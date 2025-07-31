@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Global Colors */
+    --global-bg-1: #00469f;
+    --global-bg-2: #112033;
+    --global-bg-3: #19515e;
+    --global-bg-4: #253f60;
+    --global-bg-5: #4ebbbd;
+    --global-bg-6: #b99066;
+    --global-bg-7: #f2f2f2;
+    --global-bg-8: #ffffff;
+    --global-text-1: #000000;
+    --global-text-2: #112033;
+    --global-text-3: #495057;
+    --global-text-4: #686868;
+    --global-text-5: #b99066;
+    --global-text-6: #cccccc;
+    --global-text-7: #ffffff;
+
+    /* Header Colors */
+    --header-bg-1: #000000;
+    --header-text-1: #272727;
+    --header-text-2: #6c757d;
+
+    /* Slider Colors */
+    --slider-bg-1: #d9fdff;
+
+    /* Footer Colors */
+    --footer-bg-1: #00000033;
+    --footer-bg-2: #ffffffcc;
+    --footer-text-1: #4ebbbd;
+  }
+}
+
+@layer utilities {
+  /* Global */
+  .bg-global-1 {
+    background-color: var(--global-bg-1);
+  }
+  .bg-global-2 {
+    background-color: var(--global-bg-2);
+  }
+  .bg-global-3 {
+    background-color: var(--global-bg-3);
+  }
+  .bg-global-4 {
+    background-color: var(--global-bg-4);
+  }
+  .bg-global-5 {
+    background-color: var(--global-bg-5);
+  }
+  .bg-global-6 {
+    background-color: var(--global-bg-6);
+  }
+  .bg-global-7 {
+    background-color: var(--global-bg-7);
+  }
+  .bg-global-8 {
+    background-color: var(--global-bg-8);
+  }
+  .text-global-1 {
+    color: var(--global-text-1);
+  }
+  .text-global-2 {
+    color: var(--global-text-2);
+  }
+  .text-global-3 {
+    color: var(--global-text-3);
+  }
+  .text-global-4 {
+    color: var(--global-text-4);
+  }
+  .text-global-5 {
+    color: var(--global-text-5);
+  }
+  .text-global-6 {
+    color: var(--global-text-6);
+  }
+  .text-global-7 {
+    color: var(--global-text-7);
+  }
+
+  /* Header */
+  .bg-header-1 {
+    background-color: var(--header-bg-1);
+  }
+  .text-header-1 {
+    color: var(--header-text-1);
+  }
+  .text-header-2 {
+    color: var(--header-text-2);
+  }
+
+  /* Slider */
+  .bg-slider-1 {
+    background-color: var(--slider-bg-1);
+  }
+
+  /* Footer */
+  .bg-footer-1 {
+    background-color: var(--footer-bg-1);
+  }
+  .bg-footer-2 {
+    background-color: var(--footer-bg-2);
+  }
+  .text-footer-1 {
+    color: var(--footer-text-1);
+  }
+}

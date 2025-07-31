@@ -1,0 +1,13 @@
+@import './tailwind.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cairo:wght@600&family=Source+Sans+Pro:wght@400&family=Segoe+UI:wght@400&family=Prompt:wght@500&display=swap');
+
+body {
+  font-family: 'Inter', 'Source Sans Pro', 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
