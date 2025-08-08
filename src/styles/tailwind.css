@@ -111,3 +111,13 @@
     color: var(--footer-text-1);
   }
 }
+
+/* Google Translate UI overrides */
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+.goog-te-banner-frame { display: none !important; }
+#goog-gt-tt { display: none !important; }
+.goog-tooltip { display: none !important; }
+.goog-te-balloon-frame { display: none !important; }
+.goog-te-gadget-icon { display: none !important; }
+#google_translate_element { display: none !important; }
+html body { top: 0 !important; }

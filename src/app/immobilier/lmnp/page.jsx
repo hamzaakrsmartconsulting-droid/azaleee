@@ -1,8 +1,46 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
 
+const LOCAL_STORAGE_KEY = 'lmnpPageContent';
+
+const defaultContent = {
+  heroTitle: "Investir avec le statut LMNP (location meublée non professionnelle) avec Azalee Wealth",
+  heroSubtitle: "L'investissement locatif est une stratégie d'épargne efficace. Ce système de défiscalisation immobilière permet de se constituer un patrimoine tout en percevant, mensuellement, un complément de salaire. Notre expertise de plus de 30 ans vous accompagne pour optimiser votre investissement LMNP.",
+  heroButton: "Simuler votre projet LMNP",
+  rightCardTitle: "Nos experts à votre service",
+  rightCardBenefits: [
+    "Ne payez pas d'impôt sur vos revenus locatifs",
+    "Meilleure rentabilité qu'avec une location nue",
+    "Récupération de la TVA",
+    "Accompagnement complet de votre projet"
+  ],
+  floatingCardText: "0 € →\nAnalyse personnalisée gratuite"
+};
+
 export default function LMNPPage() {
+  const [content, setContent] = useState(defaultContent);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setContent({ ...defaultContent, ...parsed });
+    }
+
+    // Listen for custom content update events
+    const handleContentUpdate = () => {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setContent({ ...defaultContent, ...parsed });
+      }
+    };
+
+    window.addEventListener('contentUpdated', handleContentUpdate);
+    return () => window.removeEventListener('contentUpdated', handleContentUpdate);
+  }, []);
+
   return (
     <>
       <Header />
@@ -15,18 +53,18 @@ export default function LMNPPage() {
             <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               {/* Main Title */}
               <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
-                Investir avec le statut LMNP (location meublée non professionnelle) avec Azalee Wealth
+                {content.heroTitle}
               </h1>
               
               {/* Description */}
               <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
-                L'investissement locatif est une stratégie d'épargne efficace. Ce système de défiscalisation immobilière permet de se constituer un patrimoine tout en percevant, mensuellement, un complément de salaire. Notre expertise de plus de 30 ans vous accompagne pour optimiser votre investissement LMNP.
+                {content.heroSubtitle}
               </p>
               
               {/* CTA Button */}
               <div className="flex justify-center lg:justify-start">
                 <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                  Simuler votre projet LMNP
+                  {content.heroButton}
                 </button>
               </div>
             </div>
@@ -41,38 +79,28 @@ export default function LMNPPage() {
                   className="w-8 h-8 sm:w-9 sm:h-9"
                 />
                 <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight">
-                  Nos experts à votre service
+                  {content.rightCardTitle}
                 </h2>
               </div>
               
               {/* Floating Price Card */}
               <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
                 <div className="text-center text-white font-source-sans font-semibold text-xs sm:text-base lg:text-xl leading-tight px-1 sm:px-0">
-                  <span className="hidden sm:block">0 € →<br /></span>
+                  <span className="hidden sm:block">{content.floatingCardText.split('\n')[0]}<br /></span>
                   <span className="sm:hidden">0€</span>
-                  <span className="hidden sm:block">Analyse personnalisée gratuite</span>
+                  <span className="hidden sm:block">{content.floatingCardText.split('\n')[1]}</span>
                 </div>
               </div>
               
               {/* Services List */}
               <div className="mt-8 sm:mt-12">
                 <ul className="space-y-2 sm:space-y-3 text-white text-xs sm:text-sm font-source-sans font-semibold leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Ne payez pas d'impôt sur vos revenus locatifs</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Meilleure rentabilité qu'avec une location nue</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Récupération de la TVA</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Accompagnement complet de votre projet</span>
-                  </li>
+                  {content.rightCardBenefits.map((benefit, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <span className="text-white mt-1">✓</span>
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -362,7 +390,84 @@ export default function LMNPPage() {
               </div>
             </div>
           </div>
-
+ 
+          {/* LMNP vs LMP: quelles différences ? */}
+          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+            <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+              LMNP vs LMP : quelles différences ?
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+                <thead className="bg-[#F2F2F2]">
+                  <tr>
+                    <th className="text-left text-[#112033] font-source-sans font-semibold px-4 py-3">Critère</th>
+                    <th className="text-left text-[#112033] font-source-sans font-semibold px-4 py-3">LMNP</th>
+                    <th className="text-left text-[#112033] font-source-sans font-semibold px-4 py-3">LMP</th>
+                  </tr>
+                </thead>
+                <tbody className="text-[#374151] font-inter">
+                  <tr className="border-t">
+                    <td className="px-4 py-3">Seuil de recettes</td>
+                    <td className="px-4 py-3">≤ 23 000 € et &lt; autres revenus du foyer</td>
+                    <td className="px-4 py-3">&gt; 23 000 € ou &gt; autres revenus du foyer</td>
+                  </tr>
+                  <tr className="border-t bg-[#FAFAFA]">
+                    <td className="px-4 py-3">Statut</td>
+                    <td className="px-4 py-3">Non professionnel</td>
+                    <td className="px-4 py-3">Professionnel</td>
+                  </tr>
+                  <tr className="border-t">
+                    <td className="px-4 py-3">Régime fiscal</td>
+                    <td className="px-4 py-3">BIC (micro-BIC ou réel)</td>
+                    <td className="px-4 py-3">BIC réel (cotisations sociales possibles)</td>
+                  </tr>
+                  <tr className="border-t bg-[#FAFAFA]">
+                    <td className="px-4 py-3">Amortissements</td>
+                    <td className="px-4 py-3">Oui (impact plus-value en 2025)</td>
+                    <td className="px-4 py-3">Oui</td>
+                  </tr>
+                  <tr className="border-t">
+                    <td className="px-4 py-3">Plus-value à la revente</td>
+                    <td className="px-4 py-3">Régime des particuliers (avec réintégration des amortissements)</td>
+                    <td className="px-4 py-3">Régime professionnel (selon situation)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-4 text-[#686868] text-sm">
+              Sources d'inspiration et synthèse basées sur des informations publiques du marché dont le dossier LMNP/LMP de Selexium.
+            </p>
+          </div>
+ 
+          {/* Résidences éligibles au LMNP */}
+          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+            <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+              Résidences éligibles au statut LMNP
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+              <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                <h3 className="text-[#005C69] font-cairo font-semibold mb-2">Étudiantes</h3>
+                <p className="text-[#374151] text-sm font-inter">Proches des campus, adaptées aux besoins étudiants.</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                <h3 className="text-[#005C69] font-cairo font-semibold mb-2">Senior</h3>
+                <p className="text-[#374151] text-sm font-inter">Résidences services pour personnes âgées autonomes.</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                <h3 className="text-[#005C69] font-cairo font-semibold mb-2">EHPAD</h3>
+                <p className="text-[#374151] text-sm font-inter">Établissements d'hébergement pour dépendance.</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                <h3 className="text-[#005C69] font-cairo font-semibold mb-2">Affaires</h3>
+                <p className="text-[#374151] text-sm font-inter">Hébergement dédié aux déplacements professionnels.</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                <h3 className="text-[#005C69] font-cairo font-semibold mb-2">Tourisme</h3>
+                <p className="text-[#374151] text-sm font-inter">Résidences de vacances avec services.</p>
+              </div>
+            </div>
+          </div>
+ 
           {/* Comment obtenir le statut LMNP */}
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
             <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">

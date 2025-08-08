@@ -106,6 +106,19 @@ export default function HomePage() {
       setContent({ ...defaultContent, ...parsed });
       if (parsed.sectionOrder) setSectionOrder(parsed.sectionOrder);
     }
+
+    // Listen for custom content update events
+    const handleContentUpdate = () => {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setContent({ ...defaultContent, ...parsed });
+        if (parsed.sectionOrder) setSectionOrder(parsed.sectionOrder);
+      }
+    };
+
+    window.addEventListener('contentUpdated', handleContentUpdate);
+    return () => window.removeEventListener('contentUpdated', handleContentUpdate);
   }, []);
 
   // Mapping des sections à afficher dynamiquement
@@ -120,13 +133,13 @@ export default function HomePage() {
                 {/* Logo visible only on mobile in hero section */}
                 {/* (Removed the hero section logo on mobile) */}
                 <h1 className="text-white text-[12px] sm:text-lg md:text-xl lg:text-4xl font-cairo font-semibold uppercase mb-4 max-w-xs sm:max-w-md lg:max-w-xl leading-snug">
-                  Votre partenaire de confiance en matière de gestion de patrimoine, de fiscalité et de conseil en investissement.
+                  {content.heroTitle}
                 </h1>
                 <p className="text-white text-[10px] sm:text-base md:text-lg lg:text-xl mb-8 max-w-xs sm:max-w-md lg:max-w-lg font-inter">
-                  Explorez des conseils personnalisés en matière de fiscalité, d'immobilier, d'investissements, de retraite et de gestion de patrimoine.
+                  {content.heroSubtitle}
                 </p>
                 <button className="bg-[#B99066] text-white px-8 py-3 rounded-full text-xs sm:text-sm font-semibold uppercase shadow-lg mb-8">
-                  Obtenez Votre Consultation Personnalisée
+                  {content.heroButton1}
                 </button>
                 {/* Dots visible only on mobile */}
                 <div className="flex justify-center items-center gap-2 mb-4 lg:hidden">
@@ -195,7 +208,7 @@ export default function HomePage() {
                 </div>
                 {/* Centered button below grid */}
                 <div className="flex justify-center mt-6">
-                  <button className="bg-[#B99066] text-white px-6 py-2 rounded font-semibold text-xs">Rencontrez-Nous</button>
+                  <button className="bg-[#B99066] text-white px-6 py-2 rounded font-semibold text-xs">{content.introButton}</button>
                 </div>
               </div>
             </div>

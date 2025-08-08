@@ -1,6 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import Button from '../ui/Button';
+import dynamic from "next/dynamic";
+const LanguageSwitcher = dynamic(() => import("./LanguageSwitcher"), { ssr: false });
 import Link from "next/link";
 
 const Header = () => {
@@ -254,6 +256,10 @@ const Header = () => {
             >
               Espace clients
             </Button>
+            {/* Language Switcher */}
+            <div className="ml-2">
+              <LanguageSwitcher />
+            </div>
           </div>
         </div>
       </div>
