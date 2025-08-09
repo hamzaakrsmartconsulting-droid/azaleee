@@ -1,347 +1,348 @@
 "use client";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Header from "../../components/common/Header";
 
+const STORAGE_KEY = "fiscalitePageContent";
+
+const defaultContent = {
+  hero: {
+    title: "Tout savoir sur la fiscalité patrimoniale et l'optimisation fiscale",
+    paragraph:
+      "Vous cherchez à optimiser votre fiscalité tout en sécurisant et valorisant votre patrimoine ? Les stratégies de fiscalité patrimoniale vous permettent de conjuguer rendement, sécurité et transmission, en toute conformité avec la législation fiscale. Accessible aussi bien aux particuliers qu'aux chefs d’entreprise, l'optimisation fiscale repose sur des solutions juridiques, financières et immobilières adaptées à votre situation et à vos projets.",
+    pill: {
+      bullets: [
+        "Investissez dans l’immobilier neuf et profitez d’avantages fiscaux exclusifs :",
+        "TVA réduite à 10 %",
+        "Crédit d’impôt sur la taxe foncière",
+      ],
+      cta: "Je calcule mon avantage fiscal",
+      portrait: "/images/fiscalite-hero-small-photo.png",
+    },
+    ctaPanel: {
+      title: "Je télécharge mon guide de l’optimisation fiscale",
+      tag: "Version numérique",
+      placeholder: "Votre email",
+      button: "Télécharger le guide",
+    },
+  },
+  sommaire: {
+    leftItems: [
+      "Qu’est-ce que l’optimisation fiscale patrimoniale ?",
+      "Pourquoi mettre en place une stratégie d’optimisation fiscale ?",
+      "Quelles sont les règles à respecter pour bénéficier des avantages fiscaux ?",
+      "Quels sont les meilleurs supports et placements pour optimiser sa fiscalité ?",
+      "Exemple d’une stratégie d’optimisation fiscale réussie",
+      "Quels pièges éviter et quelles bonnes pratiques adopter ?",
+      "Questions fréquentes sur l’optimisation fiscale",
+    ],
+    boxes: [
+      "Un prix d’acquisition avantageux grâce à une TVA réduite à 10 %",
+      "Autre avantage fiscal ou information",
+      "Encore un autre avantage ou info",
+    ],
+  },
+  lli: {
+    title: "Investissement Patrimonial & Fiscalité Optimisée : Le Dispositif LLI",
+    html:
+      "Le Logement Locatif Intermédiaire (LLI) est une solution d’investissement immobilier conçue pour les particuliers souhaitant optimiser leur fiscalité tout en développant leur patrimoine. Il s’adresse aux investisseurs recherchant une combinaison efficace entre performance financière, sécurité patrimoniale et avantages fiscaux.\n\n<b>Avec le dispositif LLI, vous bénéficiez :</b>\nD’un investissement dans un bien immobilier neuf, conforme aux dernières réglementations techniques et environnementales\nD’une TVA réduite à 10 % sur le prix d’acquisition, permettant d’alléger votre coût d’investissement\nD’un crédit d’impôt sur la taxe foncière, valable jusqu’à 20 ans, venant renforcer la rentabilité de votre opération patrimoniale",
+    button: "Je réalise ma simulation",
+    image: "/images/fiscalite-lli-image-aeac3b.png",
+  },
+  benefits: {
+    image: "/images/fiscalite-lli-benefits-66eac5.png",
+    html:
+      "Pourquoi choisir le dispositif LLI pour votre stratégie patrimoniale ?\n\nInvestir en LLI, c’est bénéficier d’une combinaison gagnante entre avantages fiscaux et acquisition d’un patrimoine immobilier neuf, tout en maîtrisant vos risques.\n\n✅ TVA réduite à 10 % sur l’acquisition, pour un prix d’achat optimisé\n✅ Crédit d’impôt sur la taxe foncière, valable jusqu’à 20 ans, permettant d’alléger vos charges\n✅ Frais de notaire réduits (2 à 3 %), bien plus avantageux que dans l’immobilier ancien\n✅ Exonération partielle de taxe foncière pendant les deux premières années\n✅ Conformité aux dernières normes énergétiques (RE2020), garantissant des performances optimales et évitant les passoires thermiques\n✅ Garantie décennale, garantie biennale et garantie de parfait achèvement sécurisant votre investissement\n✅ Possibilité de personnaliser les finitions en VEFA (Vente en l’état futur d’achèvement)\n✅ Pas de travaux à prévoir et des équipements modernes intégrés dès la livraison",
+  },
+  bottomCta: {
+    textTitle: "Investissez avec le LLI : TVA réduite et avantages fiscaux durables",
+    textBody:
+      "Profitez d’un investissement sécurisé qui combine : TVA réduite à 10 % sur l’acquisition de biens immobiliers neufs, Crédit d’impôt sur la taxe foncière, vous garantissant des économies fiscales pendant jusqu’à 20",
+    button: "Je réalise ma simulation",
+    image: "/images/fiscalite-lli-section-bottom-1b4b7d.png",
+  },
+  whereInvest: {
+    image: "/images/fiscalite-ou-investir-portrait.png",
+    intro:
+      "La réussite d’un investissement locatif repose sur le choix de la bonne localisation. Avec le Logement Locatif Intermédiaire (LLI), il est essentiel de privilégier des zones à fort potentiel locatif, proches des bassins d’emploi, des universités et bien connectées aux transports.",
+    cities: [
+      {
+        name: "Toulouse – Un marché en pleine expansion",
+        points: [
+          "Ville universitaire et technologique, attractive pour les jeunes actifs.",
+          "Dynamisme soutenu (aéronautique, spatial, services).",
+          "✅ Quartiers recommandés : Compans-Caffarelli, Rangueil",
+          "✅ 18 490 créations d’emplois au 1er trimestre 2024",
+        ],
+      },
+      {
+        name: "Paris – La sécurité d’un placement patrimonial",
+        points: [
+          "Marché solide, demande locative soutenue.",
+          "✅ Quartiers recommandés : Marais, 15ème arrondissement",
+          "✅ Rendements fiables et valorisation garantie",
+        ],
+      },
+    ],
+  },
+  example: {
+    title: "Exemple d’un investissement optimisé avec le dispositif LLI",
+    lead:
+      "En 2025, Clara, dirigeante d’entreprise à Bordeaux, décide de diversifier son patrimoine en investissant dans l’immobilier locatif via le dispositif LLI. Elle choisit un appartement neuf de 50 m², situé à quelques minutes de la gare Bordeaux Saint-Jean, un secteur à forte demande locative.",
+    bulletsTitle: "Les avantages financiers pour Clara :",
+    bullets: [
+      "Exonération de taxe foncière : pendant 20 ans, elle économise environ 1 500 € par an, soit un total potentiel de 30 000 €.",
+      "TVA réduite à 10 % : économie immédiate d’environ 20 000 € sur le prix d’achat.",
+      "Frais de notaire réduits : grâce au neuf, les frais avoisinent 2,5 %, permettant une économie d’environ 10 000 € par rapport à un bien ancien.",
+    ],
+    image: "/images/fiscalite-exemple-illustration.png",
+  },
+  sectionOrder: [
+    "hero",
+    "sommaire",
+    "lli",
+    "benefits",
+    "bottomCta",
+    "whereInvest",
+    "example",
+  ],
+};
+
 export default function FiscalitePage() {
+  const [content, setContent] = useState(defaultContent);
+
+  // Load content from localStorage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setContent((prev) => ({ ...prev, ...parsed }));
+      }
+    } catch (e) {
+      console.error("Failed to load fiscalité content", e);
+    }
+  }, []);
+
+  // Live update on CustomEvent from CMS
+  useEffect(() => {
+    const handler = () => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) setContent((prev) => ({ ...prev, ...JSON.parse(saved) }));
+      } catch {}
+    };
+    window.addEventListener("contentUpdated", handler);
+    return () => window.removeEventListener("contentUpdated", handler);
+  }, []);
+
+  const sections = useMemo(() => content.sectionOrder || defaultContent.sectionOrder, [content.sectionOrder]);
+
   return (
     <>
       <Header />
-      {/* Section précédente ... */}
-      {/* Nouvelle section Sommaire */}
-      <div className="w-full flex justify-center py-8 bg-transparent">
-        <div
-          className="relative rounded-lg shadow"
-          style={{
-            width: 1360,
-            minHeight: 291,
-            background: "rgba(255,255,255,0)",
-            maxWidth: "100%",
-            boxShadow: "0px 0px 7.35px 1.47px #DDD",
-          }}
-        >
-          {/* Title */}
-          <h2
-            className="absolute uppercase font-source-sans font-semibold"
-            style={{
-              left: 22,
-              top: 26,
-              color: "#112033",
-              fontSize: 20.6,
-              lineHeight: "1.3em",
-              letterSpacing: 1,
-            }}
-          >
-            Sommaire
-          </h2>
-          {/* Icon (placeholder) */}
-          <div
-            className="absolute opacity-50"
-            style={{
-              left: 1303,
-              top: 21,
-              width: 24.58,
-              height: 26.46,
-              background: "#112033",
-              borderRadius: 4,
-            }}
-          />
-          {/* Main text block */}
-          <div
-            className="absolute"
-            style={{
-              left: 22,
-              top: 70,
-              width: 509,
-              color: "#243E5F",
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 500,
-              fontSize: 14,
-              lineHeight: "1.77em",
-            }}
-          >
-            <p>
-              Qu’est-ce que l’optimisation fiscale patrimoniale ?<br />
-              Pourquoi mettre en place une stratégie d’optimisation fiscale ?<br />
-              Quelles sont les règles à respecter pour bénéficier des avantages fiscaux ?<br />
-              Quels sont les meilleurs supports et placements pour optimiser sa fiscalité ?<br />
-              Exemple d’une stratégie d’optimisation fiscale réussie<br />
-              Quels pièges éviter et quelles bonnes pratiques adopter ?<br />
-              Questions fréquentes sur l’optimisation fiscale
-            </p>
-          </div>
-          {/* List of items (Sommaire) - texte seul */}
-          <div
-            className="absolute"
-            style={{
-              left: 554,
-              top: 47,
-              width: 724,
-              height: 223,
-              display: "flex",
-              gap: 24,
-            }}
-          >
-            {/* Item 1 */}
-            <div
-              className="flex flex-col items-center justify-center rounded-lg shadow"
-              style={{
-                width: 165,
-                height: 139,
-                background: "#4EBBBD",
-                color: "#fff",
-                fontWeight: 600,
-                fontSize: 14,
-                position: "relative",
-                padding: 16,
-              }}
-            >
-              <span className="text-center px-2">
-                Un prix d’acquisition avantageux grâce à une TVA réduite à 10 %
-              </span>
-            </div>
-            {/* Item 2 */}
-            <div
-              className="flex flex-col items-center justify-center rounded-lg shadow"
-              style={{
-                width: 165,
-                height: 139,
-                background: "#4EBBBD",
-                color: "#fff",
-                fontWeight: 600,
-                fontSize: 14,
-                position: "relative",
-                padding: 16,
-              }}
-            >
-              <span className="text-center px-2">
-                Autre avantage fiscal ou information
-              </span>
-            </div>
-            {/* Item 3 (exemple) */}
-            <div
-              className="flex flex-col items-center justify-center rounded-lg shadow"
-              style={{
-                width: 165,
-                height: 139,
-                background: "#4EBBBD",
-                color: "#fff",
-                fontWeight: 600,
-                fontSize: 14,
-                position: "relative",
-                padding: 16,
-              }}
-            >
-              <span className="text-center px-2">
-                Encore un autre avantage ou info
-              </span>
+
+      {sections.includes("hero") && (
+        <section className="bg-[#FAFFEF]">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-7">
+                <h1 className="font-[300] text-[#112033] text-3xl sm:text-4xl lg:text-5xl leading-tight mb-4">
+                  {content.hero.title}
+                </h1>
+                <p className="text-[#686868] text-sm sm:text-base leading-relaxed max-w-2xl">
+                  {content.hero.paragraph}
+                </p>
+              </div>
+
+              <div className="lg:col-span-5">
+                <div className="relative h-[220px] sm:h-[230px] lg:h-[208px] w-full max-w-[560px] ml-auto rounded-l-xl rounded-r-[220px] bg-white shadow-md overflow-hidden">
+                  <div className="h-full pr-40 pl-5 sm:pl-6 py-5 flex flex-col justify-center">
+                    <p className="uppercase text-[11px] tracking-wide text-[#112033] mb-1">
+                      Optimisez votre fiscalité grâce au dispositif LLI
+                    </p>
+                    <ul className="text-[12px] uppercase text-black/80 leading-7 list-disc list-inside">
+                      {content.hero.pill.bullets.map((b, i) => (
+                        <li key={i}>{b}</li>
+                      ))}
+                    </ul>
+                    <button className="mt-3 inline-flex items-center rounded-md bg-[#B99066] text-white text-[12px] font-semibold px-3.5 py-2 shadow">
+                      {content.hero.pill.cta}
+                    </button>
+                  </div>
+                  <img
+                    src={content.hero.pill.portrait}
+                    alt="LLI"
+                    className="absolute top-4 right-4 w-[168px] h-[168px] rounded-full object-cover ring-8 ring-white"
+                  />
+                </div>
+              </div>
+
+              <div className="lg:col-start-7 lg:col-span-6">
+                <div className="rounded-xl bg-[#008D78] text-white p-5 sm:p-6 shadow-md">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center">
+                    <div className="md:col-span-5">
+                      <h3 className="uppercase text-lg sm:text-xl font-semibold">{content.hero.ctaPanel.title}</h3>
+                      <span className="inline-block mt-3 px-2 py-1 bg-white text-[#008D78] rounded text-[12px]">
+                        {content.hero.ctaPanel.tag}
+                      </span>
+                    </div>
+                    <div className="md:col-span-7 w-full flex gap-2">
+                      <input
+                        type="email"
+                        placeholder={content.hero.ctaPanel.placeholder}
+                        className="flex-1 h-10 px-3 rounded text-[#112033] border-0 focus:ring-2 focus:ring-white/50"
+                      />
+                      <button className="h-10 px-4 rounded bg-[#B99066] text-white text-sm shadow whitespace-nowrap">
+                        {content.hero.ctaPanel.button}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      {/* Section LLI Figma node 908-21 */}
-      <div className="w-full flex justify-center py-12 bg-white">
-        <div
-          className="relative flex flex-row items-start rounded-lg shadow-md"
-          style={{
-            width: 1328,
-            minHeight: 649,
-            background: "#fff",
-            maxWidth: "100%",
-          }}
-        >
-          {/* Texte à gauche */}
-          <div style={{ width: 650, padding: 32, position: 'relative' }}>
-            {/* Divider */}
-            <div style={{ width: 48, height: 1.6, background: '#4EBBBD', marginBottom: 24 }} />
-            {/* Heading */}
-            <h2
-              className="font-source-sans uppercase"
-              style={{
-                color: "#112033",
-                fontSize: 20,
-                fontWeight: 400,
-                lineHeight: '1.58em',
-                marginBottom: 24,
-              }}
-            >
-              Investissement Patrimonial & Fiscalité Optimisée : Le Dispositif LLI
-            </h2>
-            {/* Paragraph */}
-            <p
-              className="font-source-sans"
-              style={{
-                color: "#686868",
-                fontSize: 14.4,
-                lineHeight: '1.66em',
-                marginBottom: 32,
-              }}
-            >
-              Le Logement Locatif Intermédiaire (LLI) est une solution d’investissement immobilier conçue pour les particuliers souhaitant optimiser leur fiscalité tout en développant leur patrimoine.<br />
-              Il s’adresse aux investisseurs recherchant une combinaison efficace entre performance financière, sécurité patrimoniale et avantages fiscaux.<br />
-              <br />
-              <b>Avec le dispositif LLI, vous bénéficiez :</b><br />
-              D’un investissement dans un bien immobilier neuf, conforme aux dernières réglementations techniques et environnementales<br />
-              D’une TVA réduite à 10 % sur le prix d’acquisition, permettant d’alléger votre coût d’investissement<br />
-              D’un crédit d’impôt sur la taxe foncière, valable jusqu’à 20 ans, venant renforcer la rentabilité de votre opération patrimoniale
-            </p>
-            {/* Button */}
-            <button
-              className="rounded-lg px-8 py-3 font-source-sans font-semibold text-white shadow"
-              style={{
-                background: '#B99066',
-                fontSize: 16,
-                boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.25)',
-              }}
-            >
-              Je réalise ma simulation
-            </button>
-          </div>
-          {/* Image à droite */}
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 649 }}>
-            <img
-              src="/images/fiscalite-lli-image-aeac3b.png"
-              alt="Investissement LLI"
-              style={{ width: 638, height: 626, objectFit: 'cover', borderRadius: 16 }}
-            />
-          </div>
-        </div>
-      </div>
-      {/* Section LLI Benefits Figma node 191-19192 */}
-      <div className="w-full flex justify-center py-12 bg-white">
-        <div
-          className="relative flex flex-row items-start rounded-lg shadow-md"
-          style={{
-            width: 1323,
-            minHeight: 669,
-            background: "#fff",
-            maxWidth: "100%",
-          }}
-        >
-          {/* Image à gauche */}
-          <div style={{ width: 573, height: 495, marginTop: 40, marginRight: 45, borderRadius: 16, overflow: 'hidden' }}>
-            <img
-              src="/images/fiscalite-lli-benefits-66eac5.png"
-              alt="LLI Avantages"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 16 }}
-            />
-          </div>
-          {/* Divider vertical */}
-          <div style={{ width: 1.6, height: 495, background: '#4EBBBD', marginTop: 40, marginRight: 45 }} />
-          {/* Texte à droite */}
-          <div style={{ flex: 1, minWidth: 0, marginTop: 40 }}>
-            <div style={{ color: '#000', fontFamily: 'Source Sans Pro', fontWeight: 400, fontSize: 16, lineHeight: '1.98em', textTransform: 'uppercase' }}>
-              <p>
-                Pourquoi choisir le dispositif LLI pour votre stratégie patrimoniale ?<br /><br />
-                Investir en LLI, c’est bénéficier d’une combinaison gagnante entre avantages fiscaux et acquisition d’un patrimoine immobilier neuf, tout en maîtrisant vos risques.<br /><br />
-                Les atouts majeurs pour l’investisseur privé :<br /><br />
-                ✅ TVA réduite à 10 % sur l’acquisition, pour un prix d’achat optimisé<br />
-                ✅ Crédit d’impôt sur la taxe foncière, valable jusqu’à 20 ans, permettant d’alléger vos charges<br />
-                ✅ Frais de notaire réduits (2 à 3 %), bien plus avantageux que dans l’immobilier ancien<br />
-                ✅ Exonération partielle de taxe foncière pendant les deux premières années<br />
-                ✅ Conformité aux dernières normes énergétiques (RE2020), garantissant des performances optimales et évitant les passoires thermiques<br />
-                ✅ Garantie décennale, garantie biennale et garantie de parfait achèvement sécurisant votre investissement<br />
-                ✅ Possibilité de personnaliser les finitions en VEFA (Vente en l’état futur d’achèvement)<br />
-                ✅ Pas de travaux à prévoir et des équipements modernes intégrés dès la livraison
-              </p>
+        </section>
+      )}
+
+      {sections.includes("sommaire") && (
+        <section className="py-10 lg:py-14">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="uppercase text-[#112033] text-xl sm:text-2xl font-semibold">Sommaire</h2>
+              <div className="hidden md:block w-6 h-6 opacity-50 bg-[#4EBBBD] rounded"></div>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-5 text-[#243E5F] text-sm leading-7">
+                <p>
+                  {content.sommaire.leftItems.map((it, i) => (
+                    <span key={i}>
+                      {it}
+                      <br />
+                    </span>
+                  ))}
+                </p>
+              </div>
+              <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-6">
+                {content.sommaire.boxes.map((label, i) => (
+                  <div
+                    key={i}
+                    className="rounded-lg bg-[#4EBBBD] text-white p-4 flex items-center justify-center text-center text-[13px] font-semibold min-h-[120px] shadow"
+                  >
+                    {label}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      {/* Section LLI Bottom Figma node 191-19193 */}
-      <div className="w-full flex justify-center py-12 bg-white">
-        <div
-          className="relative flex flex-row items-center rounded-lg shadow-md"
-          style={{
-            width: 1336,
-            minHeight: 254,
-            background: "#fff",
-            maxWidth: "100%",
-          }}
-        >
-          {/* Texte et bouton à gauche */}
-          <div style={{ width: 688, padding: 32, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <div style={{ color: '#000', fontFamily: 'Source Sans Pro', fontWeight: 600, fontSize: 16, lineHeight: '1.5em', marginBottom: 16 }}>
-              Investissez avec le LLI : TVA réduite et avantages fiscaux durables<br /><br />
-              Profitez d’un investissement sécurisé qui combine :<br /><br />
-              TVA réduite à 10 % sur l’acquisition de biens immobiliers neufs<br />
-              Crédit d’impôt sur la taxe foncière, vous garantissant des économies fiscales pendant jusqu’à 20
+        </section>
+      )}
+
+      {sections.includes("lli") && (
+        <section className="py-10 lg:py-16 bg-white">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+              <div className="order-2 lg:order-1">
+                <div className="w-12 h-[1.6px] bg-[#4EBBBD] mb-6" />
+                <h3 className="uppercase text-[#112033] text-xl font-normal leading-snug mb-4">{content.lli.title}</h3>
+                <p className="text-[#686868] text-[14.4px] leading-7 mb-6 whitespace-pre-line" dangerouslySetInnerHTML={{ __html: content.lli.html.replace(/\n/g, '<br />') }} />
+                <button className="rounded-lg px-6 py-3 bg-[#B99066] text-white font-semibold shadow">{content.lli.button}</button>
+              </div>
+              <div className="order-1 lg:order-2">
+                <img src={content.lli.image} alt="Investissement LLI" className="w-full h-[360px] sm:h-[440px] lg:h-[620px] object-cover rounded-xl" />
+              </div>
             </div>
-            {/* Bouton */}
-            <button
-              className="rounded-lg px-8 py-3 font-source-sans font-semibold text-white shadow"
-              style={{
-                background: '#B99066',
-                fontSize: 16,
-                boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.25)',
-                marginTop: 12,
-                width: 230,
-                height: 40,
-              }}
-            >
-              Je réalise ma simulation
-            </button>
           </div>
-          {/* Image à droite */}
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', minHeight: 254 }}>
-            <img
-              src="/images/fiscalite-lli-section-bottom-1b4b7d.png"
-              alt="LLI Section Bottom"
-              style={{ width: 837, height: 254, objectFit: 'cover', borderRadius: 16 }}
-            />
+        </section>
+      )}
+
+      {sections.includes("benefits") && (
+        <section className="py-10 lg:py-16 bg-white">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+              <div className="rounded-xl overflow-hidden order-2 lg:order-1">
+                <img src={content.benefits.image} alt="LLI Avantages" className="w-full h-[360px] sm:h-[420px] object-cover" />
+              </div>
+              <div className="order-1 lg:order-2">
+                <div className="w-[1.6px] h-24 bg-[#4EBBBD] mb-6 hidden lg:block" />
+                <div className="text-[#000] text-base leading-8 uppercase whitespace-pre-line" dangerouslySetInnerHTML={{ __html: content.benefits.html.replace(/\n/g, '<br />') }} />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="w-full flex justify-center bg-[#FAFFEF] py-12">
-        <div
-          className="relative rounded-lg shadow-md"
-          style={{
-            width: 784.87,
-            minHeight: 448.42,
-            background: "#FAFFEF",
-            maxWidth: "100%",
-          }}
-        >
-          {/* Breadcrumb */}
-          <div
-            className="absolute left-10 top-[350px] flex items-center text-[12px] font-source-sans"
-            style={{ color: "#686868" }}
-          >
-            <span>Accueil</span>
-            <span className="mx-1">{'>'}</span>
-            <span>Fiscalité</span>
-            <span className="mx-1">{'>'}</span>
-            <span style={{ color: "#B99066" }}>
-              Investir en Logement Locatif Intermédiaire (LLI)
-            </span>
+        </section>
+      )}
+
+      {sections.includes("bottomCta") && (
+        <section className="py-10 lg:py-16 bg-white">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center rounded-xl shadow-md">
+              <div className="p-6 lg:p-8">
+                <h4 className="font-semibold text-[#000] leading-6 mb-4">{content.bottomCta.textTitle}</h4>
+                <p className="text-[#000] leading-7 text-sm mb-4">{content.bottomCta.textBody}</p>
+                <button className="rounded-md bg-[#B99066] text-white px-6 py-2 shadow font-semibold">{content.bottomCta.button}</button>
+              </div>
+              <div className="rounded-xl overflow-hidden">
+                <img src={content.bottomCta.image} alt="LLI Section Bottom" className="w-full h-56 sm:h-64 lg:h-[254px] object-cover" />
+              </div>
+            </div>
           </div>
-          {/* Heading */}
-          <h1
-            className="absolute left-10 top-[102px] font-source-sans font-light"
-            style={{
-              color: "#112033",
-              fontSize: 48,
-              width: 709,
-              lineHeight: "1.24em",
-            }}
-          >
-            Tout savoir sur la fiscalité patrimoniale et l'optimisation fiscale
-          </h1>
-          {/* Paragraph */}
-          <p
-            className="absolute left-10 top-[236px] font-source-sans"
-            style={{
-              color: "#686868",
-              fontSize: 14.4,
-              width: 665,
-              lineHeight: "1.3em",
-            }}
-          >
-            Vous cherchez à optimiser votre fiscalité tout en sécurisant et valorisant votre patrimoine ?<br />
-            Les stratégies de fiscalité patrimoniale vous permettent de conjuguer rendement, sécurité et transmission, en toute conformité avec la législation fiscale.<br />
-            Accessible aussi bien aux particuliers qu'aux chefs d’entreprise, l'optimisation fiscale repose sur des solutions juridiques, financières et immobilières adaptées à votre situation et à vos projets.
-          </p>
-        </div>
-      </div>
+        </section>
+      )}
+
+      {sections.includes("whereInvest") && (
+        <section className="py-10 lg:py-16 bg-white">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-stretch">
+              <div className="order-1 h-80 sm:h-[480px] lg:h-full">
+                <img src={content.whereInvest.image} alt="Conseillère - Où investir" className="w-full h-full object-cover rounded-xl" />
+              </div>
+              <div className="order-2">
+                <h3 className="text-[#112033] text-xl font-semibold mb-4">Où investir pour maximiser les avantages du LLI ?</h3>
+                <p className="text-[#686868] text-[15px] leading-7 mb-6">{content.whereInvest.intro}</p>
+                <div className="space-y-6 text-[#686868] text-[15px] leading-7">
+                  {content.whereInvest.cities.map((city, idx) => (
+                    <div key={idx}>
+                      <h4 className="text-[#112033] font-semibold mb-1">{city.name}</h4>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {city.points.map((p, i) => (
+                          <li key={i}>{p}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {sections.includes("example") && (
+        <section className="py-10 lg:py-16 bg-white">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+              <div>
+                <h3 className="text-[#112033] text-lg sm:text-xl font-semibold mb-4">{content.example.title}</h3>
+                <div className="space-y-4 text-[#686868] text-[15px] leading-7">
+                  <p>{content.example.lead}</p>
+                  <div>
+                    <p className="text-[#112033] font-semibold mb-2">{content.example.bulletsTitle}</p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      {content.example.bullets.map((b, i) => (
+                        <li key={i}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="w-12 h-[1.6px] bg-[#4EBBBD] mb-4 hidden lg:block" />
+                <img src={content.example.image} alt="Investir dans l’immobilier avec succès" className="w-full h-[260px] sm:h-[360px] lg:h-[574px] object-cover" />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 } 

@@ -20,6 +20,7 @@ const navGroups = [
   {
     label: "Fiscalité",
     items: [
+      { href: "/cms/fiscalite", label: "Page Fiscalité" },
       { href: "/cms/fiscalite/impot-sur-le-revenu", label: "Impôt sur le revenu" },
     ],
   },
