@@ -110,23 +110,58 @@ const defaultContent = {
 export default function FiscalitePage() {
   const [content, setContent] = useState(defaultContent);
 
-  // Load content from localStorage
+  // Load content from database or localStorage
   useEffect(() => {
     if (typeof window === "undefined") return;
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setContent((prev) => ({ ...prev, ...parsed }));
+    
+    const loadContentFromDatabase = async () => {
+      try {
+        // Essayer d'abord la base de données
+        const response = await fetch('/api/pages/content?path=/fiscalite&type=cms');
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.content) {
+            setContent((prev) => ({ ...prev, ...result.content.content }));
+            return;
+          }
+        }
+      } catch (error) {
+        console.log('Base de données non disponible, utilisation du localStorage');
       }
-    } catch (e) {
-      console.error("Failed to load fiscalité content", e);
-    }
+
+      // Fallback vers localStorage
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setContent((prev) => ({ ...prev, ...parsed }));
+        }
+      } catch (e) {
+        console.error("Failed to load fiscalité content", e);
+      }
+    };
+
+    loadContentFromDatabase();
   }, []);
 
   // Live update on CustomEvent from CMS
   useEffect(() => {
-    const handler = () => {
+    const handler = async () => {
+      // Recharger depuis la base de données quand le contenu est mis à jour
+      try {
+        const response = await fetch('/api/pages/content?path=/fiscalite&type=cms');
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.content) {
+            setContent((prev) => ({ ...prev, ...result.content.content }));
+            return;
+          }
+        }
+      } catch (error) {
+        console.log('Base de données non disponible, utilisation du localStorage');
+      }
+
+      // Fallback vers localStorage
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) setContent((prev) => ({ ...prev, ...JSON.parse(saved) }));

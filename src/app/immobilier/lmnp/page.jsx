@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
 
-const STORAGE_KEY = "lmnpPageContent";
-
 const defaultContent = {
   hero: {
     title:
@@ -264,17 +262,34 @@ const defaultContent = {
 export default function LMNPPage() {
   const [content, setContent] = useState(defaultContent);
 
-  useEffect(() => {
+  // Fonction pour charger le contenu depuis la base de données
+  const loadContentFromDatabase = async () => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const response = await fetch('/api/pages/content?path=/cms/immobilier/lmnp&type=cms');
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.content) {
+          setContent({ ...defaultContent, ...result.content.content });
+          return;
+        }
+      }
+    } catch (error) {
+      console.log('Base de données non disponible, utilisation du localStorage');
+    }
+
+    // Fallback vers localStorage
+    try {
+      const saved = localStorage.getItem("lmnpPageContent");
       if (saved) setContent({ ...defaultContent, ...JSON.parse(saved) });
     } catch {}
+  };
+
+  useEffect(() => {
+    loadContentFromDatabase();
 
     const handleContentUpdate = () => {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) setContent({ ...defaultContent, ...JSON.parse(saved) });
-      } catch {}
+      // Recharger depuis la base de données quand le contenu est mis à jour
+      loadContentFromDatabase();
     };
     window.addEventListener("contentUpdated", handleContentUpdate);
     return () => window.removeEventListener("contentUpdated", handleContentUpdate);
@@ -692,6 +707,9 @@ export default function LMNPPage() {
   return (
     <>
       <Header />
+      
+
+      
       {/* Map ordered sections */}
       {sections.map((s) => renderSection(s))}
     </>

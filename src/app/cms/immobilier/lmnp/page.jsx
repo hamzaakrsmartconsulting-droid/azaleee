@@ -347,29 +347,105 @@ function normalize(saved) {
 export default function LMNPCMS() {
   const [data, setData] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Charger le contenu depuis la base de données ou localStorage en fallback
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) setData(normalize(JSON.parse(saved)));
-    else setData(defaultContent);
+    loadContent();
   }, []);
 
-  if (!data) {
+  const loadContent = async () => {
+    try {
+      // Essayer d'abord la base de données
+      const response = await fetch('/api/pages/content?path=/cms/immobilier/lmnp&type=cms');
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.content) {
+          setData(normalize(result.content.content));
+          setIsLoading(false);
+          return;
+        }
+      }
+    } catch (error) {
+      console.log('Base de données non disponible, utilisation du localStorage');
+    }
+
+    // Fallback vers localStorage
+    try {
+      if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          setData(normalize(JSON.parse(saved)));
+        } else {
+          setData(defaultContent);
+        }
+      } else {
+        setData(defaultContent);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement:', error);
+      setData(defaultContent);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
     return (
       <div className="bg-white rounded-xl p-6 shadow-sm border">
-        <p className="text-sm text-gray-600">Chargement du contenu…</p>
+        <p className="text-sm text-gray-600">Chargement du contenu depuis la base de données…</p>
       </div>
     );
   }
 
-  const save = () => {
+  if (!data) {
+    return (
+      <div className="bg-white rounded-xl p-6 shadow-sm border">
+        <p className="text-sm text-gray-600">Erreur lors du chargement du contenu</p>
+      </div>
+    );
+  }
+
+  const save = async () => {
     setSaving(true);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    setTimeout(() => {
+    try {
+      // Essayer d'abord la base de données
+      try {
+        const response = await fetch('/api/pages/content', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pagePath: '/cms/immobilier/lmnp',
+            pageType: 'cms',
+            content: data,
+            metadata: {
+              lastModified: new Date().toISOString(),
+              modifiedBy: 'admin'
+            }
+          })
+        });
+
+        if (response.ok) {
+          console.log('Sauvegardé en base de données');
+          window.dispatchEvent(new CustomEvent("contentUpdated"));
+          setSaving(false);
+          return;
+        }
+      } catch (error) {
+        console.log('Base de données non disponible, utilisation du localStorage');
+      }
+
+      // Fallback vers localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        console.log('Sauvegardé en localStorage');
+        window.dispatchEvent(new CustomEvent("contentUpdated"));
+      }
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde:', error);
+    } finally {
       setSaving(false);
-      window.dispatchEvent(new CustomEvent("contentUpdated"));
-    }, 300);
+    }
   };
 
   return (

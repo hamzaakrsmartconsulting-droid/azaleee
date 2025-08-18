@@ -100,21 +100,39 @@ export default function HomePage() {
   const [sectionOrder, setSectionOrder] = useState(defaultSectionOrder);
 
   useEffect(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setContent({ ...defaultContent, ...parsed });
-      if (parsed.sectionOrder) setSectionOrder(parsed.sectionOrder);
-    }
+    // Charger le contenu depuis la base de données ou localStorage
+    const loadContentFromDatabase = async () => {
+      try {
+        // Essayer d'abord la base de données
+        const response = await fetch('/api/pages/content?path=/&type=cms');
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.content) {
+            const parsed = result.content.content;
+            setContent({ ...defaultContent, ...parsed });
+            if (parsed.sectionOrder) setSectionOrder(parsed.sectionOrder);
+            return;
+          }
+        }
+      } catch (error) {
+        console.log('Base de données non disponible, utilisation du localStorage');
+      }
 
-    // Listen for custom content update events
-    const handleContentUpdate = () => {
+      // Fallback vers localStorage
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         setContent({ ...defaultContent, ...parsed });
         if (parsed.sectionOrder) setSectionOrder(parsed.sectionOrder);
       }
+    };
+
+    loadContentFromDatabase();
+
+    // Listen for custom content update events
+    const handleContentUpdate = async () => {
+      // Recharger depuis la base de données quand le contenu est mis à jour
+      await loadContentFromDatabase();
     };
 
     window.addEventListener('contentUpdated', handleContentUpdate);

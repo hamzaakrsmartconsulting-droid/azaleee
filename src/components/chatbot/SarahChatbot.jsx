@@ -6,6 +6,8 @@ const LOCAL_STORAGE_KEY = 'sarahChatbotData';
 const defaultChatbotData = {
   isOpen: false,
   currentStep: 'welcome',
+  sessionId: `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+  userId: null,
   userProfile: {
     nom: '',
     prenom: '',
@@ -160,18 +162,27 @@ export default function SarahChatbot() {
   const inputRef = useRef(null);
   const hasInitialized = useRef(false);
 
-  const saveChatbotData = useCallback((data) => {
+  const saveChatbotData = useCallback(async (data) => {
     try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+      // Sauvegarder en base de données au lieu du localStorage
+      if (data.sessionId) {
+        await fetch('/api/sessions/chatbot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: data.sessionId,
+            userId: data.userId || null,
+            data: data
+          })
+        });
       }
       setChatbotData(data);
     } catch (error) {
-      console.error('Error saving chatbot data:', error);
+      console.error('Error saving chatbot data to database:', error);
     }
   }, []);
 
-  const addMessage = useCallback((message, isUser = false, type = 'message', questionId = null) => {
+  const addMessage = useCallback(async (message, isUser = false, type = 'message', questionId = null) => {
     const newMessage = {
       id: Date.now(),
       text: message,
@@ -189,7 +200,49 @@ export default function SarahChatbot() {
       saveChatbotData(updatedData);
       return updatedData;
     });
-  }, [saveChatbotData]);
+
+              // Sauvegarder automatiquement en base de données
+        try {
+          // Utiliser le sessionId existant ou en créer un nouveau unique
+          let sessionId = chatbotData.sessionId;
+          if (!sessionId) {
+            sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            // Mettre à jour le state avec le nouveau sessionId
+            setChatbotData(prev => ({ ...prev, sessionId }));
+          }
+          
+          // 1. Sauvegarder la session complète
+          await fetch('/api/sessions/chatbot', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              sessionId,
+              userId: chatbotData.userId || null,
+              data: {
+                ...chatbotData,
+                sessionId, // S'assurer que le sessionId est inclus
+                conversationHistory: [...chatbotData.conversationHistory, newMessage]
+              }
+            })
+          });
+        
+          // 2. Sauvegarder l'interaction chatbot
+          await fetch('/api/chatbot/conversations', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              session_id: sessionId,
+              user_id: chatbotData.userId || null,
+              conversationHistory: [...chatbotData.conversationHistory, newMessage],
+              userProfile: chatbotData.userProfile,
+              selectedIntentions: chatbotData.selectedIntentions,
+              currentStep: chatbotData.currentStep
+            })
+          });
+        } catch (error) {
+          console.error('Erreur lors de la sauvegarde en base de données:', error);
+        }
+  }, [saveChatbotData, chatbotData.sessionId, chatbotData.userId, chatbotData.currentStep, chatbotData.userProfile, chatbotData.selectedIntentions]);
 
   useEffect(() => {
     setIsClient(true);
@@ -229,19 +282,25 @@ export default function SarahChatbot() {
   useEffect(() => {
     if (!isClient) return;
     
-    // Load saved data
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          setChatbotData({ ...defaultChatbotData, ...parsed });
-        } catch (error) {
-          console.error('Error loading chatbot data:', error);
+    // Load saved data from database
+    loadChatbotDataFromDatabase();
+  }, [isClient]);
+
+  const loadChatbotDataFromDatabase = async () => {
+    try {
+      if (chatbotData.sessionId) {
+        const response = await fetch(`/api/sessions/chatbot?sessionId=${chatbotData.sessionId}`);
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.session) {
+            setChatbotData({ ...defaultChatbotData, ...result.session.data });
+          }
         }
       }
+    } catch (error) {
+      console.error('Error loading chatbot data from database:', error);
     }
-  }, [isClient]);
+  };
 
   useEffect(() => {
     // Scroll to bottom when new messages

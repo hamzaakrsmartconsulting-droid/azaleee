@@ -1,41 +1,72 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 
-const LOCAL_STORAGE_KEY = 'sarahChatbotData';
-
 export default function ChatbotCMS() {
   const [chatbotData, setChatbotData] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [showToast, setShowToast] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
     loadChatbotData();
-  }, []);
+    loadStats();
+  }, [currentPage, searchKeyword]);
 
-  const loadChatbotData = () => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          // Convert to array if it's a single object
-          const dataArray = Array.isArray(parsed) ? parsed : [parsed];
-          setChatbotData(dataArray);
-        } catch (error) {
-          console.error('Error loading chatbot data:', error);
-        }
+  const loadChatbotData = async () => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        limit: '50'
+      });
+      
+      if (searchKeyword) {
+        params.append('search', searchKeyword);
       }
+
+      const response = await fetch(`/api/chatbot/interactions?${params}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setChatbotData(data.data);
+        setTotalPages(data.pagination.pages);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des données:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const deleteConversation = (index) => {
-    const updatedData = chatbotData.filter((_, i) => i !== index);
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedData));
+  const loadStats = async () => {
+    try {
+      const response = await fetch('/api/chatbot/stats');
+      const data = await response.json();
+      
+      if (data.success) {
+        setStats(data.data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des statistiques:', error);
     }
-    setChatbotData(updatedData);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
+  };
+
+  const deleteConversation = async (interactionId) => {
+    try {
+      // Note: Pour l'instant, on ne supprime pas de la base de données
+      // On peut ajouter une API de suppression plus tard
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+      
+      // Recharger les données
+      await loadChatbotData();
+    } catch (error) {
+      console.error('Erreur lors de la suppression:', error);
+    }
   };
 
   const exportData = () => {
@@ -77,52 +108,78 @@ export default function ChatbotCMS() {
             </button>
           </div>
         </div>
+
+        {/* Search Bar */}
+        <div className="flex gap-4 items-center">
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="Rechercher dans les conversations..."
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+            />
+          </div>
+          <button
+            onClick={() => setCurrentPage(1)}
+            className="bg-[#4EBBBD] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors"
+          >
+            Rechercher
+          </button>
+        </div>
       </div>
 
       {/* Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="text-lg font-semibold text-[#112033] mb-2">Total Conversations</h3>
-          <p className="text-3xl font-bold text-[#4EBBBD]">{chatbotData.length}</p>
-        </div>
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="text-lg font-semibold text-[#112033] mb-2">Rendez-vous demandés</h3>
+          <h3 className="text-lg font-semibold text-[#112033] mb-2">Total Interactions</h3>
           <p className="text-3xl font-bold text-[#4EBBBD]">
-            {chatbotData.filter(data => data.selectedIntentions?.includes('rdv')).length}
+            {stats ? stats.totalInteractions : '...'}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="text-lg font-semibold text-[#112033] mb-2">Rappels demandés</h3>
+          <h3 className="text-lg font-semibold text-[#112033] mb-2">Sessions uniques</h3>
           <p className="text-3xl font-bold text-[#4EBBBD]">
-            {chatbotData.filter(data => data.selectedIntentions?.includes('rappel')).length}
+            {stats ? stats.summary.totalSessions : '...'}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="text-lg font-semibold text-[#112033] mb-2">PDFs demandés</h3>
+          <h3 className="text-lg font-semibold text-[#112033] mb-2">Utilisateurs uniques</h3>
           <p className="text-3xl font-bold text-[#4EBBBD]">
-            {chatbotData.filter(data => data.selectedIntentions?.includes('pdf')).length}
+            {stats ? stats.summary.totalUsers : '...'}
+          </p>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h3 className="text-lg font-semibold text-[#112033] mb-2">Moyenne/jour</h3>
+          <p className="text-3xl font-bold text-[#4EBBBD]">
+            {stats ? stats.summary.averageInteractionsPerDay : '...'}
           </p>
         </div>
       </div>
 
       {/* Conversations List */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4">Conversations récentes</h2>
-        {chatbotData.length === 0 ? (
+        <h2 className="text-lg font-semibold text-[#112033] mb-4">Conversations complètes</h2>
+        {loading ? (
           <div className="text-center py-8 text-gray-500">
-            <p>Aucune conversation collectée pour le moment.</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
+            <p>Chargement des interactions...</p>
+          </div>
+        ) : chatbotData.length === 0 ? (
+          <div className="text-center py-8 text-gray-500">
+            <p>Aucune interaction collectée pour le moment.</p>
           </div>
         ) : (
           <div className="space-y-4">
-            {chatbotData.map((conversation, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+            {chatbotData.map((interaction, index) => (
+              <div key={interaction.id || index} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h3 className="font-semibold text-[#112033]">
-                      Conversation #{index + 1}
+                      Session: {interaction.session_id?.substring(0, 8)}...
                     </h3>
                     <p className="text-sm text-gray-500">
-                      {conversation.conversationHistory?.length || 0} messages
+                      {interaction.date_interaction ? new Date(interaction.date_interaction).toLocaleString('fr-FR') : 'Date inconnue'}
                     </p>
                   </div>
                   <div className="flex gap-2">
@@ -142,41 +199,41 @@ export default function ChatbotCMS() {
                 </div>
 
                 {/* User Profile Summary */}
-                {conversation.userProfile && (
+                {interaction.user_profile && (
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-3">
-                    {conversation.userProfile.age && (
+                    {interaction.user_profile.age && (
                       <div>
                         <span className="text-sm font-medium text-gray-600">Âge:</span>
-                        <span className="ml-2 text-sm">{conversation.userProfile.age}</span>
+                        <span className="ml-2 text-sm">{interaction.user_profile.age}</span>
                       </div>
                     )}
-                    {conversation.userProfile.situationMatrimoniale && (
+                    {interaction.user_profile.situationMatrimoniale && (
                       <div>
                         <span className="text-sm font-medium text-gray-600">Situation:</span>
-                        <span className="ml-2 text-sm">{conversation.userProfile.situationMatrimoniale}</span>
+                        <span className="ml-2 text-sm">{interaction.user_profile.situationMatrimoniale}</span>
                       </div>
                     )}
-                    {conversation.userProfile.situationProfessionnelle && (
+                    {interaction.user_profile.situationProfessionnelle && (
                       <div>
                         <span className="text-sm font-medium text-gray-600">Profession:</span>
-                        <span className="ml-2 text-sm">{conversation.userProfile.situationProfessionnelle}</span>
+                        <span className="ml-2 text-sm">{interaction.user_profile.situationProfessionnelle}</span>
                       </div>
                     )}
-                    {conversation.userProfile.tmi && (
+                    {interaction.user_profile.tmi && (
                       <div>
                         <span className="text-sm font-medium text-gray-600">TMI:</span>
-                        <span className="ml-2 text-sm">{conversation.userProfile.tmi}</span>
+                        <span className="ml-2 text-sm">{interaction.user_profile.tmi}</span>
                       </div>
                     )}
                   </div>
                 )}
 
                 {/* Selected Intentions */}
-                {conversation.selectedIntentions && conversation.selectedIntentions.length > 0 && (
+                {interaction.selected_intentions && interaction.selected_intentions.length > 0 && (
                   <div className="mb-3">
                     <span className="text-sm font-medium text-gray-600">Intentions:</span>
                     <div className="flex flex-wrap gap-2 mt-1">
-                      {conversation.selectedIntentions.map((intention, i) => (
+                      {interaction.selected_intentions.map((intention, i) => (
                         <span key={i} className="bg-[#4EBBBD] text-white px-2 py-1 rounded text-xs">
                           {intention}
                         </span>
@@ -188,27 +245,65 @@ export default function ChatbotCMS() {
                 {/* Conversation Details */}
                 {selectedConversation === index && (
                   <div className="border-t border-gray-200 pt-4 mt-4">
-                    <h4 className="font-semibold text-[#112033] mb-3">Historique de la conversation</h4>
-                    <div className="space-y-2 max-h-60 overflow-y-auto">
-                      {conversation.conversationHistory?.map((message, msgIndex) => (
-                        <div key={msgIndex} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
-                          <div
-                            className={`max-w-xs p-2 rounded-lg text-sm ${
-                              message.isUser
-                                ? 'bg-[#4EBBBD] text-white'
-                                : 'bg-gray-100 text-gray-800'
-                            }`}
-                          >
-                            <p>{message.text}</p>
-                            <p className="text-xs opacity-70 mt-1">{message.timestamp}</p>
-                          </div>
+                    <h4 className="font-semibold text-[#112033] mb-3">Détails de la conversation</h4>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Étape actuelle:</span>
+                        <p className="text-sm mt-1">{interaction.current_step || 'Non spécifié'}</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Nombre de messages:</span>
+                        <p className="text-sm mt-1">{interaction.conversation_history?.length || 0} messages</p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-600">Historique complet:</span>
+                        <div className="max-h-60 overflow-y-auto space-y-2 mt-1">
+                          {interaction.conversation_history?.map((message, msgIndex) => (
+                            <div key={msgIndex} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
+                              <div
+                                className={`max-w-xs p-2 rounded-lg text-sm ${
+                                  message.isUser
+                                    ? 'bg-[#4EBBBD] text-white'
+                                    : 'bg-gray-100 text-gray-800'
+                                }`}
+                              >
+                                <p>{message.text}</p>
+                                <p className="text-xs opacity-70 mt-1">{message.timestamp}</p>
+                              </div>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      </div>
                     </div>
                   </div>
                 )}
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-6">
+            <button
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+            >
+              Précédent
+            </button>
+            
+            <span className="px-3 py-2 text-sm text-gray-600">
+              Page {currentPage} sur {totalPages}
+            </span>
+            
+            <button
+              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+            >
+              Suivant
+            </button>
           </div>
         )}
       </div>

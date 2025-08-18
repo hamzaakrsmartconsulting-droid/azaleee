@@ -124,12 +124,34 @@ export default function CMSPage() {
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setContent({ ...defaultContent, ...parsed });
-      if (parsed.sectionOrder) setSectionOrder(parsed.sectionOrder);
-    }
+    // Charger le contenu depuis la base de données ou localStorage
+    const loadContentFromDatabase = async () => {
+      try {
+        // Essayer d'abord la base de données
+        const response = await fetch('/api/pages/content?path=/&type=cms');
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.content) {
+            const parsed = result.content.content;
+            setContent({ ...defaultContent, ...parsed });
+            if (parsed.sectionOrder) setSectionOrder(parsed.sectionOrder);
+            return;
+          }
+        }
+      } catch (error) {
+        console.log('Base de données non disponible, utilisation du localStorage');
+      }
+
+      // Fallback vers localStorage
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setContent({ ...defaultContent, ...parsed });
+        if (parsed.sectionOrder) setSectionOrder(parsed.sectionOrder);
+      }
+    };
+
+    loadContentFromDatabase();
   }, []);
 
   const handleChange = (e) => {
@@ -166,14 +188,42 @@ export default function CMSPage() {
     setSectionOrder(newOrder);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const dataToSave = { ...content, sectionOrder };
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
+    
+    try {
+      // Essayer d'abord la base de données
+      const response = await fetch('/api/pages/content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pagePath: '/',
+          pageType: 'cms',
+          content: dataToSave,
+          metadata: {
+            lastModified: new Date().toISOString(),
+            modifiedBy: 'admin',
+            pageType: 'homepage'
+          }
+        })
+      });
+
+      if (response.ok) {
+        console.log('Sauvegardé en base de données');
+        setStatus('Saved to Database!');
+      } else {
+        throw new Error('Erreur base de données');
+      }
+    } catch (error) {
+      console.log('Base de données non disponible, utilisation du localStorage');
+      // Fallback vers localStorage
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
+      setStatus('Saved to LocalStorage!');
+    }
     
     // Dispatch custom event to notify other components
     window.dispatchEvent(new CustomEvent('contentUpdated'));
     
-    setStatus('Saved!');
     setShowToast(true);
     setTimeout(() => {
       setStatus('');
