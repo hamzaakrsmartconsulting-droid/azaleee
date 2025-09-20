@@ -5,58 +5,54 @@ import PlacementChart from "../../../components/PlacementChart";
 
 export default function AutrePatrimoinePage() {
   const chartData = [
-    { label: "Solutions alternatives", value: "20+" },
-    { label: "Taux de satisfaction", value: "95.2%" },
-    { label: "Économies moyennes", value: "€75,000" },
-    { label: "Durée d'implémentation", value: "8-12 mois" },
-    { label: "Rendement supplémentaire", value: "12.5%" }
+    { label: "Solutions alternatives", value: "3" },
+    { label: "Exonération IFI", value: "75%" },
+    { label: "Ticket minimum", value: "€5,000" },
+    { label: "Rendement moyen", value: "1-3%" },
+    { label: "Avantages fiscaux", value: "Multiples" }
   ];
 
   return (
     <>
       <Header />
       
-      {/* Hero Section with alternative solutions visualization */}
+      {/* Hero Section */}
       <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-6">
+            <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
               Autres solutions patrimoniales
             </h1>
-            <p className="text-[#686868] text-lg sm:text-xl lg:text-2xl font-inter leading-relaxed max-w-4xl mx-auto">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p className="text-[#686868] text-lg font-inter leading-relaxed max-w-4xl mx-auto mb-8">
+              En dehors des placements classiques (immobilier, assurance-vie, produits financiers), il existe des <strong>solutions patrimoniales originales</strong> permettant de :
             </p>
-          </div>
-          
-          {/* Alternative Solutions Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🏛️</span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-xl">🔄</span>
+                </div>
+                <h3 className="text-[#112033] font-semibold mb-2">Diversifier son patrimoine</h3>
+                <p className="text-[#686868] text-sm">Solutions originales et méconnues</p>
               </div>
-              <h3 className="text-[#112033] text-lg font-semibold mb-2">Lorem ipsum</h3>
-              <p className="text-[#686868] text-sm">Dolor sit amet</p>
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-xl">💰</span>
+                </div>
+                <h3 className="text-[#112033] font-semibold mb-2">Bénéficier d'avantages fiscaux</h3>
+                <p className="text-[#686868] text-sm">IFI, IR, transmission</p>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <div className="w-12 h-12 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-xl">🌱</span>
+                </div>
+                <h3 className="text-[#112033] font-semibold mb-2">S'impliquer dans l'économie réelle</h3>
+                <p className="text-[#686868] text-sm">Agriculture, forêt, vigne</p>
+              </div>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🌍</span>
-              </div>
-              <h3 className="text-[#112033] text-lg font-semibold mb-2">Consectetur</h3>
-              <p className="text-[#686868] text-sm">Adipiscing elit</p>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">💼</span>
-              </div>
-              <h3 className="text-[#112033] text-lg font-semibold mb-2">Sed eiusmod</h3>
-              <p className="text-[#686868] text-sm">Tempor incididunt</p>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🎯</span>
-              </div>
-              <h3 className="text-[#112033] text-lg font-semibold mb-2">Ut labore</h3>
-              <p className="text-[#686868] text-sm">Dolore magna</p>
+            <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg max-w-4xl mx-auto mb-8">
+              <p className="text-[#112033] text-sm font-inter">
+                👉 Ces véhicules collectifs sont souvent méconnus, mais peuvent jouer un rôle stratégique dans une <strong>gestion patrimoniale équilibrée</strong>.
+              </p>
             </div>
           </div>
 
@@ -79,116 +75,148 @@ export default function AutrePatrimoinePage() {
         chartImage="/images/variation-chart-image-944f04.png"
       />
 
-      {/* Alternative Solutions Section */}
+      {/* Les 3 solutions patrimoniales Section */}
       <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-              Lorem ipsum dolor sit amet
+            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+              Les solutions patrimoniales originales
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Left: Solutions Overview */}
-            <div>
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-8">
-                Lorem ipsum dolor sit amet
-              </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Solution 1: GFA */}
+            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-[#4EBBBD] text-2xl">🌾</span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">1. GFA</h3>
+                <p className="text-sm font-medium">Groupement Foncier Agricole</p>
+              </div>
               
-              <div className="space-y-8">
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-[#4EBBBD] rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">1</span>
-                  </div>
-                  <div>
-                    <h4 className="text-[#112033] font-source-sans font-semibold mb-3">
-                      Lorem ipsum dolor sit
-                    </h4>
-                    <p className="text-[#686868] text-sm leading-relaxed">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-                    </p>
-                  </div>
+              <div className="space-y-4">
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">📋 Définition</h4>
+                  <p className="text-xs">
+                    Société civile permettant de détenir collectivement des terres agricoles, louées à des exploitants.
+                  </p>
                 </div>
-
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-[#B99066] rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">2</span>
-                  </div>
-                  <div>
-                    <h4 className="text-[#112033] font-source-sans font-semibold mb-3">
-                      Consectetur adipiscing elit
-                    </h4>
-                    <p className="text-[#686868] text-sm leading-relaxed">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-                    </p>
-                  </div>
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">✅ Avantages</h4>
+                  <ul className="text-xs space-y-1">
+                    <li>• Exonération partielle d'<strong>IFI</strong> (jusqu'à 75%)</li>
+                    <li>• Transmission facilitée</li>
+                    <li>• Soutien à l'agriculture française</li>
+                  </ul>
                 </div>
-
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-[#59E2E4] rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">3</span>
-                  </div>
-                  <div>
-                    <h4 className="text-[#112033] font-source-sans font-semibold mb-3">
-                      Sed do eiusmod tempor
-                    </h4>
-                    <p className="text-[#686868] text-sm leading-relaxed">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
-                    </p>
-                  </div>
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">⚠️ Inconvénients</h4>
+                  <ul className="text-xs space-y-1">
+                    <li>• Rendement faible (1-2%/an)</li>
+                    <li>• Liquidité limitée</li>
+                    <li>• Dépendance à l'exploitant</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">💰 Ticket minimum</h4>
+                  <p className="text-xs">
+                    À partir de <strong>5 000 à 15 000 €</strong> selon les groupements.
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Right: Solutions Calculator */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-100">
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-6">
-                Lorem ipsum dolor sit
-              </h3>
+            {/* Solution 2: GFI */}
+            <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-[#B99066] text-2xl">🌲</span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">2. GFI</h3>
+                <p className="text-sm font-medium">Groupement Forestier d'Investissement</p>
+              </div>
               
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-[#686868] text-sm font-medium mb-2">
-                    Lorem ipsum
-                  </label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent">
-                    <option>Lorem ipsum dolor</option>
-                    <option>Consectetur adipiscing</option>
-                    <option>Sed do eiusmod</option>
-                    <option>Ut labore et dolore</option>
-                  </select>
+              <div className="space-y-4">
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">📋 Définition</h4>
+                  <p className="text-xs">
+                    Permet d'investir dans des forêts françaises (plantation, exploitation, entretien).
+                  </p>
                 </div>
-
-                <div>
-                  <label className="block text-[#686868] text-sm font-medium mb-2">
-                    Dolor sit amet
-                  </label>
-                  <input 
-                    type="number" 
-                    placeholder="€500,000"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  />
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">✅ Avantages</h4>
+                  <ul className="text-xs space-y-1">
+                    <li>• Réduction d'impôt sur le revenu (<strong>18%</strong>)</li>
+                    <li>• Exonération partielle d'<strong>IFI</strong> (75%)</li>
+                    <li>• Transmission avantageuse (abattement 75%)</li>
+                    <li>• Valorisation long terme</li>
+                  </ul>
                 </div>
-
-                <div>
-                  <label className="block text-[#686868] text-sm font-medium mb-2">
-                    Consectetur elit
-                  </label>
-                  <input 
-                    type="number" 
-                    placeholder="40"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  />
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">⚠️ Inconvénients</h4>
+                  <ul className="text-xs space-y-1">
+                    <li>• Rendement modeste (1-3%/an)</li>
+                    <li>• Placement long terme (10-15 ans)</li>
+                    <li>• Dépendance aux aléas climatiques</li>
+                  </ul>
                 </div>
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">💰 Ticket minimum</h4>
+                  <p className="text-xs">
+                    À partir de <strong>5 000 €</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
 
-                <button className="w-full bg-[#4EBBBD] text-white py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200">
-                  Lorem ipsum dolor sit
-                </button>
-
-                <div className="bg-[#FAFFEF] rounded-lg p-4 text-center">
-                  <p className="text-[#686868] text-sm">
-                    <strong>Lorem ipsum :</strong><br />
-                    <span className="text-[#4EBBBD] text-xl font-bold">€75,000</span> d'économies
+            {/* Solution 3: GFV */}
+            <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-[#59E2E4] text-2xl">🍷</span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">3. GFV</h3>
+                <p className="text-sm font-medium">Groupement Foncier Viticole</p>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">📋 Définition</h4>
+                  <p className="text-xs">
+                    Permet d'acquérir collectivement des vignes, confiées à un exploitant (domaine viticole).
+                  </p>
+                </div>
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">✅ Avantages</h4>
+                  <ul className="text-xs space-y-1">
+                    <li>• Revenus réguliers en loyers... parfois en <strong>bouteilles de vin</strong> 🍷</li>
+                    <li>• Exonération partielle d'<strong>IFI</strong> (75%)</li>
+                    <li>• Transmission facilitée</li>
+                    <li>• Valeur patrimoniale et affective</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">⚠️ Inconvénients</h4>
+                  <ul className="text-xs space-y-1">
+                    <li>• Rendement faible (1-3%/an)</li>
+                    <li>• Marché de revente limité</li>
+                    <li>• Dépendance à l'exploitant et climat</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">💰 Ticket minimum</h4>
+                  <p className="text-xs">
+                    De <strong>30 000 € à 100 000 €</strong> selon le domaine.
                   </p>
                 </div>
               </div>
@@ -197,327 +225,198 @@ export default function AutrePatrimoinePage() {
         </div>
       </section>
 
-      {/* Solutions Comparison Section */}
+      {/* Exemple chiffré GFV Section */}
       <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-              Lorem ipsum dolor sit amet
+            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+              Exemple chiffré : investissement de 100 000 € dans un GFV
             </h2>
+            <p className="text-[#686868] text-lg max-w-4xl mx-auto">
+              Investissement dans un GFV prestigieux (ex. Bourgogne) :
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Solution 1 */}
-            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#4EBBBD] text-2xl">🏛️</span>
-                </div>
-                <h3 className="text-2xl font-source-sans font-semibold mb-2">Lorem ipsum</h3>
-              </div>
-              <p className="text-sm mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
-              </p>
-              <ul className="space-y-2 text-sm">
-                <li>• Lorem ipsum dolor sit</li>
-                <li>• Consectetur adipiscing</li>
-                <li>• Sed do eiusmod tempor</li>
-                <li>• Ut labore et dolore</li>
-              </ul>
-            </div>
-
-            {/* Solution 2 */}
-            <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#B99066] text-2xl">🌍</span>
-                </div>
-                <h3 className="text-2xl font-source-sans font-semibold mb-2">Dolor sit amet</h3>
-              </div>
-              <p className="text-sm mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
-              </p>
-              <ul className="space-y-2 text-sm">
-                <li>• Lorem ipsum dolor sit</li>
-                <li>• Consectetur adipiscing</li>
-                <li>• Sed do eiusmod tempor</li>
-                <li>• Ut labore et dolore</li>
-              </ul>
-            </div>
-
-            {/* Solution 3 */}
-            <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#59E2E4] text-2xl">💼</span>
-                </div>
-                <h3 className="text-2xl font-source-sans font-semibold mb-2">Consectetur elit</h3>
-              </div>
-              <p className="text-sm mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
-              </p>
-              <ul className="space-y-2 text-sm">
-                <li>• Lorem ipsum dolor sit</li>
-                <li>• Consectetur adipiscing</li>
-                <li>• Sed do eiusmod tempor</li>
-                <li>• Ut labore et dolore</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Analysis Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Benefits Content */}
-            <div>
-              <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-8">
-                Lorem ipsum dolor sit amet
-              </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            {/* Détails de l'investissement */}
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h3 className="text-[#112033] text-xl font-semibold mb-6 text-center">
+                📊 Détails de l'investissement
+              </h3>
               
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
+                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <span className="text-green-600 text-xl">💰</span>
+                    <div>
+                      <p className="text-green-800 font-medium text-sm">Investissement initial</p>
+                      <p className="text-green-700 text-xs">Montant investi</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Lorem ipsum dolor sit
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                  </div>
+                  <p className="text-green-800 font-bold text-lg">100 000 €</p>
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
+                
+                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <span className="text-blue-600 text-xl">🏛️</span>
+                    <div>
+                      <p className="text-blue-800 font-medium text-sm">Exonération IFI</p>
+                      <p className="text-blue-700 text-xs">75% de la valeur</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Consectetur adipiscing elit
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                  </div>
+                  <p className="text-blue-800 font-bold text-lg">75 000 €</p>
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#59E2E4] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
+                
+                <div className="flex items-center justify-between p-4 bg-purple-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <span className="text-purple-600 text-xl">📈</span>
+                    <div>
+                      <p className="text-purple-800 font-medium text-sm">Revenus annuels</p>
+                      <p className="text-purple-700 text-xs">2% par an</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Sed do eiusmod tempor
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
+                  <p className="text-purple-800 font-bold text-lg">2 000 €/an</p>
+                </div>
+                
+                <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <span className="text-orange-600 text-xl">🔄</span>
+                    <div>
+                      <p className="text-orange-800 font-medium text-sm">Base taxable transmission</p>
+                      <p className="text-orange-700 text-xs">Après abattement 75%</p>
+                    </div>
                   </div>
+                  <p className="text-orange-800 font-bold text-lg">25 000 €</p>
                 </div>
               </div>
             </div>
 
-            {/* Right: Benefits Chart */}
+            {/* Avantages fiscaux */}
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-6">
-                Lorem ipsum dolor sit
+              <h3 className="text-[#112033] text-xl font-semibold mb-6 text-center">
+                ✅ Avantages fiscaux
               </h3>
               
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-[#686868] text-sm">Lorem ipsum</span>
-                  <span className="text-[#4EBBBD] font-semibold">95.2%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-[#4EBBBD] h-2 rounded-full" style={{width: '95.2%'}}></div>
-                </div>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-[#686868] text-sm">Dolor sit amet</span>
-                  <span className="text-[#B99066] font-semibold">92.8%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-[#B99066] h-2 rounded-full" style={{width: '92.8%'}}></div>
+              <div className="space-y-6">
+                <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-6 text-white">
+                  <h4 className="font-semibold mb-3">🏛️ Impôt sur la Fortune Immobilière (IFI)</h4>
+                  <div className="space-y-2 text-sm">
+                    <p>• Valeur totale : <strong>100 000 €</strong></p>
+                    <p>• Exonération : <strong>75%</strong> → 75 000 €</p>
+                    <p>• Base taxable : <strong>25 000 €</strong> seulement</p>
+                  </div>
                 </div>
                 
-                <div className="flex justify-between items-center">
-                  <span className="text-[#686868] text-sm">Consectetur elit</span>
-                  <span className="text-[#59E2E4] font-semibold">89.5%</span>
+                <div className="bg-gradient-to-r from-[#B99066] to-[#D4A574] rounded-lg p-6 text-white">
+                  <h4 className="font-semibold mb-3">🔄 Transmission</h4>
+                  <div className="space-y-2 text-sm">
+                    <p>• Si transmission de son vivant</p>
+                    <p>• Abattement : <strong>75%</strong> de la valeur</p>
+                    <p>• Base taxable : <strong>25 000 €</strong> seulement</p>
+                  </div>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-[#59E2E4] h-2 rounded-full" style={{width: '89.5%'}}></div>
+                
+                <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-6 text-white">
+                  <h4 className="font-semibold mb-3">💰 Revenus</h4>
+                  <div className="space-y-2 text-sm">
+                    <p>• Rendement : <strong>2%/an</strong></p>
+                    <p>• Revenus : <strong>2 000 €/an</strong></p>
+                    <p>• Soit en loyers, soit en bouteilles de vin</p>
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white text-center">
+            <h3 className="text-xl font-semibold mb-6">
+              👉 Double avantage : <strong>diversification + optimisation fiscale</strong>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-sm">
+                  <strong>Diversification</strong><br />
+                  Investissement dans l'économie réelle
+                </p>
+              </div>
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-sm">
+                  <strong>Optimisation fiscale</strong><br />
+                  IFI et transmission réduits
+                </p>
+              </div>
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-sm">
+                  <strong>Rendement</strong><br />
+                  2 000 €/an + valorisation
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Implementation Process Section */}
-      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+      {/* La vision Azalée Patrimoine Section */}
+      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-              Lorem ipsum dolor sit amet
+            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6 flex items-center justify-center gap-3">
+              <span className="text-[#4EBBBD] text-3xl">🚀</span>
+              La vision Azalée Patrimoine
             </h2>
+            <p className="text-[#686868] text-lg max-w-4xl mx-auto">
+              Chez <strong>Azalée Patrimoine</strong>, nous intégrons ces solutions "niches" dans une <strong>stratégie patrimoniale globale</strong> :
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <div className="text-center">
               <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">📋</span>
+                <span className="text-white text-2xl">🔍</span>
               </div>
-              <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                Lorem ipsum
+              <h3 className="text-[#112033] text-xl font-semibold mb-3">
+                Analyse de l'intérêt réel
               </h3>
               <p className="text-[#686868] text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.
+                Selon vos objectifs (fiscalité, transmission, diversification).
               </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🔍</span>
+                <span className="text-white text-2xl">🎯</span>
               </div>
-              <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                Dolor sit amet
+              <h3 className="text-[#112033] text-xl font-semibold mb-3">
+                Sélection des meilleurs véhicules
               </h3>
               <p className="text-[#686868] text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.
+                GFA, GFI, GFV avec notaires et experts-comptables.
               </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">⚙️</span>
+                <span className="text-white text-2xl">📊</span>
               </div>
-              <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                Consectetur elit
+              <h3 className="text-[#112033] text-xl font-semibold mb-3">
+                Simulation chiffrée
               </h3>
               <p className="text-[#686868] text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">✅</span>
-              </div>
-              <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                Sed eiusmod
-              </h3>
-              <p className="text-[#686868] text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.
+                De l'impact (IFI, droits de succession, revenus).
               </p>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Expert Consultation Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Expert Content */}
-            <div>
-              <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-8">
-                Lorem ipsum dolor sit amet
-              </h2>
-              
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">💡</span>
-                  </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Lorem ipsum dolor sit
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">📊</span>
-                  </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Consectetur adipiscing elit
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#59E2E4] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">🎯</span>
-                  </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Sed do eiusmod tempor
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Consultation Form */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-100">
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-6">
-                Lorem ipsum dolor sit
-              </h3>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-[#686868] text-sm font-medium mb-2">
-                    Lorem ipsum
-                  </label>
-                  <input 
-                    type="text" 
-                    placeholder="Lorem ipsum dolor"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[#686868] text-sm font-medium mb-2">
-                    Dolor sit amet
-                  </label>
-                  <input 
-                    type="email" 
-                    placeholder="lorem@ipsum.com"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[#686868] text-sm font-medium mb-2">
-                    Consectetur elit
-                  </label>
-                  <textarea 
-                    placeholder="Lorem ipsum dolor sit amet..."
-                    rows="4"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  ></textarea>
-                </div>
-
-                <button className="w-full bg-[#4EBBBD] text-white py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200">
-                  Lorem ipsum dolor sit
-                </button>
-              </div>
+          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white text-center">
+            <h3 className="text-xl font-semibold mb-6">
+              👉 Notre rôle : transformer ces placements atypiques en <strong>leviers patrimoniaux puissants</strong>, au service de votre stratégie familiale.
+            </h3>
+            
+            <div className="mt-8 bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-6 rounded-r-lg">
+              <p className="text-[#112033] text-center font-semibold">
+                📅 <strong>Contactez Azalée Patrimoine</strong> pour explorer ces solutions et découvrir si elles correspondent à votre profil et vos objectifs.
+              </p>
             </div>
           </div>
         </div>
@@ -526,15 +425,50 @@ export default function AutrePatrimoinePage() {
       {/* CTA Section */}
       <section className="w-full bg-gradient-to-r from-[#59E2E4] to-[#B99066] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-            Lorem ipsum dolor sit amet ?
+          <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
+            Prêt à découvrir ces solutions patrimoniales originales ?
           </h2>
-          <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <p className="text-white text-lg mb-8 max-w-3xl mx-auto">
+            Nos experts vous accompagnent pour intégrer ces <strong>solutions "niches"</strong> dans votre stratégie patrimoniale globale et transformer ces placements atypiques en <strong>leviers patrimoniaux puissants</strong>.
           </p>
-          <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-source-sans font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
-            Découvrir les solutions
-          </button>
+          
+          <div className="bg-white bg-opacity-20 rounded-lg p-6 mb-8 max-w-4xl mx-auto">
+            <h3 className="text-white text-xl font-semibold mb-4">
+              👉 Chez <strong>Azalée Patrimoine</strong>, nous vous apportons :
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-white">
+                  Une <strong>analyse de l'intérêt réel</strong> selon vos objectifs
+                </p>
+              </div>
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-white">
+                  La <strong>sélection des meilleurs véhicules</strong> (GFA, GFI, GFV)
+                </p>
+              </div>
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-white">
+                  Une <strong>simulation chiffrée</strong> de l'impact fiscal
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
+              Découvrir les solutions
+            </button>
+            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#4EBBBD] transition-colors duration-200">
+              Prendre rendez-vous
+            </button>
+          </div>
+
+          <div className="mt-8 bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg max-w-4xl mx-auto">
+            <p className="text-[#112033] text-center font-semibold">
+              📅 <strong>Contactez Azalée Patrimoine</strong> pour explorer ces solutions et découvrir si elles correspondent à votre profil et vos objectifs.
+            </p>
+          </div>
         </div>
       </section>
     </>

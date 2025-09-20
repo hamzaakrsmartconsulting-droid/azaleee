@@ -8,11 +8,18 @@ const dbConfig = {
   database: process.env.DB_NAME || 'azalee_patrimoine',
   port: process.env.DB_PORT || 3306,
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: 20,
   queueLimit: 0,
-  acquireTimeout: 60000,
-  timeout: 60000,
-  reconnect: true
+  // Performance optimizations
+  multipleStatements: true,
+  charset: 'utf8mb4',
+  // Connection pooling optimizations
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0,
+  // Query optimization
+  dateStrings: true,
+  supportBigNumbers: true,
+  bigNumberStrings: true
 };
 
 // Pool de connexions

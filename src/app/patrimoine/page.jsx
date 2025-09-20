@@ -31,49 +31,36 @@ export default function PatrimoinePage() {
               </div>
             </div>
             
-            {/* Right Card */}
-            <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
-              {/* Icon */}
-              <div className="flex items-center gap-4 mb-4 sm:mb-6">
+            {/* Right Image */}
+            <div className="w-full lg:w-[467px] flex justify-center lg:justify-end">
+              <div className="relative">
+                {/* Decorative background */}
+                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#4EBBBD]/20 rounded-2xl"></div>
+                
+                {/* Main image */}
                 <img
-                  src="/images/placements-responsive-header-icon-56586a.png"
-                  alt="Expert Icon"
-                  className="w-8 h-8 sm:w-9 sm:h-9"
+                  src="/images/pqtri;oine.webp"
+                  alt="Expert en gestion de patrimoine consultant des documents financiers dans un bureau élégant"
+                  className="relative z-10 w-full max-w-md lg:max-w-lg rounded-2xl shadow-2xl object-cover border-4 border-white"
+                  style={{ aspectRatio: '4/3' }}
+                  onError={(e) => {
+                    console.log('Patrimoine card image failed to load:', e.target.src);
+                  }}
+                  onLoad={() => console.log('Patrimoine card image loaded successfully')}
                 />
-                <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight">
-                  Nos experts à votre service
-                </h2>
-              </div>
-              
-              {/* Floating Price Card */}
-              <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
-                <div className="text-center text-white font-source-sans font-semibold text-xs sm:text-base lg:text-xl leading-tight px-1 sm:px-0">
-                  <span className="hidden sm:block">0 € →<br /></span>
-                  <span className="sm:hidden">0€</span>
-                  <span className="hidden sm:block">Bilan patrimonial gratuit</span>
+                
+                {/* Floating badge */}
+                <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-full flex items-center justify-center">
+                      <span className="text-white text-lg">✓</span>
+                    </div>
+                    <div>
+                      <p className="text-[#112033] font-semibold text-sm">0 €</p>
+                      <p className="text-[#4A5568] text-xs">Bilan gratuit</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              
-              {/* Services List */}
-              <div className="mt-8 sm:mt-12">
-                <ul className="space-y-2 sm:space-y-3 text-white text-xs sm:text-sm font-source-sans font-semibold leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Analyse complète de votre situation patrimoniale</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Stratégies de transmission et protection familiale</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Optimisation fiscale des donations et successions</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Conseils en succession et héritage personnalisés</span>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>

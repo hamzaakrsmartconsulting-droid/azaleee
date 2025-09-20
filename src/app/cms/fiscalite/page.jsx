@@ -1,1266 +1,767 @@
 "use client";
-import React, { useState, useEffect } from "react";
 
-// WYSIWYG Editor Component
-function WYSIWYGEditor({ label, value, onChange, placeholder = "" }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(value || "");
+import React, { useState, useEffect } from 'react';
+import CMSAuthWrapper from '../../components/cms/CMSAuthWrapper';
 
-  const handleSave = () => {
-    onChange(editValue);
-    setIsEditing(false);
-  };
 
-  const handleCancel = () => {
-    setEditValue(value || "");
-    setIsEditing(false);
-  };
 
-  const toggleBold = () => {
-    const textarea = document.querySelector(`#wysiwyg-${label.replace(/\s+/g, '-')}`);
-    if (textarea) {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const selectedText = editValue.substring(start, end);
-      const newText = editValue.substring(0, start) + `**${selectedText}**` + editValue.substring(end);
-      setEditValue(newText);
+const defaultContent = {
+  hero: {
+    title: "Tout savoir sur la fiscalité patrimoniale et l'optimisation fiscale",
+    paragraph: "Vous cherchez à optimiser votre fiscalité tout en sécurisant et valorisant votre patrimoine ? Les stratégies de fiscalité patrimoniale vous permettent de conjuguer rendement, sécurité et transmission, en toute conformité avec la législation fiscale. Accessible aussi bien aux particuliers qu'aux chefs d'entreprise, l'optimisation fiscale repose sur des solutions juridiques, financières et immobilières adaptées à votre situation et à vos projets.",
+    pill: {
+      bullets: [
+        "Investissez dans l'immobilier neuf et profitez d'avantages fiscaux exclusifs :",
+        "TVA réduite à 10 %",
+        "Crédit d'impôt sur la taxe foncière"
+      ],
+      cta: "Je calcule mon avantage fiscal",
+      portrait: "/images/fiscalite-hero-small-photo.png"
+    },
+    ctaPanel: {
+      title: "Je télécharge mon guide de l'optimisation fiscale",
+      tag: "Version numérique",
+      placeholder: "Votre email",
+      button: "Télécharger le guide"
     }
-  };
+  },
+  sommaire: {
+    leftItems: [
+      "Qu'est-ce que l'optimisation fiscale patrimoniale ?",
+      "Pourquoi mettre en place une stratégie d'optimisation fiscale ?",
+      "Quelles sont les règles à respecter pour bénéficier des avantages fiscaux ?",
+      "Quels sont les meilleurs supports et placements pour optimiser sa fiscalité ?",
+      "Exemple d'une stratégie d'optimisation fiscale réussie",
+      "Quels pièges éviter et quelles bonnes pratiques adopter ?",
+      "Questions fréquentes sur l'optimisation fiscale"
+    ],
+    boxes: [
+      "Un prix d'acquisition avantageux grâce à une TVA réduite à 10 %",
+      "Autre avantage fiscal ou information",
+      "Encore un autre avantage ou info"
+    ]
+  },
+  lli: {
+    title: "Investissement Patrimonial & Fiscalité Optimisée : Le Dispositif LLI",
+    html: "Le Logement Locatif Intermédiaire (LLI) est une solution d'investissement immobilier conçue pour les particuliers souhaitant optimiser leur fiscalité tout en développant leur patrimoine. Il s'adresse aux investisseurs recherchant une combinaison efficace entre performance financière, sécurité patrimoniale et avantages fiscaux.\n\n<b>Avec le dispositif LLI, vous bénéficiez :</b>\nD'un investissement dans un bien immobilier neuf, conforme aux dernières réglementations techniques et environnementales\nD'une TVA réduite à 10 % sur le prix d'acquisition, permettant d'alléger votre coût d'investissement\nD'un crédit d'impôt sur la taxe foncière, valable jusqu'à 20 ans, venant renforcer la rentabilité de votre opération patrimoniale",
+    button: "Je réalise ma simulation"
+  },
+  benefits: {
+    html: "Pourquoi choisir le dispositif LLI pour votre stratégie patrimoniale ?\n\nInvestir en LLI, c'est bénéficier d'une combinaison gagnante entre avantages fiscaux et acquisition d'un patrimoine immobilier neuf, tout en maîtrisant vos risques.\n\n✅ TVA réduite à 10 % sur l'acquisition, pour un prix d'achat optimisé\n✅ Crédit d'impôt sur la taxe foncière, valable jusqu'à 20 ans, permettant d'alléger vos charges\n✅ Frais de notaire réduits (2 à 3 %), bien plus avantageux que dans l'immobilier ancien\n✅ Exonération partielle de taxe foncière pendant les deux premières années\n✅ Conformité aux dernières normes énergétiques (RE2020), garantissant des performances optimales et évitant les passoires thermiques\n✅ Garantie décennale, garantie biennale et garantie de parfait achèvement sécurisant votre investissement\n✅ Possibilité de personnaliser les finitions en VEFA (Vente en l'état futur d'achèvement)\n✅ Pas de travaux à prévoir et des équipements modernes intégrés dès la livraison"
+  },
+  bottomCta: {
+    textTitle: "Investissez avec le LLI : TVA réduite et avantages fiscaux durables",
+    textBody: "Profitez d'un investissement sécurisé qui combine : TVA réduite à 10 % sur l'acquisition de biens immobiliers neufs, Crédit d'impôt sur la taxe foncière, vous garantissant des économies fiscales pendant jusqu'à 20",
+    button: "Je réalise ma simulation"
+  },
+  whereInvest: {
+    intro: "La réussite d'un investissement locatif repose sur le choix de la bonne localisation. Avec le Logement Locatif Intermédiaire (LLI), il est essentiel de privilégier des zones à fort potentiel locatif, proches des bassins d'emploi, des universités et bien connectées aux transports.",
+    cities: [
+      {
+        name: "Toulouse – Un marché en pleine expansion",
+        points: [
+          "Ville universitaire et technologique, attractive pour les jeunes actifs.",
+          "Dynamisme soutenu (aéronautique, spatial, services).",
+          "✅ Quartiers recommandés : Compans-Caffarelli, Rangueil",
+          "✅ 18 490 créations d'emplois au 1er trimestre 2024"
+        ]
+      },
+      {
+        name: "Paris – La sécurité d'un placement patrimonial",
+        points: [
+          "Marché solide, demande locative soutenue.",
+          "✅ Quartiers recommandés : Marais, 15ème arrondissement",
+          "✅ Rendements fiables et valorisation garantie"
+        ]
+      }
+    ]
+  },
+  example: {
+    title: "Exemple d'un investissement optimisé avec le dispositif LLI",
+    lead: "En 2025, Clara, dirigeante d'entreprise à Bordeaux, décide de diversifier son patrimoine en investissant dans l'immobilier locatif via le dispositif LLI. Elle choisit un appartement neuf de 50 m², situé à quelques minutes de la gare Bordeaux Saint-Jean, un secteur à forte demande locative.",
+    bulletsTitle: "Les avantages financiers pour Clara :",
+    bullets: [
+      "Exonération de taxe foncière : pendant 20 ans, elle économise environ 1 500 € par an, soit un total potentiel de 30 000 €.",
+      "TVA réduite à 10 % : économie immédiate d'environ 20 000 € sur le prix d'achat.",
+      "Frais de notaire réduits : grâce au neuf, les frais avoisinent 2,5 %, permettant une économie d'environ 10 000 € par rapport à un bien ancien."
+    ]
+  }
+};
 
-  const toggleItalic = () => {
-    const textarea = document.querySelector(`#wysiwyg-${label.replace(/\s+/g, '-')}`);
-    if (textarea) {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const selectedText = editValue.substring(start, end);
-      const newText = editValue.substring(0, start) + `*${selectedText}*` + editValue.substring(end);
-      setEditValue(newText);
-    }
-  };
+// Composant d'import d'image en base64
+const ImageImporter = ({ value, onChange, placeholder, label }) => {
+  const [showImporter, setShowImporter] = useState(false);
+  const [base64Input, setBase64Input] = useState('');
 
-  const addLink = () => {
-    const url = prompt("Entrez l'URL du lien:");
-    if (url) {
-      const textarea = document.querySelector(`#wysiwyg-${label.replace(/\s+/g, '-')}`);
-      if (textarea) {
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const selectedText = editValue.substring(start, end);
-        const newText = editValue.substring(0, start) + `[${selectedText || 'Lien'}](${url})` + editValue.substring(end);
-        setEditValue(newText);
+  const handleBase64Import = () => {
+    if (base64Input.trim()) {
+      // Vérifier si c'est déjà un format base64 valide
+      if (base64Input.startsWith('data:image/')) {
+        onChange(base64Input);
+        setShowImporter(false);
+        setBase64Input('');
+      } else {
+        // Essayer de convertir en base64
+        try {
+          // Si c'est juste le nom de fichier, on peut l'essayer
+          onChange(base64Input);
+          setShowImporter(false);
+          setBase64Input('');
+        } catch (error) {
+          alert('Format d\'image invalide. Utilisez un chemin d\'image ou une image base64.');
+        }
       }
     }
   };
 
-  const addList = () => {
-    const textarea = document.querySelector(`#wysiwyg-${label.replace(/\s+/g, '-')}`);
-    if (textarea) {
-      const start = textarea.selectionStart;
-      const newText = editValue.substring(0, start) + "\n- Élément de liste\n- Autre élément" + editValue.substring(start);
-      setEditValue(newText);
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        onChange(e.target.result);
+        setShowImporter(false);
+      };
+      reader.readAsDataURL(file);
     }
-  };
-
-  const addNumberedList = () => {
-    const textarea = document.querySelector(`#wysiwyg-${label.replace(/\s+/g, '-')}`);
-    if (textarea) {
-      const start = textarea.selectionStart;
-      const newText = editValue.substring(0, start) + "\n1. Premier élément\n2. Deuxième élément" + editValue.substring(start);
-      setEditValue(newText);
-    }
-  };
-
-  const addQuote = () => {
-    const textarea = document.querySelector(`#wysiwyg-${label.replace(/\s+/g, '-')}`);
-    if (textarea) {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const selectedText = editValue.substring(start, end);
-      const newText = editValue.substring(0, start) + `> ${selectedText || 'Citation'}` + editValue.substring(end);
-      setEditValue(newText);
-    }
-  };
-
-  const addCode = () => {
-    const textarea = document.querySelector(`#wysiwyg-${label.replace(/\s+/g, '-')}`);
-    if (textarea) {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const selectedText = editValue.substring(start, end);
-      const newText = editValue.substring(0, start) + `\`${selectedText || 'code'}\`` + editValue.substring(end);
-      setEditValue(newText);
-    }
-  };
-
-  const renderPreview = (text) => {
-    if (!text) return <span className="text-gray-400">{placeholder}</span>;
-    
-    // Simple markdown rendering
-    return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline" target="_blank">$1</a>')
-      .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-gray-300 pl-4 italic">$1</blockquote>')
-      .replace(/^(\d+)\. (.*$)/gm, '<div class="ml-4">$1. $2</div>')
-      .replace(/^- (.*$)/gm, '<div class="ml-4">• $1</div>')
-      .replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm">$1</code>')
-      .split('\n').map((line, i) => {
-        if (line.includes('<blockquote')) return <div key={i} dangerouslySetInnerHTML={{ __html: line }} />;
-        if (line.includes('<div class="ml-4">')) return <div key={i} dangerouslySetInnerHTML={{ __html: line }} />;
-        return <div key={i} dangerouslySetInnerHTML={{ __html: line }} />;
-      });
   };
 
   return (
-    <div className="mb-4">
-      <span className="block text-sm font-medium text-[#112033] mb-1">{label}</span>
-      
-      {!isEditing ? (
-        <div className="border border-gray-300 rounded p-3 min-h-[100px] bg-white">
-          <div className="prose prose-sm max-w-none">
-            {renderPreview(value)}
-          </div>
-          <button
-            onClick={() => setIsEditing(true)}
-            className="mt-2 px-3 py-1 bg-[#4EBBBD] text-white rounded text-sm hover:bg-[#3DA8AA]"
-          >
-            Modifier
-          </button>
-        </div>
-      ) : (
-        <div className="border border-gray-300 rounded">
-          {/* Toolbar */}
-          <div className="bg-gray-50 border-b border-gray-300 p-2 flex flex-wrap gap-1">
-            <button
-              onClick={toggleBold}
-              className="px-2 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-100"
-              title="Gras"
-            >
-              <strong>B</strong>
-            </button>
-            <button
-              onClick={toggleItalic}
-              className="px-2 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-100"
-              title="Italique"
-            >
-              <em>I</em>
-            </button>
-            <button
-              onClick={addLink}
-              className="px-2 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-100"
-              title="Lien"
-            >
-              🔗
-            </button>
-            <button
-              onClick={addList}
-              className="px-2 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-100"
-              title="Liste à puces"
-            >
-              •
-            </button>
-            <button
-              onClick={addNumberedList}
-              className="px-2 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-100"
-              title="Liste numérotée"
-            >
-              1.
-            </button>
-            <button
-              onClick={addQuote}
-              className="px-2 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-100"
-              title="Citation"
-            >
-              "
-            </button>
-            <button
-              onClick={addCode}
-              className="px-2 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-100"
-              title="Code"
-            >
-              &lt;/&gt;
-            </button>
-          </div>
-          
-          {/* Editor */}
-          <textarea
-            id={`wysiwyg-${label.replace(/\s+/g, '-')}`}
-            className="w-full p-3 focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            rows={8}
-            value={editValue}
-            onChange={(e) => setEditValue(e.target.value)}
-            placeholder={placeholder}
-          />
-          
-          {/* Actions */}
-          <div className="bg-gray-50 border-t border-gray-300 p-2 flex gap-2">
-            <button
-              onClick={handleSave}
-              className="px-3 py-1 bg-[#4EBBBD] text-white rounded text-sm hover:bg-[#3DA8AA]"
-            >
-              Sauvegarder
-            </button>
-            <button
-              onClick={handleCancel}
-              className="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
-            >
-              Annuler
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-const STORAGE_KEYS = {
-  declarationImpots: "declarationImpotsContent",
-  tranchesBaremesPlafonds: "tranchesBaremesPlafondsContent",
-  loisFiscales: "loisFiscalesContent",
-  reductionsImpotDeficitFoncier: "reductionsImpotDeficitFoncierContent",
-  fiscalitePlacements: "fiscalitePlacementsContent",
-  pfu: "pfuContent",
-  tmiPrelevementsSociaux: "tmiPrelevementsSociauxContent",
-  defiscalisationCasSpecifiques: "defiscalisationCasSpecifiquesContent",
-  autreFiscalite: "autreFiscaliteContent"
-};
-
-const PAGES = [
-  { id: "declarationImpots", name: "Déclaration d'impôts", path: "/fiscalite/declaration-impots" },
-  { id: "tranchesBaremesPlafonds", name: "Tranches, barèmes et plafonds", path: "/fiscalite/tranches-baremes-plafonds" },
-  { id: "loisFiscales", name: "Lois fiscales", path: "/fiscalite/lois-fiscales" },
-  { id: "reductionsImpotDeficitFoncier", name: "Réductions d'impôt et déficit foncier", path: "/fiscalite/reductions-impot-deficit-foncier" },
-  { id: "fiscalitePlacements", name: "Fiscalité des placements", path: "/fiscalite/fiscalite-placements" },
-  { id: "pfu", name: "PFU", path: "/fiscalite/pfu" },
-  { id: "tmiPrelevementsSociaux", name: "TMI et prélèvements sociaux", path: "/fiscalite/tmi-prelevements-sociaux" },
-  { id: "defiscalisationCasSpecifiques", name: "Défiscalisation cas spéciaux", path: "/fiscalite/defiscalisation-cas-specifiques" },
-  { id: "autreFiscalite", name: "Autre fiscalité", path: "/fiscalite/autre-fiscalite" }
-];
-
-function TextInput({ label, value, onChange, placeholder = "" }) {
-  return (
-    <label className="block mb-4">
-      <span className="block text-sm font-medium text-[#112033] mb-1">{label}</span>
+    <div className="space-y-2">
+      <div className="flex items-center gap-3">
       <input
-        className="w-full rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#4EBBBD]"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
         placeholder={placeholder}
       />
-    </label>
-  );
-}
-
-function TextArea({ label, value, onChange, rows = 5, placeholder = "" }) {
-  return (
-    <label className="block mb-4">
-      <span className="block text-sm font-medium text-[#112033] mb-1">{label}</span>
-      <textarea
-        rows={rows}
-        className="w-full rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#4EBBBD]"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-      />
-    </label>
-  );
-}
-
-function ImageInput({ label, value, onChange }) {
-  const handleFile = (file) => {
-    const reader = new FileReader();
-    reader.onload = () => onChange(reader.result);
-    reader.readAsDataURL(file);
-  };
-  
-  return (
-    <div className="mb-4">
-      <span className="block text-sm font-medium text-[#112033] mb-1">{label}</span>
-      <div className="flex items-center gap-2">
-        <input
-          className="flex-1 rounded border border-gray-300 px-3 py-2"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder="URL ou base64"
-        />
-        <label className="px-3 py-2 border rounded cursor-pointer bg-white">
-          Importer
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) handleFile(f);
-            }}
-          />
-        </label>
-      </div>
-      {value && (
-        <img src={value} alt="preview" className="mt-2 h-28 rounded border object-cover" />
-      )}
-    </div>
-  );
-}
-
-function ArrayInput({ label, value, onChange, placeholder = "Un élément par ligne" }) {
-  return (
-    <label className="block mb-4">
-      <span className="block text-sm font-medium text-[#112033] mb-1">{label}</span>
-      <textarea
-        rows={5}
-        className="w-full rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#4EBBBD]"
-        value={Array.isArray(value) ? value.join("\n") : value}
-        onChange={(e) => onChange(e.target.value.split("\n").filter(Boolean))}
-        placeholder={placeholder}
-      />
-    </label>
-  );
-}
-
-function ObjectArrayInput({ label, items, onChange, fields }) {
-  const addItem = () => {
-    const newItem = {};
-    fields.forEach(field => {
-      newItem[field.key] = field.default || "";
-    });
-    onChange([...items, newItem]);
-  };
-
-  const removeItem = (index) => {
-    const newItems = items.filter((_, i) => i !== index);
-    onChange(newItems);
-  };
-
-  const updateItem = (index, field, value) => {
-    const newItems = [...items];
-    newItems[index] = { ...newItems[index], [field]: value };
-    onChange(newItems);
-  };
-
-  return (
-    <div className="mb-6">
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-sm font-medium text-[#112033]">{label}</span>
         <button
           type="button"
-          onClick={addItem}
-          className="px-3 py-1 bg-[#4EBBBD] text-white rounded text-sm hover:bg-[#3DA8AA]"
+          onClick={() => setShowImporter(!showImporter)}
+          className="px-3 py-2 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700 transition-colors"
         >
-          + Ajouter
+          📁 Importer
         </button>
       </div>
       
-      {items.map((item, index) => (
-        <div key={index} className="border rounded p-4 mb-3 bg-gray-50">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-medium text-[#686868]">Élément #{index + 1}</span>
+      {value && (
+        <img 
+          src={value} 
+          alt="Aperçu" 
+          className="w-16 h-16 object-cover rounded border"
+          onError={(e) => e.target.style.display = 'none'}
+        />
+      )}
+
+      {/* Modal d'import */}
+      {showImporter && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-[#112033] mb-4">Importer une image</h3>
+            
+            {/* Upload de fichier */}
+    <div className="mb-4">
+              <label className="block text-sm font-medium text-[#686868] mb-2">
+                📁 Choisir un fichier
+              </label>
+          <input
+            type="file"
+            accept="image/*"
+                onChange={handleFileUpload}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              />
+      </div>
+
+            {/* Coller base64 */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-[#686868] mb-2">
+                📋 Coller une image base64
+              </label>
+      <textarea
+                value={base64Input}
+                onChange={(e) => setBase64Input(e.target.value)}
+                placeholder="Collez ici le code base64 de votre image..."
+                rows={4}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono text-xs"
+              />
+            </div>
+
+            {/* Boutons */}
+            <div className="flex gap-2">
+        <button
+                onClick={handleBase64Import}
+                className="flex-1 px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
+        >
+                Importer
+        </button>
             <button
-              type="button"
-              onClick={() => removeItem(index)}
-              className="px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600"
+                onClick={() => setShowImporter(false)}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
             >
-              Supprimer
+                Annuler
             </button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {fields.map(field => (
-              <div key={field.key}>
-                <label className="block text-xs text-[#686868] mb-1">{field.label}</label>
-                {field.type === "textarea" ? (
-                  <textarea
-                    rows={3}
-                    className="w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-2 focus:ring-[#4EBBBD]"
-                    value={item[field.key] || ""}
-                    onChange={(e) => updateItem(index, field.key, e.target.value)}
-                    placeholder={field.placeholder}
+            {/* Instructions */}
+            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+              <p className="text-xs text-gray-600">
+                <strong>💡 Comment obtenir une image base64 :</strong><br/>
+                1. Ouvrez votre image dans un éditeur<br/>
+                2. Copiez le code base64 généré<br/>
+                3. Collez-le dans le champ ci-dessus
+              </p>
+              </div>
+          </div>
+        </div>
+      )}
+      </div>
+    </CMSAuthWrapper>
+  );
+};
+
+export default function FiscaliteCMSPage() {
+  const [content, setContent] = useState(defaultContent);
+  const [showToast, setShowToast] = useState(false);
+
+    useEffect(() => {
+    // Charger le contenu depuis la base de données
+    const loadContentFromDatabase = async () => {
+      try {
+        const response = await fetch('/api/pages/content?path=/fiscalite&type=cms');
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.content) {
+            const parsed = result.content.content;
+            setContent({ ...defaultContent, ...parsed });
+            return;
+          }
+        }
+        
+        // Si pas de contenu en base, utiliser le contenu par défaut
+        console.log('Aucun contenu trouvé en base de données, utilisation du contenu par défaut');
+      } catch (error) {
+        console.error('Erreur lors du chargement depuis la base de données:', error);
+        // En cas d'erreur, utiliser le contenu par défaut
+      }
+    };
+
+    loadContentFromDatabase();
+  }, []);
+
+  const handleChange = (section, field, value) => {
+    setContent(prev => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [field]: value
+      }
+    }));
+  };
+
+  const handleArrayChange = (section, arrayField, idx, field, value) => {
+    setContent(prev => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [arrayField]: prev[section][arrayField].map((item, index) => 
+          index === idx ? { ...item, [field]: value } : item
+        )
+      }
+    }));
+  };
+
+    const handleSave = async () => {
+    try {
+      const response = await fetch('/api/pages/content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pagePath: '/fiscalite',
+          pageType: 'cms',
+          content: content,
+          metadata: {
+            lastModified: new Date().toISOString(),
+            modifiedBy: 'admin',
+            pageType: 'cms'
+          }
+        })
+      });
+
+      if (response.ok) {
+        console.log('Sauvegardé en base de données');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 2000);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde:', error);
+      alert('Erreur lors de la sauvegarde: ' + error.message);
+    }
+    
+    // Dispatch custom event to notify other components
+    window.dispatchEvent(new CustomEvent('contentUpdated'));
+  };
+
+  // Vérifier que le contenu est initialisé
+  if (!content || !content.hero) {
+        
+  const handleLogout = () => {
+    localStorage.removeItem('cms_token');
+    sessionStorage.removeItem('cms_token');
+    window.location.href = '/cms/login';
+  };
+
+  return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
+          <p className="text-[#686868]">Chargement du CMS...</p>
+              </div>
+        </div>
+    );
+  }
+              
+  return (
+    <CMSAuthWrapper>
+      <div className="space-y-6 p-6">
+              {/* Header */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div className="flex items-center justify-between mb-4">
+              <div>
+              <h1 className="text-2xl font-bold text-[#112033]">CMS Fiscalité</h1>
+              <p className="text-[#686868]">Gérez le contenu de la page fiscalité</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleSave}
+                className="bg-[#4EBBBD] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#3DA8AA]"
+              >
+                Sauvegarder
+              </button>
+            <button 
+              onClick={handleLogout} 
+              className="bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Déconnexion
+            </button>
+              </div>
+            </div>
+            
+          {/* Guide des images */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+            <h3 className="text-sm font-medium text-blue-800 mb-2">📸 Guide de gestion des images</h3>
+            <div className="text-xs text-blue-700 space-y-1">
+              <p>• <strong>Format recommandé :</strong> JPG, PNG, WebP (max 2MB)</p>
+              <p>• <strong>Dossier :</strong> Placez vos images dans <code className="bg-blue-100 px-1 rounded">/public/images/</code></p>
+              <p>• <strong>Exemple :</strong> <code className="bg-blue-100 px-1 rounded">/images/ma-photo.jpg</code></p>
+              <p>• <strong>Optimisation :</strong> Utilisez des images de 800x600px pour de meilleures performances</p>
+              <p>• <strong>Nouveau :</strong> Cliquez sur "📁 Importer" pour uploader des fichiers ou coller du base64</p>
+              </div>
+            </div>
+          </div>
+
+              {/* Hero Section */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Hero</h2>
+          <div className="space-y-4">
+              <div>
+              <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
+              <input
+                value={content.hero.title} 
+                onChange={(e) => handleChange('hero', 'title', e.target.value)} 
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+              
+            {/* Gestion des images */}
+            <div className="border-t pt-4">
+              <h3 className="text-md font-medium text-[#112033] mb-3">Images</h3>
+              <div className="space-y-3">
+              <div>
+                  <label className="block text-xs text-[#686868] mb-1">Image portrait (Pill droite)</label>
+                  <ImageImporter
+                    value={content.hero.pill.portrait}
+                    onChange={(value) => handleChange('hero', 'pill', { ...content.hero.pill, portrait: value })}
+                    placeholder="/images/fiscalite-hero-small-photo.png"
                   />
-                ) : (
+                  <p className="text-xs text-gray-500 mt-1">Chemin vers l'image ou image base64</p>
+              </div>
+              </div>
+            </div>
+          <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Paragraphe principal</label>
+      <textarea
+              value={content.hero.paragraph} 
+              onChange={(e) => handleChange('hero', 'paragraph', e.target.value)} 
+              rows={4} 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+            />
+            </div>
+            
+          <div className="border-t pt-4">
+            <h3 className="text-md font-medium text-[#112033] mb-3">Pill (Encadré droit)</h3>
+            <div className="space-y-3">
+              {content.hero?.pill?.bullets?.map((bullet, index) => (
+                <div key={index}>
+                  <label className="block text-xs text-[#686868] mb-1">Point {index + 1}</label>
+        <input
+                    value={bullet} 
+            onChange={(e) => {
+                      const newBullets = [...content.hero.pill.bullets];
+                      newBullets[index] = e.target.value;
+                      handleChange('hero', 'pill', { ...content.hero.pill, bullets: newBullets });
+            }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+          />
+      </div>
+              ))}
+              <div>
+                <label className="block text-xs text-[#686868] mb-1">Bouton CTA</label>
                   <input
-                    type={field.type || "text"}
-                    className="w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-2 focus:ring-[#4EBBBD]"
-                    value={item[field.key] || ""}
-                    onChange={(e) => updateItem(index, field.key, e.target.value)}
-                    placeholder={field.placeholder}
-                  />
-                )}
+                  value={content.hero.pill.cta} 
+                  onChange={(e) => handleChange('hero', 'pill', { ...content.hero.pill, cta: e.target.value })} 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t pt-4">
+            <h3 className="text-md font-medium text-[#112033] mb-3">Panel CTA (Encadré vert)</h3>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-[#686868] mb-1">Titre</label>
+      <input
+                  value={content.hero.ctaPanel.title} 
+                  onChange={(e) => handleChange('hero', 'ctaPanel', { ...content.hero.ctaPanel, title: e.target.value })} 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-[#686868] mb-1">Tag</label>
+                <input 
+                  value={content.hero.ctaPanel.tag} 
+                  onChange={(e) => handleChange('hero', 'ctaPanel', { ...content.hero.ctaPanel, tag: e.target.value })} 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-[#686868] mb-1">Placeholder email</label>
+                <input 
+                  value={content.hero.ctaPanel.placeholder} 
+                  onChange={(e) => handleChange('hero', 'ctaPanel', { ...content.hero.ctaPanel, placeholder: e.target.value })} 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-[#686868] mb-1">Bouton</label>
+                <input 
+                  value={content.hero.ctaPanel.button} 
+                  onChange={(e) => handleChange('hero', 'ctaPanel', { ...content.hero.ctaPanel, button: e.target.value })} 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
+      {/* Sommaire Section */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Sommaire</h2>
+        <div className="space-y-4">
+              <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Liste des questions (gauche)</label>
+            {content.sommaire?.leftItems?.map((item, index) => (
+              <div key={index} className="mb-2">
+                <label className="block text-xs text-[#686868] mb-1">Question {index + 1}</label>
+                <input 
+                  value={item} 
+                  onChange={(e) => {
+                    const newItems = [...content.sommaire.leftItems];
+                    newItems[index] = e.target.value;
+                    handleChange('sommaire', 'leftItems', newItems);
+                  }} 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
               </div>
             ))}
           </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function NumberInput({ label, value, onChange, placeholder = "", min = null, max = null }) {
-  return (
-    <label className="block mb-4">
-      <span className="block text-sm font-medium text-[#112033] mb-1">{label}</span>
-      <input
-        type="number"
-        className="w-full rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#4EBBBD]"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        min={min}
-        max={max}
-        step="0.01"
-      />
-    </label>
-  );
-}
-
-export default function FiscaliteCMS() {
-  const [selectedPage, setSelectedPage] = useState("declarationImpots");
-  const [pageData, setPageData] = useState({});
-  const [saving, setSaving] = useState(false);
-  const [notification, setNotification] = useState("");
-
-  useEffect(() => {
-    loadPageData(selectedPage);
-  }, [selectedPage]);
-
-  const loadPageData = async (pageId) => {
-    try {
-      // Essayer d'abord la base de données
-      const response = await fetch(`/api/pages/content?path=${PAGES.find(p => p.id === pageId)?.path}&type=cms`);
-      if (response.ok) {
-        const result = await response.json();
-        if (result.success && result.content) {
-          setPageData(result.content.content);
-          return;
-        }
-      }
-    } catch (error) {
-      console.log('Base de données non disponible, utilisation du localStorage');
-    }
-
-    // Fallback vers localStorage
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS[pageId]);
-      if (saved) {
-        setPageData(JSON.parse(saved));
-      } else {
-        setPageData({});
-      }
-    } catch (e) {
-      console.error("Failed to load page data", e);
-      setPageData({});
-    }
-  };
-
-  const savePageData = async () => {
-    setSaving(true);
-    try {
-      // Essayer d'abord la base de données
-      try {
-        const response = await fetch('/api/pages/content', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            pagePath: PAGES.find(p => p.id === selectedPage)?.path,
-            pageType: 'cms',
-            content: pageData,
-            metadata: {
-              lastModified: new Date().toISOString(),
-              modifiedBy: 'admin',
-              pageId: selectedPage
-            }
-          })
-        });
-
-        if (response.ok) {
-          console.log('Sauvegardé en base de données');
-          setNotification("✅ Contenu sauvegardé en base de données !");
-          window.dispatchEvent(new CustomEvent("contentUpdated"));
-          setSaving(false);
-          setTimeout(() => setNotification(""), 3000);
-          return;
-        }
-      } catch (error) {
-        console.log('Base de données non disponible, utilisation du localStorage');
-      }
-
-      // Fallback vers localStorage
-      localStorage.setItem(STORAGE_KEYS[selectedPage], JSON.stringify(pageData));
-      setNotification("✅ Contenu sauvegardé en localStorage !");
-      window.dispatchEvent(new CustomEvent("contentUpdated"));
-    } catch (e) {
-      console.error("Failed to save page data", e);
-      setNotification("❌ Erreur lors de la sauvegarde");
-    } finally {
-      setSaving(false);
-      setTimeout(() => setNotification(""), 3000);
-    }
-  };
-
-  const updateField = (path, value) => {
-    const keys = path.split(".");
-    const newData = { ...pageData };
-    let current = newData;
-    
-    for (let i = 0; i < keys.length - 1; i++) {
-      if (!current[keys[i]]) current[keys[i]] = {};
-      current = current[keys[i]];
-    }
-    
-    current[keys[keys.length - 1]] = value;
-    setPageData(newData);
-  };
-
-  const renderPageEditor = () => {
-    switch (selectedPage) {
-      case "declarationImpots":
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Déclaration d'impôts</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Hero Section</h4>
-                <TextInput
-                  label="Titre"
-                  value={pageData.hero?.title || ""}
-                  onChange={(value) => updateField("hero.title", value)}
-                  placeholder="Titre de la page déclaration d'impôts"
+            <label className="block text-sm font-medium text-[#686868] mb-2">Boîtes d'avantages (droite)</label>
+            {content.sommaire?.boxes?.map((box, index) => (
+              <div key={index} className="mb-2">
+                <label className="block text-xs text-[#686868] mb-1">Boîte {index + 1}</label>
+                <input 
+                  value={box} 
+                  onChange={(e) => {
+                    const newBoxes = [...content.sommaire.boxes];
+                    newBoxes[index] = e.target.value;
+                    handleChange('sommaire', 'boxes', newBoxes);
+                  }} 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                 />
-                <WYSIWYGEditor
-                  label="Sous-titre"
-                  value={pageData.hero?.subtitle || ""}
-                  onChange={(value) => updateField("hero.subtitle", value)}
-                  placeholder="Description de la page"
-                />
-                <TextInput
-                  label="Bouton CTA"
-                  value={pageData.hero?.button || ""}
-                  onChange={(value) => updateField("hero.button", value)}
-                  placeholder="Texte du bouton"
-                />
-                <ImageInput
-                  label="Image hero"
-                  value={pageData.hero?.image || ""}
-                  onChange={(value) => updateField("hero.image", value)}
+              </div>
+            ))}
+            </div>
+              </div>
+            </div>
+
+              {/* LLI Section */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-lg font-semibold text-[#112033] mb-4">Section LLI</h2>
+          <div className="space-y-4">
+              <div>
+              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
+              <input 
+                value={content.lli.title} 
+                onChange={(e) => handleChange('lli', 'title', e.target.value)} 
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                 />
               </div>
               
+            {/* Image LLI */}
               <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Étapes de déclaration</h4>
-                <ObjectArrayInput
-                  label="Étapes"
-                  items={pageData.declarationSteps || []}
-                  onChange={(value) => updateField("declarationSteps", value)}
-                  fields={[
-                    { key: "step", label: "Numéro d'étape", placeholder: "1", type: "number" },
-                    { key: "title", label: "Titre de l'étape", placeholder: "Rassemblement des documents" },
-                    { key: "description", label: "Description", placeholder: "Collectez tous vos justificatifs", type: "textarea" }
-                  ]}
-                />
-                
-                <h4 className="text-md font-medium text-[#112033] mb-3 mt-6">Documents requis</h4>
-                <ArrayInput
-                  label="Liste des documents (un par ligne)"
-                  value={pageData.documentsRequis || []}
-                  onChange={(value) => updateField("documentsRequis", value)}
-                  placeholder="Bulletins de salaire\nAttestations de revenus\nJustificatifs de charges"
-                />
+              <label className="block text-sm font-medium text-[#686868] mb-2">Image de la section</label>
+              <ImageImporter
+                value={content.lli.image}
+                onChange={(value) => handleChange('lli', 'image', value)}
+                placeholder="/images/fiscalite-lli-image-aeac3b.png"
+              />
+              <p className="text-xs text-gray-500 mt-1">Chemin vers l'image ou image base64</p>
               </div>
-            </div>
-            
-            <div className="border-t pt-6">
-              <h4 className="text-md font-medium text-[#112033] mb-3">Informations complémentaires</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <WYSIWYGEditor
-                  label="Délais de déclaration"
-                  value={pageData.delais || ""}
-                  onChange={(value) => updateField("delais", value)}
-                  placeholder="Informations sur les délais..."
+              <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Contenu HTML</label>
+            <textarea 
+              value={content.lli.html} 
+              onChange={(e) => handleChange('lli', 'html', e.target.value)} 
+              rows={8} 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent font-mono text-sm"
+              placeholder="Utilisez <b> pour le gras et \n pour les sauts de ligne"
                 />
-                <WYSIWYGEditor
-                  label="Sanctions en cas de retard"
-                  value={pageData.sanctions || ""}
-                  onChange={(value) => updateField("sanctions", value)}
-                  placeholder="Détails des sanctions..."
+            </div>
+          <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Bouton</label>
+            <input 
+              value={content.lli.button} 
+              onChange={(e) => handleChange('lli', 'button', e.target.value)} 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                 />
               </div>
             </div>
           </div>
-        );
 
-      case "tranchesBaremesPlafonds":
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Tranches, barèmes et plafonds</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Benefits Section */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Avantages</h2>
+          <div className="space-y-4">
+            {/* Image Benefits */}
               <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Hero Section</h4>
-                <TextInput
-                  label="Titre"
-                  value={pageData.hero?.title || ""}
-                  onChange={(value) => updateField("hero.title", value)}
-                  placeholder="Titre de la page barèmes"
-                />
-                <WYSIWYGEditor
-                  label="Sous-titre"
-                  value={pageData.hero?.subtitle || ""}
-                  onChange={(value) => updateField("hero.subtitle", value)}
-                  placeholder="Description de la page"
-                />
-                <ImageInput
-                  label="Image hero"
-                  value={pageData.hero?.image || ""}
-                  onChange={(value) => updateField("hero.image", value)}
-                />
+              <label className="block text-sm font-medium text-[#686868] mb-2">Image de la section</label>
+              <ImageImporter
+                value={content.benefits.image}
+                onChange={(value) => handleChange('benefits', 'image', value)}
+                placeholder="/images/fiscalite-lli-benefits-66eac5.png"
+              />
+              <p className="text-xs text-gray-500 mt-1">Chemin vers l'image ou image base64</p>
               </div>
               
               <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Barème 2024</h4>
-                <ObjectArrayInput
-                  label="Tranches d'imposition"
-                  items={pageData.bareme2024 || []}
-                  onChange={(value) => updateField("bareme2024", value)}
-                  fields={[
-                    { key: "seuil", label: "Seuil (€)", placeholder: "0", type: "number" },
-                    { key: "taux", label: "Taux (%)", placeholder: "0", type: "number" },
-                    { key: "montant", label: "Montant (€)", placeholder: "0", type: "number" },
-                    { key: "description", label: "Description", placeholder: "Jusqu'à" }
-                  ]}
-                />
-                
-                <h4 className="text-md font-medium text-[#112033] mb-3 mt-6">Plafonds importants</h4>
-                <ObjectArrayInput
-                  label="Plafonds"
-                  items={pageData.plafonds || []}
-                  onChange={(value) => updateField("plafonds", value)}
-                  fields={[
-                    { key: "nom", label: "Nom du plafond", placeholder: "Plafond de la Sécurité sociale" },
-                    { key: "montant", label: "Montant (€)", placeholder: "0", type: "number" },
-                    { key: "description", label: "Description", placeholder: "Explication du plafond", type: "textarea" }
-                  ]}
-                />
+              <label className="block text-sm font-medium text-[#686868] mb-2">Contenu HTML des avantages</label>
+              <textarea 
+                value={content.benefits.html} 
+                onChange={(e) => handleChange('benefits', 'html', e.target.value)} 
+                rows={10} 
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent font-mono text-sm"
+                placeholder="Utilisez ✅ pour les puces et \n pour les sauts de ligne"
+              />
+            </div>
               </div>
             </div>
             
-            <div className="border-t pt-6">
-              <h4 className="text-md font-medium text-[#112033] mb-3">Informations complémentaires</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <WYSIWYGEditor
-                  label="Notes importantes"
-                  value={pageData.notes || ""}
-                  onChange={(value) => updateField("notes", value)}
-                  placeholder="Notes sur les barèmes..."
+              {/* Bottom CTA Section */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-lg font-semibold text-[#112033] mb-4">Section CTA Bas</h2>
+          <div className="space-y-4">
+            {/* Image Bottom CTA */}
+            <div>
+              <label className="block text-sm font-medium text-[#686868] mb-2">Image de la section</label>
+              <ImageImporter
+                value={content.bottomCta.image}
+                onChange={(value) => handleChange('bottomCta', 'image', value)}
+                placeholder="/images/fiscalite-lli-section-bottom-1b4b7d.png"
+              />
+              <p className="text-xs text-gray-500 mt-1">Chemin vers l'image ou image base64</p>
+              </div>
+            
+              <div>
+              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
+              <input 
+                value={content.bottomCta.textTitle} 
+                onChange={(e) => handleChange('bottomCta', 'textTitle', e.target.value)} 
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                 />
-                <WYSIWYGEditor
-                  label="Évolutions prévues"
-                  value={pageData.evolutions || ""}
-                  onChange={(value) => updateField("evolutions", value)}
-                  placeholder="Changements à venir..."
+              </div>
+              <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Texte</label>
+            <textarea 
+              value={content.bottomCta.textBody} 
+              onChange={(e) => handleChange('bottomCta', 'textBody', e.target.value)} 
+              rows={3} 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+              <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Bouton</label>
+            <input 
+              value={content.bottomCta.button} 
+              onChange={(e) => handleChange('bottomCta', 'button', e.target.value)} 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                 />
               </div>
             </div>
           </div>
-        );
 
-      case "loisFiscales":
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Lois fiscales</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Where Invest Section */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Où Investir</h2>
+          <div className="space-y-4">
+            {/* Image Where Invest */}
               <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Hero Section</h4>
-                <TextInput
-                  label="Titre"
-                  value={pageData.hero?.title || ""}
-                  onChange={(value) => updateField("hero.title", value)}
-                  placeholder="Titre de la page lois fiscales"
-                />
-                <WYSIWYGEditor
-                  label="Sous-titre"
-                  value={pageData.hero?.subtitle || ""}
-                  onChange={(value) => updateField("hero.subtitle", value)}
-                  placeholder="Description de la page"
-                />
-                <ImageInput
-                  label="Image hero"
-                  value={pageData.hero?.image || ""}
-                  onChange={(value) => updateField("hero.image", value)}
-                />
+              <label className="block text-sm font-medium text-[#686868] mb-2">Image de la section</label>
+              <ImageImporter
+                value={content.whereInvest.image}
+                onChange={(value) => handleChange('whereInvest', 'image', value)}
+                placeholder="/images/fiscalite-ou-investir-portrait.png"
+              />
+              <p className="text-xs text-gray-500 mt-1">Chemin vers l'image ou image base64</p>
               </div>
               
               <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Lois immobilières</h4>
-                <ObjectArrayInput
-                  label="Lois fiscales immobilières"
-                  items={pageData.loisImmobilieres || []}
-                  onChange={(value) => updateField("loisImmobilieres", value)}
-                  fields={[
-                    { key: "name", label: "Nom complet", placeholder: "Loi Pinel" },
-                    { key: "shortName", label: "Nom court", placeholder: "Pinel" },
-                    { key: "description", label: "Description", placeholder: "Réduction d'impôt pour investissement immobilier neuf", type: "textarea" },
-                    { key: "avantage", label: "Avantage principal", placeholder: "Réduction d'impôt de 21%" },
-                    { key: "duree", label: "Durée d'engagement", placeholder: "6, 9 ou 12 ans" }
-                  ]}
-                />
-              </div>
+              <label className="block text-sm font-medium text-[#686868] mb-2">Introduction</label>
+              <textarea 
+                value={content.whereInvest.intro} 
+                onChange={(e) => handleChange('whereInvest', 'intro', e.target.value)} 
+                rows={3} 
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+              />
             </div>
             
-            <div className="border-t pt-6">
-              <h4 className="text-md font-medium text-[#112033] mb-3">Détails des lois</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <WYSIWYGEditor
-                  label="Conditions d'éligibilité"
-                  value={pageData.conditionsEligibilite || ""}
-                  onChange={(value) => updateField("conditionsEligibilite", value)}
-                  placeholder="Conditions générales..."
-                />
-                <WYSIWYGEditor
-                  label="Limitations et restrictions"
-                  value={pageData.limitations || ""}
-                  onChange={(value) => updateField("limitations", value)}
-                  placeholder="Limites et restrictions..."
+              <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Villes</label>
+            {content.whereInvest?.cities?.map((city, cityIndex) => (
+              <div key={cityIndex} className="border border-gray-200 rounded-lg p-4 mb-4">
+                <h4 className="text-sm font-medium text-[#112033] mb-3">Ville {cityIndex + 1}</h4>
+                <div className="space-y-3">
+              <div>
+                    <label className="block text-xs text-[#686868] mb-1">Nom de la ville</label>
+                    <input 
+                      value={city.name} 
+                      onChange={(e) => {
+                        const newCities = [...content.whereInvest.cities];
+                        newCities[cityIndex] = { ...city, name: e.target.value };
+                        handleChange('whereInvest', 'cities', newCities);
+                      }} 
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                 />
               </div>
+              <div>
+                    <label className="block text-xs text-[#686868] mb-1">Points clés</label>
+                    {city.points.map((point, pointIndex) => (
+                      <div key={pointIndex} className="mb-2">
+                        <input 
+                          value={point} 
+                          onChange={(e) => {
+                            const newCities = [...content.whereInvest.cities];
+                            const newPoints = [...city.points];
+                            newPoints[pointIndex] = e.target.value;
+                            newCities[cityIndex] = { ...city, points: newPoints };
+                            handleChange('whereInvest', 'cities', newCities);
+                          }} 
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+                    ))}
             </div>
           </div>
-        );
-
-      case "reductionsImpotDeficitFoncier":
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Réductions d'impôt et déficit foncier</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Hero Section</h4>
-                <TextInput
-                  label="Titre"
-                  value={pageData.hero?.title || ""}
-                  onChange={(value) => updateField("hero.title", value)}
-                  placeholder="Titre de la page réductions"
-                />
-                <WYSIWYGEditor
-                  label="Sous-titre"
-                  value={pageData.hero?.subtitle || ""}
-                  onChange={(value) => updateField("hero.subtitle", value)}
-                  placeholder="Description de la page"
-                />
-                <ImageInput
-                  label="Image hero"
-                  value={pageData.hero?.image || ""}
-                  onChange={(value) => updateField("hero.image", value)}
-                />
-              </div>
-              
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Chiffres clés</h4>
-                <ObjectArrayInput
-                  label="Statistiques importantes"
-                  items={pageData.quickStats?.stats || []}
-                  onChange={(value) => updateField("quickStats.stats", value)}
-                  fields={[
-                    { key: "label", label: "Label", placeholder: "Réduction max" },
-                    { key: "value", label: "Valeur", placeholder: "21%" },
-                    { key: "description", label: "Description", placeholder: "Loi Pinel" }
-                  ]}
-                />
-                
-                <h4 className="text-md font-medium text-[#112033] mb-3 mt-6">Types de réductions</h4>
-                <ObjectArrayInput
-                  label="Réductions d'impôt"
-                  items={pageData.reductions || []}
-                  onChange={(value) => updateField("reductions", value)}
-                  fields={[
-                    { key: "nom", label: "Nom", placeholder: "Loi Pinel" },
-                    { key: "taux", label: "Taux de réduction", placeholder: "21%" },
-                    { key: "description", label: "Description", placeholder: "Détails de la réduction", type: "textarea" }
-                  ]}
-                />
-              </div>
             </div>
-            
-            <div className="border-t pt-6">
-              <h4 className="text-md font-medium text-[#112033] mb-3">Déficit foncier</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <WYSIWYGEditor
-                  label="Définition du déficit foncier"
-                  value={pageData.definitionDeficit || ""}
-                  onChange={(value) => updateField("definitionDeficit", value)}
-                  placeholder="Explication du déficit foncier..."
-                />
-                <WYSIWYGEditor
-                  label="Conditions de report"
-                  value={pageData.conditionsReport || ""}
-                  onChange={(value) => updateField("conditionsReport", value)}
-                  placeholder="Conditions de report du déficit..."
-                />
-              </div>
-            </div>
+            ))}
           </div>
-        );
-
-      case "fiscalitePlacements":
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Fiscalité des placements</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Hero Section</h4>
-                <TextInput
-                  label="Titre"
-                  value={pageData.hero?.title || ""}
-                  onChange={(value) => updateField("hero.title", value)}
-                  placeholder="Titre de la page fiscalité placements"
-                />
-                <WYSIWYGEditor
-                  label="Sous-titre"
-                  value={pageData.hero?.subtitle || ""}
-                  onChange={(value) => updateField("hero.subtitle", value)}
-                  placeholder="Description de la page"
-                />
-                <ImageInput
-                  label="Image hero"
-                  value={pageData.hero?.image || ""}
-                  onChange={(value) => updateField("hero.image", value)}
-                />
-              </div>
-              
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Types de placements</h4>
-                <ObjectArrayInput
-                  label="Placements et leur fiscalité"
-                  items={pageData.placementTypes?.items || []}
-                  onChange={(value) => updateField("placementTypes.items", value)}
-                  fields={[
-                    { key: "name", label: "Nom du placement", placeholder: "Livret A" },
-                    { key: "type", label: "Type", placeholder: "Épargne réglementée" },
-                    { key: "fiscalite", label: "Fiscalité", placeholder: "Exonéré d'impôt", type: "textarea" },
-                    { key: "taux", label: "Taux de rendement", placeholder: "3%" }
-                  ]}
-                />
-              </div>
-            </div>
-            
-            <div className="border-t pt-6">
-              <h4 className="text-md font-medium text-[#112033] mb-3">Comparaison fiscale</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <WYSIWYGEditor
-                  label="PFU vs TMI"
-                  value={pageData.pfuVsTmi || ""}
-                  onChange={(value) => updateField("pfuVsTmi", value)}
-                  placeholder="Comparaison PFU vs TMI..."
-                />
-                <WYSIWYGEditor
-                  label="Optimisations possibles"
-                  value={pageData.optimisations || ""}
-                  onChange={(value) => updateField("optimisations", value)}
-                  placeholder="Stratégies d'optimisation..."
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      case "pfu":
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Prélèvement Forfaitaire Unique (PFU)</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Hero Section</h4>
-                <TextInput
-                  label="Titre"
-                  value={pageData.hero?.title || ""}
-                  onChange={(value) => updateField("hero.title", value)}
-                  placeholder="Titre de la page PFU"
-                />
-                <WYSIWYGEditor
-                  label="Sous-titre"
-                  value={pageData.hero?.subtitle || ""}
-                  onChange={(value) => updateField("hero.subtitle", value)}
-                  placeholder="Description de la page"
-                />
-                <ImageInput
-                  label="Image hero"
-                  value={pageData.hero?.image || ""}
-                  onChange={(value) => updateField("hero.image", value)}
-                />
-              </div>
-              
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Composition du taux</h4>
-                <ObjectArrayInput
-                  label="Taux PFU"
-                  items={pageData.taux?.items || []}
-                  onChange={(value) => updateField("taux.items", value)}
-                  fields={[
-                    { key: "revenu", label: "Type de revenu", placeholder: "Dividendes" },
-                    { key: "taux", label: "Taux (%)", placeholder: "12.8", type: "number" },
-                    { key: "details", label: "Détails", placeholder: "Impôt sur le revenu" }
-                  ]}
-                />
-                
-                <h4 className="text-md font-medium text-[#112033] mb-3 mt-6">Seuils et conditions</h4>
-                <ObjectArrayInput
-                  label="Conditions d'application"
-                  items={pageData.conditions || []}
-                  onChange={(value) => updateField("conditions", value)}
-                  fields={[
-                    { key: "condition", label: "Condition", placeholder: "Revenus < 50 000€" },
-                    { key: "description", label: "Description", placeholder: "Explication de la condition", type: "textarea" }
-                  ]}
-                />
-              </div>
-            </div>
-            
-            <div className="border-t pt-6">
-              <h4 className="text-md font-medium text-[#112033] mb-3">Avantages et inconvénients</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ArrayInput
-                  label="Avantages du PFU (un par ligne)"
-                  value={pageData.avantages || []}
-                  onChange={(value) => updateField("avantages", value)}
-                  placeholder="Taux fixe et prévisible\nSimplicité de calcul"
-                />
-                <ArrayInput
-                  label="Inconvénients du PFU (un par ligne)"
-                  value={pageData.inconvenients || []}
-                  onChange={(value) => updateField("inconvenients", value)}
-                  placeholder="Pas de déduction des charges\nTaux non progressif"
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      case "tmiPrelevementsSociaux":
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">TMI et prélèvements sociaux</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Hero Section</h4>
-                <TextInput
-                  label="Titre"
-                  value={pageData.hero?.title || ""}
-                  onChange={(value) => updateField("hero.title", value)}
-                  placeholder="Titre de la page TMI"
-                />
-                <WYSIWYGEditor
-                  label="Sous-titre"
-                  value={pageData.hero?.subtitle || ""}
-                  onChange={(value) => updateField("hero.subtitle", value)}
-                  placeholder="Description de la page"
-                />
-                <ImageInput
-                  label="Image hero"
-                  value={pageData.hero?.image || ""}
-                  onChange={(value) => updateField("hero.image", value)}
-                />
-              </div>
-              
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Barème TMI</h4>
-                <ObjectArrayInput
-                  label="Tranches TMI"
-                  items={pageData.tmi?.bareme || []}
-                  onChange={(value) => updateField("tmi.bareme", value)}
-                  fields={[
-                    { key: "seuil", label: "Seuil", placeholder: "Jusqu'à 11 294€" },
-                    { key: "taux", label: "Taux", placeholder: "0%" },
-                    { key: "description", label: "Description", placeholder: "Pas d'impôt" }
-                  ]}
-                />
-                
-                <h4 className="text-md font-medium text-[#112033] mb-3 mt-6">Prélèvements sociaux</h4>
-                <ObjectArrayInput
-                  label="Taux des prélèvements"
-                  items={pageData.prelevementsSociaux || []}
-                  onChange={(value) => updateField("prelevementsSociaux", value)}
-                  fields={[
-                    { key: "nom", label: "Nom", placeholder: "CSG" },
-                    { key: "taux", label: "Taux (%)", placeholder: "9.2", type: "number" },
-                    { key: "description", label: "Description", placeholder: "Contribution sociale généralisée" }
-                  ]}
-                />
-              </div>
-            </div>
-            
-            <div className="border-t pt-6">
-              <h4 className="text-md font-medium text-[#112033] mb-3">Calcul et optimisation</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <WYSIWYGEditor
-                  label="Méthode de calcul"
-                  value={pageData.methodeCalcul || ""}
-                  onChange={(value) => updateField("methodeCalcul", value)}
-                  placeholder="Explication du calcul TMI..."
-                />
-                <WYSIWYGEditor
-                  label="Stratégies d'optimisation"
-                  value={pageData.strategiesOptimisation || ""}
-                  onChange={(value) => updateField("strategiesOptimisation", value)}
-                  placeholder="Comment optimiser sa TMI..."
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      case "defiscalisationCasSpecifiques":
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Défiscalisation cas spéciaux</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Hero Section</h4>
-                <TextInput
-                  label="Titre"
-                  value={pageData.hero?.title || ""}
-                  onChange={(value) => updateField("hero.title", value)}
-                  placeholder="Titre de la page défiscalisation"
-                />
-                <TextArea
-                  label="Sous-titre"
-                  value={pageData.hero?.subtitle || ""}
-                  onChange={(value) => updateField("hero.subtitle", value)}
-                  rows={4}
-                  placeholder="Description de la page"
-                />
-                <ImageInput
-                  label="Image hero"
-                  value={pageData.hero?.image || ""}
-                  onChange={(value) => updateField("hero.image", value)}
-                />
-              </div>
-              
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Cas spéciaux</h4>
-                <ObjectArrayInput
-                  label="Cas de défiscalisation"
-                  items={pageData.casSpecifiques?.items || []}
-                  onChange={(value) => updateField("casSpecifiques.items", value)}
-                  fields={[
-                    { key: "nom", label: "Nom", placeholder: "Défiscalisation outre-mer" },
-                    { key: "description", label: "Description", placeholder: "Dispositifs spécifiques pour les investissements en outre-mer", type: "textarea" },
-                    { key: "avantage", label: "Avantage fiscal", placeholder: "Réduction d'impôt de X%" }
-                  ]}
-                />
-              </div>
-            </div>
-            
-            <div className="border-t pt-6">
-              <h4 className="text-md font-medium text-[#112033] mb-3">Informations détaillées</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <TextArea
-                  label="Conditions spécifiques"
-                  value={pageData.conditionsSpecifiques || ""}
-                  onChange={(value) => updateField("conditionsSpecifiques", value)}
-                  rows={4}
-                  placeholder="Conditions particulières..."
-                />
-                <TextArea
-                  label="Risques et précautions"
-                  value={pageData.risques || ""}
-                  onChange={(value) => updateField("risques", value)}
-                  rows={4}
-                  placeholder="Risques à connaître..."
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      case "autreFiscalite":
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Autre fiscalité</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Hero Section</h4>
-                <TextInput
-                  label="Titre"
-                  value={pageData.hero?.title || ""}
-                  onChange={(value) => updateField("hero.title", value)}
-                  placeholder="Titre de la page autre fiscalité"
-                />
-                <TextArea
-                  label="Sous-titre"
-                  value={pageData.hero?.subtitle || ""}
-                  onChange={(value) => updateField("hero.subtitle", value)}
-                  rows={4}
-                  placeholder="Description de la page"
-                />
-                <ImageInput
-                  label="Image hero"
-                  value={pageData.hero?.image || ""}
-                  onChange={(value) => updateField("hero.image", value)}
-                />
-              </div>
-              
-              <div>
-                <h4 className="text-md font-medium text-[#112033] mb-3">Sujets fiscaux</h4>
-                <ObjectArrayInput
-                  label="Sujets fiscaux divers"
-                  items={pageData.sujets?.items || []}
-                  onChange={(value) => updateField("sujets.items", value)}
-                  fields={[
-                    { key: "nom", label: "Nom", placeholder: "Impôt sur la Fortune Immobilière (IFI)" },
-                    { key: "description", label: "Description", placeholder: "Taxe sur le patrimoine immobilier net", type: "textarea" },
-                    { key: "seuil", label: "Seuil (€)", placeholder: "1 300 000", type: "number" },
-                    { key: "taux", label: "Taux (%)", placeholder: "0.5 à 1.5", type: "number" }
-                  ]}
-                />
-              </div>
-            </div>
-            
-            <div className="border-t pt-6">
-              <h4 className="text-md font-medium text-[#112033] mb-3">Détails et conseils</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <WYSIWYGEditor
-                  label="Points importants"
-                  value={pageData.pointsImportants || ""}
-                  onChange={(value) => updateField("pointsImportants", value)}
-                  placeholder="Points clés à retenir..."
-                />
-                <WYSIWYGEditor
-                  label="Conseils d'optimisation"
-                  value={pageData.conseils || ""}
-                  onChange={(value) => updateField("conseils", value)}
-                  placeholder="Conseils pour optimiser..."
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      default:
-        return <div>Page non reconnue</div>;
-    }
-  };
-
-  return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-[#112033]">CMS — Fiscalité</h1>
-        <div className="flex gap-2">
-          <button
-            onClick={() => {
-              // Populate test data for current page
-              const testData = {
-                hero: {
-                  title: "Tranches, barèmes et plafonds - Test CMS",
-                  subtitle: "**Comprenez** le fonctionnement du barème progressif de l'impôt sur le revenu. \n\n*Découvrez* les seuils, taux et calculs pour optimiser votre fiscalité.\n\n> **Note importante** : Ces informations sont mises à jour régulièrement.\n\n- Point clé 1\n- Point clé 2\n- Point clé 3",
-                  image: "/images/fiscalite-hero.jpg"
-                },
-                bareme2024: [
-                  { seuil: 0, taux: 0, montant: 0, description: "Jusqu'à" },
-                  { seuil: 11294, taux: 11, montant: 0, description: "De" },
-                  { seuil: 28797, taux: 30, montant: 1930, description: "De" },
-                  { seuil: 82341, taux: 41, montant: 16072, description: "De" },
-                  { seuil: 177106, taux: 45, montant: 38845, description: "Au-delà de" }
-                ],
-                plafonds: [
-                  {
-                    nom: "Plafond du quotient familial",
-                    montant: 1592,
-                    description: "Limite de réduction d'impôt pour les enfants à charge et autres personnes à charge."
-                  },
-                  {
-                    nom: "Plafond Pinel",
-                    montant: 300000,
-                    description: "Montant maximum d'investissement pour bénéficier de la réduction d'impôt Pinel."
-                  },
-                  {
-                    nom: "Plafond CSE",
-                    montant: 3000,
-                    description: "Plafond annuel pour les avantages en nature et chèques cadeaux du CSE."
-                  }
-                ],
-                notes: "## Notes importantes sur les barèmes\n\n**Attention** : Les seuils peuvent varier selon votre situation familiale.\n\n*Rappel* : Le calcul se fait par tranches successives.\n\n> **Conseil** : Utilisez notre simulateur pour un calcul précis.\n\n1. Vérifiez vos parts fiscales\n2. Consultez les seuils de l'année\n3. Calculez impôt par tranche",
-                evolutions: "## Évolutions prévues pour 2025\n\n**Changements annoncés** :\n\n- *Indexation* des seuils sur l'inflation\n- **Nouveaux** plafonds pour certaines réductions\n- > **Réforme** en cours de discussion\n\n### Détails des modifications\n\n`Code fiscal` : Articles en cours de révision\n\n[En savoir plus](https://www.impots.gouv.fr)",
-              };
-              setPageData(testData);
-            }}
-            className="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600"
-          >
-            Données de test
-          </button>
-          <button
-            onClick={savePageData}
-            className="px-4 py-2 rounded bg-[#4EBBBD] text-white disabled:opacity-60"
-            disabled={saving}
-          >
-            {saving ? "Sauvegarde…" : "Sauvegarder"}
-          </button>
         </div>
       </div>
 
-      {/* Notification */}
-      {notification && (
-        <div className={`fixed bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg shadow-lg z-50 ${
-          notification.includes("✅") ? "bg-green-500 text-white" : "bg-red-500 text-white"
-        }`}>
-          {notification}
+              {/* Example Section */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Exemple</h2>
+          <div className="space-y-4">
+            {/* Image Example */}
+              <div>
+              <label className="block text-sm font-medium text-[#686868] mb-2">Image de la section</label>
+              <ImageImporter
+                value={content.example.image}
+                onChange={(value) => handleChange('example', 'image', value)}
+                placeholder="/images/fiscalite-exemple-illustration.png"
+              />
+              <p className="text-xs text-gray-500 mt-1">Chemin vers l'image ou image base64</p>
+              </div>
+              
+              <div>
+              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
+              <input 
+                value={content.example.title} 
+                onChange={(e) => handleChange('example', 'title', e.target.value)} 
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+              <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Introduction</label>
+            <textarea 
+              value={content.example.lead} 
+              onChange={(e) => handleChange('example', 'lead', e.target.value)} 
+              rows={3} 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+            </div>
+          <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Titre des avantages</label>
+            <input 
+              value={content.example.bulletsTitle} 
+              onChange={(e) => handleChange('example', 'bulletsTitle', e.target.value)} 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
+              </div>
+          <div>
+            <label className="block text-sm font-medium text-[#686868] mb-2">Avantages financiers</label>
+            {content.example?.bullets?.map((bullet, index) => (
+              <div key={index} className="mb-2">
+                <label className="block text-xs text-[#686868] mb-1">Avantage {index + 1}</label>
+                <textarea 
+                  value={bullet} 
+                  onChange={(e) => {
+                    const newBullets = [...content.example.bullets];
+                    newBullets[index] = e.target.value;
+                    handleChange('example', 'bullets', newBullets);
+                  }} 
+                  rows={2}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                />
         </div>
-      )}
-
-      {/* Page Selection */}
-      <div className="border-b border-gray-200">
-        <div className="flex flex-wrap gap-2">
-          {PAGES.map((page) => (
-            <button
-              key={page.id}
-              onClick={() => setSelectedPage(page.id)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                selectedPage === page.id
-                  ? "bg-[#4EBBBD] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
-              }`}
-            >
-              {page.name}
-            </button>
           ))}
         </div>
       </div>
-
-      {/* Page Editor */}
-      <div className="min-h-[600px]">
-        {renderPageEditor()}
       </div>
 
-      {/* Debug Section */}
-      <div className="border-t border-gray-200 pt-4">
-        <details className="text-sm">
-          <summary className="cursor-pointer text-[#686868] hover:text-[#112033]">
-            Debug: Voir les données actuelles
-          </summary>
-          <pre className="mt-2 p-4 bg-gray-100 rounded text-xs overflow-auto max-h-40">
-            {JSON.stringify(pageData, null, 2)}
-          </pre>
-        </details>
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed bottom-6 right-6 bg-[#4EBBBD] text-white px-6 py-3 rounded-lg shadow-lg z-50">
+          Contenu sauvegardé avec succès !
       </div>
-
-      {/* Page Preview Link */}
-      <div className="border-t border-gray-200 pt-4">
-        <p className="text-sm text-[#686868] mb-2">
-          Page sélectionnée : <strong>{PAGES.find(p => p.id === selectedPage)?.name}</strong>
-        </p>
-        <a
-          href={PAGES.find(p => p.id === selectedPage)?.path}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4EBBBD] hover:underline text-sm"
-        >
-          Voir la page en cours →
-        </a>
-      </div>
+      )}
     </div>
   );
 } 

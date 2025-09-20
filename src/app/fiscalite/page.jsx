@@ -1,44 +1,49 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import Header from "../../components/common/Header";
 
 const STORAGE_KEY = "fiscalitePageContent";
 
+// Mapping function to match sommaire titles with existing pages
+const getPageUrl = (title) => {
+  const pageMapping = {
+    "Impôt sur le revenu": "/fiscalite/impot-sur-le-revenu",
+    "Déclaration d'impôts": "/fiscalite/declaration-impots", 
+    "Tranches, barèmes, plafonds": "/fiscalite/tranches-baremes-plafonds",
+    "Lois fiscales": "/fiscalite/lois-fiscales",
+    "Réductions d'impôt/déficit foncier": "/fiscalite/reductions-impot-deficit-foncier",
+    "Fiscalité des placements financiers : ce qu'il faut absolument comprendre": "/fiscalite/fiscalite-placements",
+    "PFU ou Prélèvement Forfaitaire Unique : tout ce qu'un investisseur doit savoir": "/fiscalite/pfu",
+    "Tranche Marginale d'Imposition (TMI) + Prélèvements sociaux : ce que tout investisseur doit comprendre": "/fiscalite/tmi-prelevements-sociaux",
+    "Fiscalité de l'épargne salariale et retraite": null, // No existing page
+    "Fiscalité des donations et successions": null // No existing page
+  };
+  return pageMapping[title] || null;
+};
+
 const defaultContent = {
   hero: {
-    title: "Tout savoir sur la fiscalité patrimoniale et l'optimisation fiscale",
-    paragraph:
-      "Vous cherchez à optimiser votre fiscalité tout en sécurisant et valorisant votre patrimoine ? Les stratégies de fiscalité patrimoniale vous permettent de conjuguer rendement, sécurité et transmission, en toute conformité avec la législation fiscale. Accessible aussi bien aux particuliers qu'aux chefs d’entreprise, l'optimisation fiscale repose sur des solutions juridiques, financières et immobilières adaptées à votre situation et à vos projets.",
-    pill: {
-      bullets: [
-        "Investissez dans l’immobilier neuf et profitez d’avantages fiscaux exclusifs :",
-        "TVA réduite à 10 %",
-        "Crédit d’impôt sur la taxe foncière",
-      ],
-      cta: "Je calcule mon avantage fiscal",
-      portrait: "/images/fiscalite-hero-small-photo.png",
-    },
-    ctaPanel: {
-      title: "Je télécharge mon guide de l’optimisation fiscale",
-      tag: "Version numérique",
-      placeholder: "Votre email",
-      button: "Télécharger le guide",
-    },
+    title: "Maîtrisez votre fiscalité avec expertise",
+    paragraph: "Optimisez votre situation fiscale grâce à notre expertise de plus de 30 ans. Nous vous accompagnons dans la compréhension et l'application des stratégies fiscales les plus avantageuses pour votre patrimoine. Découvrez comment réduire légalement vos impôts tout en sécurisant votre avenir financier.",
   },
   sommaire: {
     leftItems: [
-      "Qu’est-ce que l’optimisation fiscale patrimoniale ?",
-      "Pourquoi mettre en place une stratégie d’optimisation fiscale ?",
-      "Quelles sont les règles à respecter pour bénéficier des avantages fiscaux ?",
-      "Quels sont les meilleurs supports et placements pour optimiser sa fiscalité ?",
-      "Exemple d’une stratégie d’optimisation fiscale réussie",
-      "Quels pièges éviter et quelles bonnes pratiques adopter ?",
-      "Questions fréquentes sur l’optimisation fiscale",
+      "Impôt sur le revenu",
+      "Déclaration d'impôts", 
+      "Tranches, barèmes, plafonds",
+      "Lois fiscales",
+      "Réductions d'impôt/déficit foncier",
+      "Fiscalité des placements financiers : ce qu'il faut absolument comprendre",
+      "PFU ou Prélèvement Forfaitaire Unique : tout ce qu'un investisseur doit savoir",
+      "Tranche Marginale d'Imposition (TMI) + Prélèvements sociaux : ce que tout investisseur doit comprendre",
+      "Fiscalité de l'épargne salariale et retraite",
+      "Fiscalité des donations et successions"
     ],
     boxes: [
-      "Un prix d’acquisition avantageux grâce à une TVA réduite à 10 %",
-      "Autre avantage fiscal ou information",
-      "Encore un autre avantage ou info",
+      "Optimisation fiscale personnalisée",
+      "Conseil en stratégie patrimoniale", 
+      "Accompagnement dans vos démarches"
     ],
   },
   lli: {
@@ -46,7 +51,7 @@ const defaultContent = {
     html:
       "Le Logement Locatif Intermédiaire (LLI) est une solution d’investissement immobilier conçue pour les particuliers souhaitant optimiser leur fiscalité tout en développant leur patrimoine. Il s’adresse aux investisseurs recherchant une combinaison efficace entre performance financière, sécurité patrimoniale et avantages fiscaux.\n\n<b>Avec le dispositif LLI, vous bénéficiez :</b>\nD’un investissement dans un bien immobilier neuf, conforme aux dernières réglementations techniques et environnementales\nD’une TVA réduite à 10 % sur le prix d’acquisition, permettant d’alléger votre coût d’investissement\nD’un crédit d’impôt sur la taxe foncière, valable jusqu’à 20 ans, venant renforcer la rentabilité de votre opération patrimoniale",
     button: "Je réalise ma simulation",
-    image: "/images/fiscalite-lli-image-aeac3b.png",
+    image: "/images/fisc2.webp",
   },
   benefits: {
     image: "/images/fiscalite-lli-benefits-66eac5.png",
@@ -100,75 +105,44 @@ const defaultContent = {
     "hero",
     "sommaire",
     "lli",
-    "benefits",
-    "bottomCta",
-    "whereInvest",
-    "example",
   ],
+};
+
+// Fonction pour convertir le contenu du CMS vers le format de la page
+const convertCMSContentToPageFormat = (cmsContent) => {
+  if (!cmsContent) {
+    return {};
+  }
+
+  // Le nouveau CMS utilise un format plat, pas besoin de conversion complexe
+  // On peut utiliser directement le contenu
+  return cmsContent;
 };
 
 export default function FiscalitePage() {
   const [content, setContent] = useState(defaultContent);
 
-  // Load content from database or localStorage
+  // Clear localStorage and disable CMS/database loading
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    // Clear localStorage immediately
+    try {
+      localStorage.clear();
+      console.log('Fiscalité page: localStorage cleared');
+    } catch (error) {
+      console.error('Error clearing localStorage:', error);
+    }
+
+    // Always use default content to prevent flash
+    setContent(defaultContent);
+    console.log('Fiscalité page: Using default content only - CMS disabled to prevent flash');
     
-    const loadContentFromDatabase = async () => {
-      try {
-        // Essayer d'abord la base de données
-        const response = await fetch('/api/pages/content?path=/fiscalite&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            setContent((prev) => ({ ...prev, ...result.content.content }));
-            return;
-          }
-        }
-      } catch (error) {
-        console.log('Base de données non disponible, utilisation du localStorage');
-      }
-
-      // Fallback vers localStorage
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          setContent((prev) => ({ ...prev, ...parsed }));
-        }
-      } catch (e) {
-        console.error("Failed to load fiscalité content", e);
-      }
+    // Listen for custom content update events (but don't auto-load)
+    const handleContentUpdate = async () => {
+      console.log('Fiscalité page: Content update event received - but CMS loading is disabled');
     };
 
-    loadContentFromDatabase();
-  }, []);
-
-  // Live update on CustomEvent from CMS
-  useEffect(() => {
-    const handler = async () => {
-      // Recharger depuis la base de données quand le contenu est mis à jour
-      try {
-        const response = await fetch('/api/pages/content?path=/fiscalite&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            setContent((prev) => ({ ...prev, ...result.content.content }));
-            return;
-          }
-        }
-      } catch (error) {
-        console.log('Base de données non disponible, utilisation du localStorage');
-      }
-
-      // Fallback vers localStorage
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) setContent((prev) => ({ ...prev, ...JSON.parse(saved) }));
-      } catch {}
-    };
-    window.addEventListener("contentUpdated", handler);
-    return () => window.removeEventListener("contentUpdated", handler);
+    window.addEventListener('contentUpdated', handleContentUpdate);
+    return () => window.removeEventListener('contentUpdated', handleContentUpdate);
   }, []);
 
   const sections = useMemo(() => content.sectionOrder || defaultContent.sectionOrder, [content.sectionOrder]);
@@ -178,95 +152,112 @@ export default function FiscalitePage() {
       <Header />
 
       {sections.includes("hero") && (
-        <section className="bg-[#FAFFEF]">
-          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-7">
-                <h1 className="font-[300] text-[#112033] text-3xl sm:text-4xl lg:text-5xl leading-tight mb-4">
-                  {content.hero.title}
-                </h1>
-                <p className="text-[#686868] text-sm sm:text-base leading-relaxed max-w-2xl">
-                  {content.hero.paragraph}
-                </p>
-              </div>
-
-              <div className="lg:col-span-5">
-                <div className="relative h-[220px] sm:h-[230px] lg:h-[208px] w-full max-w-[560px] ml-auto rounded-l-xl rounded-r-[220px] bg-white shadow-md overflow-hidden">
-                  <div className="h-full pr-40 pl-5 sm:pl-6 py-5 flex flex-col justify-center">
-                    <p className="uppercase text-[11px] tracking-wide text-[#112033] mb-1">
-                      Optimisez votre fiscalité grâce au dispositif LLI
-                    </p>
-                    <ul className="text-[12px] uppercase text-black/80 leading-7 list-disc list-inside">
-                      {content.hero.pill.bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
-                      ))}
-                    </ul>
-                    <button className="mt-3 inline-flex items-center rounded-md bg-[#B99066] text-white text-[12px] font-semibold px-3.5 py-2 shadow">
-                      {content.hero.pill.cta}
-                    </button>
-                  </div>
-                  <img
-                    src={content.hero.pill.portrait}
-                    alt="LLI"
-                    className="absolute top-4 right-4 w-[168px] h-[168px] rounded-full object-cover ring-8 ring-white"
-                  />
-                </div>
-              </div>
-
-              <div className="lg:col-start-7 lg:col-span-6">
-                <div className="rounded-xl bg-[#008D78] text-white p-5 sm:p-6 shadow-md">
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center">
-                    <div className="md:col-span-5">
-                      <h3 className="uppercase text-lg sm:text-xl font-semibold">{content.hero.ctaPanel.title}</h3>
-                      <span className="inline-block mt-3 px-2 py-1 bg-white text-[#008D78] rounded text-[12px]">
-                        {content.hero.ctaPanel.tag}
-                      </span>
-                    </div>
-                    <div className="md:col-span-7 w-full flex gap-2">
-                      <input
-                        type="email"
-                        placeholder={content.hero.ctaPanel.placeholder}
-                        className="flex-1 h-10 px-3 rounded text-[#112033] border-0 focus:ring-2 focus:ring-white/50"
-                      />
-                      <button className="h-10 px-4 rounded bg-[#B99066] text-white text-sm shadow whitespace-nowrap">
-                        {content.hero.ctaPanel.button}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <section className="relative w-full min-h-[600px] py-12 sm:py-20 lg:py-24 overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img
+              src="/images/upgrade.webp"
+              alt="Background fiscalité - Upgrade professionnel"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                console.log('Fiscalité background image failed to load:', e.target.src);
+                e.target.style.display = 'none';
+              }}
+              onLoad={() => console.log('Fiscalité background image loaded successfully')}
+            />
+          </div>
+          
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#253F60]/80 via-[#253F60]/60 to-transparent"></div>
+          
+          {/* Content */}
+          <div className="relative z-10 max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-12 flex flex-col items-center lg:items-start justify-center text-center lg:text-left min-h-[600px]">
+            <div className="max-w-2xl">
+              <h1 className="text-white text-[12px] sm:text-lg md:text-xl lg:text-4xl font-cairo font-semibold uppercase mb-4 leading-snug">
+                {content.hero.title}
+              </h1>
+              <p className="text-white text-[10px] sm:text-base md:text-lg lg:text-xl mb-8 font-inter leading-relaxed">
+                {content.hero.paragraph}
+              </p>
+              
+              {/* CTA Button */}
+              <button className="bg-[#B99066] text-white px-8 py-3 rounded-full text-xs sm:text-sm font-semibold uppercase shadow-lg hover:bg-[#A67A5A] transition-colors duration-200">
+                Optimiser ma fiscalité maintenant
+              </button>
             </div>
           </div>
         </section>
       )}
 
       {sections.includes("sommaire") && (
-        <section className="py-10 lg:py-14">
+        <section className="py-16 lg:py-20 bg-gradient-to-br from-[#F8FAFB] to-[#F1F5F9]">
           <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="uppercase text-[#112033] text-xl sm:text-2xl font-semibold">Sommaire</h2>
-              <div className="hidden md:block w-6 h-6 opacity-50 bg-[#4EBBBD] rounded"></div>
+            {/* Section Header */}
+            <div className="text-center mb-12">
+              <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 rounded-full mx-auto"></div>
+              <h2 className="text-2xl lg:text-3xl font-cairo font-semibold text-[#112033] mb-2">Sommaire</h2>
+              <p className="text-[#4A5568] font-inter">Découvrez tous nos domaines d'expertise fiscale</p>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-5 text-[#243E5F] text-sm leading-7">
-                <p>
-                  {content.sommaire.leftItems.map((it, i) => (
-                    <span key={i}>
-                      {it}
-                      <br />
-                    </span>
-                  ))}
-                </p>
-              </div>
-              <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-6">
-                {content.sommaire.boxes.map((label, i) => (
-                  <div
-                    key={i}
-                    className="rounded-lg bg-[#4EBBBD] text-white p-4 flex items-center justify-center text-center text-[13px] font-semibold min-h-[120px] shadow"
-                  >
-                    {label}
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+              {/* Left: Topics List */}
+              <div className="lg:col-span-7">
+                <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                  <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-6">Nos domaines d'expertise</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {content.sommaire.leftItems.map((item, index) => {
+                      const pageUrl = getPageUrl(item);
+                      const isClickable = pageUrl !== null;
+                      
+                      return (
+                        <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                          <div className="w-2 h-2 bg-[#4EBBBD] rounded-full mt-2 flex-shrink-0"></div>
+                          {isClickable ? (
+                            <Link href={pageUrl} className="text-[#374151] font-inter text-sm leading-relaxed hover:text-[#4EBBBD] hover:underline transition-colors duration-200 cursor-pointer">
+                              {item}
+                            </Link>
+                          ) : (
+                            <span className="text-[#374151] font-inter text-sm leading-relaxed opacity-75">
+                              {item}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
-                ))}
+                </div>
+              </div>
+
+              {/* Right: Service Cards */}
+              <div className="lg:col-span-5">
+                <div className="grid grid-cols-1 gap-6">
+                  {content.sommaire.boxes.map((service, index) => (
+                    <div key={index} className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-white">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                          <span className="text-white text-xl">
+                            {index === 0 ? '🎯' : index === 1 ? '💼' : '🤝'}
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-cairo font-semibold text-lg mb-1">{service}</h3>
+                          <p className="text-white/90 text-sm font-inter">
+                            {index === 0 ? 'Solutions sur-mesure adaptées à votre situation' :
+                             index === 1 ? 'Stratégies patrimoniales personnalisées' :
+                             'Accompagnement complet dans vos démarches'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* CTA Section */}
+                <div className="mt-8 text-center">
+                  <button className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-8 py-4 rounded-lg font-inter font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                    Consulter nos experts
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -291,93 +282,9 @@ export default function FiscalitePage() {
         </section>
       )}
 
-      {sections.includes("benefits") && (
-        <section className="py-10 lg:py-16 bg-white">
-          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-              <div className="rounded-xl overflow-hidden order-2 lg:order-1">
-                <img src={content.benefits.image} alt="LLI Avantages" className="w-full h-[360px] sm:h-[420px] object-cover" />
-              </div>
-              <div className="order-1 lg:order-2">
-                <div className="w-[1.6px] h-24 bg-[#4EBBBD] mb-6 hidden lg:block" />
-                <div className="text-[#000] text-base leading-8 uppercase whitespace-pre-line" dangerouslySetInnerHTML={{ __html: content.benefits.html.replace(/\n/g, '<br />') }} />
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
 
-      {sections.includes("bottomCta") && (
-        <section className="py-10 lg:py-16 bg-white">
-          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center rounded-xl shadow-md">
-              <div className="p-6 lg:p-8">
-                <h4 className="font-semibold text-[#000] leading-6 mb-4">{content.bottomCta.textTitle}</h4>
-                <p className="text-[#000] leading-7 text-sm mb-4">{content.bottomCta.textBody}</p>
-                <button className="rounded-md bg-[#B99066] text-white px-6 py-2 shadow font-semibold">{content.bottomCta.button}</button>
-              </div>
-              <div className="rounded-xl overflow-hidden">
-                <img src={content.bottomCta.image} alt="LLI Section Bottom" className="w-full h-56 sm:h-64 lg:h-[254px] object-cover" />
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
 
-      {sections.includes("whereInvest") && (
-        <section className="py-10 lg:py-16 bg-white">
-          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-stretch">
-              <div className="order-1 h-80 sm:h-[480px] lg:h-full">
-                <img src={content.whereInvest.image} alt="Conseillère - Où investir" className="w-full h-full object-cover rounded-xl" />
-              </div>
-              <div className="order-2">
-                <h3 className="text-[#112033] text-xl font-semibold mb-4">Où investir pour maximiser les avantages du LLI ?</h3>
-                <p className="text-[#686868] text-[15px] leading-7 mb-6">{content.whereInvest.intro}</p>
-                <div className="space-y-6 text-[#686868] text-[15px] leading-7">
-                  {content.whereInvest.cities.map((city, idx) => (
-                    <div key={idx}>
-                      <h4 className="text-[#112033] font-semibold mb-1">{city.name}</h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        {city.points.map((p, i) => (
-                          <li key={i}>{p}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
 
-      {sections.includes("example") && (
-        <section className="py-10 lg:py-16 bg-white">
-          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-              <div>
-                <h3 className="text-[#112033] text-lg sm:text-xl font-semibold mb-4">{content.example.title}</h3>
-                <div className="space-y-4 text-[#686868] text-[15px] leading-7">
-                  <p>{content.example.lead}</p>
-                  <div>
-                    <p className="text-[#112033] font-semibold mb-2">{content.example.bulletsTitle}</p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      {content.example.bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="w-12 h-[1.6px] bg-[#4EBBBD] mb-4 hidden lg:block" />
-                <img src={content.example.image} alt="Investir dans l’immobilier avec succès" className="w-full h-[260px] sm:h-[360px] lg:h-[574px] object-cover" />
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
     </>
   );
 } 

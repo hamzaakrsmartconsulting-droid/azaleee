@@ -6,11 +6,11 @@ import Footer from "../../../components/common/Footer";
 const STORAGE_KEY = "tranchesBaremesPlafondsContent";
 
 export default function TranchesBaremesPlafondsPage() {
-  const [selectedYear, setSelectedYear] = useState("2024");
+  const [selectedYear, setSelectedYear] = useState("2025");
   const [selectedSituation, setSelectedSituation] = useState("celibataire");
   const [content, setContent] = useState({});
 
-  const years = ["2024", "2023", "2022"];
+  const years = ["2025", "2024", "2023"];
   const situations = [
     { id: "celibataire", label: "Célibataire", parts: 1 },
     { id: "marie", label: "Marié(e)/Pacsé(e)", parts: 2 },
@@ -44,8 +44,8 @@ export default function TranchesBaremesPlafondsPage() {
   }, []);
 
   // Use CMS data or fallback to default data
-  const heroTitle = content.hero?.title || "Tranches, barèmes et plafonds";
-  const heroSubtitle = content.hero?.subtitle || "Comprenez le fonctionnement du barème progressif de l'impôt sur le revenu. Découvrez les seuils, taux et calculs pour optimiser votre fiscalité.";
+  const heroTitle = content.hero?.title || "Tranches, barèmes, plafond";
+  const heroSubtitle = content.hero?.subtitle || "L'impôt sur le revenu est calculé selon un barème progressif par tranches. Plus le revenu est élevé, plus le taux d'imposition marginal augmente. Le <strong>taux marginal d'imposition</strong> (TMI) est le taux d'imposition qui s'applique à la <strong>tranche la plus élevée</strong> de vos revenus. Le <strong>taux moyen d'imposition</strong> est le taux moyen auquel vos revenus sont taxés.";
   const heroImage = content.hero?.image || "";
 
   // Use CMS barème data or fallback to default
@@ -70,19 +70,29 @@ export default function TranchesBaremesPlafondsPage() {
     // Fallback to default data
     return [
       {
-        nom: "Plafond du quotient familial",
-        montant: 1592,
-        description: "Limite de réduction d'impôt pour les enfants à charge et autres personnes à charge."
+        nom: "Plafonnement quotient familial",
+        montant: 1759,
+        description: "Limite de réduction d'impôt par demi-part supplémentaire en 2025."
       },
       {
-        nom: "Plafond Pinel",
-        montant: 300000,
-        description: "Montant maximum d'investissement pour bénéficier de la réduction d'impôt Pinel."
+        nom: "Plafonnement niches fiscales",
+        montant: 10000,
+        description: "Plafond global des réductions et crédits d'impôt par foyer fiscal."
       },
       {
-        nom: "Plafond CSE",
-        montant: 3000,
-        description: "Plafond annuel pour les avantages en nature et chèques cadeaux du CSE."
+        nom: "Plafonnement niches fiscales (spécial)",
+        montant: 18000,
+        description: "Plafond pour certains dispositifs (Girardin, Sofica)."
+      },
+      {
+        nom: "Pension alimentaire",
+        montant: 6674,
+        description: "Plafond déductible pour pension alimentaire versée à un enfant majeur."
+      },
+      {
+        nom: "PER - Limite revenus",
+        montant: 35194,
+        description: "Plafond annuel pour les versements déductibles au PER."
       }
     ];
   };
@@ -101,6 +111,13 @@ export default function TranchesBaremesPlafondsPage() {
       .replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm">$1</code>');
   };
 
+  const bareme2025 = [
+    { seuil: 0, taux: 0, montant: 0, description: "Jusqu'à" },
+    { seuil: 11497, taux: 11, montant: 0, description: "De" },
+    { seuil: 29315, taux: 30, montant: 1964, description: "De" },
+    { seuil: 83823, taux: 41, montant: 16425, description: "De" },
+    { seuil: 180294, taux: 45, montant: 39560, description: "Au-delà de" }
+  ];
   const bareme2024 = getBaremeFromCMS();
   const bareme2023 = [
     { seuil: 0, taux: 0, montant: 0, description: "Jusqu'à" },
@@ -120,10 +137,11 @@ export default function TranchesBaremesPlafondsPage() {
 
   const getBareme = () => {
     switch(selectedYear) {
+      case "2025": return bareme2025;
       case "2024": return bareme2024;
       case "2023": return bareme2023;
       case "2022": return bareme2022;
-      default: return bareme2024;
+      default: return bareme2025;
     }
   };
 
@@ -415,6 +433,79 @@ export default function TranchesBaremesPlafondsPage() {
         </div>
       </section>
 
+      {/* Notions importantes */}
+      <section className="py-12 bg-white">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            Trois notions essentielles à maîtriser
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-[#E8F5E8] to-[#D4EDDA] rounded-xl p-6 shadow-lg">
+              <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
+                <span>👨‍👩‍👧‍👦</span> Quotient familial
+              </h3>
+              <p className="text-[#374151] text-sm mb-4">
+                Ajuste le calcul de l'impôt selon la composition du foyer. Plus le foyer a de parts, plus l'économie d'impôt est importante.
+              </p>
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-[#686868] text-xs mb-2"><strong>Calcul des parts :</strong></p>
+                <ul className="text-[#686868] text-xs space-y-1">
+                  <li>• Un adulte = 1 part</li>
+                  <li>• 2 premiers enfants = 0,5 part chacun</li>
+                  <li>• Enfants suivants = 1 part chacun</li>
+                  <li>• Famille (2+3 enfants) = 4 parts</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-[#FFEFD5] to-[#FFE4B5] rounded-xl p-6 shadow-lg">
+              <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
+                <span>💰</span> Plafonnement
+              </h3>
+              <p className="text-[#374151] text-sm mb-4">
+                Limite l'utilisation des avantages fiscaux. Le plafonnement global des niches fiscales est fixé à 10 000 € par an.
+              </p>
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-[#686868] text-xs mb-2"><strong>Plafonds 2025 :</strong></p>
+                <ul className="text-[#686868] text-xs space-y-1">
+                  <li>• Niches fiscales : 10 000 €</li>
+                  <li>• Dispositifs spéciaux : 18 000 €</li>
+                  <li>• Quotient familial : 1 759 €/demi-part</li>
+                  <li>• PER : 10% des revenus</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-[#E3F2FD] to-[#BBDEFB] rounded-xl p-6 shadow-lg">
+              <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
+                <span>📈</span> Effet de tranche
+              </h3>
+              <p className="text-[#374151] text-sm mb-4">
+                Peut être optimisé par des arbitrages patrimoniaux : assurance-vie, rachats programmés, versements PER.
+              </p>
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-[#686868] text-xs mb-2"><strong>Optimisations possibles :</strong></p>
+                <ul className="text-[#686868] text-xs space-y-1">
+                  <li>• Assurance-vie</li>
+                  <li>• Rachats programmés</li>
+                  <li>• Versements PER</li>
+                  <li>• Déficit foncier</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white text-center">
+            <h3 className="text-xl font-semibold mb-3">💡 Conseil Azalée Patrimoine</h3>
+            <p className="text-base opacity-90">
+              La compréhension de ces mécanismes permet d'identifier des marges de manœuvre pour réduire la fiscalité 
+              de manière légale et sécurisée. Nos experts vous accompagnent dans cette optimisation.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Evolution over years */}
       <section className="py-12 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -466,6 +557,131 @@ export default function TranchesBaremesPlafondsPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Quotient familial et plafonnement */}
+      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            Quotient familial et plafonnement
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-[#112033] text-xl font-semibold mb-4">Calcul du quotient familial</h3>
+              <p className="text-[#374151] text-base leading-relaxed mb-4">
+                Le quotient familial permet de diviser le revenu imposable du foyer par le nombre de parts fiscales 
+                (adultes et enfants à charges, et éventuellement parents au delà de 75 ans), ce qui réduit l'impôt dû.
+              </p>
+              <div className="bg-gradient-to-r from-[#E8F5E8] to-[#D4EDDA] rounded-lg p-4 mb-4">
+                <p className="text-[#112033] font-semibold mb-2">Règle des parts :</p>
+                <ul className="text-[#374151] text-sm space-y-1">
+                  <li>• Un adulte vaut 1 part</li>
+                  <li>• Les 2 premiers enfants valent 1/2 part</li>
+                  <li>• Les enfants suivants valent 1 part</li>
+                  <li>• Ainsi, une famille (2 parents + 3 enfants) équivaut à 4 parts</li>
+                </ul>
+              </div>
+              <div className="bg-gradient-to-r from-[#FFE4E1] to-[#FFCCCB] rounded-lg p-4">
+                <p className="text-[#112033] font-semibold mb-2">⚠️ Plafonnement 2025 :</p>
+                <p className="text-[#374151] text-sm">
+                  L'avantage procuré par chaque part ou demi-part supplémentaire est plafonné à <strong>1 759 € par demi-part</strong>. 
+                  Dans les foyers à hauts revenus, l'économie d'impôt liée aux enfants est limitée.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-[#112033] text-xl font-semibold mb-4">Rattacher ou détacher un enfant majeur</h3>
+              <p className="text-[#374151] text-base leading-relaxed mb-4">
+                À partir de 18 ans, un enfant peut choisir d'être rattaché au foyer fiscal de ses parents ou de faire sa propre déclaration.
+              </p>
+              
+              <div className="space-y-4">
+                <div className="bg-gradient-to-r from-[#E3F2FD] to-[#BBDEFB] rounded-lg p-4">
+                  <h4 className="text-[#112033] font-semibold mb-2">Cas où il est plus avantageux de sortir l'enfant :</h4>
+                  <ul className="text-[#374151] text-sm space-y-1">
+                    <li>• Étudiant avec abattements spécifiques</li>
+                    <li>• Faibles revenus (non imposable)</li>
+                    <li>• Pension alimentaire déductible (plafonnée à 6 674 € en 2025)</li>
+                  </ul>
+                </div>
+
+                <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-4 text-white">
+                  <h4 className="font-semibold mb-2">👉 Conseil Azalée Patrimoine</h4>
+                  <p className="text-sm opacity-90">
+                    L'arbitrage entre rattachement et détachement doit être étudié au cas par cas. 
+                    Un conseiller en gestion de patrimoine peut réaliser des simulations pour comparer les deux options.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Plafonnement des niches fiscales */}
+      <section className="py-12 bg-white">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            Le plafonnement des niches fiscales
+          </h2>
+          
+          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h3 className="text-[#112033] text-xl font-semibold mb-4">Mécanisme du plafonnement global</h3>
+            <p className="text-[#374151] text-base leading-relaxed mb-6">
+              Le système fiscal français limite l'utilisation des avantages fiscaux grâce au mécanisme du plafonnement global des niches fiscales. 
+              Celui-ci vise à éviter que l'accumulation de réductions et crédits d'impôt ne réduise trop fortement l'impôt dû.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-gradient-to-r from-[#E8F5E8] to-[#D4EDDA] rounded-lg p-6">
+                <h4 className="text-[#112033] font-semibold mb-3">Plafond général : 10 000 €</h4>
+                <p className="text-[#374151] text-sm mb-3">Pour la plupart des réductions et crédits d'impôt :</p>
+                <ul className="text-[#374151] text-sm space-y-1">
+                  <li>• Emploi à domicile</li>
+                  <li>• Loi Pinel</li>
+                  <li>• Dons</li>
+                  <li>• Investissements PME</li>
+                </ul>
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#FFEFD5] to-[#FFE4B5] rounded-lg p-6">
+                <h4 className="text-[#112033] font-semibold mb-3">Plafond spécial : 18 000 €</h4>
+                <p className="text-[#374151] text-sm mb-3">Pour certains dispositifs spécifiques :</p>
+                <ul className="text-[#374151] text-sm space-y-1">
+                  <li>• Investissements outre-mer (loi Girardin)</li>
+                  <li>• Sofica</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-[#E3F2FD] to-[#BBDEFB] rounded-xl p-6 mb-8">
+            <h3 className="text-[#112033] text-lg font-semibold mb-3">Cas particuliers : Le PER</h3>
+            <p className="text-[#374151] text-base leading-relaxed">
+              Le PER échappe au plafonnement global mais possède ses propres règles : les versements déductibles sont limités à 
+              10 % des revenus professionnels (dans la limite de 35 194 € en 2025) ou à 10 % du plafond annuel de la Sécurité sociale (PASS) 
+              si ce montant est plus avantageux.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white">
+            <h3 className="text-xl font-semibold mb-3">👉 Chez Azalée Patrimoine</h3>
+            <p className="text-base opacity-90 mb-4">
+              Nous réalisons des simulations personnalisées pour optimiser l'utilisation de vos niches fiscales et hiérarchiser 
+              les dispositifs les plus pertinents selon vos revenus et vos objectifs.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="bg-white text-[#005C69] px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200">
+                Simulation personnalisée
+              </button>
+              <button className="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-[#005C69] transition-colors duration-200">
+                Prendre rendez-vous
+              </button>
+            </div>
           </div>
         </div>
       </section>

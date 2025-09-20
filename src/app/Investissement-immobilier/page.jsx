@@ -29,48 +29,36 @@ export default function InvestissementImmobilierPage() {
               </button>
             </div>
             
-            {/* Right Card */}
-            <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
-              {/* Icon */}
-              <div className="flex items-center gap-4 mb-4 sm:mb-6">
+            {/* Right Image */}
+            <div className="w-full lg:w-[467px] flex justify-center lg:justify-end">
+              <div className="relative">
+                {/* Decorative background */}
+                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#4EBBBD]/20 rounded-2xl"></div>
+                
+                {/* Main image */}
                 <img
-                  src="/images/investissement-immobilier-header-icon-56586a.png"
-                  alt="Expert Icon"
-                  className="w-8 h-8 sm:w-9 sm:h-9"
+                  src="/images/immobilier.webp"
+                  alt="Femme dirigeante consultant des plans d'appartement neuf dans un bureau moderne"
+                  className="relative z-10 w-full max-w-md lg:max-w-lg rounded-2xl shadow-2xl object-cover border-4 border-white"
+                  style={{ aspectRatio: '4/3' }}
+                  onError={(e) => {
+                    console.log('Immobilier card image failed to load:', e.target.src);
+                  }}
+                  onLoad={() => console.log('Immobilier card image loaded successfully')}
                 />
-                <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight">
-                  Nos experts à votre service
-          </h2>
-              </div>
-              
-              {/* Floating Price Card */}
-              <div className="absolute -top-16 -right-8 w-[202px] h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
-                <div className="text-center text-white font-source-sans font-semibold text-base sm:text-lg lg:text-xl leading-tight">
-                  0 € →<br />
-                  Analyse personnalisée gratuite
+                
+                {/* Floating badge */}
+                <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-full flex items-center justify-center">
+                      <span className="text-white text-lg">✓</span>
+                    </div>
+                    <div>
+                      <p className="text-[#112033] font-semibold text-sm">0 €</p>
+                      <p className="text-[#4A5568] text-xs">Analyse gratuite</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              
-              {/* Services List */}
-              <div className="mt-8 sm:mt-12">
-                <ul className="space-y-2 sm:space-y-3 text-white text-xs sm:text-sm font-source-sans font-semibold leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Analyse globale de votre situation patrimoniale</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Optimisation de vos investissements et rendements</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Accompagnement sur le financement et la fiscalité immobilière</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Stratégie d'acquisition, de gestion locative & transmission patrimoniale</span>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -534,81 +522,6 @@ export default function InvestissementImmobilierPage() {
         </div>
       </section>
 
-      {/* Guide Download Section */}
-      <section className="w-full relative py-16 sm:py-20 lg:py-24 overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/investissement-immobilier-guide-background-46a33f.png"
-            alt="Guide Background"
-            className="w-full h-full object-cover"
-            />
-          </div>
-        
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#253F60] to-[#B99066] opacity-90"></div>
-        
-        {/* Content */}
-        <div className="relative z-10 max-w-[1255px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-            {/* Left Content */}
-            <div className="flex-1 text-white">
-              {/* Title */}
-              <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold uppercase leading-tight mb-4 sm:mb-6">
-                RÉDUISEZ EFFICACEMENT VOTRE FISCALITÉ
-              </h2>
-              
-              {/* Description */}
-              <p className="text-white text-base sm:text-lg lg:text-xl font-source-sans leading-relaxed mb-8 sm:mb-12 max-w-2xl">
-                Nos experts analysent pour vous l'ensemble des solutions légales pour alléger votre imposition et optimiser la gestion de votre patrimoine.
-              </p>
-              
-              {/* Download Button */}
-              <button className="bg-white text-black px-8 sm:px-12 py-4 sm:py-6 rounded-lg shadow-lg font-source-sans font-semibold text-lg sm:text-xl hover:bg-gray-100 transition-colors duration-200 transform hover:scale-105">
-                Je télécharge mon guide gratuit
-              </button>
-        </div>
-            
-            {/* Right Side - Overlapping Brochures */}
-            <div className="hidden lg:flex flex-1 justify-center items-center relative h-80">
-              {/* Back Brochure - Loi Denormandie */}
-              <div className="absolute transform rotate-12 translate-x-8 translate-y-4 z-10">
-                <div className="w-48 h-64 bg-white rounded-lg shadow-lg overflow-hidden">
-                  <div className="w-full h-16 bg-gray-700"></div>
-                  <div className="p-4">
-                    <h3 className="text-sm font-bold text-white bg-gray-700 px-2 py-1 rounded mb-2">LOI DENORMANDIE</h3>
-                    <p className="text-xs text-gray-600">Solutions d'investissement</p>
-      </div>
-                </div>
-              </div>
-              
-              {/* Middle Brochure - De la Défiscalisation */}
-              <div className="absolute transform -rotate-6 translate-x-2 -translate-y-2 z-20">
-                <div className="w-48 h-64 bg-white rounded-lg shadow-lg overflow-hidden">
-                  <div className="w-full h-16 bg-gray-600"></div>
-                  <div className="p-4">
-                    <h3 className="text-sm font-bold text-white bg-gray-600 px-2 py-1 rounded mb-2">DE LA DÉFISCALISATION</h3>
-                    <p className="text-xs text-gray-600">Guide complet</p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Front Brochure - Guide Défiscalisation */}
-              <div className="absolute transform rotate-3 -translate-x-4 -translate-y-4 z-30">
-                <div className="w-48 h-64 bg-white rounded-lg shadow-lg overflow-hidden">
-                  <div className="w-full h-16 bg-gray-400"></div>
-                  <div className="p-4">
-                    <h3 className="text-sm font-bold text-gray-800 mb-2">GUIDE DÉFISCALISATION</h3>
-                    <p className="text-xs text-gray-600 mb-1">Transformez vos impôts en patrimoine</p>
-                    <p className="text-xs text-gray-600 mb-2">Payez moins d'impôt !</p>
-                    <div className="text-xs text-gray-500 mt-4">Celexium</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Retirement Planning Section */}
       <section className="w-full bg-white py-16 sm:py-20 lg:py-24">

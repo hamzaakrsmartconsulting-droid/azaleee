@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
-const LOCAL_STORAGE_KEY = 'homepageContent';
-
 const defaultContent = {
   // Hero Section
   heroTitle: "Votre partenaire de confiance en matière de gestion de patrimoine, de fiscalité et de conseil en investissement.",
@@ -124,10 +122,9 @@ export default function CMSPage() {
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    // Charger le contenu depuis la base de données ou localStorage
+    // Charger le contenu depuis la base de données
     const loadContentFromDatabase = async () => {
       try {
-        // Essayer d'abord la base de données
         const response = await fetch('/api/pages/content?path=/&type=cms');
         if (response.ok) {
           const result = await response.json();
@@ -138,16 +135,12 @@ export default function CMSPage() {
             return;
           }
         }
+        
+        // Si pas de contenu en base, utiliser le contenu par défaut
+        console.log('Aucun contenu trouvé en base de données, utilisation du contenu par défaut');
       } catch (error) {
-        console.log('Base de données non disponible, utilisation du localStorage');
-      }
-
-      // Fallback vers localStorage
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setContent({ ...defaultContent, ...parsed });
-        if (parsed.sectionOrder) setSectionOrder(parsed.sectionOrder);
+        console.error('Erreur lors du chargement depuis la base de données:', error);
+        // En cas d'erreur, utiliser le contenu par défaut
       }
     };
 
@@ -192,7 +185,6 @@ export default function CMSPage() {
     const dataToSave = { ...content, sectionOrder };
     
     try {
-      // Essayer d'abord la base de données
       const response = await fetch('/api/pages/content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -212,13 +204,12 @@ export default function CMSPage() {
         console.log('Sauvegardé en base de données');
         setStatus('Saved to Database!');
       } else {
-        throw new Error('Erreur base de données');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
       }
     } catch (error) {
-      console.log('Base de données non disponible, utilisation du localStorage');
-      // Fallback vers localStorage
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
-      setStatus('Saved to LocalStorage!');
+      console.error('Erreur lors de la sauvegarde:', error);
+      setStatus(`Erreur: ${error.message}`);
     }
     
     // Dispatch custom event to notify other components
@@ -247,7 +238,7 @@ export default function CMSPage() {
     contactBar: 'Barre Contact/Catégories',
   };
 
-  return (
+    return (
     <div className="space-y-6">
       {/* Header */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
@@ -290,11 +281,11 @@ export default function CMSPage() {
                       >
                         <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#4EBBBD] text-white flex items-center justify-center font-bold text-sm">
                           {idx + 1}
-                        </div>
+              </div>
                         <div className="flex-shrink-0 text-[#4EBBBD] text-xl">⋮⋮</div>
                         <span className="font-medium text-[#112033]">{sectionLabels[section] || section}</span>
-                    </div>
-                  )}
+                  </div>
+                )}
                 </Draggable>
               ))}
               {provided.placeholder}
@@ -302,7 +293,7 @@ export default function CMSPage() {
           )}
         </Droppable>
       </DragDropContext>
-        </div>
+          </div>
 
       {/* Content Sections */}
       <div className="space-y-6">
@@ -316,46 +307,46 @@ export default function CMSPage() {
                     Section Hero
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
                       <textarea 
-                        name="heroTitle" 
-                        value={content.heroTitle} 
-                        onChange={handleChange} 
+                    name="heroTitle"
+                    value={content.heroTitle}
+                    onChange={handleChange}
                         rows={3} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
                       <textarea 
-                        name="heroSubtitle" 
-                        value={content.heroSubtitle} 
-                        onChange={handleChange} 
+                    name="heroSubtitle"
+                    value={content.heroSubtitle}
+                    onChange={handleChange}
                         rows={3} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-                      <input 
-                        name="heroButton1" 
-                        value={content.heroButton1} 
-                        onChange={handleChange} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-              </div>
-                    <div>
+                  <input
+                    name="heroButton1"
+                    value={content.heroButton1}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-                      <input 
-                        name="heroButton2" 
-                        value={content.heroButton2} 
-                        onChange={handleChange} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
+                  <input
+                    name="heroButton2"
+                    value={content.heroButton2}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
               </div>
-              </div>
-              </div>
+            </div>
               );
           case 'intro':
               return (
@@ -364,37 +355,37 @@ export default function CMSPage() {
                     <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
                     Section Introduction
                   </h2>
-                  <div className="space-y-4">
-                    <div>
+              <div className="space-y-4">
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-                      <input 
-                        name="introTitle" 
-                        value={content.introTitle} 
-                        onChange={handleChange} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
+                  <input
+                    name="introTitle"
+                    value={content.introTitle}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Paragraphe</label>
-                      <textarea 
-                        name="introParagraph" 
-                        value={content.introParagraph} 
-                        onChange={handleChange} 
-                        rows={4} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
+                  <textarea
+                    name="introParagraph"
+                    value={content.introParagraph}
+                    onChange={handleChange}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Bouton</label>
-                      <input 
-                        name="introButton" 
-                        value={content.introButton} 
-                        onChange={handleChange} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
+                  <input
+                    name="introButton"
+                    value={content.introButton}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
               </div>
-              </div>
-              </div>
+            </div>
               );
           case 'experts':
               return (
@@ -403,26 +394,26 @@ export default function CMSPage() {
                     <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
                     Section Experts
                   </h2>
-                  <div className="space-y-4">
-                    <div>
+              <div className="space-y-4">
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-                      <input 
-                        name="expertsTitle" 
-                        value={content.expertsTitle} 
-                        onChange={handleChange} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-              </div>
-                    <div>
+                  <input
+                    name="expertsTitle"
+                    value={content.expertsTitle}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-                      <textarea 
-                        name="expertsDescription" 
-                        value={content.expertsDescription} 
-                        onChange={handleChange} 
-                        rows={3} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-              </div>
+                  <textarea
+                    name="expertsDescription"
+                    value={content.expertsDescription}
+                    onChange={handleChange}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
                     <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Liste des experts</label>
               <DragDropContext onDragEnd={onDragEndExperts}>
@@ -604,12 +595,12 @@ export default function CMSPage() {
                     <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
                     Section Statistiques
                   </h2>
-                  <div className="space-y-4">
+                <div className="space-y-4">
               {content.stats.map((stat, idx) => (
                       <div key={idx} className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="block text-xs font-medium text-[#686868] mb-1">Valeur</label>
-                          <input 
+                          <input
                             value={stat.value} 
                             onChange={e => handleArrayChange('stats', idx, 'value', e.target.value)} 
                             className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#4EBBBD] focus:border-transparent"
@@ -783,7 +774,7 @@ export default function CMSPage() {
                       <div key={idx} className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="block text-xs font-medium text-[#686868] mb-1">Logo {idx + 1} URL</label>
-                          <input 
+                          <input
                             value={url} 
                             onChange={e => handleArrayStringChange('partners', idx, e.target.value)} 
                             className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#4EBBBD] focus:border-transparent"
@@ -829,9 +820,9 @@ export default function CMSPage() {
                         onChange={handleChange} 
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                       />
+                </div>
               </div>
-              </div>
-              </div>
+            </div>
               );
           case 'footer':
               return (
@@ -840,7 +831,7 @@ export default function CMSPage() {
                     <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
                     Section Footer
                   </h2>
-                  <div className="space-y-4">
+              <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Expertise (séparées par une virgule)</label>
                       <input 
@@ -852,7 +843,7 @@ export default function CMSPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Outils (séparés par une virgule)</label>
-                      <input 
+                      <input
                         name="footerOutils" 
                         value={content.footerOutils.join(', ')} 
                         onChange={e => setContent({ ...content, footerOutils: e.target.value.split(',').map(s => s.trim()) })} 
@@ -861,7 +852,7 @@ export default function CMSPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Entreprise (séparées par une virgule)</label>
-                      <input 
+                      <input
                         name="footerEntreprise" 
                         value={content.footerEntreprise.join(', ')} 
                         onChange={e => setContent({ ...content, footerEntreprise: e.target.value.split(',').map(s => s.trim()) })} 
@@ -932,9 +923,9 @@ export default function CMSPage() {
                         onChange={e => setContent({ ...content, footerLinks: e.target.value.split(',').map(s => s.trim()) })} 
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                       />
+                  </div>
               </div>
-              </div>
-              </div>
+            </div>
               );
           case 'contactBar':
               return (
@@ -943,25 +934,25 @@ export default function CMSPage() {
                     <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
                     Section Barre Contact/Catégories
                   </h2>
-                  <div className="space-y-4">
-                    <div>
+              <div className="space-y-4">
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Téléphone</label>
-                      <input 
-                        name="contactPhone" 
-                        value={content.contactPhone} 
-                        onChange={handleChange} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
+                  <input
+                    name="contactPhone"
+                    value={content.contactPhone}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Email</label>
-                      <input 
-                        name="contactEmail" 
-                        value={content.contactEmail} 
-                        onChange={handleChange} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                    </div>
+                  <input
+                    name="contactEmail"
+                    value={content.contactEmail}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
                     <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Catégories (séparées par une virgule)</label>
                       <input 
@@ -971,7 +962,7 @@ export default function CMSPage() {
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                       />
               </div>
-                    <div>
+              <div>
                       <label className="block text-sm font-medium text-[#686868] mb-2">Image URL</label>
                       <input 
                         name="contactUsImage" 
@@ -980,8 +971,8 @@ export default function CMSPage() {
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                       />
               </div>
-              </div>
-              </div>
+            </div>
+          </div>
               );
           default:
               return <div key={section} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
@@ -1001,6 +992,6 @@ export default function CMSPage() {
           <span className="font-medium">Contenu sauvegardé avec succès !</span>
         </div>
       )}
-    </div>
+      </div>
   );
-} 
+}

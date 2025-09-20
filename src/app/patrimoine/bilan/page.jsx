@@ -16,39 +16,44 @@ export default function BilanPage() {
     <>
       <Header />
       
-      {/* Hero Section with bilan visualization */}
+      {/* Hero Section */}
       <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-6">
+            <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
               Bilan patrimonial
             </h1>
-            <p className="text-[#686868] text-lg sm:text-xl lg:text-2xl font-inter leading-relaxed max-w-4xl mx-auto">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p className="text-[#686868] text-lg font-inter leading-relaxed max-w-4xl mx-auto mb-8">
+              Un <strong>bilan patrimonial</strong> est l'équivalent d'une radiographie complète de votre situation financière, fiscale et familiale.
             </p>
+            <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg max-w-4xl mx-auto mb-8">
+              <p className="text-[#112033] text-sm font-inter">
+                👉 C'est le point de départ indispensable pour construire une <strong>stratégie patrimoniale sur mesure</strong>.
+              </p>
+            </div>
           </div>
           
           {/* Bilan Statistics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <h3 className="text-[#686868] text-sm font-medium mb-2">Lorem ipsum</h3>
+              <h3 className="text-[#686868] text-sm font-medium mb-2">Actifs analysés</h3>
               <p className="text-[#4EBBBD] text-3xl font-bold">€1.25M</p>
-              <p className="text-[#686868] text-sm">Dolor sit amet</p>
+              <p className="text-[#686868] text-sm">Patrimoine moyen</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <h3 className="text-[#686868] text-sm font-medium mb-2">Consectetur</h3>
-              <p className="text-[#B99066] text-3xl font-bold">10</p>
-              <p className="text-[#686868] text-sm">Adipiscing elit</p>
+              <h3 className="text-[#686868] text-sm font-medium mb-2">Optimisations</h3>
+              <p className="text-[#B99066] text-3xl font-bold">8-12</p>
+              <p className="text-[#686868] text-sm">Solutions identifiées</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <h3 className="text-[#686868] text-sm font-medium mb-2">Sed eiusmod</h3>
+              <h3 className="text-[#686868] text-sm font-medium mb-2">Économies</h3>
               <p className="text-[#59E2E4] text-3xl font-bold">€85K</p>
-              <p className="text-[#686868] text-sm">Tempor incididunt</p>
+              <p className="text-[#686868] text-sm">Potentielles</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <h3 className="text-[#686868] text-sm font-medium mb-2">Ut labore</h3>
+              <h3 className="text-[#686868] text-sm font-medium mb-2">Satisfaction</h3>
               <p className="text-[#4EBBBD] text-3xl font-bold">94.7%</p>
-              <p className="text-[#686868] text-sm">Dolore magna</p>
+              <p className="text-[#686868] text-sm">Clients satisfaits</p>
             </div>
           </div>
 
@@ -71,61 +76,78 @@ export default function BilanPage() {
         chartImage="/images/variation-chart-image-944f04.png"
       />
 
-      {/* Bilan Process Section */}
+      {/* Pourquoi réaliser un bilan patrimonial Section */}
       <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-              Lorem ipsum dolor sit amet
+            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+              Pourquoi réaliser un bilan patrimonial ?
             </h2>
+            <p className="text-[#686868] text-lg max-w-4xl mx-auto">
+              Un <strong>bilan patrimonial</strong> est l'équivalent d'une radiographie complète de votre situation financière, fiscale et familiale.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Left: Process Overview */}
+            {/* Left: Pourquoi faire un bilan */}
             <div>
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-8">
-                Lorem ipsum dolor sit amet
+              <h3 className="text-[#112033] text-xl font-semibold mb-8">
+                Il permet de :
               </h3>
               
               <div className="space-y-8">
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 bg-[#4EBBBD] rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">1</span>
+                    <span className="text-white font-bold text-xl">📊</span>
                   </div>
                   <div>
-                    <h4 className="text-[#112033] font-source-sans font-semibold mb-3">
-                      Lorem ipsum dolor sit
+                    <h4 className="text-[#112033] font-semibold mb-3">
+                      Faire un état des lieux de vos <strong>actifs</strong>
                     </h4>
                     <p className="text-[#686868] text-sm leading-relaxed">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                      Immobilier, placements financiers, épargne professionnelle, parts sociales…
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 bg-[#B99066] rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">2</span>
+                    <span className="text-white font-bold text-xl">📋</span>
                   </div>
                   <div>
-                    <h4 className="text-[#112033] font-source-sans font-semibold mb-3">
-                      Consectetur adipiscing elit
+                    <h4 className="text-[#112033] font-semibold mb-3">
+                      Identifier vos <strong>passifs</strong>
                     </h4>
                     <p className="text-[#686868] text-sm leading-relaxed">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                      Emprunts, dettes fiscales, engagements
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 bg-[#59E2E4] rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">3</span>
+                    <span className="text-white font-bold text-xl">💰</span>
                   </div>
                   <div>
-                    <h4 className="text-[#112033] font-source-sans font-semibold mb-3">
-                      Sed do eiusmod tempor
+                    <h4 className="text-[#112033] font-semibold mb-3">
+                      Évaluer votre <strong>fiscalité actuelle</strong> et ses optimisations possibles
                     </h4>
                     <p className="text-[#686868] text-sm leading-relaxed">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+                      Identifier les leviers d'optimisation fiscale disponibles
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-[#4EBBBD] rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-xl">🎯</span>
+                  </div>
+                  <div>
+                    <h4 className="text-[#112033] font-semibold mb-3">
+                      Mettre en cohérence vos <strong>objectifs de vie</strong>
+                    </h4>
+                    <p className="text-[#686868] text-sm leading-relaxed">
+                      Retraite, transmission, protection de la famille, projets immobiliers
                     </p>
                   </div>
                 </div>
@@ -134,14 +156,14 @@ export default function BilanPage() {
 
             {/* Right: Bilan Calculator */}
             <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-100">
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-6">
-                Lorem ipsum dolor sit
+              <h3 className="text-[#112033] text-xl font-semibold mb-6">
+                Calculez votre potentiel d'optimisation
               </h3>
               
               <div className="space-y-6">
                 <div>
                   <label className="block text-[#686868] text-sm font-medium mb-2">
-                    Lorem ipsum
+                    Valeur de votre patrimoine
                   </label>
                   <input 
                     type="number" 
@@ -152,19 +174,19 @@ export default function BilanPage() {
 
                 <div>
                   <label className="block text-[#686868] text-sm font-medium mb-2">
-                    Dolor sit amet
+                    Situation familiale
                   </label>
                   <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent">
-                    <option>Lorem ipsum dolor</option>
-                    <option>Consectetur adipiscing</option>
-                    <option>Sed do eiusmod</option>
-                    <option>Ut labore et dolore</option>
+                    <option>Célibataire</option>
+                    <option>Marié(e) sans enfants</option>
+                    <option>Marié(e) avec enfants</option>
+                    <option>Divorcé(e)</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-[#686868] text-sm font-medium mb-2">
-                    Consectetur elit
+                    Âge
                   </label>
                   <input 
                     type="number" 
@@ -174,13 +196,13 @@ export default function BilanPage() {
                 </div>
 
                 <button className="w-full bg-[#4EBBBD] text-white py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200">
-                  Lorem ipsum dolor sit
+                  Estimer mes économies
                 </button>
 
                 <div className="bg-[#FAFFEF] rounded-lg p-4 text-center">
                   <p className="text-[#686868] text-sm">
-                    <strong>Lorem ipsum :</strong><br />
-                    <span className="text-[#4EBBBD] text-xl font-bold">€85,000</span> d'économies
+                    <strong>Économies potentielles :</strong><br />
+                    <span className="text-[#4EBBBD] text-xl font-bold">€85,000</span> par an
                   </p>
                 </div>
               </div>
@@ -189,32 +211,29 @@ export default function BilanPage() {
         </div>
       </section>
 
-      {/* Analysis Areas Section */}
+      {/* Que contient un bilan patrimonial Section */}
       <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-              Lorem ipsum dolor sit amet
+            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+              Que contient un bilan patrimonial ?
             </h2>
+            <p className="text-[#686868] text-lg max-w-4xl mx-auto">
+              Un rapport complet qui analyse :
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#4EBBBD] text-2xl">📊</span>
+                  <span className="text-[#4EBBBD] text-2xl">👨‍👩‍👧‍👦</span>
                 </div>
-                <h3 className="text-2xl font-source-sans font-semibold mb-2">Lorem ipsum</h3>
+                <h3 className="text-2xl font-semibold mb-2">Situation familiale</h3>
               </div>
               <p className="text-sm mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+                Régime matrimonial, clauses bénéficiaires d'assurance-vie, protection du conjoint et des enfants.
               </p>
-              <ul className="space-y-2 text-sm">
-                <li>• Lorem ipsum dolor sit</li>
-                <li>• Consectetur adipiscing</li>
-                <li>• Sed do eiusmod tempor</li>
-                <li>• Ut labore et dolore</li>
-              </ul>
             </div>
 
             <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
@@ -222,187 +241,267 @@ export default function BilanPage() {
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-[#B99066] text-2xl">💰</span>
                 </div>
-                <h3 className="text-2xl font-source-sans font-semibold mb-2">Dolor sit amet</h3>
+                <h3 className="text-2xl font-semibold mb-2">Situation financière</h3>
               </div>
               <p className="text-sm mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+                Placements existants, rendement, frais.
               </p>
-              <ul className="space-y-2 text-sm">
-                <li>• Lorem ipsum dolor sit</li>
-                <li>• Consectetur adipiscing</li>
-                <li>• Sed do eiusmod tempor</li>
-                <li>• Ut labore et dolore</li>
-              </ul>
             </div>
 
             <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#59E2E4] text-2xl">🛡️</span>
+                  <span className="text-[#59E2E4] text-2xl">🏠</span>
                 </div>
-                <h3 className="text-2xl font-source-sans font-semibold mb-2">Consectetur elit</h3>
+                <h3 className="text-2xl font-semibold mb-2">Situation immobilière</h3>
               </div>
               <p className="text-sm mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+                Résidence principale, locatif, SCI, valorisation et fiscalité.
               </p>
-              <ul className="space-y-2 text-sm">
-                <li>• Lorem ipsum dolor sit</li>
-                <li>• Consectetur adipiscing</li>
-                <li>• Sed do eiusmod tempor</li>
-                <li>• Ut labore et dolore</li>
-              </ul>
+            </div>
+
+            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-[#4EBBBD] text-2xl">💼</span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">Situation professionnelle</h3>
+              </div>
+              <p className="text-sm mb-4">
+                Statut social, épargne salariale, retraite (PER, PERCO, Article 83, Madelin).
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-[#B99066] text-2xl">🎯</span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">Vos objectifs</h3>
+              </div>
+              <p className="text-sm mb-4">
+                Constitution d'un capital, transmission, optimisation fiscale, diversification.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-[#59E2E4] text-2xl">📊</span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">Résultat</h3>
+              </div>
+              <p className="text-sm mb-4">
+                Un document clair, pédagogique et opérationnel qui propose des <strong>scénarios d'optimisation</strong> et des <strong>solutions concrètes</strong>.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Recommendations Section */}
+      {/* Tarification du bilan patrimonial Section */}
       <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Recommendations Content */}
-            <div>
-              <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-8">
-                Lorem ipsum dolor sit amet
-              </h2>
-              
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Lorem ipsum dolor sit
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Consectetur adipiscing elit
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#59E2E4] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Sed do eiusmod tempor
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Recommendations Chart */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-6">
-                Lorem ipsum dolor sit
-              </h3>
-              
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-[#686868] text-sm">Lorem ipsum</span>
-                  <span className="text-[#4EBBBD] font-semibold">94.7%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-[#4EBBBD] h-2 rounded-full" style={{width: '94.7%'}}></div>
-                </div>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-[#686868] text-sm">Dolor sit amet</span>
-                  <span className="text-[#B99066] font-semibold">89.3%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-[#B99066] h-2 rounded-full" style={{width: '89.3%'}}></div>
-                </div>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-[#686868] text-sm">Consectetur elit</span>
-                  <span className="text-[#59E2E4] font-semibold">87.1%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-[#59E2E4] h-2 rounded-full" style={{width: '87.1%'}}></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Expert Consultation Section */}
-      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-              Lorem ipsum dolor sit amet
+            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+              Tarification du bilan patrimonial chez Azalée
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">📋</span>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Club Azalée */}
+            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-[#4EBBBD] text-2xl">👑</span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">Club Azalée</h3>
+                <p className="text-lg font-bold mb-4">250 €/mois</p>
               </div>
-              <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                Lorem ipsum
-              </h3>
-              <p className="text-[#686868] text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.
-              </p>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-green-300 text-xl">✅</span>
+                  <p className="text-sm">Le bilan patrimonial est <strong>inclus gratuitement</strong></p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-green-300 text-xl">✅</span>
+                  <p className="text-sm">Accompagnement personnalisé</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-green-300 text-xl">✅</span>
+                  <p className="text-sm">Suivi régulier</p>
+                </div>
+              </div>
             </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🔍</span>
+            {/* Non-membres */}
+            <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-[#B99066] text-2xl">💼</span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">Non-membres</h3>
+                <p className="text-lg font-bold mb-4">2 500 € HT</p>
               </div>
-              <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                Dolor sit amet
-              </h3>
-              <p className="text-[#686868] text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.
-              </p>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-yellow-300 text-xl">💼</span>
+                  <p className="text-sm">Le bilan est facturé <strong>2 500 € HT</strong></p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-yellow-300 text-xl">⏱️</span>
+                  <p className="text-sm">Environ <strong>10 heures de travail d'expert</strong></p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-yellow-300 text-xl">📊</span>
+                  <p className="text-sm">Collecte des données, analyses, simulations, recommandations</p>
+                </div>
+              </div>
             </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">⚙️</span>
+            {/* Club Azalée VIP */}
+            <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-[#59E2E4] text-2xl">⭐</span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">Club Azalée VIP</h3>
+                <p className="text-lg font-bold mb-4">1 800 € HT/an</p>
               </div>
-              <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                Consectetur elit
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-blue-300 text-xl">🎯</span>
+                  <p className="text-sm">Offre premium à <strong>1 800 € HT/an</strong></p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-blue-300 text-xl">👨‍👩‍👧‍👦</span>
+                  <p className="text-sm">Suivi patrimonial personnalisé pour l'ensemble des <strong>branches familiales</strong></p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-blue-300 text-xl">🤝</span>
+                  <p className="text-sm">Parents, enfants, grands-parents</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-6 rounded-r-lg">
+            <p className="text-[#112033] text-center font-semibold">
+              👉 Idéal pour coordonner la stratégie patrimoniale d'une <strong>famille élargie</strong>, harmoniser les donations, préparer les successions et optimiser la fiscalité de plusieurs générations.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Exemple concret Section */}
+      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+              Exemple concret
+            </h2>
+            <p className="text-[#686868] text-lg max-w-4xl mx-auto">
+              Un couple de 50 ans, avec deux enfants majeurs et des parents âgés de 75 ans :
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            {/* Situation initiale */}
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h3 className="text-[#112033] text-xl font-semibold mb-6 text-center">
+                📊 Situation initiale
               </h3>
-              <p className="text-[#686868] text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.
-              </p>
+              
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between items-center p-4 bg-[#E8F4F8] rounded-lg">
+                  <span className="text-[#112033] font-medium">Résidence principale</span>
+                  <span className="text-[#4EBBBD] font-bold text-lg">900 000 €</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#FFF8E1] rounded-lg">
+                  <span className="text-[#112033] font-medium">Patrimoine financier</span>
+                  <span className="text-[#B99066] font-bold text-lg">600 000 €</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#E8F4F8] rounded-lg">
+                  <span className="text-[#112033] font-medium">Parts d'entreprise</span>
+                  <span className="text-[#59E2E4] font-bold text-lg">1,5 M€</span>
+                </div>
+              </div>
+
+              <div className="bg-orange-50 border-l-4 border-orange-400 p-4 rounded-r-lg">
+                <h4 className="text-orange-800 font-semibold mb-2">⚠️ Problématiques :</h4>
+                <ul className="text-orange-700 text-sm space-y-1">
+                  <li>• Retraite à préparer</li>
+                  <li>• Transmission anticipée aux enfants</li>
+                  <li>• Protection du conjoint</li>
+                  <li>• Gestion de l'IFI</li>
+                </ul>
+              </div>
             </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">✅</span>
-              </div>
-              <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                Sed eiusmod
+            {/* Solutions Azalée */}
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h3 className="text-[#112033] text-xl font-semibold mb-6 text-center">
+                ✅ Grâce au <strong>bilan patrimonial Azalée</strong>
               </h3>
-              <p className="text-[#686868] text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.
-              </p>
+              
+              <div className="space-y-4 mb-6">
+                <div className="flex items-start gap-4 p-4 bg-green-50 rounded-lg">
+                  <span className="text-green-600 text-xl">📋</span>
+                  <div>
+                    <p className="text-green-800 font-medium text-sm">Mise en place d'une donation-partage</p>
+                    <p className="text-green-700 text-xs">Pour réduire les droits futurs</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-4 bg-green-50 rounded-lg">
+                  <span className="text-green-600 text-xl">💰</span>
+                  <div>
+                    <p className="text-green-800 font-medium text-sm">Intégration d'un contrat de capitalisation</p>
+                    <p className="text-green-700 text-xs">Pour lisser la fiscalité</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-4 bg-green-50 rounded-lg">
+                  <span className="text-green-600 text-xl">🏢</span>
+                  <div>
+                    <p className="text-green-800 font-medium text-sm">Préparation d'un pacte Dutreil</p>
+                    <p className="text-green-700 text-xs">Pour l'entreprise familiale</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-4 bg-green-50 rounded-lg">
+                  <span className="text-green-600 text-xl">🛡️</span>
+                  <div>
+                    <p className="text-green-800 font-medium text-sm">Mise en place d'une prévoyance décès</p>
+                    <p className="text-green-700 text-xs">Pour sécuriser la transmission</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
+                <h4 className="text-green-800 font-semibold mb-2">🎯 Résultat :</h4>
+                <p className="text-green-700 text-sm">
+                  Une stratégie globale qui <strong>réduit de moitié les droits de succession</strong> et sécurise le patrimoine pour les générations futures.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white text-center">
+            <h3 className="text-xl font-semibold mb-6">
+              👉 Résultat : une stratégie globale qui <strong>réduit de moitié les droits de succession</strong> et sécurise le patrimoine pour les générations futures.
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-sm">
+                  <strong>Réduction des droits de succession</strong><br />
+                  De moitié grâce à l'anticipation
+                </p>
+              </div>
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-sm">
+                  <strong>Sécurisation du patrimoine</strong><br />
+                  Pour les générations futures
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -411,15 +510,50 @@ export default function BilanPage() {
       {/* CTA Section */}
       <section className="w-full bg-gradient-to-r from-[#59E2E4] to-[#B99066] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-            Lorem ipsum dolor sit amet ?
+          <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
+            Prêt à réaliser votre bilan patrimonial ?
           </h2>
-          <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <p className="text-white text-lg mb-8 max-w-3xl mx-auto">
+            Le bilan patrimonial n'est pas un simple document : c'est une <strong>feuille de route stratégique</strong>.
           </p>
-          <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-source-sans font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
-            Réaliser mon bilan
-          </button>
+          
+          <div className="bg-white bg-opacity-20 rounded-lg p-6 mb-8 max-w-4xl mx-auto">
+            <h3 className="text-white text-xl font-semibold mb-4">
+              👉 Chez <strong>Azalée Patrimoine</strong>, nous vous apportons :
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-white">
+                  Une analyse <strong>indépendante et complète</strong>
+                </p>
+              </div>
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-white">
+                  Des <strong>solutions concrètes et chiffrées</strong>
+                </p>
+              </div>
+              <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                <p className="text-white">
+                  Un <strong>accompagnement personnalisé</strong> dans le temps
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
+              Réaliser mon bilan
+            </button>
+            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#4EBBBD] transition-colors duration-200">
+              Prendre rendez-vous
+            </button>
+          </div>
+
+          <div className="mt-8 bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg max-w-4xl mx-auto">
+            <p className="text-[#112033] text-center font-semibold">
+              📅 <strong>Prenez rendez-vous dès aujourd'hui</strong> pour réaliser votre bilan patrimonial et préparer l'avenir avec sérénité.
+            </p>
+          </div>
         </div>
       </section>
     </>

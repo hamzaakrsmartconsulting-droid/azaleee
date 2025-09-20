@@ -4,257 +4,163 @@ import Header from "../../../components/common/Header";
 
 const defaultContent = {
   hero: {
-    title:
-      "Investir avec le statut LMNP (location meublée non professionnelle) avec Azalee Wealth",
-    subtitle:
-      "L'investissement locatif est une stratégie d'épargne efficace. Ce système de défiscalisation immobilière permet de se constituer un patrimoine tout en percevant, mensuellement, un complément de salaire. Notre expertise de plus de 30 ans vous accompagne pour optimiser votre investissement LMNP.",
+    title: "LMNP (Loueur Meublé Non Professionnel) : un dispositif fiscal avantageux pour investir dans l'immobilier locatif",
+    subtitle: "Le statut de Loueur Meublé Non Professionnel (LMNP) est l'un des dispositifs fiscaux les plus attractifs pour les investisseurs particuliers. Il permet de louer un logement meublé (studio, colocation, résidence gérée…) tout en bénéficiant d'un régime fiscal très favorable.",
+    description: "Contrairement à la location nue, les loyers perçus sont déclarés non pas en revenus fonciers, mais en BIC (Bénéfices Industriels et Commerciaux). Cette distinction ouvre la possibilité d'amortir le bien et le mobilier, réduisant fortement – voire annulant – l'imposition sur les loyers pendant plusieurs années.",
+    example: "Exemple simple : un studio acheté 120 000 € et loué 550 €/mois. Grâce à l'amortissement, les loyers sont quasi non imposés pendant 15 à 20 ans.",
     button: "Simuler votre projet LMNP",
   },
   rightCard: {
     title: "Nos experts à votre service",
     benefits: [
-      "Ne payez pas d'impôt sur vos revenus locatifs",
-      "Meilleure rentabilité qu'avec une location nue",
-      "Récupération de la TVA",
-      "Accompagnement complet de votre projet",
+      "Fiscalité très avantageuse avec amortissement",
+      "Loyers quasi exonérés d'impôt pendant 15-20 ans",
+      "Flexibilité d'investissement (studio, résidence gérée)",
+      "Revenus complémentaires sécurisés",
     ],
     floatingText: "0 € →\nAnalyse personnalisée gratuite",
     icon: "/images/placements-responsive-header-icon-56586a.png",
   },
   sommaire: {
     items: [
-      "Qu'est-ce que le statut LMNP (loueur meublé non professionnel) ?",
-      "Quels sont les avantages du statut LMNP ?",
-      "Quelles sont les conditions du statut LMNP ?",
-      "Comment déclarer ses revenus en LMNP ?",
-      "Comment obtenir le statut LMNP ?",
-      "Quels sont les inconvénients de la location meublée non professionnelle ?",
-      "Questions et réponses sur la LMNP",
-    ],
-  },
-  imageBlock: {
-    title: "Investissement LMNP en pratique",
-    intro:
-      "Découvrez comment l'investissement LMNP peut transformer votre approche de l'immobilier locatif. Nos experts vous accompagnent dans la sélection de biens optimisés pour la location meublée.",
-    bullets: [
-      "Biens sélectionnés pour la rentabilité LMNP",
-      "Accompagnement personnalisé",
-      "Optimisation fiscale garantie",
-    ],
-    image: "/images/imm1.jpg",
-  },
-  definition: {
-    title: "1. Qu'est-ce que le statut LMNP (loueur meublé non professionnel) ?",
-    paragraphs: [
-      "Le statut de loueur meublé non professionnel (LMNP) est un statut attribué aux bailleurs non-professionnels qui louent des biens meublés. Cette activité ne constitue pas l'activité principale du bailleur. Il s'agit davantage d'un complément de revenus.",
-      "Le statut LMNP est ouvert à tout contribuable français qui souhaite préparer sa retraite en investissant dans un bien meublé. Depuis 1949, le statut LMNP offre une optimisation fiscale intéressante à tout investisseur.",
-      "Pour être considéré comme non professionnel, le propriétaire doit remplir certaines conditions :",
-    ],
-    bullets: [
-      "Les recettes annuelles tirées de la location ne doivent pas dépasser 23 000 € pour l'ensemble du foyer fiscal.",
-      "Ces recettes doivent également être inférieures au montant total des autres revenus d'activité du foyer fiscal (salaires, autres BIC, etc.).",
-    ],
-  },
-  changes2025: {
-    title: "Quels sont les changements du statut LMNP en 2025",
-    paragraphs: [
-      "L'adoption de la loi de finances 2025 par l'article 49.3 a renforcé les dispositions de la loi Le Meur relatives aux meublés de tourisme, impactant ainsi le statut LMNP. Désormais, l'amortissement, jusqu'à présent exclu du calcul de la plus-value lors de la revente, sera réintégré.",
-      "Concrètement, si vous décidez de vendre votre bien, la somme totale des amortissements pratiqués pendant toute la durée de détention viendra diminuer votre prix d'achat initial. Résultat : la base taxable sur la plus-value augmente et, avec elle, l'impôt dû.",
+      "Les avantages du LMNP",
+      "Les inconvénients et points de vigilance",
+      "Le nouveau traitement de la plus-value en LMNP",
+      "Exemple concret",
+      "LMNP en direct ou en résidence gérée ?",
+      "Conseil Azalée Patrimoine",
     ],
   },
   avantages: {
-    title: "2. Quels sont les avantages du statut LMNP ?",
+    title: "Les avantages du LMNP",
     cards: [
       {
-        title: "Optimisation fiscale",
+        title: "Fiscalité très avantageuse",
         bullets: [
-          "Amortissement du bien immobilier",
-          "Déduction des charges et intérêts",
-          "Réduction de l'impôt sur le revenu",
-          "Possibilité de déficit foncier",
+          "L'amortissement du bien et du mobilier permet de gommer une grande partie du bénéfice imposable",
+          "En pratique, les loyers encaissés sont souvent exonérés d'impôt pendant 15 à 20 ans",
         ],
       },
       {
-        title: "Rentabilité améliorée",
+        title: "Flexibilité d'investissement",
         bullets: [
-          "Loyers plus élevés qu'en location nue",
-          "Récupération de la TVA",
-          "Complément de revenus mensuel",
-          "Constitution d'un patrimoine",
+          "Le LMNP s'applique aussi bien à un studio classique qu'à des résidences gérées (étudiantes, seniors, EHPAD, tourisme)",
+          "Vous pouvez investir en direct ou via un exploitant professionnel",
         ],
       },
       {
-        title: "Flexibilité",
+        title: "Revenus complémentaires sécurisés",
         bullets: [
-          "Baux courts renouvelables",
-          "Adaptation aux besoins locatifs",
-          "Gestion simplifiée",
-          "Possibilité de résidence personnelle",
-        ],
-      },
-    ],
-  },
-  conditions: {
-    title: "3. Quelles sont les conditions du statut LMNP ?",
-    cards: [
-      {
-        title: "Conditions de revenus",
-        bullets: [
-          "Recettes annuelles de location ≤ 23 000 €",
-          "Revenus locatifs < autres revenus du foyer fiscal",
+          "En location meublée classique, vous fixez librement le loyer et choisissez vos locataires",
+          "En résidence gérée, vous signez un bail commercial avec un exploitant qui vous verse un loyer régulier, que le logement soit occupé ou non",
         ],
       },
       {
-        title: "Conditions du bien",
+        title: "Transmission facilitée",
         bullets: [
-          "Logement meublé avec équipements de base",
-          "Bail d'un an renouvelable (9 mois pour étudiants)",
-          "Dépôt de garantie : 2 mois de loyer",
+          "Le LMNP reste une activité non professionnelle, donc plus simple à transmettre qu'un statut professionnel (LMP)",
         ],
       },
-    ],
-  },
-  declaration: {
-    title: "4. Comment déclarer ses revenus en LMNP ?",
-    cards: [
-      {
-        title: "Régime Micro-BIC",
-        bullets: [
-          "Recettes ≤ 72 600 € par an",
-          "Abattement forfaitaire de 50%",
-          "Pas de comptabilité obligatoire",
-          "Déclaration simplifiée",
-        ],
-      },
-      {
-        title: "Régime Réel",
-        bullets: [
-          "Recettes > 72 600 € par an",
-          "Comptabilité obligatoire",
-          "Déduction des charges réelles",
-          "Amortissement du bien",
-        ],
-      },
-    ],
-  },
-  lmnpVsLmp: {
-    title: "LMNP vs LMP : quelles différences ?",
-    rows: [
-      {
-        critere: "Seuil de recettes",
-        lmnp: "≤ 23 000 € et < autres revenus du foyer",
-        lmp: "> 23 000 € ou > autres revenus du foyer",
-      },
-      { critere: "Statut", lmnp: "Non professionnel", lmp: "Professionnel" },
-      {
-        critere: "Régime fiscal",
-        lmnp: "BIC (micro-BIC ou réel)",
-        lmp: "BIC réel (cotisations sociales possibles)",
-      },
-      { critere: "Amortissements", lmnp: "Oui (impact plus-value en 2025)", lmp: "Oui" },
-      {
-        critere: "Plus-value à la revente",
-        lmnp: "Régime des particuliers (avec réintégration des amortissements)",
-        lmp: "Régime professionnel (selon situation)",
-      },
-    ],
-    note:
-      "Sources d'inspiration et synthèse basées sur des informations publiques du marché dont le dossier LMNP/LMP de Selexium.",
-  },
-  residences: {
-    title: "Résidences éligibles au statut LMNP",
-    items: [
-      { title: "Étudiantes", text: "Proches des campus, adaptées aux besoins étudiants." },
-      { title: "Senior", text: "Résidences services pour personnes âgées autonomes." },
-      { title: "EHPAD", text: "Établissements d'hébergement pour dépendance." },
-      { title: "Affaires", text: "Hébergement dédié aux déplacements professionnels." },
-      { title: "Tourisme", text: "Résidences de vacances avec services." },
-    ],
-  },
-  steps: {
-    title: "5. Comment obtenir le statut LMNP ?",
-    items: [
-      { title: "Acquisition", text: "Achat d'un bien immobilier neuf ou ancien" },
-      { title: "Aménagement", text: "Équipement du logement en meublé" },
-      { title: "Location", text: "Mise en location avec bail meublé" },
-      { title: "Déclaration", text: "Déclaration des revenus en BIC" },
     ],
   },
   inconvenients: {
-    title:
-      "6. Quels sont les inconvénients de la location meublée non professionnelle ?",
+    title: "Les inconvénients et points de vigilance",
     cards: [
       {
-        title: "Gestion locative",
+        title: "Gestion plus lourde en direct",
         bullets: [
-          "Rotation plus fréquente des locataires",
-          "Entretien des meubles et équipements",
-          "Gestion administrative plus complexe",
-          "Risque de vacance locative",
+          "Recherche de locataires",
+          "Turnover plus élevé (étudiants, jeunes actifs)",
+          "Entretien du mobilier",
         ],
       },
       {
-        title: "Contraintes fiscales",
+        title: "Dépendance à l'exploitant en résidence gérée",
         bullets: [
-          "Limitation des recettes à 23 000 €",
-          "Obligation de respecter les conditions",
-          "Risque de requalification en LMP",
-          "Contrôles fiscaux possibles",
+          "Si la société de gestion connaît des difficultés, vos loyers peuvent être impactés",
         ],
       },
       {
-        title: "Investissement initial",
+        title: "Risque de vacance locative",
         bullets: [
-          "Coût d'équipement du logement",
-          "Amortissement sur plusieurs années",
-          "Besoin de trésorerie initiale",
-          "Délai de rentabilisation",
+          "En direct, un logement mal placé ou mal meublé peut rester vide plusieurs mois",
+        ],
+      },
+      {
+        title: "Revente encadrée",
+        bullets: [
+          "En résidence gérée, le marché secondaire peut être moins liquide que pour un logement classique",
         ],
       },
     ],
   },
-  faq: {
-    title: "7. Questions et réponses sur la LMNP",
-    items: [
+  plusValue: {
+    title: "Le nouveau traitement de la plus-value en LMNP",
+    paragraphs: [
+      "Jusqu'ici, l'un des grands atouts du LMNP était que l'amortissement pratiqué sur le bien n'était pas réintégré dans le calcul de la plus-value. Autrement dit, vous profitiez d'années de loyers quasi exonérés d'impôt sans pénalité à la revente.",
+      "Désormais, l'administration fiscale a précisé que l'amortissement doit être pris en compte dans certaines conditions lors du calcul de la plus-value en cas de cession. Cela signifie que la plus-value imposable peut être plus élevée que prévu.",
+      "Toutefois, il est essentiel de garder une vision long terme :",
+    ],
+    bullets: [
+      "Le LMNP reste une stratégie sur 15 à 20 ans",
+      "Les avantages fiscaux immédiats (loyers peu ou pas imposés) compensent largement cet ajustement à la sortie",
+      "La revente peut toujours être optimisée via une bonne anticipation et une détention longue",
+    ],
+  },
+  exemple: {
+    title: "Exemple concret",
+    description: "Un investisseur achète un studio 120 000 € en LMNP, financé par crédit. Loué 550 €/mois, il perçoit 6 600 € par an. Grâce à l'amortissement (environ 4 000 €/an), son revenu imposable est nul. Pendant 15 ans, il encaisse plus de 90 000 € de loyers quasi exonérés d'impôt.",
+    conclusion: "À la revente, la fiscalité sur la plus-value doit intégrer une partie des amortissements pratiqués. Mais l'investisseur a déjà largement profité d'une fiscalité allégée pendant 15 ans, ce qui compense ce traitement.",
+  },
+  comparaison: {
+    title: "LMNP en direct ou en résidence gérée ?",
+    options: [
       {
-        q: "Quelles sont les différences entre la LMP et la LMNP ?",
-        a: "Le statut de loueur en meublé professionnel implique de toucher des revenus locatifs suffisamment importants ... supérieurs à 23 000 € ou être plus importants que les revenus globaux du foyer fiscal soumis à l'impôt sur le revenu.",
+        title: "En direct (studio, colocation, petite surface en ville)",
+        bullets: [
+          "Plus de liberté dans le choix du locataire et du loyer",
+          "Rentabilité brute généralement plus élevée",
+          "Gestion plus chronophage",
+        ],
       },
       {
-        q: "Peut-on investir en LMNP dans l'ancien ?",
-        a: "Il est tout à fait possible d'investir en LMNP dans l'ancien. Aussi connu sous le nom de LMNP d'occasion ... déjà équipé et parfois même occupé.",
-      },
-      {
-        q: "Quelles résidences sont éligibles au statut LMNP ?",
-        a: "Toutes les résidences donnent accès au statut LMNP : résidences étudiantes, senior, EHPAD, d'affaires et de tourisme.",
-      },
-      {
-        q: "Comment revendre son bien LMNP ?",
-        a: "La revente se fait comme une revente classique d'un bien immobilier. La plus-value est imposée à 19% + 17,2% de prélèvements sociaux, avec abattement selon la durée de détention.",
+        title: "En résidence gérée (tourisme, étudiant, EHPAD, seniors)",
+        bullets: [
+          "Revenus sécurisés par un bail commercial avec un exploitant",
+          "Zéro gestion locative",
+          "Rentabilité légèrement inférieure et dépendance à la santé financière de l'exploitant",
+        ],
       },
     ],
+  },
+  conseil: {
+    title: "Conseil Azalée Patrimoine",
+    paragraphs: [
+      "Le LMNP reste un des dispositifs fiscaux les plus efficaces pour se constituer des revenus complémentaires. L'impact du nouveau traitement de la plus-value ne doit pas faire oublier que le cœur de la stratégie se joue sur le long terme : lissage des revenus, fiscalité allégée et patrimoine constitué sur 15 à 20 ans.",
+      "Chez Azalée Patrimoine, nous vous aidons à :",
+    ],
+    bullets: [
+      "Choisir entre investissement en direct ou en résidence gérée",
+      "Sécuriser vos loyers grâce à un bon emplacement ou un exploitant solide",
+      "Anticiper la fiscalité de la revente pour éviter les mauvaises surprises",
+    ],
+    conclusion: "Le LMNP est un outil puissant pour diversifier vos revenus et préparer votre retraite sereinement.",
   },
   finalCta: {
     title: "Prêt à investir en LMNP ?",
-    subtitle:
-      "Nos experts Azalee Wealth vous accompagnent pour construire votre stratégie d'investissement LMNP et optimiser votre défiscalisation immobilière.",
+    subtitle: "Nos experts Azalée Patrimoine vous accompagnent pour construire votre stratégie d'investissement LMNP et optimiser votre défiscalisation immobilière.",
     primaryButton: "Simuler mon projet LMNP",
     secondaryButton: "Prendre rendez-vous",
   },
   sectionOrder: [
     "hero",
     "sommaire",
-    "imageBlock",
-    "definition",
-    "changes2025",
     "avantages",
-    "conditions",
-    "declaration",
-    "lmnpVsLmp",
-    "residences",
-    "steps",
     "inconvenients",
-    "faq",
+    "plusValue",
+    "exemple",
+    "comparaison",
+    "conseil",
     "finalCta",
   ],
 };
@@ -347,6 +253,14 @@ export default function LMNPPage() {
                   <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
                     {hero.subtitle}
                   </p>
+                  <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-6 sm:mb-8 text-center lg:text-left">
+                    {hero.description}
+                  </p>
+                  <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
+                    <p className="text-white text-xs sm:text-sm font-inter">
+                      👉 {hero.example}
+                    </p>
+                  </div>
                   <div className="flex justify-center lg:justify-start">
                     <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
                       {hero.button}
@@ -435,42 +349,43 @@ export default function LMNPPage() {
             </div>
           </section>
         );
-      case "definition":
+      case "exemple":
         return (
-          <section key="definition" className="w-full bg-white py-0">
+          <section key="exemple" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
                 <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
-                  {content.definition?.title}
+                  {content.exemple?.title}
                 </h2>
-                <div className="space-y-6 text-[#374151] font-inter">
-                  {(content.definition?.paragraphs || []).map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                  {(content.definition?.bullets || []).length > 0 && (
-                    <ul className="list-disc pl-6 space-y-2">
-                      {content.definition.bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
-                      ))}
-                    </ul>
-                  )}
+                <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-6 sm:p-8 text-white">
+                  <p className="text-lg mb-6">{content.exemple?.description}</p>
+                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                    <p className="text-sm">{content.exemple?.conclusion}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
         );
-      case "changes2025":
+      case "plusValue":
         return (
-          <section key="changes2025" className="w-full bg-white py-0">
+          <section key="plusValue" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12 border-l-4 border-[#B99066]">
-                <h3 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-4">
-                  {content.changes2025?.title}
-                </h3>
-                <div className="space-y-4 text-[#374151] font-inter">
-                  {(content.changes2025?.paragraphs || []).map((p, i) => (
+              <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                  {content.plusValue?.title}
+                </h2>
+                <div className="space-y-6 text-[#374151] font-inter">
+                  {(content.plusValue?.paragraphs || []).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
+                  {(content.plusValue?.bullets || []).length > 0 && (
+                    <ul className="list-disc pl-6 space-y-2">
+                      {content.plusValue.bullets.map((b, i) => (
+                        <li key={i}>{b}</li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>
@@ -554,37 +469,29 @@ export default function LMNPPage() {
             </div>
           </section>
         );
-      case "lmnpVsLmp":
+      case "comparaison":
         return (
-          <section key="lmnpVsLmp" className="w-full bg-white py-0">
+          <section key="comparaison" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+              <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
                 <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
-                  {content.lmnpVsLmp?.title}
+                  {content.comparaison?.title}
                 </h2>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
-                    <thead className="bg-[#F2F2F2]">
-                      <tr>
-                        <th className="text-left text-[#112033] font-source-sans font-semibold px-4 py-3">Critère</th>
-                        <th className="text-left text-[#112033] font-source-sans font-semibold px-4 py-3">LMNP</th>
-                        <th className="text-left text-[#112033] font-source-sans font-semibold px-4 py-3">LMP</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-[#374151] font-inter">
-                      {(content.lmnpVsLmp?.rows || []).map((row, i) => (
-                        <tr key={i} className={i % 2 === 1 ? "border-t bg-[#FAFAFA]" : "border-t"}>
-                          <td className="px-4 py-3">{row.critere}</td>
-                          <td className="px-4 py-3">{row.lmnp}</td>
-                          <td className="px-4 py-3">{row.lmp}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {(content.comparaison?.options || []).map((option, i) => (
+                    <div key={i} className="bg-white rounded-lg p-6 shadow-md">
+                      <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-4">{option.title}</h3>
+                      <ul className="space-y-3 text-[#374151] font-inter">
+                        {(option.bullets || []).map((b, j) => (
+                          <li key={j} className="flex items-start gap-2">
+                            <span className={i === 0 ? "text-[#59E2E4] mt-1" : "text-[#B99066] mt-1"}>•</span>
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
-                {content.lmnpVsLmp?.note && (
-                  <p className="mt-4 text-[#686868] text-sm">{content.lmnpVsLmp.note}</p>
-                )}
               </div>
             </div>
           </section>
@@ -609,24 +516,30 @@ export default function LMNPPage() {
             </div>
           </section>
         );
-      case "steps":
+      case "conseil":
         return (
-          <section key="steps" className="w-full bg-white py-0">
+          <section key="conseil" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
-                  {content.steps?.title}
+              <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12 text-white">
+                <h2 className="text-white text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                  {content.conseil?.title}
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {(content.steps?.items || []).map((item, i) => (
-                    <div key={i} className="text-center bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6">
-                      <div className={`w-12 h-12 ${i % 2 === 0 ? "bg-[#59E2E4]" : "bg-[#B99066]"} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                        <span className="text-white text-xl font-bold">{i + 1}</span>
-                      </div>
-                      <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">{item.title}</h3>
-                      <p className="text-[#374151] text-sm font-inter">{item.text}</p>
-                    </div>
+                <div className="space-y-6">
+                  {(content.conseil?.paragraphs || []).map((p, i) => (
+                    <p key={i} className="text-lg">{p}</p>
                   ))}
+                  {(content.conseil?.bullets || []).length > 0 && (
+                    <ul className="list-disc pl-6 space-y-2">
+                      {content.conseil.bullets.map((b, i) => (
+                        <li key={i}>{b}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {content.conseil?.conclusion && (
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                      <p className="text-sm">{content.conseil.conclusion}</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

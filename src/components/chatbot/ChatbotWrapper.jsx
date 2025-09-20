@@ -12,4 +12,8 @@ export default function ChatbotWrapper() {
   }
 
   return <SarahChatbot />;
-} 
+}
+
+
+
+

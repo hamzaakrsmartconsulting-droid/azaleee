@@ -1,741 +1,487 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const LOCAL_STORAGE_KEY = 'sarahChatbotData';
+// SCRIPT CONVERSATIONNEL SARA - AZALÉE PATRIMOINE
+// Objectif final : prise de rendez-vous qualifié à fort taux de conversion
 
-const defaultChatbotData = {
-  isOpen: false,
-  currentStep: 'welcome',
-  sessionId: `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-  userId: null,
-  userProfile: {
-    nom: '',
-    prenom: '',
-    age: '',
-    situationMatrimoniale: '',
-    enfants: '',
-    situationProfessionnelle: '',
-    tmi: '',
-    placementsActuels: '',
-    budgetProjet: '',
-    email: '',
-    telephone: ''
-  },
-  conversationHistory: [],
-  selectedIntentions: [],
-  selectedThemes: [],
-  currentQuestionIndex: 0
-};
-
-const conversationScript = {
+const SARA_SCRIPT = {
+  // ACCUEIL — Créer un climat de confiance et d'ouverture
   welcome: {
-    message: "Bonjour et bienvenue sur azalee-patrimoine.fr ! Je suis Sarah, votre conseiller patrimonial virtuel. Je vais vous accompagner pour optimiser vos finances, investir, ou anticiper l'avenir. Comment puis-je vous aider aujourd'hui ?",
+    message: "Bonjour et bienvenue sur azalee-patrimoine.fr ! Je suis votre conseiller patrimonial virtuel. Vous souhaitez optimiser vos finances, investir, ou anticiper l'avenir ? Je peux vous aider à y voir clair.",
     options: [
-      { id: 'question_rapide', label: 'Obtenir une réponse rapide à une question patrimoniale', nextStep: 'intention' },
-      { id: 'rappel', label: 'Être rappelé(e) par un conseiller', nextStep: 'rappel' },
-      { id: 'rdv', label: 'Prendre un rendez-vous directement', nextStep: 'rdv' }
+      { text: "Obtenir une réponse rapide à une question patrimoniale", value: "question_rapide" },
+      { text: "Être rappelé(e) par un conseiller", value: "rappel" },
+      { text: "Prendre un rendez-vous directement", value: "rdv" }
     ]
   },
+  
+  // INTENTION UTILISATEUR — Comprendre l'objectif sans alourdir le dialogue
   intention: {
-    message: "Parfait ! Pour vous orienter efficacement, que souhaitez-vous explorer aujourd'hui ?",
+    message: "Pour vous orienter efficacement, que souhaitez-vous explorer aujourd'hui ?",
     options: [
-      { id: 'placements', label: 'Optimiser mes placements financiers', nextStep: 'profile' },
-      { id: 'fiscalite', label: 'Réduire mes impôts', nextStep: 'profile' },
-      { id: 'retraite', label: 'Préparer ma retraite', nextStep: 'profile' },
-      { id: 'transmission', label: 'Transmettre mon patrimoine', nextStep: 'profile' },
-      { id: 'immobilier', label: 'Investir dans l\'immobilier', nextStep: 'profile' },
-      { id: 'diversification', label: 'Diversifier mon patrimoine', nextStep: 'profile' },
-      { id: 'situation_specifique', label: 'Gérer une situation spécifique (divorce, succession, expatriation…)', nextStep: 'profile' }
+      { text: "Optimiser mes placements financiers", value: "placements" },
+      { text: "Réduire mes impôts", value: "fiscalite" },
+      { text: "Préparer ma retraite", value: "retraite" },
+      { text: "Transmettre mon patrimoine", value: "transmission" },
+      { text: "Investir dans l'immobilier", value: "immobilier" },
+      { text: "Diversifier mon patrimoine", value: "diversification" },
+      { text: "Gérer une situation spécifique (divorce, succession, expatriation…)", value: "situation_specifique" }
     ]
   },
+  
+  // PROFIL UTILISATEUR — Établir un profil fiable sans décourager
   profile: {
+    message: "Pour mieux comprendre votre situation, j'aurais besoin de quelques informations confidentielles :",
     questions: [
-      {
-        id: 'age',
-        question: "Pour commencer, quel est votre âge ?",
-        type: 'number',
-        required: true,
-        followUp: "Merci ! Votre âge est un facteur important pour adapter nos recommandations."
-      },
-      {
-        id: 'situationMatrimoniale',
-        question: "Êtes-vous marié(e), pacsé(e) ou célibataire ?",
-        type: 'select',
-        options: ['Marié(e)', 'Pacsé(e)', 'Célibataire'],
-        required: true,
-        followUp: "Parfait ! Votre situation familiale influence nos stratégies de transmission."
-      },
-      {
-        id: 'enfants',
-        question: "Avez-vous des enfants ?",
-        type: 'select',
-        options: ['Oui', 'Non'],
-        required: true,
-        followUp: "Excellent ! La présence d'enfants ouvre des opportunités de transmission."
-      },
-      {
-        id: 'situationProfessionnelle',
-        question: "Quelle est votre situation professionnelle ?",
-        type: 'select',
-        options: ['Salarié', 'Entrepreneur', 'Retraité', 'Autre'],
-        required: true,
-        followUp: "Très bien ! Votre statut professionnel détermine nos stratégies fiscales."
-      },
-      {
-        id: 'tmi',
-        question: "Connaissez-vous votre TMI (Tranche Marginale d'Imposition) ?",
-        type: 'select',
-        options: ['< 14%', '14%', '30%', '41%', '45%', 'Je ne sais pas'],
-        required: false,
-        followUp: "Pas de problème ! Nous pourrons l'estimer ensemble si nécessaire."
-      },
-      {
-        id: 'placementsActuels',
-        question: "Disposez-vous déjà de placements financiers ou immobiliers ? Si oui, lesquels ?",
-        type: 'textarea',
-        required: false,
-        followUp: "Merci pour ces informations ! Cela nous aide à proposer des solutions complémentaires."
-      },
-      {
-        id: 'budgetProjet',
-        question: "Quel montant envisagez-vous pour votre futur projet d'investissement ?",
-        type: 'number',
-        required: false,
-        followUp: "Parfait ! Ce budget nous permettra de vous proposer des solutions adaptées."
-      }
-    ],
-    nextStep: 'engagement'
-  },
-  engagement: {
-    message: "Excellent ! J'ai maintenant une vision claire de votre situation. Basé sur vos réponses, je peux vous proposer des solutions personnalisées. Que souhaitez-vous faire maintenant ?",
-    options: [
-      { id: 'pdf', label: 'Recevoir un mini-bilan PDF gratuit personnalisé', nextStep: 'pdf' },
-      { id: 'rdv', label: 'Fixer un rendez-vous avec un conseiller patrimonial agréé Azalée', nextStep: 'rdv' },
-      { id: 'rappel', label: 'Être recontacté(e) ultérieurement par un expert', nextStep: 'rappel' }
+      { id: "nom", text: "Quel est votre nom ?", type: "text", required: true },
+      { id: "prenom", text: "Et votre prénom ?", type: "text", required: true },
+      { id: "age", text: "Quel est votre âge ?", type: "number", required: true },
+      { id: "situation_matrimoniale", text: "Êtes-vous marié(e), pacsé(e) ou célibataire ?", type: "select", options: ["Marié(e)", "Pacsé(e)", "Célibataire"], required: true },
+      { id: "enfants", text: "Avez-vous des enfants ?", type: "select", options: ["Oui", "Non"], required: true },
+      { id: "situation_professionnelle", text: "Quelle est votre situation professionnelle ? (Salarié, entrepreneur, retraité, etc.)", type: "select", options: ["Salarié", "Entrepreneur", "Retraité", "Autre"], required: true },
+      { id: "tmi", text: "Connaissez-vous votre TMI ? (Aide contextuelle si besoin)", type: "select", options: ["Oui, je le connais", "Non", "Je ne sais pas"], required: false },
+      { id: "placements_actuels", text: "Disposez-vous de placements financiers ou immobiliers ? Lesquels ?", type: "select", options: ["Oui, financiers", "Oui, immobiliers", "Oui, les deux", "Non"], required: false },
+      { id: "budget_projet", text: "Quel montant envisagez-vous pour un futur projet ?", type: "select", options: ["Moins de 50 000 €", "50 000 € à 100 000 €", "100 000 € à 500 000 €", "Plus de 500 000 €"], required: false }
     ]
   },
-  rdv: {
-    message: "Parfait ! Je vais organiser un rendez-vous personnalisé pour vous. Quel moment vous conviendrait le mieux ?",
-    fields: [
-      { id: 'date', label: 'Date souhaitée', type: 'date', required: true },
-      { id: 'heure', label: 'Heure souhaitée', type: 'time', required: true },
-      { id: 'canal', label: 'Canal souhaité', type: 'select', options: ['Téléphone', 'Visio', 'Agence'], required: true },
-      { id: 'email', label: 'Votre email', type: 'email', required: true },
-      { id: 'telephone', label: 'Votre téléphone', type: 'tel', required: true }
-    ],
-    nextStep: 'confirmation'
-  },
-  rappel: {
-    message: "Je vais organiser un rappel personnalisé pour vous. Quand souhaitez-vous être contacté(e) ?",
-    fields: [
-      { id: 'dateRappel', label: 'Date de rappel', type: 'date', required: true },
-      { id: 'heureRappel', label: 'Heure de rappel', type: 'time', required: true },
-      { id: 'email', label: 'Votre email', type: 'email', required: true },
-      { id: 'telephone', label: 'Votre téléphone', type: 'tel', required: true }
-    ],
-    nextStep: 'confirmation'
-  },
-  pdf: {
-    message: "Je vais préparer votre mini-bilan personnalisé basé sur vos réponses. Pour vous l'envoyer, j'ai besoin de votre email :",
-    fields: [
-      { id: 'email', label: 'Votre email', type: 'email', required: true }
-    ],
-    nextStep: 'confirmation'
-  },
-  confirmation: {
-    message: "Parfait ! C'est noté. Un conseiller Azalée vous contactera au moment prévu avec des recommandations personnalisées basées sur notre échange. Merci pour votre confiance !",
+  
+  // ENGAGEMENT FINAL — Transformer la réflexion en action
+  engagement: {
+    message: "Je dispose maintenant des éléments essentiels pour vous apporter une préconisation personnalisée. Souhaitez-vous :",
     options: [
-      { id: 'fermer', label: 'Fermer la conversation', nextStep: 'close' }
+      { text: "Recevoir un mini-bilan PDF gratuit", value: "pdf" },
+      { text: "Fixer un rendez-vous avec un conseiller patrimonial agréé Azalée", value: "rdv_final" },
+      { text: "Être recontacté(e) ultérieurement", value: "rappel_final" }
+    ]
+  },
+  
+  // PRISE DE RENDEZ-VOUS — Finaliser l'acquisition de lead qualifié
+  rdv: {
+    message: "Merci pour votre confiance. Quel moment vous conviendrait le mieux ?",
+    options: [
+      { text: "Téléphone", value: "telephone" },
+      { text: "Visio", value: "visio" },
+      { text: "Agence", value: "agence" }
     ]
   }
 };
 
+// SCÉNARISATION INTELLIGENTE PAR OBJECTIF — Créer une conversation experte et orientée résultat
+const THEMATIQUES = {
+  placements: {
+    explication: "Les placements financiers peuvent être optimisés selon votre profil de risque et vos objectifs.",
+    question: "Souhaitez-vous comparer des placements selon vos objectifs (rendement, fiscalité, capitalisation) ?"
+  },
+  retraite: {
+    explication: "La préparation de la retraite nécessite une stratégie adaptée à votre situation.",
+    question: "À quel âge envisagez-vous de partir à la retraite ?"
+  },
+  transmission: {
+    explication: "La transmission du patrimoine peut être optimisée fiscalement.",
+    question: "Souhaitez-vous protéger un enfant ou conjoint en particulier ?"
+  },
+  immobilier: {
+    explication: "L'investissement immobilier offre des avantages fiscaux et patrimoniaux.",
+    question: "Quel type d'investissement immobilier vous intéresse ?"
+  },
+  fiscalite: {
+    explication: "La fiscalité peut être optimisée selon votre situation personnelle.",
+    question: "Dans quel domaine souhaitez-vous réduire vos impôts ?"
+  },
+  diversification: {
+    explication: "La diversification permet de sécuriser votre patrimoine.",
+    question: "Quelle part de votre patrimoine souhaitez-vous diversifier ?"
+  },
+  situation_specifique: {
+    explication: "Chaque situation personnelle nécessite une approche adaptée et des solutions sur-mesure.",
+    question: "Pouvez-vous me décrire brièvement votre situation spécifique ?"
+  }
+};
+
 export default function SarahChatbot() {
-  const [chatbotData, setChatbotData] = useState(defaultChatbotData);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-  const [userInput, setUserInput] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState('welcome');
+  const [messages, setMessages] = useState([]);
+  const [userProfile, setUserProfile] = useState({
+    nom: '',
+    prenom: '',
+    age: '',
+    situation_matrimoniale: '',
+    enfants: '',
+    situation_professionnelle: '',
+    tmi: '',
+    placements_actuels: '',
+    budget_projet: '',
+    intention: '',
+    thematique_reponse: '',
+    canal_preference: '',
+    telephone: '',
+    email: ''
+  });
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
-  const [currentQuestion, setCurrentQuestion] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-  const hasInitialized = useRef(false);
 
-  const saveChatbotData = useCallback(async (data) => {
-    try {
-      // Sauvegarder en base de données au lieu du localStorage
-      if (data.sessionId) {
-        await fetch('/api/sessions/chatbot', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sessionId: data.sessionId,
-            userId: data.userId || null,
-            data: data
-          })
-        });
-      }
-      setChatbotData(data);
-    } catch (error) {
-      console.error('Error saving chatbot data to database:', error);
-    }
-  }, []);
-
-  const addMessage = useCallback(async (message, isUser = false, type = 'message', questionId = null) => {
-    const newMessage = {
-      id: Date.now(),
-      text: message,
-      isUser,
-      timestamp: new Date().toLocaleTimeString(),
-      type,
-      questionId
-    };
-    
-    setChatbotData(prevData => {
-      const updatedData = {
-        ...prevData,
-        conversationHistory: [...prevData.conversationHistory, newMessage]
-      };
-      saveChatbotData(updatedData);
-      return updatedData;
-    });
-
-              // Sauvegarder automatiquement en base de données
-        try {
-          // Utiliser le sessionId existant ou en créer un nouveau unique
-          let sessionId = chatbotData.sessionId;
-          if (!sessionId) {
-            sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-            // Mettre à jour le state avec le nouveau sessionId
-            setChatbotData(prev => ({ ...prev, sessionId }));
-          }
-          
-          // 1. Sauvegarder la session complète
-          await fetch('/api/sessions/chatbot', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              sessionId,
-              userId: chatbotData.userId || null,
-              data: {
-                ...chatbotData,
-                sessionId, // S'assurer que le sessionId est inclus
-                conversationHistory: [...chatbotData.conversationHistory, newMessage]
-              }
-            })
-          });
-        
-          // 2. Sauvegarder l'interaction chatbot
-          await fetch('/api/chatbot/conversations', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              session_id: sessionId,
-              user_id: chatbotData.userId || null,
-              conversationHistory: [...chatbotData.conversationHistory, newMessage],
-              userProfile: chatbotData.userProfile,
-              selectedIntentions: chatbotData.selectedIntentions,
-              currentStep: chatbotData.currentStep
-            })
-          });
-        } catch (error) {
-          console.error('Erreur lors de la sauvegarde en base de données:', error);
-        }
-  }, [saveChatbotData, chatbotData.sessionId, chatbotData.userId, chatbotData.currentStep, chatbotData.userProfile, chatbotData.selectedIntentions]);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-    
-    // Show chatbot after 5 seconds
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-      // Add initial welcome message if no conversation history and not already initialized
-      if (chatbotData.conversationHistory.length === 0 && !hasInitialized.current) {
-        const welcomeStep = conversationScript.welcome;
-        if (welcomeStep) {
-          const newMessage = {
-            id: Date.now(),
-            text: welcomeStep.message,
-            isUser: false,
-            timestamp: new Date().toLocaleTimeString(),
-            type: 'message'
-          };
-          
-          const updatedData = {
-            ...chatbotData,
-            conversationHistory: [newMessage]
-          };
-          saveChatbotData(updatedData);
-          hasInitialized.current = true;
-        }
-      }
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, [isClient, saveChatbotData]);
-
-  useEffect(() => {
-    if (!isClient) return;
-    
-    // Load saved data from database
-    loadChatbotDataFromDatabase();
-  }, [isClient]);
-
-  const loadChatbotDataFromDatabase = async () => {
-    try {
-      if (chatbotData.sessionId) {
-        const response = await fetch(`/api/sessions/chatbot?sessionId=${chatbotData.sessionId}`);
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.session) {
-            setChatbotData({ ...defaultChatbotData, ...result.session.data });
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error loading chatbot data from database:', error);
-    }
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    // Scroll to bottom when new messages
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatbotData.conversationHistory]);
+    scrollToBottom();
+  }, [messages]);
 
-  // Handle profile questions
   useEffect(() => {
-    if (chatbotData.currentStep === 'profile' && !isTyping) {
-      const profileStep = conversationScript.profile;
-      if (profileStep && profileStep.questions) {
-        const questionIndex = chatbotData.currentQuestionIndex || 0;
-        if (questionIndex < profileStep.questions.length) {
-          const question = profileStep.questions[questionIndex];
-          setCurrentQuestion(question);
-          
-          // Add question to conversation if not already there
-          const questionExists = chatbotData.conversationHistory.some(
-            msg => msg.type === 'question' && msg.questionId === question.id
-          );
-          
-          if (!questionExists) {
-            setTimeout(() => {
-              const newMessage = {
-                id: Date.now(),
-                text: question.question,
-                isUser: false,
-                timestamp: new Date().toLocaleTimeString(),
-                type: 'question',
-                questionId: question.id
-              };
-              
-              setChatbotData(prevData => {
-                const updatedData = {
-                  ...prevData,
-                  conversationHistory: [...prevData.conversationHistory, newMessage]
-                };
-                saveChatbotData(updatedData);
-                return updatedData;
-              });
-            }, 500);
-          }
-        } else {
-          // All questions answered, move to engagement
-          setChatbotData(prevData => {
-            const updatedData = {
-              ...prevData,
-              currentStep: 'engagement'
-            };
-            saveChatbotData(updatedData);
-            return updatedData;
-          });
-        }
-      }
-    }
-  }, [chatbotData.currentStep, chatbotData.currentQuestionIndex, isTyping, saveChatbotData]);
-
-  // Add options as conversation bubbles when step changes
-  useEffect(() => {
-    if (!isTyping && chatbotData.currentStep) {
-      const step = conversationScript[chatbotData.currentStep];
-      if (step && step.options) {
-        // Check if options are already in conversation
-        const optionsExist = chatbotData.conversationHistory.some(
-          msg => msg.type === 'options' && msg.stepId === chatbotData.currentStep
-        );
-        
-        if (!optionsExist) {
-          setTimeout(() => {
-            const optionsMessage = {
-              id: Date.now(),
-              text: step.message || "Choisissez une option :",
-              isUser: false,
-              timestamp: new Date().toLocaleTimeString(),
-              type: 'options',
-              stepId: chatbotData.currentStep,
-              options: step.options
-            };
-            
-            setChatbotData(prevData => {
-              const updatedData = {
-                ...prevData,
-                conversationHistory: [...prevData.conversationHistory, optionsMessage]
-              };
-              saveChatbotData(updatedData);
-              return updatedData;
-            });
-          }, 300);
-        }
-      }
-    }
-  }, [chatbotData.currentStep, isTyping, saveChatbotData]);
-
-  const handleOptionClick = useCallback((option) => {
-    if (isTyping) return;
-    
-    setIsTyping(true);
-    addMessage(option.label, true);
-    
-    if (option.nextStep === 'close') {
-      setIsMinimized(true);
-      setIsTyping(false);
-      return;
-    }
-
-    setChatbotData(prevData => {
-      const updatedData = {
-        ...prevData,
-        currentStep: option.nextStep,
-        selectedIntentions: [...prevData.selectedIntentions, option.id]
-      };
-      saveChatbotData(updatedData);
-      return updatedData;
-    });
-
-    // Add Sarah's response after a short delay
-    setTimeout(() => {
-      const step = conversationScript[option.nextStep];
-      if (step) {
-        addMessage(step.message);
-      }
-      setIsTyping(false);
-    }, 800);
-  }, [addMessage, isTyping, saveChatbotData]);
-
-  const handleQuestionAnswer = useCallback((question, answer) => {
-    if (isTyping || !answer.trim()) return;
-    
-    setIsTyping(true);
-    addMessage(answer, true);
-    
-    // Add follow-up message
-    setTimeout(() => {
-      if (question.followUp) {
-        addMessage(question.followUp);
-      }
-      setIsTyping(false);
-    }, 500);
-
-    // Update user profile and move to next question
-    setChatbotData(prevData => {
-      const updatedProfile = { ...prevData.userProfile, [question.id]: answer };
-      const nextQuestionIndex = (prevData.currentQuestionIndex || 0) + 1;
-      const profileStep = conversationScript.profile;
-      
-      let updatedData = {
-        ...prevData,
-        userProfile: updatedProfile,
-        currentQuestionIndex: nextQuestionIndex
-      };
-
-      // If all questions are answered, move to engagement
-      if (profileStep && nextQuestionIndex >= profileStep.questions.length) {
-        updatedData = {
-          ...updatedData,
-          currentStep: 'engagement'
-        };
-      }
-
-      saveChatbotData(updatedData);
-      return updatedData;
-    });
-  }, [addMessage, isTyping, saveChatbotData]);
-
-  const handleFieldSubmit = useCallback((fields) => {
-    if (isTyping) return;
-    
-    setIsTyping(true);
-    const formData = {};
-    fields.forEach(field => {
-      const input = document.getElementById(`sarah-${field.id}`);
-      if (input) {
-        formData[field.id] = input.value;
-      }
-    });
-
-    setChatbotData(prevData => {
-      const currentStep = prevData.currentStep;
-      const nextStep = conversationScript[currentStep]?.nextStep || 'confirmation';
-      
-      const updatedData = {
-        ...prevData,
-        userProfile: { ...prevData.userProfile, ...formData },
-        currentStep: nextStep
-      };
-      saveChatbotData(updatedData);
-      return updatedData;
-    });
-
-    // Add user's response
-    const userResponse = Object.values(formData).join(', ');
-    addMessage(userResponse, true);
-
-    // Add Sarah's response
-    setTimeout(() => {
-      setChatbotData(prevData => {
-        const nextStep = conversationScript[prevData.currentStep];
-        if (nextStep) {
-          addMessage(nextStep.message);
-        }
-        return prevData;
+    if (isOpen && messages.length === 0) {
+      // Initialiser avec le message d'accueil
+      addMessage({
+        type: 'bot',
+        content: SARA_SCRIPT.welcome.message,
+        options: SARA_SCRIPT.welcome.options
       });
-      setIsTyping(false);
-    }, 500);
-  }, [addMessage, isTyping, saveChatbotData]);
+    }
+  }, [isOpen]);
 
-  const handleUserInput = useCallback((e) => {
-    e.preventDefault();
-    if (!userInput.trim() || isTyping) return;
+  const addMessage = (message) => {
+    setMessages(prev => [...prev, message]);
+  };
 
+  const handleOptionClick = async (option, step) => {
     setIsTyping(true);
-    addMessage(userInput, true);
-    setUserInput('');
+    
+    // Ajouter le message de l'utilisateur
+    addMessage({
+      type: 'user',
+      content: option.text
+    });
 
-    // Provide contextual response based on current step
-    setTimeout(() => {
-      const currentStep = conversationScript[chatbotData.currentStep];
-      let response = "Je comprends votre question. Laissez-moi vous orienter vers la meilleure solution...";
-      
-      if (currentStep) {
-        if (chatbotData.currentStep === 'welcome') {
-          response = "Merci pour votre question. Je vais vous aider à trouver la solution la plus adaptée à votre situation. Pouvez-vous me dire ce qui vous intéresse le plus ?";
-        } else if (chatbotData.currentStep === 'intention') {
-          response = "Excellente question ! Je vais vous guider vers la solution la plus appropriée pour votre projet. Laissez-moi d'abord mieux comprendre votre situation.";
-        } else if (chatbotData.currentStep === 'profile') {
-          response = "Merci pour ces informations. Je vais maintenant personnaliser mes recommandations pour vous. Avez-vous d'autres questions ?";
-        } else if (chatbotData.currentStep === 'engagement') {
-          response = "Parfait ! Je vais maintenant vous proposer les meilleures options pour votre situation. Que souhaitez-vous faire ?";
-        } else {
-          response = "Je comprends votre demande. Laissez-moi vous accompagner dans la suite du processus.";
+    // Traiter la réponse selon l'étape
+    switch (step) {
+      case 'welcome':
+        if (option.value === 'question_rapide') {
+          setCurrentStep('intention');
+            setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: SARA_SCRIPT.intention.message,
+              options: SARA_SCRIPT.intention.options
+            });
+            setIsTyping(false);
+          }, 1000);
+        } else if (option.value === 'rappel') {
+          setCurrentStep('rappel');
+          setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: "Parfait ! Un conseiller vous rappellera dans les plus brefs délais. Pouvez-vous me donner votre numéro de téléphone ?",
+              inputType: 'tel'
+            });
+            setIsTyping(false);
+          }, 1000);
+        } else if (option.value === 'rdv') {
+          setCurrentStep('rdv');
+          setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: SARA_SCRIPT.rdv.message,
+              options: SARA_SCRIPT.rdv.options
+            });
+            setIsTyping(false);
+          }, 1000);
         }
+        break;
+
+      case 'intention':
+        const thematique = THEMATIQUES[option.value];
+        if (thematique) {
+          setUserProfile(prev => ({ ...prev, intention: option.text }));
+          
+          // Afficher l'explication thématique
+          setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: thematique.explication
+            });
+          }, 1000);
+          
+          // Puis poser la question ciblée
+      setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: thematique.question,
+              inputType: 'text'
+            });
+            setCurrentStep('thematique_question');
+            setIsTyping(false);
+          }, 2000);
+        }
+        break;
+
+      case 'profile':
+        const questions = SARA_SCRIPT.profile.questions;
+        const currentQuestion = questions[currentQuestionIndex];
+        
+        // Sauvegarder la réponse
+        setUserProfile(prev => ({
+          ...prev,
+          [currentQuestion.id]: option.text
+        }));
+        
+        if (currentQuestionIndex < questions.length - 1) {
+          // Passer à la question suivante
+          const nextQuestion = questions[currentQuestionIndex + 1];
+          setCurrentQuestionIndex(prev => prev + 1);
+          
+    setTimeout(() => {
+            const nextOptions = nextQuestion.type === 'select' && nextQuestion.options 
+              ? nextQuestion.options.map(opt => ({ text: opt, value: opt }))
+              : [];
+            
+            addMessage({
+              type: 'bot',
+              content: nextQuestion.text,
+              options: nextOptions,
+              inputType: nextQuestion.type === 'text' ? 'text' : nextQuestion.type === 'number' ? 'number' : null
+            });
+            setIsTyping(false);
+          }, 1000);
+        } else {
+          // Toutes les questions sont terminées
+          setCurrentStep('engagement');
+        setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: SARA_SCRIPT.engagement.message,
+              options: SARA_SCRIPT.engagement.options
+            });
+            setIsTyping(false);
+        }, 1000);
       }
-      
-      addMessage(response);
+        break;
+
+      case 'engagement':
+        if (option.value === 'pdf') {
+          setCurrentStep('email_input');
+          setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: "Parfait ! Votre mini-bilan PDF sera généré et envoyé par email. Pouvez-vous me donner votre adresse email ?",
+              inputType: 'email'
+            });
+            setIsTyping(false);
+          }, 1000);
+        } else if (option.value === 'rdv_final') {
+          setCurrentStep('rdv');
+          setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: SARA_SCRIPT.rdv.message,
+              options: SARA_SCRIPT.rdv.options
+            });
+            setIsTyping(false);
+          }, 1000);
+        } else if (option.value === 'rappel_final') {
+          setCurrentStep('phone_input');
+          setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: "Parfait ! Un conseiller vous rappellera dans les plus brefs délais. Pouvez-vous me donner votre numéro de téléphone ?",
+              inputType: 'tel'
+            });
+            setIsTyping(false);
+          }, 1000);
+        }
+        break;
+
+      case 'rdv':
+        setUserProfile(prev => ({ ...prev, canal_preference: option.text }));
+        setTimeout(() => {
+          addMessage({
+            type: 'bot',
+            content: "Parfait, c'est noté. Un conseiller Azalée vous contactera au moment prévu. À très bientôt !"
+          });
+          setIsTyping(false);
+          
+          // Fermer la conversation après 3 secondes
+          setTimeout(() => {
+            setIsOpen(false);
+          }, 3000);
+        }, 1000);
+        break;
+    }
+  };
+
+  const handleUserInput = async (input) => {
+    if (!input.trim()) return;
+    
+    setIsTyping(true);
+    
+    // Ajouter le message de l'utilisateur
+    addMessage({
+      type: 'user',
+      content: input
+    });
+
+    switch (currentStep) {
+      case 'thematique_question':
+        setUserProfile(prev => ({ ...prev, thematique_reponse: input }));
+        setCurrentStep('profile');
+        
+    setTimeout(() => {
+          addMessage({
+            type: 'bot',
+            content: SARA_SCRIPT.profile.message
+          });
+        }, 1000);
+        
+        setTimeout(() => {
+          const firstQuestion = SARA_SCRIPT.profile.questions[0];
+          const firstOptions = firstQuestion.type === 'select' && firstQuestion.options 
+            ? firstQuestion.options.map(opt => ({ text: opt, value: opt }))
+            : [];
+          
+          addMessage({
+            type: 'bot',
+            content: firstQuestion.text,
+            options: firstOptions,
+            inputType: firstQuestion.type === 'text' ? 'text' : firstQuestion.type === 'number' ? 'number' : null
+          });
+          setCurrentQuestionIndex(0);
+          setIsTyping(false);
+        }, 2000);
+        break;
+
+      case 'profile':
+        const questions = SARA_SCRIPT.profile.questions;
+        const currentQuestion = questions[currentQuestionIndex];
+        
+        // Sauvegarder la réponse
+        setUserProfile(prev => ({
+          ...prev,
+          [currentQuestion.id]: input
+        }));
+        
+        if (currentQuestionIndex < questions.length - 1) {
+          // Passer à la question suivante
+          const nextQuestion = questions[currentQuestionIndex + 1];
+          setCurrentQuestionIndex(prev => prev + 1);
+          
+          setTimeout(() => {
+            const nextOptions = nextQuestion.type === 'select' && nextQuestion.options 
+              ? nextQuestion.options.map(opt => ({ text: opt, value: opt }))
+              : [];
+            
+            addMessage({
+              type: 'bot',
+              content: nextQuestion.text,
+              options: nextOptions,
+              inputType: nextQuestion.type === 'text' ? 'text' : nextQuestion.type === 'number' ? 'number' : null
+            });
+        setIsTyping(false);
+          }, 1000);
+        } else {
+          // Toutes les questions sont terminées
+          setCurrentStep('engagement');
+          setTimeout(() => {
+            addMessage({
+              type: 'bot',
+              content: SARA_SCRIPT.engagement.message,
+              options: SARA_SCRIPT.engagement.options
+            });
+            setIsTyping(false);
+          }, 1000);
+        }
+        break;
+
+      case 'email_input':
+        setUserProfile(prev => ({ ...prev, email: input }));
+        setTimeout(() => {
+          addMessage({
+            type: 'bot',
+            content: "Merci ! Votre mini-bilan PDF sera envoyé à cette adresse. À très bientôt !"
+          });
+          setIsTyping(false);
+          
+        setTimeout(() => {
+            setIsOpen(false);
+          }, 3000);
+        }, 1000);
+        break;
+
+      case 'phone_input':
+        setUserProfile(prev => ({ ...prev, telephone: input }));
+    setTimeout(() => {
+          addMessage({
+            type: 'bot',
+            content: "Parfait ! Un conseiller vous rappellera bientôt. À très bientôt !"
+          });
       setIsTyping(false);
+          
+    setTimeout(() => {
+            setIsOpen(false);
+          }, 3000);
     }, 1000);
-  }, [userInput, isTyping, addMessage, chatbotData.currentStep]);
+        break;
+    }
+  };
 
-  const renderQuestion = () => {
-    if (!currentQuestion || chatbotData.currentStep !== 'profile') return null;
-
-    const handleSubmit = (value) => {
-      if (value && value.trim()) {
-        handleQuestionAnswer(currentQuestion, value.trim());
+  const toggleChatbot = () => {
+    setIsOpen(!isOpen);
+    if (!isOpen) {
+      // Reset when opening
+      setCurrentStep('welcome');
+      setMessages([]);
+      setCurrentQuestionIndex(0);
+      setUserProfile({
+        nom: '',
+        prenom: '',
+        age: '',
+        situation_matrimoniale: '',
+        enfants: '',
+        situation_professionnelle: '',
+        tmi: '',
+        placements_actuels: '',
+        budget_projet: '',
+        intention: '',
+        thematique_reponse: '',
+        canal_preference: '',
+        telephone: '',
+        email: ''
+      });
       }
     };
 
     return (
-      <div className="space-y-3 p-4 border-t border-gray-200 bg-gray-50">
-        <div className="bg-white border border-blue-200 rounded-lg p-4 shadow-sm">
-          <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
-            <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Question {chatbotData.currentQuestionIndex + 1}
-          </h4>
-          <p className="text-gray-700 mb-3">{currentQuestion.question}</p>
-          {currentQuestion.type === 'select' ? (
-            <select
-              onChange={(e) => {
-                if (e.target.value) {
-                  handleSubmit(e.target.value);
-                }
-              }}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            >
-              <option value="">Sélectionnez une option...</option>
-              {currentQuestion.options.map((option) => (
-                <option key={option} value={option}>{option}</option>
-              ))}
-            </select>
-          ) : currentQuestion.type === 'textarea' ? (
-            <div className="space-y-2">
-              <textarea
-                onBlur={(e) => handleSubmit(e.target.value)}
-                rows={3}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                placeholder="Tapez votre réponse..."
-              />
+    <>
+      {/* Bouton flottant */}
               <button
-                onClick={(e) => {
-                  const textarea = e.target.previousElementSibling;
-                  if (textarea && textarea.value.trim()) {
-                    handleSubmit(textarea.value);
-                  }
-                }}
-                className="bg-[#4EBBBD] text-white px-4 py-2 rounded-lg hover:bg-[#3DA8AA] transition-colors"
-              >
-                Continuer
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              <input
-                type={currentQuestion.type}
-                onBlur={(e) => handleSubmit(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                placeholder="Tapez votre réponse..."
-              />
-              <button
-                onClick={(e) => {
-                  const input = e.target.previousElementSibling;
-                  if (input && input.value.trim()) {
-                    handleSubmit(input.value);
-                  }
-                }}
-                className="bg-[#4EBBBD] text-white px-4 py-2 rounded-lg hover:bg-[#3DA8AA] transition-colors"
-              >
-                Continuer
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  const renderStep = () => {
-    const step = conversationScript[chatbotData.currentStep];
-    if (!step) return null;
-
-    // Don't render if options are already in conversation
-    if (step.options) {
-      const optionsExist = chatbotData.conversationHistory.some(
-        msg => msg.type === 'options' && msg.stepId === chatbotData.currentStep
-      );
-      if (optionsExist) return null;
-    }
-
-    return (
-      <div className="p-4 border-t border-gray-200 bg-gray-50">
-        {step.options && (
-          <div className="space-y-2">
-            <p className="text-sm text-gray-600 mb-3 font-medium">Choisissez une option :</p>
-            {step.options.map((option) => (
-              <button
-                key={option.id}
-                onClick={() => handleOptionClick(option)}
-                disabled={isTyping}
-                className="w-full text-left p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-[#4EBBBD] rounded-full"></div>
-                  {option.label}
-                </div>
-              </button>
-            ))}
-          </div>
-        )}
-        
-        {step.fields && (
-          <div className="space-y-3">
-            <p className="text-sm text-gray-600 mb-3 font-medium">Remplissez les informations :</p>
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              handleFieldSubmit(step.fields);
-            }} className="space-y-3">
-              {step.fields.map((field) => (
-                <div key={field.id}>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {field.label}
-                  </label>
-                  {field.type === 'select' ? (
-                    <select
-                      id={`sarah-${field.id}`}
-                      required={field.required}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    >
-                      <option value="">Sélectionnez...</option>
-                      {field.options.map((option) => (
-                        <option key={option} value={option}>{option}</option>
-                      ))}
-                    </select>
-                  ) : field.type === 'textarea' ? (
-                    <textarea
-                      id={`sarah-${field.id}`}
-                      required={field.required}
-                      rows={3}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  ) : (
-                    <input
-                      id={`sarah-${field.id}`}
-                      type={field.type}
-                      required={field.required}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  )}
-                </div>
-              ))}
-              <button
-                type="submit"
-                disabled={isTyping}
-                className="w-full bg-[#4EBBBD] text-white py-2 px-4 rounded-lg hover:bg-[#3DA8AA] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isTyping ? 'En cours...' : 'Continuer'}
-              </button>
-            </form>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  if (!isClient || !isVisible) return null;
-
-  return (
-    <div className="fixed bottom-4 right-4 z-50">
-      {isMinimized ? (
-        <button
-          onClick={() => setIsMinimized(false)}
-          className="bg-[#4EBBBD] text-white p-4 rounded-full shadow-lg hover:bg-[#3DA8AA] transition-colors"
+        onClick={toggleChatbot}
+        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
           </svg>
         </button>
-      ) : (
-        <div className="bg-white rounded-lg shadow-xl border border-gray-200 w-96 h-[600px] flex flex-col">
+
+      {/* Chatbot */}
+      {isOpen && (
+        <div className="fixed bottom-24 right-6 w-96 h-[600px] bg-white border border-gray-200 rounded-lg shadow-xl z-50 flex flex-col">
           {/* Header */}
-          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#3DA8AA] text-white p-4 rounded-t-lg flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="bg-blue-600 text-white p-4 rounded-t-lg flex items-center justify-between">
+            <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <span className="text-[#4EBBBD] font-bold text-lg">S</span>
+                <span className="text-blue-600 font-bold text-lg">S</span>
               </div>
               <div>
-                <h3 className="font-semibold">Sarah</h3>
-                <p className="text-sm opacity-90">Conseiller patrimonial virtuel</p>
+                <h3 className="font-semibold">SARA - Conseiller Patrimonial</h3>
+                <p className="text-sm opacity-90">Azalée Patrimoine</p>
               </div>
             </div>
             <button
-              onClick={() => setIsMinimized(true)}
-              className="text-white hover:text-gray-200 transition-colors"
+              onClick={toggleChatbot}
+              className="text-white hover:text-gray-200"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -743,68 +489,32 @@ export default function SarahChatbot() {
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {chatbotData.conversationHistory.length === 0 ? (
-              <div className="text-center text-gray-500 py-8">
-                <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                </div>
-                <p className="text-sm">Sarah se connecte...</p>
-              </div>
-            ) : (
-              chatbotData.conversationHistory.map((message) => (
-                <div key={message.id}>
-                  {message.type === 'options' ? (
-                    <div className="space-y-2">
-                      {/* Sarah's message */}
-                      <div className="flex justify-start">
-                        <div className="bg-gray-100 text-gray-800 max-w-xs p-3 rounded-lg shadow-sm">
-                          <p className="text-sm leading-relaxed">{message.text}</p>
-                          <p className="text-xs opacity-70 mt-1">{message.timestamp}</p>
-                        </div>
-                      </div>
-                      {/* Options as conversation bubbles */}
-                      <div className="space-y-2 ml-4">
-                        {message.options.map((option) => (
+            {messages.map((message, index) => (
+              <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] ${message.type === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'} rounded-lg p-3`}>
+                  <p className="text-sm">{message.content}</p>
+                  
+                  {/* Options pour les messages du bot */}
+                  {message.type === 'bot' && message.options && (
+                    <div className="mt-3 space-y-2">
+                      {message.options.map((option, optionIndex) => (
                           <button
-                            key={option.id}
-                            onClick={() => handleOptionClick(option)}
-                            disabled={isTyping}
-                            className="w-full text-left p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
-                          >
-                            <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 bg-[#4EBBBD] rounded-full"></div>
-                              {option.label}
-                            </div>
+                          key={optionIndex}
+                          onClick={() => handleOptionClick(option, currentStep)}
+                          className="block w-full text-left p-2 bg-white border border-gray-300 rounded text-sm hover:bg-gray-50 transition-colors"
+                        >
+                          {option.text}
                           </button>
                         ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <div
-                      className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div
-                        className={`max-w-xs p-3 rounded-lg shadow-sm ${
-                          message.isUser
-                            ? 'bg-[#4EBBBD] text-white'
-                            : message.type === 'question'
-                            ? 'bg-blue-50 border border-blue-200 text-blue-900'
-                            : 'bg-gray-100 text-gray-800'
-                        }`}
-                      >
-                        <p className="text-sm leading-relaxed">{message.text}</p>
-                        <p className="text-xs opacity-70 mt-1">{message.timestamp}</p>
-                      </div>
                     </div>
                   )}
                 </div>
-              ))
-            )}
+              </div>
+            ))}
+            
             {isTyping && (
               <div className="flex justify-start">
-                <div className="bg-gray-100 text-gray-800 max-w-xs p-3 rounded-lg shadow-sm">
+                <div className="bg-gray-100 text-gray-800 rounded-lg p-3">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -813,40 +523,46 @@ export default function SarahChatbot() {
                 </div>
               </div>
             )}
+            
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Current Question */}
-          {renderQuestion()}
-
-          {/* Choices/Options - Now displayed as conversation bubbles */}
-          {renderStep()}
-
-          {/* Input Area - Now at the bottom */}
+          {/* Input */}
           <div className="p-4 border-t border-gray-200">
-            <form onSubmit={handleUserInput} className="flex gap-2">
+            <div className="flex space-x-2">
               <input
                 ref={inputRef}
                 type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
                 placeholder="Tapez votre message..."
-                disabled={isTyping}
-                className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent disabled:opacity-50"
+                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    handleUserInput(e.target.value);
+                    e.target.value = '';
+                  }
+                }}
               />
               <button
-                type="submit"
-                disabled={!userInput.trim() || isTyping}
-                className="bg-[#4EBBBD] text-white px-4 py-2 rounded-lg hover:bg-[#3DA8AA] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={() => {
+                  if (inputRef.current) {
+                    handleUserInput(inputRef.current.value);
+                    inputRef.current.value = '';
+                  }
+                }}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </button>
-            </form>
           </div>
         </div>
-      )}
     </div>
+      )}
+    </>
   );
 } 
+
+
+
+

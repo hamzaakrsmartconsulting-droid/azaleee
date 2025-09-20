@@ -14,8 +14,7 @@ export default function Page() {
             Impôt sur le revenu
           </h1>
           <p className="max-w-3xl mx-auto text-[#686868] text-base sm:text-lg font-inter leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non est sit amet massa finibus
-            rhoncus. Vivamus sed efficitur nibh, in convallis urna.
+            L'impôt sur le revenu (IR) est l'un des piliers du système fiscal français. Depuis 2019, il est prélevé à la source, ce qui permet une collecte immédiate et continue. Il s'applique aux revenus d'activité, fonciers, financiers et exceptionnels.
           </p>
           <div className="mt-6 flex items-center justify-center gap-3">
             <a href="#simulateur" className="inline-flex items-center justify-center bg-[#4EBBBD] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#3DA8AA] transition-colors duration-200">Accéder au simulateur</a>
@@ -28,19 +27,19 @@ export default function Page() {
       <div className="relative -mt-10 sm:-mt-12 lg:-mt-14">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
-            <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Lorem ipsum</p>
-            <p className="text-[#112033] text-2xl font-cairo font-semibold">Barème progressif</p>
-            <p className="text-[#686868] text-xs mt-1">Dolor sit amet</p>
+            <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Depuis 2019</p>
+            <p className="text-[#112033] text-2xl font-cairo font-semibold">Prélèvement à la source</p>
+            <p className="text-[#686868] text-xs mt-1">Collecte immédiate et continue</p>
           </div>
           <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
-            <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Consectetur</p>
-            <p className="text-[#112033] text-2xl font-cairo font-semibold">Quotient familial</p>
-            <p className="text-[#686868] text-xs mt-1">Adipiscing elit</p>
+            <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Optimisation</p>
+            <p className="text-[#112033] text-2xl font-cairo font-semibold">Dispositifs fiscaux</p>
+            <p className="text-[#686868] text-xs mt-1">PER, Pinel, Girardin, déficit foncier</p>
           </div>
           <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
-            <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Sed do</p>
-            <p className="text-[#112033] text-2xl font-cairo font-semibold">Crédits & réductions</p>
-            <p className="text-[#686868] text-xs mt-1">Eiusmod tempor</p>
+            <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Stratégie</p>
+            <p className="text-[#112033] text-2xl font-cairo font-semibold">Patrimoine</p>
+            <p className="text-[#686868] text-xs mt-1">Maîtrise de l'IR essentielle</p>
           </div>
         </div>
       </div>
@@ -51,66 +50,99 @@ export default function Page() {
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
             <h2 className="text-[#112033] text-2xl font-source-sans font-semibold mb-4">Sommaire</h2>
             <ol className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[#686868] font-inter">
-              <li>1. Bases de l'impôt sur le revenu</li>
-              <li>2. Tranches et barème en vigueur</li>
-              <li>3. Quotient familial et parts</li>
-              <li>4. Déductions, crédits et réductions</li>
-              <li>5. Déclaration et calendrier</li>
-              <li>6. Questions fréquentes</li>
+              <li>1. Prélèvement à la source depuis 2019</li>
+              <li>2. Types de revenus imposables</li>
+              <li>3. Optimisation fiscale patrimoniale</li>
+              <li>4. Dispositifs de défiscalisation</li>
+              <li>5. Stratégie d'investissement adaptée</li>
+              <li>6. Anticipation des réformes fiscales</li>
             </ol>
           </div>
 
           {/* Two-column informational blocks */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8">
-              <h3 className="text-[#005C69] text-xl font-cairo font-semibold mb-3">1. Bases de l'impôt</h3>
-              <p className="text-[#374151] font-inter mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a porta ipsum. Pellentesque non leo sit amet metus faucibus venenatis.</p>
+              <h3 className="text-[#005C69] text-xl font-cairo font-semibold mb-3">1. Prélèvement à la source</h3>
+              <p className="text-[#374151] font-inter mb-3">Depuis 2019, l'impôt sur le revenu est prélevé à la source, permettant une collecte immédiate et continue. Cette réforme modernise le système fiscal français.</p>
               <ul className="list-disc pl-5 text-[#374151] font-inter space-y-1">
-                <li>Assiette, revenu net imposable</li>
-                <li>Foyer fiscal, rattachement</li>
-                <li>Revenus catégoriels</li>
+                <li>Collecte immédiate et continue</li>
+                <li>Modernisation du système fiscal</li>
+                <li>Simplification pour les contribuables</li>
               </ul>
             </div>
             <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8">
-              <h3 className="text-[#005C69] text-xl font-cairo font-semibold mb-3">2. Tranches et barème</h3>
-              <p className="text-[#374151] font-inter mb-3">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Integer euismod, nisl ac facilisis egestas, nunc eros fermentum enim.</p>
-              <div className="grid grid-cols-2 gap-3 text-sm">
+              <h3 className="text-[#005C69] text-xl font-cairo font-semibold mb-3">2. Types de revenus imposables</h3>
+              <p className="text-[#374151] font-inter mb-3">L'impôt sur le revenu s'applique à différents types de revenus selon leur nature et leur source.</p>
+              <div className="grid grid-cols-1 gap-3 text-sm">
                 <div className="bg-white rounded-lg p-4 shadow">
-                  <p className="text-[#686868]">0% jusqu'à 11 294 €</p>
+                  <p className="text-[#686868] font-medium">Revenus d'activité</p>
+                  <p className="text-[#686868] text-xs">Salaires, bénéfices industriels et commerciaux, bénéfices non commerciaux</p>
                 </div>
                 <div className="bg-white rounded-lg p-4 shadow">
-                  <p className="text-[#686868]">11% de 11 295 à 28 797 €</p>
+                  <p className="text-[#686868] font-medium">Revenus fonciers</p>
+                  <p className="text-[#686868] text-xs">Loyers perçus sur des biens immobiliers</p>
                 </div>
                 <div className="bg-white rounded-lg p-4 shadow">
-                  <p className="text-[#686868]">30% de 28 798 à 82 341 €</p>
+                  <p className="text-[#686868] font-medium">Revenus financiers</p>
+                  <p className="text-[#686868] text-xs">Intérêts, dividendes, plus-values</p>
                 </div>
                 <div className="bg-white rounded-lg p-4 shadow">
-                  <p className="text-[#686868]">41% de 82 342 à 177 106 €</p>
-                </div>
-                <div className="bg-white rounded-lg p-4 shadow col-span-2">
-                  <p className="text-[#686868]">45% au-delà</p>
+                  <p className="text-[#686868] font-medium">Revenus exceptionnels</p>
+                  <p className="text-[#686868] text-xs">Indemnités, gains divers</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Wide card with quotient familial explanation */}
+          {/* Wide card with optimization explanation */}
           <div className="mt-8 bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
-            <h3 className="text-[#005C69] text-xl font-cairo font-semibold mb-3">3. Quotient familial et parts</h3>
-            <p className="text-[#374151] font-inter mb-4">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+            <h3 className="text-[#005C69] text-xl font-cairo font-semibold mb-3">3. Optimisation fiscale patrimoniale</h3>
+            <p className="text-[#374151] font-inter mb-4">Pour un contribuable patrimonial, la maîtrise de l'impôt sur le revenu est essentielle afin d'optimiser la charge fiscale et d'adapter la stratégie d'investissement.</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-[#F9FAFB] rounded-lg p-4">
-                <p className="text-[#6B7280] text-xs uppercase mb-1">Célibataire</p>
-                <p className="text-[#112033] font-source-sans font-semibold">1 part</p>
+                <p className="text-[#6B7280] text-xs uppercase mb-1">Optimisation</p>
+                <p className="text-[#112033] font-source-sans font-semibold">Charge fiscale</p>
+                <p className="text-[#6B7280] text-xs mt-1">Grâce aux dispositifs existants</p>
               </div>
               <div className="bg-[#F9FAFB] rounded-lg p-4">
-                <p className="text-[#6B7280] text-xs uppercase mb-1">Marié / Pacsé</p>
-                <p className="text-[#112033] font-source-sans font-semibold">2 parts</p>
+                <p className="text-[#6B7280] text-xs uppercase mb-1">Stratégie</p>
+                <p className="text-[#112033] font-source-sans font-semibold">Investissement</p>
+                <p className="text-[#6B7280] text-xs mt-1">Selon la fiscalité applicable</p>
               </div>
               <div className="bg-[#F9FAFB] rounded-lg p-4">
-                <p className="text-[#6B7280] text-xs uppercase mb-1">Enfants</p>
-                <p className="text-[#112033] font-source-sans font-semibold">+0,5 puis +1</p>
+                <p className="text-[#6B7280] text-xs uppercase mb-1">Anticipation</p>
+                <p className="text-[#112033] font-source-sans font-semibold">Réformes fiscales</p>
+                <p className="text-[#6B7280] text-xs mt-1">Impact sur le rendement net</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Dispositifs fiscaux */}
+      <section className="w-full bg-[#F2F2F2] py-10 sm:py-12 lg:py-16">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-8 text-center">Dispositifs de défiscalisation</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+              <div className="text-4xl mb-4">🏠</div>
+              <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">PER</h3>
+              <p className="text-[#374151] text-sm font-inter">Plan d'Épargne Retraite pour optimiser la fiscalité</p>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+              <div className="text-4xl mb-4">🏢</div>
+              <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">Loi Pinel</h3>
+              <p className="text-[#374151] text-sm font-inter">Investissement locatif avec réduction d'impôt</p>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+              <div className="text-4xl mb-4">🌴</div>
+              <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">Girardin</h3>
+              <p className="text-[#374151] text-sm font-inter">Investissement outre-mer avec avantages fiscaux</p>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+              <div className="text-4xl mb-4">📊</div>
+              <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">Déficit foncier</h3>
+              <p className="text-[#374151] text-sm font-inter">Réduction d'impôt via travaux immobiliers</p>
             </div>
           </div>
         </div>
@@ -168,12 +200,16 @@ export default function Page() {
               <h3 className="text-[#005C69] text-xl font-cairo font-semibold mb-3">Questions fréquentes</h3>
               <div className="space-y-3 text-[#374151] font-inter">
                 <div>
-                  <p className="font-medium">Lorem ipsum dolor sit amet?</p>
-                  <p className="text-sm text-[#686868]">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                  <p className="font-medium">Pourquoi le prélèvement à la source est-il important pour les contribuables patrimoniaux ?</p>
+                  <p className="text-sm text-[#686868]">Il permet une collecte immédiate et continue, simplifiant la gestion fiscale et l'anticipation des flux de trésorerie.</p>
                 </div>
                 <div>
-                  <p className="font-medium">Duis aute irure dolor in reprehenderit?</p>
-                  <p className="text-sm text-[#686868]">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+                  <p className="font-medium">Comment optimiser l'impôt sur le revenu avec les dispositifs fiscaux ?</p>
+                  <p className="text-sm text-[#686868]">Les dispositifs comme le PER, la loi Pinel, Girardin et le déficit foncier permettent de réduire significativement la charge fiscale.</p>
+                </div>
+                <div>
+                  <p className="font-medium">Quelle est l'importance de l'anticipation des réformes fiscales ?</p>
+                  <p className="text-sm text-[#686868]">Anticiper les réformes permet d'adapter la stratégie d'investissement et de préserver le rendement net des placements.</p>
                 </div>
               </div>
             </div>

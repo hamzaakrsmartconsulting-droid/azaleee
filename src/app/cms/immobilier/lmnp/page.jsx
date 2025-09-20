@@ -1,78 +1,14 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
-const STORAGE_KEY = "lmnpPageContent";
 
-function TextInput({ label, value, onChange }) {
-  return (
-    <label className="block mb-4">
-      <span className="block text-sm font-medium text-[#112033] mb-1">{label}</span>
-      <input
-        className="w-full rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#4EBBBD]"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    </label>
-  );
-}
-
-function TextArea({ label, value, onChange, rows = 5 }) {
-  return (
-    <label className="block mb-4">
-      <span className="block text-sm font-medium text-[#112033] mb-1">{label}</span>
-      <textarea
-        rows={rows}
-        className="w-full rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#4EBBBD]"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    </label>
-  );
-}
-
-function ImageInput({ label, value, onChange }) {
-  const handleFile = (file) => {
-    const reader = new FileReader();
-    reader.onload = () => onChange(reader.result);
-    reader.readAsDataURL(file);
-  };
-  return (
-    <div className="mb-4">
-      <span className="block text-sm font-medium text-[#112033] mb-1">{label}</span>
-      <div className="flex items-center gap-2">
-        <input
-          className="flex-1 rounded border border-gray-300 px-3 py-2"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder="URL ou base64"
-        />
-        <label className="px-3 py-2 border rounded cursor-pointer bg-white">
-          Importer
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) handleFile(f);
-            }}
-          />
-        </label>
-      </div>
-      {value && (
-        <img src={value} alt="preview" className="mt-2 h-28 rounded border object-cover" />
-      )}
-    </div>
-  );
-}
 
 const defaultContent = {
   hero: {
-    title:
-      "Investir avec le statut LMNP (location meublée non professionnelle) avec Azalee Wealth",
-    subtitle:
-      "L'investissement locatif est une stratégie d'épargne efficace. Ce système de défiscalisation immobilière permet de se constituer un patrimoine tout en percevant, mensuellement, un complément de salaire. Notre expertise de plus de 30 ans vous accompagne pour optimiser votre investissement LMNP.",
+    title: "Investir avec le statut LMNP (location meublée non professionnelle) avec Azalee Wealth",
+    subtitle: "L'investissement locatif est une stratégie d'épargne efficace. Ce système de défiscalisation immobilière permet de se constituer un patrimoine tout en percevant, mensuellement, un complément de salaire. Notre expertise de plus de 30 ans vous accompagne pour optimiser votre investissement LMNP.",
     button: "Simuler votre projet LMNP",
   },
   rightCard: {
@@ -99,8 +35,7 @@ const defaultContent = {
   },
   imageBlock: {
     title: "Investissement LMNP en pratique",
-    intro:
-      "Découvrez comment l'investissement LMNP peut transformer votre approche de l'immobilier locatif. Nos experts vous accompagnent dans la sélection de biens optimisés pour la location meublée.",
+    intro: "Découvrez comment l'investissement LMNP peut transformer votre approche de l'immobilier locatif. Nos experts vous accompagnent dans la sélection de biens optimisés pour la location meublée.",
     bullets: [
       "Biens sélectionnés pour la rentabilité LMNP",
       "Accompagnement personnalisé",
@@ -163,537 +98,781 @@ const defaultContent = {
     title: "3. Quelles sont les conditions du statut LMNP ?",
     cards: [
       {
-        title: "Conditions de revenus",
+        title: "Revenus locatifs",
         bullets: [
-          "Recettes annuelles de location ≤ 23 000 €",
-          "Revenus locatifs < autres revenus du foyer fiscal",
+          "Maximum 23 000 € par an",
+          "Inférieurs aux autres revenus",
+          "Pas d'activité principale",
         ],
       },
       {
-        title: "Conditions du bien",
+        title: "Type de bien",
         bullets: [
-          "Logement meublé avec équipements de base",
-          "Bail d'un an renouvelable (9 mois pour étudiants)",
-          "Dépôt de garantie : 2 mois de loyer",
+          "Bien meublé obligatoire",
+          "Équipements de base inclus",
+          "Conformité aux normes",
+        ],
+      },
+      {
+        title: "Statut fiscal",
+        bullets: [
+          "Résident fiscal français",
+          "Déclaration annuelle obligatoire",
+          "Respect des obligations comptables",
         ],
       },
     ],
   },
   declaration: {
     title: "4. Comment déclarer ses revenus en LMNP ?",
-    cards: [
-      {
-        title: "Régime Micro-BIC",
-        bullets: [
-          "Recettes ≤ 72 600 € par an",
-          "Abattement forfaitaire de 50%",
-          "Pas de comptabilité obligatoire",
-          "Déclaration simplifiée",
-        ],
-      },
-      {
-        title: "Régime Réel",
-        bullets: [
-          "Recettes > 72 600 € par an",
-          "Comptabilité obligatoire",
-          "Déduction des charges réelles",
-          "Amortissement du bien",
-        ],
-      },
+    paragraphs: [
+      "La déclaration des revenus LMNP se fait chaque année dans votre déclaration d'impôts. Vous devez remplir le formulaire 2042 C PRO pour déclarer vos revenus locatifs.",
+      "Les charges déductibles incluent : l'amortissement du bien, les intérêts d'emprunt, les charges de copropriété, les assurances, les frais de gestion, etc.",
+    ],
+    steps: [
+      "Remplir le formulaire 2042 C PRO",
+      "Joindre le bilan et le compte de résultat",
+      "Déclarer les revenus et charges",
+      "Calculer le résultat imposable",
     ],
   },
-  lmnpVsLmp: {
-    title: "LMNP vs LMP : quelles différences ?",
-    rows: [
-      {
-        critere: "Seuil de recettes",
-        lmnp: "≤ 23 000 € et < autres revenus du foyer",
-        lmp: "> 23 000 € ou > autres revenus du foyer",
-      },
-      { critere: "Statut", lmnp: "Non professionnel", lmp: "Professionnel" },
-      {
-        critere: "Régime fiscal",
-        lmnp: "BIC (micro-BIC ou réel)",
-        lmp: "BIC réel (cotisations sociales possibles)",
-      },
-      { critere: "Amortissements", lmnp: "Oui (impact plus-value en 2025)", lmp: "Oui" },
-      {
-        critere: "Plus-value à la revente",
-        lmnp: "Régime des particuliers (avec réintégration des amortissements)",
-        lmp: "Régime professionnel (selon situation)",
-      },
-    ],
-    note:
-      "Sources d'inspiration et synthèse basées sur des informations publiques du marché dont le dossier LMNP/LMP de Selexium.",
-  },
-  residences: {
-    title: "Résidences éligibles au statut LMNP",
-    items: [
-      { title: "Étudiantes", text: "Proches des campus, adaptées aux besoins étudiants." },
-      { title: "Senior", text: "Résidences services pour personnes âgées autonomes." },
-      { title: "EHPAD", text: "Établissements d'hébergement pour dépendance." },
-      { title: "Affaires", text: "Hébergement dédié aux déplacements professionnels." },
-      { title: "Tourisme", text: "Résidences de vacances avec services." },
-    ],
-  },
-  steps: {
+  obtention: {
     title: "5. Comment obtenir le statut LMNP ?",
-    items: [
-      { title: "Acquisition", text: "Achat d'un bien immobilier neuf ou ancien" },
-      { title: "Aménagement", text: "Équipement du logement en meublé" },
-      { title: "Location", text: "Mise en location avec bail meublé" },
-      { title: "Déclaration", text: "Déclaration des revenus en BIC" },
+    paragraphs: [
+      "Le statut LMNP s'obtient automatiquement dès lors que vous louez un bien meublé et que vous respectez les conditions de revenus. Aucune démarche administrative préalable n'est nécessaire.",
+      "Cependant, il est recommandé de se faire accompagner par des professionnels pour optimiser votre investissement et respecter toutes les obligations.",
+    ],
+    conseils: [
+      "Choisir un bien adapté à la location meublée",
+      "Équiper le bien selon les standards",
+      "Respecter les plafonds de revenus",
+      "Tenir une comptabilité rigoureuse",
     ],
   },
   inconvenients: {
-    title:
-      "6. Quels sont les inconvénients de la location meublée non professionnelle ?",
+    title: "6. Quels sont les inconvénients de la location meublée non professionnelle ?",
     cards: [
       {
-        title: "Gestion locative",
+        title: "Complexité administrative",
         bullets: [
-          "Rotation plus fréquente des locataires",
-          "Entretien des meubles et équipements",
-          "Gestion administrative plus complexe",
-          "Risque de vacance locative",
+          "Comptabilité obligatoire",
+          "Déclarations fiscales annuelles",
+          "Respect des réglementations",
+          "Gestion des charges",
         ],
       },
       {
-        title: "Contraintes fiscales",
+        title: "Risques financiers",
         bullets: [
-          "Limitation des recettes à 23 000 €",
-          "Obligation de respecter les conditions",
-          "Risque de requalification en LMP",
-          "Contrôles fiscaux possibles",
+          "Vacances locatives possibles",
+          "Coûts d'équipement et d'entretien",
+          "Fiscalité complexe",
+          "Évolution de la réglementation",
         ],
       },
       {
-        title: "Investissement initial",
+        title: "Engagement",
         bullets: [
-          "Coût d'équipement du logement",
-          "Amortissement sur plusieurs années",
-          "Besoin de trésorerie initiale",
-          "Délai de rentabilisation",
+          "Investissement à long terme",
+          "Gestion locative continue",
+          "Adaptation aux évolutions",
+          "Maintenance du bien",
         ],
       },
     ],
   },
   faq: {
     title: "7. Questions et réponses sur la LMNP",
-    items: [
+    questions: [
       {
-        q: "Quelles sont les différences entre la LMP et la LMNP ?",
-        a: "Le statut de loueur en meublé professionnel implique de toucher des revenus locatifs suffisamment importants ... supérieurs à 23 000 € ou être plus importants que les revenus globaux du foyer fiscal soumis à l'impôt sur le revenu.",
+        question: "Puis-je louer plusieurs biens en LMNP ?",
+        reponse: "Oui, vous pouvez louer plusieurs biens en LMNP, mais le plafond de 23 000 € s'applique à l'ensemble de vos revenus locatifs.",
       },
       {
-        q: "Peut-on investir en LMNP dans l'ancien ?",
-        a: "Il est tout à fait possible d'investir en LMNP dans l'ancien. Aussi connu sous le nom de LMNP d'occasion ... déjà équipé et parfois même occupé.",
+        question: "Quels meubles sont obligatoires ?",
+        reponse: "Le bien doit être équipé des meubles de base : lit, table, chaises, armoire, électroménager de base, etc.",
       },
       {
-        q: "Quelles résidences sont éligibles au statut LMNP ?",
-        a: "Toutes les résidences donnent accès au statut LMNP : résidences étudiantes, senior, EHPAD, d'affaires et de tourisme.",
+        question: "Comment calculer l'amortissement ?",
+        reponse: "L'amortissement se calcule sur la valeur du bien (hors terrain) sur une durée de 20 à 30 ans selon la nature du bien.",
       },
       {
-        q: "Comment revendre son bien LMNP ?",
-        a: "La revente se fait comme une revente classique d'un bien immobilier. La plus-value est imposée à 19% + 17,2% de prélèvements sociaux, avec abattement selon la durée de détention.",
+        question: "Puis-je déduire les frais de notaire ?",
+        reponse: "Non, les frais de notaire ne sont pas déductibles en LMNP, mais ils peuvent être inclus dans la base d'amortissement.",
       },
     ],
   },
-  finalCta: {
-    title: "Prêt à investir en LMNP ?",
-    subtitle:
-      "Nos experts Azalee Wealth vous accompagnent pour construire votre stratégie d'investissement LMNP et optimiser votre défiscalisation immobilière.",
-    primaryButton: "Simuler mon projet LMNP",
-    secondaryButton: "Prendre rendez-vous",
-  },
+  sectionOrder: [
+    'hero',
+    'sommaire',
+    'imageBlock',
+    'definition',
+    'changes2025',
+    'avantages',
+    'conditions',
+    'declaration',
+    'lmnpVsLmp',
+    'residences',
+    'steps',
+    'inconvenients',
+    'faq',
+    'finalCta',
+  ],
 };
 
-function normalize(saved) {
-  const legacy = saved || {};
-  return {
-    ...defaultContent,
-    ...legacy,
-    hero: {
-      ...defaultContent.hero,
-      ...(legacy.hero || {}),
-      ...(legacy.heroTitle || legacy.heroSubtitle || legacy.heroButton
-        ? {
-            title: legacy.heroTitle ?? (legacy.hero || {}).title ?? defaultContent.hero.title,
-            subtitle: legacy.heroSubtitle ?? (legacy.hero || {}).subtitle ?? defaultContent.hero.subtitle,
-            button: legacy.heroButton ?? (legacy.hero || {}).button ?? defaultContent.hero.button,
-          }
-        : {}),
-    },
-    rightCard: {
-      ...defaultContent.rightCard,
-      ...(legacy.rightCard || {}),
-      ...(legacy.rightCardTitle || legacy.rightCardBenefits || legacy.floatingCardText || legacy.rightCardIcon
-        ? {
-            title: legacy.rightCardTitle ?? (legacy.rightCard || {}).title ?? defaultContent.rightCard.title,
-            benefits: legacy.rightCardBenefits ?? (legacy.rightCard || {}).benefits ?? defaultContent.rightCard.benefits,
-            floatingText: legacy.floatingCardText ?? (legacy.rightCard || {}).floatingText ?? defaultContent.rightCard.floatingText,
-            icon: legacy.rightCardIcon ?? (legacy.rightCard || {}).icon ?? defaultContent.rightCard.icon,
-          }
-        : {}),
-    },
-    imageBlock: {
-      ...defaultContent.imageBlock,
-      ...(legacy.imageBlock || {}),
-      ...(legacy.imageBlockImage ? { image: legacy.imageBlockImage } : {}),
-    },
-  };
+// Deep merge utility to safely merge saved content with defaults
+function deepMerge(defaultObj, sourceObj) {
+  if (Array.isArray(defaultObj)) {
+    return Array.isArray(sourceObj) ? sourceObj : defaultObj;
+  }
+  if (defaultObj && typeof defaultObj === 'object') {
+    const result = {};
+    const keys = new Set([
+      ...Object.keys(defaultObj || {}),
+      ...Object.keys(sourceObj || {}),
+    ]);
+    keys.forEach((key) => {
+      const defaultVal = defaultObj ? defaultObj[key] : undefined;
+      const sourceVal = sourceObj ? sourceObj[key] : undefined;
+      result[key] = deepMerge(defaultVal, sourceVal);
+    });
+    return result;
+  }
+  return sourceObj != null ? sourceObj : defaultObj;
 }
 
-export default function LMNPCMS() {
-  const [data, setData] = useState(null);
-  const [saving, setSaving] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+// Composant d'édition directe
+const EditableElement = ({ value, onChange, element, className, placeholder, multiline = false }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(value);
 
-  // Charger le contenu depuis la base de données ou localStorage en fallback
-  useEffect(() => {
-    loadContent();
-  }, []);
-
-  const loadContent = async () => {
-    try {
-      // Essayer d'abord la base de données
-      const response = await fetch('/api/pages/content?path=/cms/immobilier/lmnp&type=cms');
-      if (response.ok) {
-        const result = await response.json();
-        if (result.success && result.content) {
-          setData(normalize(result.content.content));
-          setIsLoading(false);
-          return;
-        }
-      }
-    } catch (error) {
-      console.log('Base de données non disponible, utilisation du localStorage');
-    }
-
-    // Fallback vers localStorage
-    try {
-      if (typeof window !== 'undefined') {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          setData(normalize(JSON.parse(saved)));
-        } else {
-          setData(defaultContent);
-        }
-      } else {
-        setData(defaultContent);
-      }
-    } catch (error) {
-      console.error('Erreur lors du chargement:', error);
-      setData(defaultContent);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleDoubleClick = () => {
+    setIsEditing(true);
+    setEditValue(value);
   };
 
-  if (isLoading) {
-    return (
-      <div className="bg-white rounded-xl p-6 shadow-sm border">
-        <p className="text-sm text-gray-600">Chargement du contenu depuis la base de données…</p>
-      </div>
-    );
-  }
-
-  if (!data) {
-    return (
-      <div className="bg-white rounded-xl p-6 shadow-sm border">
-        <p className="text-sm text-gray-600">Erreur lors du chargement du contenu</p>
-      </div>
-    );
-  }
-
-  const save = async () => {
-    setSaving(true);
+    const handleSave = async () => {
     try {
-      // Essayer d'abord la base de données
-      try {
-        const response = await fetch('/api/pages/content', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            pagePath: '/cms/immobilier/lmnp',
-            pageType: 'cms',
-            content: data,
-            metadata: {
-              lastModified: new Date().toISOString(),
-              modifiedBy: 'admin'
-            }
-          })
-        });
+      const response = await fetch('/api/pages/content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pagePath: '/immobilier/lmnp',
+          pageType: 'cms',
+          content: content,
+          metadata: {
+            lastModified: new Date().toISOString(),
+            modifiedBy: 'admin',
+            pageType: 'cms'
+          }
+        })
+      });
 
-        if (response.ok) {
-          console.log('Sauvegardé en base de données');
-          window.dispatchEvent(new CustomEvent("contentUpdated"));
-          setSaving(false);
-          return;
-        }
-      } catch (error) {
-        console.log('Base de données non disponible, utilisation du localStorage');
-      }
-
-      // Fallback vers localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        console.log('Sauvegardé en localStorage');
-        window.dispatchEvent(new CustomEvent("contentUpdated"));
+      if (response.ok) {
+        console.log('Sauvegardé en base de données');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 2000);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
       }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
-    } finally {
-      setSaving(false);
+      alert('Erreur lors de la sauvegarde: ' + error.message);
+    }
+    
+    // Dispatch custom event to notify other components
+    window.dispatchEvent(new CustomEvent('contentUpdated'));
+  };
+
+  // Drag & Drop: reorder sectionOrder
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+    const currentOrder = content.sectionOrder || defaultContent.sectionOrder;
+    const newOrder = reorder(currentOrder, result.source.index, result.destination.index);
+    const updated = { ...content, sectionOrder: newOrder };
+    setContent(updated);
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+      window.dispatchEvent(new CustomEvent('contentUpdated'));
+      channel?.postMessage({ path: '/cms/immobilier/lmnp', key: LOCAL_STORAGE_KEY, ts: Date.now() });
+    } catch {}
+  };
+
+  useEffect(() => {
+    return () => {
+      try { channel?.close?.(); } catch {}
+    };
+  }, [channel]);
+
+  // Render a section by key based on current content
+  const renderSection = (key) => {
+    switch (key) {
+      case 'hero':
+  return (
+          <section key="hero" className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                <div className="lg:col-span-1">
+                  <EditableElement
+                    value={content.hero.title}
+                    onChange={(value) => handleChange('hero', 'title', value)}
+                    element="h1"
+                    className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6"
+                    placeholder="Titre principal de la page"
+                  />
+                  <EditableElement
+                    value={content.hero.subtitle}
+                    onChange={(value) => handleChange('hero', 'subtitle', value)}
+                    element="p"
+                    className="text-[#374151] text-lg leading-relaxed mb-8"
+                    placeholder="Sous-titre de la page"
+                    multiline
+                  />
+                  <EditableElement
+                    value={content.hero.button}
+                    onChange={(value) => handleChange('hero', 'button', value)}
+                    element="button"
+                    className="inline-flex items-center justify-center bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium text-lg hover:bg-[#3DA8AA] transition-colors"
+                    placeholder="Texte du bouton CTA"
+                  />
+      </div>
+                <div className="bg-white rounded-lg shadow-lg p-8">
+                  <EditableElement
+                    value={content.rightCard.title}
+                    onChange={(value) => handleChange('rightCard', 'title', value)}
+                    element="h2"
+                    className="text-2xl font-semibold text-[#112033] mb-6"
+                    placeholder="Titre de la carte droite"
+                  />
+                  <EditableList
+                    items={content.rightCard?.benefits || []}
+                    onChange={(value) => handleChange('rightCard', 'benefits', value)}
+                    className="space-y-3 mb-6"
+                    placeholder="Ajoutez des avantages..."
+                  />
+                  <div className="bg-[#4EBBBD] rounded-lg p-4 text-white text-center">
+                    <EditableElement
+                      value={content.rightCard.floatingText}
+                      onChange={(value) => handleChange('rightCard', 'floatingText', value)}
+                      element="p"
+                      className="text-lg font-semibold whitespace-pre-line"
+                      placeholder="Texte flottant"
+                    />
+        </div>
+        </div>
+      </div>
+        </div>
+          </section>
+        );
+      case 'sommaire':
+        return (
+          <section key="sommaire" className="py-16 sm:py-20 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#112033] text-3xl sm:text-4xl font-semibold text-center mb-12">Sommaire</h2>
+              <div className="max-w-4xl mx-auto">
+                <EditableList
+                  items={content.sommaire?.items || []}
+                  onChange={(value) => handleChange('sommaire', 'items', value)}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                  placeholder="Ajoutez des éléments au sommaire..."
+                />
+        </div>
+      </div>
+          </section>
+        );
+      case 'imageBlock':
+        return (
+          <section key="imageBlock" className="py-16 sm:py-20 bg-gray-50">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+                  <EditableElement
+                    value={content.imageBlock.title}
+                    onChange={(value) => handleChange('imageBlock', 'title', value)}
+                    element="h2"
+                    className="text-3xl font-semibold text-[#112033] mb-6"
+                    placeholder="Titre du bloc image"
+                  />
+                  <EditableElement
+                    value={content.imageBlock.intro}
+                    onChange={(value) => handleChange('imageBlock', 'intro', value)}
+                    element="p"
+                    className="text-lg text-[#374151] leading-relaxed mb-6"
+                    placeholder="Introduction du bloc image"
+                    multiline
+                  />
+                  <EditableList
+                    items={content.imageBlock?.bullets || []}
+                    onChange={(value) => handleChange('imageBlock', 'bullets', value)}
+                    className="space-y-2"
+                    placeholder="Ajoutez des points clés..."
+                  />
+        </div>
+                <div className="text-center">
+                  <img src={content.imageBlock.image} alt="Investissement LMNP" className="w-full max-w-md mx-auto rounded-lg shadow-lg" />
+        </div>
+      </div>
+            </div>
+          </section>
+        );
+      case 'definition':
+        return (
+          <section key="definition" className="py-16 sm:py-20 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
+                <EditableElement
+                  value={content.definition.title}
+                  onChange={(value) => handleChange('definition', 'title', value)}
+                  element="h2"
+                  className="text-3xl font-semibold text-[#112033] mb-8"
+                  placeholder="Titre de la définition"
+                />
+                <div className="space-y-4 mb-6">
+                  {content.definition?.paragraphs?.map((paragraph, index) => (
+                    <EditableElement
+                      key={index}
+                      value={paragraph}
+                      onChange={(value) => {
+                        const newParagraphs = [...content.definition.paragraphs];
+                        newParagraphs[index] = value;
+                        handleChange('definition', 'paragraphs', newParagraphs);
+                      }}
+                      element="p"
+                      className="text-lg text-[#374151] leading-relaxed"
+                      placeholder={`Paragraphe ${index + 1}`}
+                      multiline
+                    />
+          ))}
+        </div>
+                <EditableList
+                  items={content.definition?.bullets || []}
+                  onChange={(value) => handleChange('definition', 'bullets', value)}
+                  className="space-y-2 ml-6"
+                  placeholder="Ajoutez des points à savoir..."
+                />
+      </div>
+            </div>
+          </section>
+        );
+      case 'changes2025':
+        return (
+          <section key="changes2025" className="py-16 sm:py-20 bg-gray-50">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
+                <EditableElement
+                  value={content.changes2025.title}
+                  onChange={(value) => handleChange('changes2025', 'title', value)}
+                  element="h2"
+                  className="text-3xl font-semibold text-[#112033] mb-8"
+                  placeholder="Titre des changements 2025"
+                />
+                <div className="space-y-4">
+                  {content.changes2025?.paragraphs?.map((paragraph, index) => (
+                    <EditableElement
+                      key={index}
+                      value={paragraph}
+                      onChange={(value) => {
+                        const newParagraphs = [...content.changes2025.paragraphs];
+                        newParagraphs[index] = value;
+                        handleChange('changes2025', 'paragraphs', newParagraphs);
+                      }}
+                      element="p"
+                      className="text-lg text-[#374151] leading-relaxed"
+                      placeholder={`Paragraphe ${index + 1}`}
+                      multiline
+                    />
+          ))}
+        </div>
+      </div>
+            </div>
+          </section>
+        );
+      case 'avantages':
+        return (
+          <section key="avantages" className="py-16 sm:py-20 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <EditableElement
+                value={content.avantages.title}
+                onChange={(value) => handleChange('avantages', 'title', value)}
+                element="h2"
+                className="text-3xl font-semibold text-[#112033] text-center mb-12"
+                placeholder="Titre de la section avantages"
+              />
+              <EditableCards
+                cards={content.avantages?.cards || []}
+                onChange={(value) => handleChange('avantages', 'cards', value)}
+                className=""
+              />
+            </div>
+          </section>
+        );
+      case 'conditions':
+        return (
+          <section key="conditions" className="py-16 sm:py-20 bg-gray-50">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <EditableElement
+                value={content.conditions.title}
+                onChange={(value) => handleChange('conditions', 'title', value)}
+                element="h2"
+                className="text-3xl font-semibold text-[#112033] text-center mb-12"
+                placeholder="Titre de la section conditions"
+              />
+              <EditableCards
+                cards={content.conditions?.cards || []}
+                onChange={(value) => handleChange('conditions', 'cards', value)}
+                className=""
+              />
+            </div>
+          </section>
+        );
+      case 'declaration':
+        return (
+          <section key="declaration" className="py-16 sm:py-20 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
+                <EditableElement
+                  value={content.declaration.title}
+                  onChange={(value) => handleChange('declaration', 'title', value)}
+                  element="h2"
+                  className="text-3xl font-semibold text-[#112033] mb-8"
+                  placeholder="Titre de la section déclaration"
+                />
+                <div className="space-y-4 mb-6">
+                  {content.declaration?.paragraphs?.map((paragraph, index) => (
+                    <EditableElement
+                      key={index}
+                      value={paragraph}
+                      onChange={(value) => {
+                        const newParagraphs = [...(content.declaration?.paragraphs || [])];
+                        newParagraphs[index] = value;
+                        handleChange('declaration', 'paragraphs', newParagraphs);
+                      }}
+                      element="p"
+                      className="text-lg text-[#374151] leading-relaxed"
+                      placeholder={`Paragraphe ${index + 1}`}
+                      multiline
+                    />
+          ))}
+        </div>
+                <EditableList
+                  items={content.declaration?.steps || []}
+                  onChange={(value) => handleChange('declaration', 'steps', value)}
+                  className="space-y-2 ml-6"
+                  placeholder="Ajoutez les étapes de déclaration..."
+                />
+      </div>
+            </div>
+          </section>
+        );
+      case 'obtention':
+        return (
+          <section key="obtention" className="py-16 sm:py-20 bg-gray-50">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
+                <EditableElement
+                  value={content.obtention.title}
+                  onChange={(value) => handleChange('obtention', 'title', value)}
+                  element="h2"
+                  className="text-3xl font-semibold text-[#112033] mb-8"
+                  placeholder="Titre de la section obtention"
+                />
+                <div className="space-y-4 mb-6">
+                  {content.obtention?.paragraphs?.map((paragraph, index) => (
+                    <EditableElement
+                      key={index}
+                      value={paragraph}
+                      onChange={(value) => {
+                        const newParagraphs = [...content.obtention.paragraphs];
+                        newParagraphs[index] = value;
+                        handleChange('obtention', 'paragraphs', newParagraphs);
+                      }}
+                      element="p"
+                      className="text-lg text-[#374151] leading-relaxed"
+                      placeholder={`Paragraphe ${index + 1}`}
+                    />
+                  ))}
+        </div>
+                <EditableList
+                  items={content.obtention?.conseils || []}
+                  onChange={(value) => handleChange('obtention', 'conseils', value)}
+                  className="space-y-2 ml-6"
+                  placeholder="Ajoutez des conseils..."
+                />
+      </div>
+            </div>
+          </section>
+        );
+      case 'inconvenients':
+        return (
+          <section key="inconvenients" className="py-16 sm:py-20 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <EditableElement
+                value={content.inconvenients.title}
+                onChange={(value) => handleChange('inconvenients', 'title', value)}
+                element="h2"
+                className="text-3xl font-semibold text-[#112033] text-center mb-12"
+                placeholder="Titre de la section inconvénients"
+              />
+              <EditableCards
+                cards={content.inconvenients?.cards || []}
+                onChange={(value) => handleChange('inconvenients', 'cards', value)}
+                className=""
+              />
+            </div>
+          </section>
+        );
+      case 'faq':
+        return (
+          <section key="faq" className="py-16 sm:py-20 bg-gray-50">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
+                <EditableElement
+                  value={content.faq.title}
+                  onChange={(value) => handleChange('faq', 'title', value)}
+                  element="h2"
+                  className="text-3xl font-semibold text-[#112033] text-center mb-12"
+                  placeholder="Titre de la section FAQ"
+                />
+                <div className="space-y-6">
+                  {content.faq?.questions?.map((faq, index) => (
+                    <div key={index} className="bg-white rounded-lg shadow-md p-6">
+                      <EditableElement
+                        value={faq.question}
+                        onChange={(value) => {
+                          const newQuestions = [...content.faq.questions];
+                          newQuestions[index] = { ...faq, question: value };
+                          handleChange('faq', 'questions', newQuestions);
+                        }}
+                        element="h3"
+                        className="text-lg font-semibold text-[#112033] mb-3"
+                        placeholder="Question"
+                      />
+                      <EditableElement
+                        value={faq.reponse}
+                        onChange={(value) => {
+                          const newQuestions = [...content.faq.questions];
+                          newQuestions[index] = { ...faq, reponse: value };
+                          handleChange('faq', 'questions', newQuestions);
+                        }}
+                        element="p"
+                        className="text-[#374151] leading-relaxed"
+                        placeholder="Réponse"
+                        multiline
+                      />
+            </div>
+          ))}
+        </div>
+      </div>
+            </div>
+          </section>
+        );
+      default:
+        return null;
     }
   };
 
+  if (!content) {
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border space-y-10">
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
+          <p className="text-[#686868]">Chargement du CMS...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header du CMS */}
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 py-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-[#112033]">CMS — Page LMNP</h1>
+      <div>
+              <h1 className="text-2xl font-bold text-[#112033]">CMS LMNP - Mode Visuel</h1>
+              <p className="text-[#686868]">Double-cliquez sur les éléments pour les modifier directement</p>
+            </div>
+            <div className="flex items-center gap-3">
         <button
-          onClick={save}
-          className="px-4 py-2 rounded bg-[#4EBBBD] text-white disabled:opacity-60"
-          disabled={saving}
-        >
-          {saving ? "Sauvegarde…" : "Sauvegarder"}
+                onClick={() => setEditMode(editMode === 'visual' ? 'form' : 'visual')}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  editMode === 'visual' 
+                    ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                {editMode === 'visual' ? '📝 Mode Formulaire' : '👁️ Mode Visuel'}
+              </button>
+              <button
+                onClick={handleSave}
+                className="bg-[#4EBBBD] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#3DA8AA]"
+              >
+                💾 Sauvegarder
         </button>
-      </div>
-
-      {/* Hero */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <h3 className="text-sm font-semibold text-[#112033] mb-3">Hero</h3>
-          <TextInput label="Titre" value={data.hero.title} onChange={(v) => setData({ ...data, hero: { ...data.hero, title: v } })} />
-          <TextArea label="Sous-titre" rows={5} value={data.hero.subtitle} onChange={(v) => setData({ ...data, hero: { ...data.hero, subtitle: v } })} />
-          <TextInput label="Texte bouton" value={data.hero.button} onChange={(v) => setData({ ...data, hero: { ...data.hero, button: v } })} />
-        </div>
-        <div>
-          <h3 className="text-sm font-semibold text-[#112033] mb-3">Carte droite</h3>
-          <TextInput label="Titre carte" value={data.rightCard.title} onChange={(v) => setData({ ...data, rightCard: { ...data.rightCard, title: v } })} />
-          <TextArea label="Avantages (un par ligne)" rows={6} value={data.rightCard.benefits.join("\n")} onChange={(v) => setData({ ...data, rightCard: { ...data.rightCard, benefits: v.split("\n").filter(Boolean) } })} />
-          <TextArea label="Texte bulle flottante (\\n pour un saut)" rows={2} value={data.rightCard.floatingText} onChange={(v) => setData({ ...data, rightCard: { ...data.rightCard, floatingText: v } })} />
-          <ImageInput label="Icône" value={data.rightCard.icon} onChange={(v) => setData({ ...data, rightCard: { ...data.rightCard, icon: v } })} />
-        </div>
-      </div>
-
-      {/* Sommaire */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <h3 className="text-sm font-semibold text-[#112033] mb-3">Sommaire</h3>
-          <TextArea label="Éléments (un par ligne)" rows={8} value={data.sommaire.items.join("\n")} onChange={(v) => setData({ ...data, sommaire: { ...data.sommaire, items: v.split("\n").filter(Boolean) } })} />
-        </div>
-        <div>
-          <h3 className="text-sm font-semibold text-[#112033] mb-3">Bloc image</h3>
-          <TextInput label="Titre" value={data.imageBlock.title} onChange={(v) => setData({ ...data, imageBlock: { ...data.imageBlock, title: v } })} />
-          <TextArea label="Intro" rows={4} value={data.imageBlock.intro} onChange={(v) => setData({ ...data, imageBlock: { ...data.imageBlock, intro: v } })} />
-          <TextArea label="Points (un par ligne)" rows={4} value={data.imageBlock.bullets.join("\n")} onChange={(v) => setData({ ...data, imageBlock: { ...data.imageBlock, bullets: v.split("\n").filter(Boolean) } })} />
-          <ImageInput label="Image" value={data.imageBlock.image} onChange={(v) => setData({ ...data, imageBlock: { ...data.imageBlock, image: v } })} />
-        </div>
-      </div>
-
-      {/* Définition */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <h3 className="text-sm font-semibold text-[#112033] mb-3">Définition</h3>
-          <TextInput label="Titre" value={data.definition.title} onChange={(v) => setData({ ...data, definition: { ...data.definition, title: v } })} />
-          <TextArea label="Paragraphes (un par ligne)" rows={6} value={data.definition.paragraphs.join("\n\n")} onChange={(v) => setData({ ...data, definition: { ...data.definition, paragraphs: v.split(/\n\n+/).filter(Boolean) } })} />
-          <TextArea label="Puces (une par ligne)" rows={4} value={data.definition.bullets.join("\n")} onChange={(v) => setData({ ...data, definition: { ...data.definition, bullets: v.split("\n").filter(Boolean) } })} />
-        </div>
-        <div>
-          <h3 className="text-sm font-semibold text-[#112033] mb-3">Changements 2025</h3>
-          <TextInput label="Titre" value={data.changes2025.title} onChange={(v) => setData({ ...data, changes2025: { ...data.changes2025, title: v } })} />
-          <TextArea label="Paragraphes (un par ligne)" rows={6} value={data.changes2025.paragraphs.join("\n\n")} onChange={(v) => setData({ ...data, changes2025: { ...data.changes2025, paragraphs: v.split(/\n\n+/).filter(Boolean) } })} />
-        </div>
-      </div>
-
-      {/* Avantages */}
-      <div>
-        <h3 className="text-sm font-semibold text-[#112033] mb-3">Avantages</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {data.avantages.cards.map((card, idx) => (
-            <div key={idx} className="rounded border p-4 bg-gray-50">
-              <TextInput label={`Carte #${idx + 1} — Titre`} value={card.title} onChange={(v) => {
-                const next = [...data.avantages.cards];
-                next[idx] = { ...next[idx], title: v };
-                setData({ ...data, avantages: { ...data.avantages, cards: next } });
-              }} />
-              <TextArea label="Puces (une par ligne)" rows={6} value={card.bullets.join("\n")} onChange={(v) => {
-                const next = [...data.avantages.cards];
-                next[idx] = { ...next[idx], bullets: v.split("\n").filter(Boolean) };
-                setData({ ...data, avantages: { ...data.avantages, cards: next } });
-              }} />
             </div>
+      </div>
+
+          {/* Ordre des sections (Drag & Drop) */}
+          <div className="mt-3">
+            <h3 className="text-sm font-semibold text-[#112033] mb-2">Ordre des sections</h3>
+            <p className="text-xs text-[#686868] mb-3">Faites glisser les éléments pour réordonner. L'ordre est appliqué sur la page officielle.</p>
+            <DragDropContext onDragEnd={onDragEnd}>
+              <Droppable droppableId="sections-order" direction="horizontal">
+                {(provided) => (
+                  <ul ref={provided.innerRef} {...provided.droppableProps} className="flex flex-wrap gap-2">
+                    {(content.sectionOrder || defaultContent.sectionOrder).map((sec, index) => (
+                      <Draggable key={sec} draggableId={sec} index={index}>
+                        {(dragProvided, snapshot) => (
+                          <li
+                            ref={dragProvided.innerRef}
+                            {...dragProvided.draggableProps}
+                            {...dragProvided.dragHandleProps}
+                            className={`px-3 py-1 rounded border text-xs select-none ${snapshot.isDragging ? 'bg-blue-50 border-blue-300' : 'bg-gray-50 border-gray-200'}`}
+                          >
+                            {sec}
+                          </li>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </ul>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </div>
+
+          {/* Instructions */}
+          {editMode === 'visual' && (
+            <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-sm text-blue-700">
+                💡 <strong>Mode Visuel :</strong> Double-cliquez sur n'importe quel texte pour le modifier. 
+                Appuyez sur <kbd className="bg-blue-100 px-1 rounded text-xs">Entrée</kbd> pour sauvegarder, 
+                <kbd className="bg-blue-100 px-1 rounded text-xs">Échap</kbd> pour annuler.
+              </p>
+        </div>
+          )}
+        </div>
+      </div>
+
+      {/* Contenu principal */}
+      <div className="max-w-7xl mx-auto">
+        {editMode === 'visual' ? (
+          // Mode Visuel — Render by current section order so drag changes show in real time
+          <div className="space-y-0">
+            {(content.sectionOrder || []).map((sec) => renderSection(sec))}
+          </div>
+        ) : (
+          // Mode Formulaire - Interface classique
+          <div className="space-y-6 p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+              <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Hero</h2>
+              <div className="space-y-4">
+      <div>
+                  <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
+                  <input
+                    value={content.hero.title}
+                    onChange={(e) => handleChange('hero', 'title', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+            </div>
+                <div>
+                  <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
+                  <textarea
+                    value={content.hero.subtitle}
+                    onChange={(e) => handleChange('hero', 'subtitle', e.target.value)}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-[#686868] mb-2">Bouton CTA</label>
+                  <input
+                    value={content.hero.button}
+                    onChange={(e) => handleChange('hero', 'button', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+        </div>
+      </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+              <h2 className="text-lg font-semibold text-[#112033] mb-4">Carte droite</h2>
+              <div className="space-y-4">
+      <div>
+                  <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
+                  <input
+                    value={content.rightCard.title}
+                    onChange={(e) => handleChange('rightCard', 'title', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-[#686868] mb-2">Texte flottant</label>
+                  <textarea
+                    value={content.rightCard.floatingText}
+                    onChange={(e) => handleChange('rightCard', 'floatingText', e.target.value)}
+                    rows={2}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-[#686868] mb-2">Avantages</label>
+                  {content.rightCard.benefits.map((benefit, index) => (
+                    <div key={index} className="mb-2">
+                      <input
+                        value={benefit}
+                        onChange={(e) => {
+                          const newBenefits = [...content.rightCard.benefits];
+                          newBenefits[index] = e.target.value;
+                          handleChange('rightCard', 'benefits', newBenefits);
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                      />
+            </div>
+          ))}
+                </div>
+        </div>
+      </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+              <h2 className="text-lg font-semibold text-[#112033] mb-4">Sommaire</h2>
+              <div className="space-y-4">
+        <div>
+                  <label className="block text-sm font-medium text-[#686868] mb-2">Éléments du sommaire</label>
+                  {content.sommaire.items.map((item, index) => (
+                    <div key={index} className="mb-2">
+                      <input
+                        value={item}
+                        onChange={(e) => {
+                          const newItems = [...content.sommaire.items];
+                          newItems[index] = e.target.value;
+                          handleChange('sommaire', 'items', newItems);
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                      />
+        </div>
           ))}
         </div>
       </div>
-
-      {/* Conditions */}
-      <div>
-        <h3 className="text-sm font-semibold text-[#112033] mb-3">Conditions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {data.conditions.cards.map((card, idx) => (
-            <div key={idx} className="rounded border p-4 bg-gray-50">
-              <TextInput label={`Bloc #${idx + 1} — Titre`} value={card.title} onChange={(v) => {
-                const next = [...data.conditions.cards];
-                next[idx] = { ...next[idx], title: v };
-                setData({ ...data, conditions: { ...data.conditions, cards: next } });
-              }} />
-              <TextArea label="Puces (une par ligne)" rows={6} value={card.bullets.join("\n")} onChange={(v) => {
-                const next = [...data.conditions.cards];
-                next[idx] = { ...next[idx], bullets: v.split("\n").filter(Boolean) };
-                setData({ ...data, conditions: { ...data.conditions, cards: next } });
-              }} />
-            </div>
-          ))}
         </div>
+        </div>
+        )}
       </div>
 
-      {/* Déclaration */}
-      <div>
-        <h3 className="text-sm font-semibold text-[#112033] mb-3">Déclaration des revenus</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {data.declaration.cards.map((card, idx) => (
-            <div key={idx} className="rounded border p-4 bg-gray-50">
-              <TextInput label={`Bloc #${idx + 1} — Titre`} value={card.title} onChange={(v) => {
-                const next = [...data.declaration.cards];
-                next[idx] = { ...next[idx], title: v };
-                setData({ ...data, declaration: { ...data.declaration, cards: next } });
-              }} />
-              <TextArea label="Puces (une par ligne)" rows={6} value={card.bullets.join("\n")} onChange={(v) => {
-                const next = [...data.declaration.cards];
-                next[idx] = { ...next[idx], bullets: v.split("\n").filter(Boolean) };
-                setData({ ...data, declaration: { ...data.declaration, cards: next } });
-              }} />
-            </div>
-          ))}
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed bottom-6 right-6 bg-[#4EBBBD] text-white px-6 py-3 rounded-lg shadow-lg z-50">
+          Contenu sauvegardé avec succès !
         </div>
-      </div>
-
-      {/* LMNP vs LMP */}
-      <div>
-        <h3 className="text-sm font-semibold text-[#112033] mb-3">Tableau — LMNP vs LMP</h3>
-        <div className="space-y-4">
-          {data.lmnpVsLmp.rows.map((row, idx) => (
-            <div key={idx} className="rounded border p-4 bg-gray-50 grid grid-cols-1 md:grid-cols-3 gap-3">
-              <TextInput label="Critère" value={row.critere} onChange={(v) => {
-                const next = [...data.lmnpVsLmp.rows];
-                next[idx] = { ...next[idx], critere: v };
-                setData({ ...data, lmnpVsLmp: { ...data.lmnpVsLmp, rows: next } });
-              }} />
-              <TextInput label="LMNP" value={row.lmnp} onChange={(v) => {
-                const next = [...data.lmnpVsLmp.rows];
-                next[idx] = { ...next[idx], lmnp: v };
-                setData({ ...data, lmnpVsLmp: { ...data.lmnpVsLmp, rows: next } });
-              }} />
-              <TextInput label="LMP" value={row.lmp} onChange={(v) => {
-                const next = [...data.lmnpVsLmp.rows];
-                next[idx] = { ...next[idx], lmp: v };
-                setData({ ...data, lmnpVsLmp: { ...data.lmnpVsLmp, rows: next } });
-              }} />
-            </div>
-          ))}
-          <TextArea label="Note" rows={2} value={data.lmnpVsLmp.note || ""} onChange={(v) => setData({ ...data, lmnpVsLmp: { ...data.lmnpVsLmp, note: v } })} />
-        </div>
-      </div>
-
-      {/* Résidences */}
-      <div>
-        <h3 className="text-sm font-semibold text-[#112033] mb-3">Résidences éligibles</h3>
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-          {data.residences.items.map((it, idx) => (
-            <div key={idx} className="rounded border p-4 bg-gray-50">
-              <TextInput label="Titre" value={it.title} onChange={(v) => {
-                const next = [...data.residences.items];
-                next[idx] = { ...next[idx], title: v };
-                setData({ ...data, residences: { ...data.residences, items: next } });
-              }} />
-              <TextArea label="Texte" rows={3} value={it.text} onChange={(v) => {
-                const next = [...data.residences.items];
-                next[idx] = { ...next[idx], text: v };
-                setData({ ...data, residences: { ...data.residences, items: next } });
-              }} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Étapes */}
-      <div>
-        <h3 className="text-sm font-semibold text-[#112033] mb-3">Étapes — Obtenir le statut LMNP</h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {data.steps.items.map((it, idx) => (
-            <div key={idx} className="rounded border p-4 bg-gray-50">
-              <TextInput label="Titre" value={it.title} onChange={(v) => {
-                const next = [...data.steps.items];
-                next[idx] = { ...next[idx], title: v };
-                setData({ ...data, steps: { ...data.steps, items: next } });
-              }} />
-              <TextArea label="Texte" rows={3} value={it.text} onChange={(v) => {
-                const next = [...data.steps.items];
-                next[idx] = { ...next[idx], text: v };
-                setData({ ...data, steps: { ...data.steps, items: next } });
-              }} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Inconvénients */}
-      <div>
-        <h3 className="text-sm font-semibold text-[#112033] mb-3">Inconvénients</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {data.inconvenients.cards.map((card, idx) => (
-            <div key={idx} className="rounded border p-4 bg-gray-50">
-              <TextInput label="Titre" value={card.title} onChange={(v) => {
-                const next = [...data.inconvenients.cards];
-                next[idx] = { ...next[idx], title: v };
-                setData({ ...data, inconvenients: { ...data.inconvenients, cards: next } });
-              }} />
-              <TextArea label="Puces (une par ligne)" rows={6} value={card.bullets.join("\n")} onChange={(v) => {
-                const next = [...data.inconvenients.cards];
-                next[idx] = { ...next[idx], bullets: v.split("\n").filter(Boolean) };
-                setData({ ...data, inconvenients: { ...data.inconvenients, cards: next } });
-              }} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* FAQ */}
-      <div>
-        <h3 className="text-sm font-semibold text-[#112033] mb-3">FAQ</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {data.faq.items.map((it, idx) => (
-            <div key={idx} className="rounded border p-4 bg-gray-50">
-              <TextInput label="Question" value={it.q} onChange={(v) => {
-                const next = [...data.faq.items];
-                next[idx] = { ...next[idx], q: v };
-                setData({ ...data, faq: { ...data.faq, items: next } });
-              }} />
-              <TextArea label="Réponse" rows={4} value={it.a} onChange={(v) => {
-                const next = [...data.faq.items];
-                next[idx] = { ...next[idx], a: v };
-                setData({ ...data, faq: { ...data.faq, items: next } });
-              }} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* CTA final */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <h3 className="text-sm font-semibold text-[#112033] mb-3">CTA final</h3>
-          <TextInput label="Titre" value={data.finalCta.title} onChange={(v) => setData({ ...data, finalCta: { ...data.finalCta, title: v } })} />
-          <TextArea label="Sous-titre" rows={4} value={data.finalCta.subtitle} onChange={(v) => setData({ ...data, finalCta: { ...data.finalCta, subtitle: v } })} />
-        </div>
-        <div>
-          <TextInput label="Bouton primaire" value={data.finalCta.primaryButton} onChange={(v) => setData({ ...data, finalCta: { ...data.finalCta, primaryButton: v } })} />
-          <TextInput label="Bouton secondaire" value={data.finalCta.secondaryButton} onChange={(v) => setData({ ...data, finalCta: { ...data.finalCta, secondaryButton: v } })} />
-        </div>
-      </div>
+      )}
     </div>
   );
 } 

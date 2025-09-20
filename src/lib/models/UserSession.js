@@ -89,6 +89,11 @@ export class UserSession {
     }
   }
 
+  // Alias pour getAllByType (pour compatibilité avec l'API)
+  static async getAllByType(sessionType) {
+    return this.getByType(sessionType);
+  }
+
   // Supprimer une session
   static async delete(sessionId) {
     const query = 'DELETE FROM user_sessions WHERE session_id = ?';
