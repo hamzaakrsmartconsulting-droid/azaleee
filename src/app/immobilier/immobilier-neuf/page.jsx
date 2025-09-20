@@ -15,65 +15,52 @@ export default function ImmobilierNeufPage() {
             <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               {/* Main Title */}
               <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
-                Immobilier Neuf – Lorem Ipsum Dolor Sit Amet
+                Immobilier neuf: investir dans la modernité et la fiscalité
               </h1>
               
               {/* Description */}
               <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Découvrez les opportunités d'investissement dans l'immobilier neuf avec nos experts. De la VEFA aux dispositifs fiscaux avantageux comme Pinel, Scellier et Robien, nous vous accompagnons dans vos projets d'investissement immobilier moderne.
               </p>
               
               {/* CTA Button */}
               <div className="flex justify-center lg:justify-start">
                 <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                  Lorem Ipsum Dolor
+                  Découvrir nos solutions
                 </button>
               </div>
             </div>
             
-            {/* Right Card */}
-            <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
-              {/* Icon */}
-              <div className="flex items-center gap-4 mb-4 sm:mb-6">
+            {/* Right Image */}
+            <div className="w-full lg:w-[467px] flex justify-center lg:justify-end">
+              <div className="relative">
+                {/* Decorative background */}
+                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#4EBBBD]/20 rounded-2xl"></div>
+                
+                {/* Main image */}
                 <img
-                  src="/images/placements-responsive-header-icon-56586a.png"
-                  alt="Expert Icon"
-                  className="w-8 h-8 sm:w-9 sm:h-9"
+                  src="/images/modern.webp"
+                  alt="Immobilier neuf moderne - Architecture contemporaine et design élégant"
+                  className="relative z-10 w-full max-w-md lg:max-w-lg rounded-2xl shadow-2xl object-cover border-4 border-white"
+                  style={{ aspectRatio: '4/3' }}
+                  onError={(e) => {
+                    console.log('Modern immobilier image failed to load:', e.target.src);
+                  }}
+                  onLoad={() => console.log('Modern immobilier image loaded successfully')}
                 />
-                <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight">
-                  Lorem Ipsum Dolor
-                </h2>
-              </div>
-              
-              {/* Floating Price Card */}
-              <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
-                <div className="text-center text-white font-source-sans font-semibold text-xs sm:text-base lg:text-xl leading-tight px-1 sm:px-0">
-                  <span className="hidden sm:block">0 € →<br /></span>
-                  <span className="sm:hidden">0€</span>
-                  <span className="hidden sm:block">Lorem Ipsum Dolor</span>
+                
+                {/* Floating badge */}
+                <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-full flex items-center justify-center">
+                      <span className="text-white text-lg">✓</span>
+                    </div>
+                    <div>
+                      <p className="text-[#112033] font-semibold text-sm">0 €</p>
+                      <p className="text-[#4A5568] text-xs">Analyse gratuite</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              
-              {/* Services List */}
-              <div className="mt-8 sm:mt-12">
-                <ul className="space-y-2 sm:space-y-3 text-white text-xs sm:text-sm font-source-sans font-semibold leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Lorem ipsum dolor sit amet</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Consectetur adipiscing elit</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Sed do eiusmod tempor</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Ut labore et dolore magna</span>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -100,163 +87,146 @@ export default function ImmobilierNeufPage() {
             </nav>
           </div>
 
-          {/* Avantages Immobilier Neuf */}
+          {/* Section VEFA */}
           <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
             <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Lorem Ipsum Dolor Sit Amet ?
+              VEFA (Vente en l'État Futur d'Achèvement)
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Lorem Ipsum</h3>
-                <p className="text-[#374151] text-sm font-inter">Dolor sit amet consectetur adipiscing</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Dolor Sit</h3>
-                <p className="text-[#374151] text-sm font-inter">Amet consectetur adipiscing elit</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Consectetur</h3>
-                <p className="text-[#374151] text-sm font-inter">Adipiscing elit sed do eiusmod</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Adipiscing</h3>
-                <p className="text-[#374151] text-sm font-inter">Elit sed do eiusmod tempor</p>
-              </div>
+            <div className="text-center mb-8">
+              <p className="text-[#374151] text-base sm:text-lg font-inter leading-relaxed max-w-4xl mx-auto mb-6">
+                La VEFA vous permet d'acquérir un bien immobilier neuf avant sa construction finale. 
+                Un investissement stratégique avec des avantages fiscaux et financiers significatifs.
+              </p>
+              <a 
+                href="/immobilier/vefa" 
+                className="inline-block bg-[#B99066] text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-[#A67A5A] transition-colors duration-200"
+              >
+                Découvrir la VEFA
+              </a>
             </div>
           </div>
 
-          {/* Nos Programmes Neufs */}
+          {/* Dispositifs Fiscaux */}
           <div className="mb-8 sm:mb-12">
             <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Lorem Ipsum Dolor Sit Amet
+              Les dispositifs fiscaux : Pinel, Scellier, Robien
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="h-48 bg-gradient-to-br from-[#59E2E4] to-[#B99066] flex items-center justify-center">
-                  <span className="text-white text-2xl font-bold">Lorem</span>
+                  <span className="text-white text-2xl font-bold">Pinel</span>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-3">Ipsum Dolor Sit</h3>
-                  <p className="text-[#374151] font-inter mb-4">Amet consectetur adipiscing elit sed do eiusmod tempor incididunt</p>
+                  <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-3">Loi Pinel</h3>
+                  <p className="text-[#374151] font-inter mb-4">Réduction d'impôt jusqu'à 12% du prix d'acquisition sur 12 ans maximum</p>
                   <ul className="text-[#374151] text-sm font-inter space-y-2">
-                    <li>• Lorem ipsum dolor sit</li>
-                    <li>• Consectetur adipiscing</li>
-                    <li>• Sed do eiusmod tempor</li>
-                    <li>• Ut labore et dolore</li>
+                    <li>• Investissement locatif neuf</li>
+                    <li>• Réduction d'impôt progressive</li>
+                    <li>• Engagement de location 6 à 12 ans</li>
+                    <li>• Plafonds de loyer et de ressources</li>
                   </ul>
                 </div>
               </div>
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="h-48 bg-gradient-to-br from-[#B99066] to-[#59E2E4] flex items-center justify-center">
-                  <span className="text-white text-2xl font-bold">Dolor</span>
+                  <span className="text-white text-2xl font-bold">Scellier</span>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-3">Sit Amet Consectetur</h3>
-                  <p className="text-[#374151] font-inter mb-4">Adipiscing elit sed do eiusmod tempor incididunt ut labore</p>
+                  <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-3">Loi Scellier</h3>
+                  <p className="text-[#374151] font-inter mb-4">Dispositif fiscal pour l'investissement locatif dans le neuf (discontinué)</p>
                   <ul className="text-[#374151] text-sm font-inter space-y-2">
-                    <li>• Lorem ipsum dolor</li>
-                    <li>• Consectetur adipiscing</li>
-                    <li>• Sed do eiusmod</li>
-                    <li>• Ut labore et dolore</li>
+                    <li>• Réduction d'impôt sur le revenu</li>
+                    <li>• Investissement locatif neuf</li>
+                    <li>• Engagement de location 9 ans</li>
+                    <li>• Dispositif historique</li>
                   </ul>
                 </div>
               </div>
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="h-48 bg-gradient-to-br from-[#59E2E4] to-[#B99066] flex items-center justify-center">
-                  <span className="text-white text-2xl font-bold">Amet</span>
+                  <span className="text-white text-2xl font-bold">Robien</span>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-3">Consectetur Adipiscing</h3>
-                  <p className="text-[#374151] font-inter mb-4">Elit sed do eiusmod tempor incididunt ut labore et dolore</p>
+                  <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-3">Loi Robien</h3>
+                  <p className="text-[#374151] font-inter mb-4">Ancien dispositif fiscal pour l'investissement locatif dans le neuf</p>
                   <ul className="text-[#374151] text-sm font-inter space-y-2">
-                    <li>• Lorem ipsum dolor sit</li>
-                    <li>• Consectetur adipiscing</li>
-                    <li>• Sed do eiusmod tempor</li>
-                    <li>• Ut labore et dolore magna</li>
+                    <li>• Réduction d'impôt sur le revenu</li>
+                    <li>• Investissement locatif neuf</li>
+                    <li>• Engagement de location 5 ans</li>
+                    <li>• Dispositif historique</li>
                   </ul>
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Processus d'Investissement */}
-          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Lorem Ipsum Dolor Sit Amet
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-xl font-bold">1</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Lorem</h3>
-                <p className="text-[#374151] text-sm font-inter">Ipsum dolor sit amet consectetur</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-xl font-bold">2</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Ipsum</h3>
-                <p className="text-[#374151] text-sm font-inter">Dolor sit amet adipiscing</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-xl font-bold">3</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Dolor</h3>
-                <p className="text-[#374151] text-sm font-inter">Sit amet consectetur elit</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-xl font-bold">4</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Sit</h3>
-                <p className="text-[#374151] text-sm font-inter">Amet consectetur adipiscing</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-xl font-bold">5</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Amet</h3>
-                <p className="text-[#374151] text-sm font-inter">Consectetur adipiscing elit</p>
-              </div>
+            <div className="text-center mt-8">
+              <a 
+                href="/immobilier/scellier" 
+                className="inline-block bg-[#B99066] text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-[#A67A5A] transition-colors duration-200 mr-4"
+              >
+                Découvrir Scellier
+              </a>
+              <a 
+                href="/immobilier/robien" 
+                className="inline-block bg-[#59E2E4] text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-[#4EBBBD] transition-colors duration-200"
+              >
+                Découvrir Robien
+              </a>
             </div>
           </div>
 
-          {/* CTA Final */}
+          {/* Faire Construire */}
+          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+              Faire construire : terrain + maison
+            </h2>
+            <div className="text-center mb-8">
+              <p className="text-[#374151] text-base sm:text-lg font-inter leading-relaxed max-w-4xl mx-auto mb-6">
+                Construire sa maison sur son propre terrain offre de nombreux avantages : personnalisation totale, 
+                économies d'impôts, et investissement patrimonial durable. Nos experts vous accompagnent dans chaque étape.
+              </p>
+              <a 
+                href="/immobilier/faire-construire" 
+                className="inline-block bg-[#B99066] text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-[#A67A5A] transition-colors duration-200"
+              >
+                Découvrir faire construire
+              </a>
+            </div>
+          </div>
+
+          {/* Conclusion */}
           <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-8 sm:p-10 lg:p-12 text-center">
             <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-4 sm:mb-6">
-              Lorem Ipsum Dolor Sit Amet ?
+              Conclusion
             </h2>
-            <p className="text-white text-base sm:text-lg font-inter mb-6 sm:mb-8 max-w-2xl mx-auto">
-              Consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+            <p className="text-white text-base sm:text-lg font-inter mb-6 sm:mb-8 max-w-4xl mx-auto">
+              L'<strong>investissement immobilier</strong> n'est pas monolithique : il existe une stratégie adaptée à chaque objectif.
             </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-white font-cairo font-semibold text-lg mb-3">Réduire vos impôts</h3>
+                <p className="text-white/90 text-sm font-inter mb-4">→ Loi Pinel, déficit foncier, LMNP</p>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-white font-cairo font-semibold text-lg mb-3">Préparer votre retraite</h3>
+                <p className="text-white/90 text-sm font-inter mb-4">→ Investissement locatif, LMNP, SCI familiale</p>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-6">
+                <h3 className="text-white font-cairo font-semibold text-lg mb-3">Valoriser rapidement votre capital</h3>
+                <p className="text-white/90 text-sm font-inter mb-4">→ Immeubles de rapport, plus-value immobilière</p>
+              </div>
+            </div>
+            
+            <p className="text-white text-base sm:text-lg font-inter mb-6 sm:mb-8 max-w-4xl mx-auto">
+              👉 Chez <strong>Azalée Patrimoine</strong>, nous analysons votre profil fiscal, patrimonial et vos objectifs pour bâtir une stratégie sur mesure.
+            </p>
+            
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-white text-[#005C69] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors duration-200">
-                Lorem Ipsum
+                Demander un bilan gratuit
               </button>
               <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#005C69] transition-colors duration-200">
-                Dolor Sit Amet
+                Prendre rendez-vous
               </button>
             </div>
           </div>

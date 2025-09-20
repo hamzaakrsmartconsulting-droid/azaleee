@@ -1,8 +1,144 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
+
+const STORAGE_KEY = "assuranceVieLuxembourgContent";
+
+const defaultContent = {
+  hero: {
+    title: "Assurance-vie luxembourgeoise : la version haut de gamme",
+    subtitle: "Souvent perçue comme une \"assurance-vie haut de gamme\", l'assurance-vie luxembourgeoise est en réalité un outil patrimonial transfrontalier qui répond parfaitement aux besoins des investisseurs fortunés et des personnes susceptibles de s'expatrier.",
+    description: "Si le discours marketing autour du triangle de sécurité est bien connu, il ne reflète pas toujours la réalité de la protection offerte selon les contrats. Le véritable atout de l'assurance-vie luxembourgeoise réside dans sa neutralité fiscale et sa souplesse en matière d'investissement et de mobilité internationale.",
+    button: "Demander une étude patrimoniale gratuite",
+    image: "/images/assurance-vie-luxembourg-hero.jpg"
+  },
+  fonctionnement: {
+    title: "📌 Fonctionnement et spécificités",
+    description: "L'assurance-vie luxembourgeoise est proche de l'assurance-vie française :",
+    points: [
+      "Elle permet d'investir sur des fonds en euros (capital garanti) et des unités de compte (actions, obligations, ETF, SCPI, private equity, produits structurés…)",
+      "Elle est souscrite auprès d'un assureur luxembourgeois, mais peut être distribuée par des courtiers et CGP en France",
+      "Elle est ouverte aussi bien aux résidents français qu'aux non-résidents"
+    ],
+    difference: "La grande différence tient à son régime fiscal et juridique : elle est conçue pour s'adapter à la résidence fiscale du souscripteur, même en cas de mobilité internationale."
+  },
+  neutralite: {
+    title: "🌍 L'atout majeur : la neutralité fiscale pour les expatriés",
+    description: "Contrairement à l'assurance-vie française, dont la fiscalité est liée au droit français, l'assurance-vie luxembourgeoise s'adapte au pays de résidence fiscale du souscripteur.",
+    points: [
+      "Tant que vous êtes résident fiscal français, elle suit les règles fiscales françaises (PFU, abattements après 8 ans)",
+      "Si vous devenez résident fiscal étranger, le contrat bascule automatiquement sous le régime fiscal de votre pays d'accueil",
+      "En cas de retour en France, l'antériorité fiscale du contrat est conservée"
+    ],
+    exemple: {
+      titre: "Exemple :",
+      description: "Monsieur B souscrit une assurance-vie luxembourgeoise en France en 2025. En 2030, il part travailler au Canada : son contrat est reconnu fiscalement au Canada. Dix ans plus tard, il revient en France : il conserve son antériorité fiscale (plus de 8 ans).",
+      conclusion: "C'est ce caractère \"portable\" qui en fait un produit unique pour les expatriés ou les personnes ayant un profil international."
+    }
+  },
+  souplesse: {
+    title: "💶 Souplesse d'investissement : multi-devises et fonds dédiés",
+    description: "Autre atout majeur : la souplesse des supports disponibles.",
+    avantages: [
+      "Multi-devises : possibilité d'investir en euros, dollars, francs suisses, livres sterling… Un avantage clé pour les personnes ayant des revenus ou des projets dans plusieurs zones monétaires",
+      "Fonds internes dédiés (FID) : à partir d'un certain montant (souvent 250 000 €), il est possible de créer une gestion financière sur mesure, adaptée à votre profil",
+      "Large univers d'investissement : private equity, hedge funds, fonds alternatifs, produits structurés… L'éventail est beaucoup plus large qu'en assurance-vie française"
+    ],
+    exemple: "Exemple : un expatrié au Qatar percevant ses revenus en dollars peut loger ses placements en USD pour éviter le risque de change, tout en gardant une gestion financière personnalisée."
+  },
+  avantages: {
+    title: "✅ Les avantages de l'assurance-vie luxembourgeoise",
+    points: [
+      "Neutralité fiscale : le contrat s'adapte à votre pays de résidence fiscale actuel",
+      "Souplesse d'investissement : accès à une gamme d'actifs bien plus large, avec une gestion sur mesure possible",
+      "Multi-devises : protection contre les fluctuations de change",
+      "Transmission internationale : possibilité de désigner des bénéficiaires situés dans différents pays, avec adaptation aux conventions fiscales",
+      "Protection renforcée : en cas de faillite de l'assureur, vos avoirs sont logés dans une banque dépositaire, séparés des fonds propres"
+    ]
+  },
+  inconvenients: {
+    title: "⚠️ Les inconvénients et points de vigilance",
+    points: [
+      "Ticket d'entrée élevé : la plupart des assureurs exigent un investissement minimum de 250 000 €, parfois 500 000 €",
+      "Complexité administrative : gestion plus lourde en raison des réglementations transfrontalières",
+      "Coûts de gestion : souvent supérieurs à ceux des contrats français classiques, surtout pour les fonds dédiés",
+      "Triangle de sécurité à relativiser : même si le Luxembourg impose une ségrégation stricte des actifs, la protection réelle varie selon le contrat et la banque dépositaire choisie"
+    ]
+  },
+  transmission: {
+    title: "⚖️ Assurance-vie luxembourgeoise et transmission",
+    description: "Comme en France, le contrat permet de désigner librement des bénéficiaires. L'intérêt est renforcé pour les familles vivant à l'étranger ou ayant des héritiers non-résidents.",
+    points: [
+      "La fiscalité applicable dépendra de la résidence fiscale du défunt et des bénéficiaires",
+      "La clause bénéficiaire peut être adaptée aux particularités de chaque pays"
+    ],
+    exemple: "Exemple : un résident français désigne ses enfants installés aux États-Unis et en Espagne comme bénéficiaires. À son décès, la fiscalité appliquée sera analysée au regard des conventions fiscales internationales."
+  },
+  exemple: {
+    title: "💡 Exemple concret",
+    description: "Madame X, cadre dirigeante, souscrit une assurance-vie luxembourgeoise en 2025 avec 500 000 €. En 2030, elle est expatriée à Singapour pour son travail.",
+    points: [
+      "Son contrat continue sans rupture, fiscalisé selon la législation singapourienne",
+      "Elle conserve son antériorité fiscale en France",
+      "En 2040, elle revient en France : son contrat a plus de 15 ans, elle bénéficie donc des abattements fiscaux maximaux pour ses rachats"
+    ]
+  },
+  conseil: {
+    title: "🎯 Conseil Azalée Patrimoine",
+    description: "L'assurance-vie luxembourgeoise est un produit d'exception, mais elle ne convient pas à tout le monde. Elle s'adresse principalement aux :",
+    cibles: [
+      "Expatriés ou futurs expatriés, qui bénéficient de sa neutralité fiscale",
+      "Investisseurs fortunés, capables d'apporter un ticket d'entrée conséquent",
+      "Familles ayant des enjeux internationaux (héritiers dans plusieurs pays, projets d'installation à l'étranger)"
+    ],
+    accompagnement: "Chez Azalée Patrimoine, nous accompagnons nos clients dans :",
+    services: [
+      "La sélection du bon contrat luxembourgeois en fonction de leur mobilité internationale",
+      "Le choix des supports (multi-devises, fonds dédiés, SCPI, private equity)",
+      "L'optimisation fiscale et successorale, en coordination avec leur situation personnelle et leurs projets de vie"
+    ],
+    conclusion: "L'assurance-vie luxembourgeoise n'est pas seulement un produit \"sécurisé\", c'est surtout un outil patrimonial international, pensé pour ceux dont la vie ne se limite pas à un seul pays."
+  },
+  cta: {
+    title: "📩 Contactez un conseiller Azalée Patrimoine",
+    subtitle: "pour savoir si l'assurance-vie luxembourgeoise peut s'intégrer à votre stratégie patrimoniale et anticiper vos projets d'expatriation",
+    email: "contact@azalee-patrimoine.fr",
+    primaryButton: "Demander une étude gratuite",
+    secondaryButton: "Prendre rendez-vous"
+  }
+};
 
 export default function AssuranceVieLuxembourgPage() {
+  const [content, setContent] = useState(defaultContent);
+  const [activeTab, setActiveTab] = useState("fonctionnement");
+
+  // Load content from localStorage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setContent((prev) => ({ ...prev, ...parsed }));
+      }
+    } catch (e) {
+      console.error("Failed to load content", e);
+    }
+  }, []);
+
+  // Live update on CustomEvent from CMS
+  useEffect(() => {
+    const handler = () => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) setContent((prev) => ({ ...prev, ...JSON.parse(saved) }));
+      } catch {}
+    };
+    window.addEventListener("contentUpdated", handler);
+    return () => window.removeEventListener("contentUpdated", handler);
+  }, []);
+
   return (
     <>
       <Header />
@@ -15,18 +151,18 @@ export default function AssuranceVieLuxembourgPage() {
             <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               {/* Main Title */}
               <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
-                Assurance Vie Luxembourg – L'excellence européenne pour votre patrimoine avec Azalee Wealth
+                {content.hero.title}
               </h1>
               
               {/* Description */}
               <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
-                Découvrez les avantages uniques de l'assurance vie luxembourgeoise. Notre expertise de plus de 30 ans vous accompagne pour optimiser votre épargne avec les meilleures conditions fiscales européennes et une sécurité juridique renforcée.
+                {content.hero.subtitle}
               </p>
               
               {/* CTA Button */}
               <div className="flex justify-center lg:justify-start">
                 <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                  Demander une étude patrimoniale gratuite
+                  {content.hero.button}
                 </button>
               </div>
             </div>
@@ -41,16 +177,16 @@ export default function AssuranceVieLuxembourgPage() {
                   className="w-8 h-8 sm:w-9 sm:h-9"
                 />
                 <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight">
-                  Nos experts à votre service
+                  Version haut de gamme
                 </h2>
               </div>
               
               {/* Floating Price Card */}
               <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
                 <div className="text-center text-white font-source-sans font-semibold text-xs sm:text-base lg:text-xl leading-tight px-1 sm:px-0">
-                  <span className="hidden sm:block">0 € →<br /></span>
-                  <span className="sm:hidden">0€</span>
-                  <span className="hidden sm:block">Analyse personnalisée gratuite</span>
+                  <span className="hidden sm:block">250k€ →<br /></span>
+                  <span className="sm:hidden">250k€</span>
+                  <span className="hidden sm:block">Ticket d'entrée</span>
                 </div>
               </div>
               
@@ -59,19 +195,19 @@ export default function AssuranceVieLuxembourgPage() {
                 <ul className="space-y-2 sm:space-y-3 text-white text-xs sm:text-sm font-source-sans font-semibold leading-relaxed">
                   <li className="flex items-start gap-2">
                     <span className="text-white mt-1">✓</span>
-                    <span>Expertise en droit luxembourgeois et européen</span>
+                    <span>Neutralité fiscale internationale</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white mt-1">✓</span>
-                    <span>Optimisation fiscale internationale</span>
+                    <span>Multi-devises et fonds dédiés</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white mt-1">✓</span>
-                    <span>Accès aux meilleurs contrats européens</span>
+                    <span>Transmission internationale</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white mt-1">✓</span>
-                    <span>Accompagnement multilingue et personnalisé</span>
+                    <span>Protection renforcée</span>
                   </li>
                 </ul>
               </div>
@@ -80,261 +216,348 @@ export default function AssuranceVieLuxembourgPage() {
         </div>
       </section>
 
-      {/* Content Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+      {/* Navigation Tabs */}
+      <section className="py-8 bg-white border-b border-gray-200">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
-          <div className="mb-4 sm:mb-6 lg:mb-8">
-            <nav className="flex items-center text-xs sm:text-sm lg:text-base">
-              <a href="/" className="text-[#005C69] font-source-sans font-semibold hover:underline">
-                Accueil
-              </a>
-              <span className="text-[#686868] mx-2">{'>'}</span>
-              <a href="/placements" className="text-[#005C69] font-source-sans font-semibold hover:underline">
-                Solutions de placement
-              </a>
-              <span className="text-[#686868] mx-2">{'>'}</span>
-              <span className="text-[#4EBBBD] font-source-sans font-semibold">
-                Assurance Vie Luxembourg
-              </span>
-            </nav>
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={() => setActiveTab("fonctionnement")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "fonctionnement"
+                  ? "bg-[#B99066] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              📌 Fonctionnement
+            </button>
+            <button
+              onClick={() => setActiveTab("neutralite")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "neutralite"
+                  ? "bg-[#B99066] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              🌍 Neutralité fiscale
+            </button>
+            <button
+              onClick={() => setActiveTab("souplesse")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "souplesse"
+                  ? "bg-[#B99066] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              💶 Souplesse
+            </button>
+            <button
+              onClick={() => setActiveTab("avantages")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "avantages"
+                  ? "bg-[#B99066] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              ✅ Avantages
+            </button>
+            <button
+              onClick={() => setActiveTab("conseil")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "conseil"
+                  ? "bg-[#B99066] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              🎯 Conseil
+            </button>
+          </div>
+          </div>
+      </section>
+
+      {/* Fonctionnement Section */}
+      {activeTab === "fonctionnement" && (
+        <div className="space-y-12">
+          <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+                {content.fonctionnement.title}
+            </h2>
+              <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
+                {content.fonctionnement.description}
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                {content.fonctionnement.points.map((point, index) => (
+                  <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
+              </div>
+                      <p className="text-[#374151] text-sm font-medium">{point}</p>
+              </div>
+            </div>
+                ))}
           </div>
 
-          {/* L'essentiel Block */}
-          <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 lg:p-10 mb-8 sm:mb-12 relative">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-t-lg"></div>
-            <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-4 sm:mb-6">
-              L'essentiel de l'Assurance Vie Luxembourg
+              <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-8 text-white text-center">
+                <p className="text-lg font-medium">👉 {content.fonctionnement.difference}</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Inconvénients Section */}
+          <section className="py-12 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+                {content.inconvenients.title}
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] p-4 rounded-lg">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-base mb-2">Sécurité juridique</h3>
-                <p className="text-[#374151] text-sm font-inter">Contrats régis par le droit luxembourgeois, reconnu pour sa stabilité et sa protection des investisseurs.</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {content.inconvenients.points.map((point, index) => (
+                  <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl shadow-lg p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#B99066] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
+                      </div>
+                      <p className="text-[#374151] text-sm font-medium">{point}</p>
+                    </div>
+                  </div>
+                ))}
+                </div>
               </div>
-              <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] p-4 rounded-lg">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-base mb-2">Fiscalité européenne</h3>
-                <p className="text-[#374151] text-sm font-inter">Bénéficiez des avantages fiscaux européens avec une transparence et une conformité optimales.</p>
+          </section>
+                </div>
+      )}
+
+      {/* Neutralité Section */}
+      {activeTab === "neutralite" && (
+        <div className="space-y-12">
+          <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+                {content.neutralite.title}
+              </h2>
+              <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
+                {content.neutralite.description}
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                {content.neutralite.points.map((point, index) => (
+                  <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
               </div>
-              <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] p-4 rounded-lg">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-base mb-2">Diversification internationale</h3>
-                <p className="text-[#374151] text-sm font-inter">Accès à une large gamme de supports d'investissement européens et internationaux.</p>
+                      <p className="text-[#374151] text-sm font-medium">{point}</p>
+                </div>
+              </div>
+                ))}
+                </div>
+              
+              <div className="bg-white rounded-xl shadow-lg p-8">
+                <h3 className="text-[#005C69] text-lg font-semibold mb-4">{content.neutralite.exemple.titre}</h3>
+                <p className="text-[#374151] text-sm mb-4">{content.neutralite.exemple.description}</p>
+                <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-lg p-4 text-white">
+                  <p className="text-sm font-medium">👉 {content.neutralite.exemple.conclusion}</p>
               </div>
             </div>
           </div>
+          </section>
 
-          {/* Pourquoi choisir l'Assurance Vie Luxembourg */}
-          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Pourquoi choisir l'Assurance Vie Luxembourg ?
+          {/* Transmission Section */}
+          <section className="py-12 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+                {content.transmission.title}
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">1</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Stabilité européenne</h3>
-                <p className="text-[#374151] text-sm font-inter">Luxembourg, centre financier européen reconnu pour sa stabilité politique et économique.</p>
+              <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
+                {content.transmission.description}
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {content.transmission.points.map((point, index) => (
+                  <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl shadow-lg p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">2</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Réglementation stricte</h3>
-                <p className="text-[#374151] text-sm font-inter">Contrôles rigoureux de la CSSF et conformité aux standards européens.</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">3</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Performance optimale</h3>
-                <p className="text-[#374151] text-sm font-inter">Accès aux meilleurs gestionnaires européens et performances historiques élevées.</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">4</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Transmission internationale</h3>
-                <p className="text-[#374151] text-sm font-inter">Solutions de transmission adaptées aux familles internationales et expatriées.</p>
+                      <p className="text-[#374151] text-sm font-medium">{point}</p>
               </div>
             </div>
+                ))}
           </div>
 
-          {/* Nos Solutions d'Assurance Vie Luxembourg */}
-          <div className="mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Nos Solutions d'Assurance Vie Luxembourg
-            </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 border-l-4 border-[#59E2E4]">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-4">Contrats Unit-Linked</h3>
-                <ul className="space-y-3 text-[#374151] font-inter">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#59E2E4] mt-1">•</span>
-                    <span>Gestion en unités de compte</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#59E2E4] mt-1">•</span>
-                    <span>Accès aux fonds européens de qualité</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#59E2E4] mt-1">•</span>
-                    <span>Gestion pilotée par des experts</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#59E2E4] mt-1">•</span>
-                    <span>Flexibilité totale des versements</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 border-l-4 border-[#B99066]">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-4">Contrats Multi-Supports</h3>
-                <ul className="space-y-3 text-[#374151] font-inter">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B99066] mt-1">•</span>
-                    <span>Diversification maximale</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B99066] mt-1">•</span>
-                    <span>Fonds en euros garantis</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B99066] mt-1">•</span>
-                    <span>Unités de compte performantes</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B99066] mt-1">•</span>
-                    <span>Gestion personnalisée selon votre profil</span>
-                  </li>
-                </ul>
+              <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-8 text-white text-center">
+                <p className="text-lg font-medium">👉 {content.transmission.exemple}</p>
               </div>
             </div>
-          </div>
+          </section>
+        </div>
+      )}
 
-          {/* Avantages Spécifiques Luxembourg */}
-          <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Les Avantages Spécifiques du Luxembourg
+      {/* Souplesse Section */}
+      {activeTab === "souplesse" && (
+        <div className="space-y-12">
+          <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+                {content.souplesse.title}
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Réglementation européenne</h3>
-                <ul className="text-[#374151] text-sm font-inter space-y-2">
-                  <li>• Directive Solvabilité II</li>
-                  <li>• Contrôles CSSF stricts</li>
-                  <li>• Protection des investisseurs</li>
-                  <li>• Transparence maximale</li>
-                </ul>
+              <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
+                {content.souplesse.description}
+              </p>
+              
+              <div className="space-y-6 mb-8">
+                {content.souplesse.avantages.map((avantage, index) => (
+                  <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
               </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Fiscalité avantageuse</h3>
-                <ul className="text-[#374151] text-sm font-inter space-y-2">
-                  <li>• Pas de retenue à la source</li>
-                  <li>• Traités fiscaux européens</li>
-                  <li>• Optimisation internationale</li>
-                  <li>• Conformité CRS/FATCA</li>
-                </ul>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Expertise multilingue</h3>
-                <ul className="text-[#374151] text-sm font-inter space-y-2">
-                  <li>• Support en français</li>
-                  <li>• Documentation multilingue</li>
-                  <li>• Accompagnement international</li>
-                  <li>• Expertise cross-border</li>
-                </ul>
+                      <p className="text-[#374151] text-sm font-medium">{avantage}</p>
               </div>
             </div>
+                ))}
           </div>
 
-          {/* Notre Accompagnement Spécialisé */}
-          <div className="mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Notre Accompagnement Spécialisé Luxembourg
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-12 h-12 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Analyse internationale</h3>
-                <p className="text-[#374151] text-sm font-inter">Évaluation de votre situation fiscale et patrimoniale internationale</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Stratégie européenne</h3>
-                <p className="text-[#374151] text-sm font-inter">Élaboration d'une stratégie d'investissement européenne optimisée</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-12 h-12 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Souscription</h3>
-                <p className="text-[#374151] text-sm font-inter">Accompagnement dans la souscription et la configuration du contrat</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Suivi international</h3>
-                <p className="text-[#374151] text-sm font-inter">Suivi régulier et ajustements selon l'évolution de vos besoins</p>
+              <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-8 text-white text-center">
+                <p className="text-lg font-medium">👉 {content.souplesse.exemple}</p>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* FAQ Section */}
-          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Questions Fréquentes
+          {/* Exemple Section */}
+          <section className="py-12 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+                {content.exemple.title}
             </h2>
+              <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
+                {content.exemple.description}
+              </p>
+              
+              <div className="space-y-6">
+                {content.exemple.points.map((point, index) => (
+                  <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl shadow-lg p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
+                </div>
+                      <p className="text-[#374151] text-sm font-medium">{point}</p>
+              </div>
+                </div>
+                ))}
+              </div>
+                </div>
+          </section>
+              </div>
+      )}
+
+      {/* Avantages Section */}
+      {activeTab === "avantages" && (
+        <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+              {content.avantages.title}
+            </h2>
+            
             <div className="space-y-6">
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Quels sont les avantages fiscaux de l'assurance vie luxembourgeoise ?</h3>
-                <p className="text-[#374151] font-inter">L'assurance vie luxembourgeoise bénéficie d'une fiscalité européenne avantageuse avec une transparence optimale et des traités fiscaux favorables pour les résidents français.</p>
+              {content.avantages.points.map((point, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      {index + 1}
+                </div>
+                    <p className="text-[#374151] text-sm font-medium">{point}</p>
               </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">La réglementation luxembourgeoise est-elle sûre ?</h3>
-                <p className="text-[#374151] font-inter">Oui, le Luxembourg applique les plus hauts standards européens avec la directive Solvabilité II et des contrôles stricts de la CSSF pour protéger les investisseurs.</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Conseil Section */}
+      {activeTab === "conseil" && (
+        <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+              {content.conseil.title}
+            </h2>
+            <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
+              {content.conseil.description}
+            </p>
+            
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <h3 className="text-[#005C69] text-lg font-semibold mb-6 text-center">
+                Elle s'adresse principalement aux :
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {content.conseil.cibles.map((cible, index) => (
+                  <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
+                      </div>
+                      <p className="text-[#374151] text-sm font-medium">{cible}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Puis-je souscrire depuis la France ?</h3>
-                <p className="text-[#374151] font-inter">Oui, les contrats luxembourgeois sont accessibles aux résidents français. Notre équipe vous accompagne dans toutes les démarches administratives.</p>
               </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Quelle est la différence avec l'assurance vie française ?</h3>
-                <p className="text-[#374151] font-inter">L'assurance vie luxembourgeoise offre une diversification européenne, une réglementation internationale et des avantages fiscaux optimisés pour les investisseurs internationaux.</p>
+            
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <h3 className="text-[#005C69] text-lg font-semibold mb-6 text-center">
+                {content.conseil.accompagnement}
+              </h3>
+              <div className="space-y-4">
+                {content.conseil.services.map((service, index) => (
+                  <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#B99066] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
               </div>
+                      <p className="text-[#374151] text-sm font-medium">{service}</p>
+              </div>
+                  </div>
+                ))}
             </div>
           </div>
 
-          {/* CTA Final */}
-          <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-8 sm:p-10 lg:p-12 text-center">
-            <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-4 sm:mb-6">
-              Prêt à découvrir l'excellence européenne ?
+            <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-8 text-white text-center">
+              <p className="text-lg font-medium">👉 {content.conseil.conclusion}</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-[#F2F2F2] to-[#E5E5E5]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 text-center">
+            <h2 className="text-[#005C69] text-2xl lg:text-3xl font-semibold mb-4">
+              {content.cta.title}
             </h2>
-            <p className="text-white text-base sm:text-lg font-inter mb-6 sm:mb-8 max-w-2xl mx-auto">
-              Nos experts Azalee Wealth vous accompagnent pour construire une stratégie d'assurance vie luxembourgeoise adaptée à vos objectifs internationaux.
+            <p className="text-[#374151] text-lg mb-8 max-w-3xl mx-auto">
+              {content.cta.subtitle}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-[#005C69] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors duration-200">
-                Demander une étude gratuite
+            <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-6 text-white mb-8">
+              <h3 className="text-xl font-semibold mb-3">📧 {content.cta.email}</h3>
+              <p className="text-sm opacity-90">Stratégie patrimoniale internationale</p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67A5A] transition-colors duration-200 text-lg">
+                🗓️ {content.cta.primaryButton}
               </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#005C69] transition-colors duration-200">
-                Prendre rendez-vous
+              <button className="border-2 border-[#B99066] text-[#B99066] px-8 py-4 rounded-lg font-medium hover:bg-[#B99066] hover:text-white transition-colors duration-200 text-lg">
+                📧 {content.cta.secondaryButton}
               </button>
             </div>
           </div>
         </div>
       </section>
+
+      <Footer />
     </>
   );
 } 

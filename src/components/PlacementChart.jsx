@@ -21,6 +21,10 @@ const PlacementChart = ({ title, data, chartImage }) => {
               src={chartImage}
               alt={`${title} Chart`}
               className="w-full max-w-md lg:max-w-lg h-auto rounded-lg shadow-lg"
+              onError={(e) => {
+                console.log('Chart image failed to load:', e.target.src);
+              }}
+              onLoad={() => console.log('Chart image loaded successfully')}
             />
           </div>
 

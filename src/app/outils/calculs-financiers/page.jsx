@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
 import Footer from "../../../components/common/Footer";
 
@@ -62,12 +62,187 @@ function computeFutureValue({ principal, annualRatePct, years, periodsPerYear, c
 
 export default function CalculsFinanciersPage() {
   const [activeTab, setActiveTab] = useState("capitalisation"); // capitalisation | amortissement | roi
+  const [cmsContent, setCmsContent] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [principal, setPrincipal] = useState(10000);
   const [annualRatePct, setAnnualRatePct] = useState(3);
   const [years, setYears] = useState(5);
   const [periodsPerYear, setPeriodsPerYear] = useState(12);
   const [contributionPerPeriod, setContributionPerPeriod] = useState(0);
+
+  // Load CMS content from database
+  useEffect(() => {
+    const loadCmsContent = async () => {
+      try {
+        const response = await fetch(`/api/pages/content?path=/outils/calculs-financiers&type=cms`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.content) {
+            console.log('CMS Content loaded:', data.content);
+            const parsedContent = JSON.parse(data.content.content);
+            console.log('Parsed CMS Content:', parsedContent);
+            setCmsContent(parsedContent);
+          } else {
+            console.log('No CMS content found in response:', data);
+          }
+        } else {
+          console.log('CMS API response not ok:', response.status);
+        }
+      } catch (error) {
+        console.log('Error loading CMS content:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadCmsContent();
+  }, []);
+
+  // Default content if CMS content is not available
+  const content = cmsContent || {
+    hero: {
+      title: "Calculs financiers divers",
+      subtitle: "Simulez vos investissements et prêts avec nos outils financiers",
+      description: "Utilisez nos calculateurs pour planifier vos investissements, évaluer vos prêts et analyser la rentabilité de vos projets. Des outils précis et faciles à utiliser.",
+      ctaPrimary: "Commencer la simulation",
+      ctaSecondary: "En savoir plus"
+    },
+    calculator: {
+      title: "Calculateur financier",
+      tabs: [
+        { id: "capitalisation", label: "Capitalisation composée", description: "Calculez la valeur future de vos investissements" },
+        { id: "amortissement", label: "Amortissement de prêt", description: "Simulez le remboursement de vos emprunts" },
+        { id: "roi", label: "Analyse ROI", description: "Évaluez la rentabilité de vos investissements" }
+      ]
+    },
+    capitalisation: {
+      parameters: {
+        montantInitial: { label: "Montant initial", description: "Capital de départ pour votre investissement" },
+        tauxAnnuel: { label: "Taux annuel (%)", description: "Rendement annuel de votre placement" },
+        duree: { label: "Durée (années)", description: "Horizon de placement en années" },
+        capitalisation: { label: "Capitalisation", description: "Périodicité des intérêts composés" },
+        versementPeriodique: { label: "Versement périodique", description: "Apport régulier à votre investissement" }
+      },
+      results: {
+        sections: {
+          montantFinal: "Montant final",
+          interetsGeneres: "Intérêts générés",
+          capitalInitial: "Capital initial",
+          versements: "Versements totaux",
+          cagr: "CAGR"
+        }
+      }
+    },
+    methodology: {
+      title: "Détails et méthodologie",
+      description: "Comprendre les calculs et formules utilisées",
+      content: [
+        "La capitalisation composée utilise la formule : VF = VP × (1 + r)^n + PMT × [(1 + r)^n - 1] / r",
+        "L'amortissement de prêt calcule les échéances selon le système français d'amortissement constant",
+        "Le ROI se calcule comme : (Gains - Coûts) / Coûts × 100",
+        "Tous les calculs sont effectués avec une précision de 2 décimales"
+      ]
+    },
+    faq: {
+      title: "Questions fréquentes",
+      questions: [
+        {
+          question: "Comment fonctionne la capitalisation composée ?",
+          answer: "La capitalisation composée permet à vos intérêts de générer à leur tour des intérêts, créant un effet boule de neige sur votre capital."
+        },
+        {
+          question: "Quelle est la différence entre taux nominal et taux effectif ?",
+          answer: "Le taux nominal est le taux annuel affiché, tandis que le taux effectif prend en compte la fréquence de capitalisation des intérêts."
+        },
+        {
+          question: "Comment interpréter le ROI ?",
+          answer: "Un ROI positif indique un investissement rentable. Plus le pourcentage est élevé, plus l'investissement est intéressant."
+        }
+      ]
+    },
+    actions: {
+      reset: "Réinitialiser",
+      export: "Exporter (PDF)",
+      start: "Commencer",
+      learnMore: "En savoir plus"
+    }
+  };
+
+  // Ensure content structure is complete with fallbacks
+  const safeContent = {
+    hero: {
+      title: content.hero?.title || "Calculs financiers divers",
+      subtitle: content.hero?.subtitle || "Simulez vos investissements et prêts avec nos outils financiers",
+      description: content.hero?.description || "Utilisez nos calculateurs pour planifier vos investissements, évaluer vos prêts et analyser la rentabilité de vos projets.",
+      ctaPrimary: content.hero?.ctaPrimary || "Commencer la simulation",
+      ctaSecondary: content.hero?.ctaSecondary || "En savoir plus"
+    },
+    calculator: {
+      title: content.calculator?.title || "Calculateur financier",
+      tabs: content.calculator?.tabs || [
+        { id: "capitalisation", label: "Capitalisation composée", description: "Calculez la valeur future de vos investissements" },
+        { id: "amortissement", label: "Amortissement de prêt", description: "Simulez le remboursement de vos emprunts" },
+        { id: "roi", label: "Analyse ROI", description: "Évaluez la rentabilité de vos investissements" }
+      ]
+    },
+    capitalisation: {
+      parameters: {
+        montantInitial: content.capitalisation?.parameters?.montantInitial || { label: "Montant initial", description: "Capital de départ pour votre investissement" },
+        tauxAnnuel: content.capitalisation?.parameters?.tauxAnnuel || { label: "Taux annuel (%)", description: "Rendement annuel de votre placement" },
+        duree: content.capitalisation?.parameters?.duree || { label: "Durée (années)", description: "Horizon de placement en années" },
+        capitalisation: content.capitalisation?.parameters?.capitalisation || { label: "Capitalisation", description: "Périodicité des intérêts composés" },
+        versementPeriodique: content.capitalisation?.parameters?.versementPeriodique || { label: "Versement périodique", description: "Apport régulier à votre investissement" }
+      },
+      results: {
+        sections: content.capitalisation?.results?.sections || {
+          montantFinal: "Montant final",
+          interetsGeneres: "Intérêts générés",
+          capitalInitial: "Capital initial",
+          versements: "Versements totaux",
+          cagr: "CAGR"
+        }
+      }
+    },
+    methodology: {
+      title: content.methodology?.title || "Détails et méthodologie",
+      description: content.methodology?.description || "Comprendre les calculs et formules utilisées",
+      content: content.methodology?.content || [
+        "La capitalisation composée utilise la formule : VF = VP × (1 + r)^n + PMT × [(1 + r)^n - 1] / r",
+        "L'amortissement de prêt calcule les échéances selon le système français d'amortissement constant",
+        "Le ROI se calcule comme : (Gains - Coûts) / Coûts × 100",
+        "Tous les calculs sont effectués avec une précision de 2 décimales"
+      ]
+    },
+    faq: {
+      title: content.faq?.title || "Questions fréquentes",
+      questions: content.faq?.questions || [
+        {
+          question: "Comment fonctionne la capitalisation composée ?",
+          answer: "La capitalisation composée permet à vos intérêts de générer à leur tour des intérêts, créant un effet boule de neige sur votre capital."
+        },
+        {
+          question: "Quelle est la différence entre taux nominal et taux effectif ?",
+          answer: "Le taux nominal est le taux annuel affiché, tandis que le taux effectif prend en compte la fréquence de capitalisation des intérêts."
+        },
+        {
+          question: "Comment interpréter le ROI ?",
+          answer: "Un ROI positif indique un investissement rentable. Plus le pourcentage est élevé, plus l'investissement est intéressant."
+        }
+      ]
+    },
+    actions: {
+      reset: content.actions?.reset || "Réinitialiser",
+      export: content.actions?.export || "Exporter (PDF)",
+      start: content.actions?.start || "Commencer",
+      learnMore: content.actions?.learnMore || "En savoir plus"
+    }
+  };
+
+  // Debug logging
+  console.log('Original content:', content);
+  console.log('Safe content:', safeContent);
+  console.log('Capitalisation parameter check:', safeContent.capitalisation?.parameters?.capitalisation);
 
   const { futureValue, interestEarned, cagr, totalContrib } = useMemo(() => {
     const p = clampNumber(Number(principal) || 0);
@@ -101,6 +276,21 @@ export default function CalculsFinanciersPage() {
     setContributionPerPeriod(0);
   }
 
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
+            <p className="text-gray-600">Chargement du contenu...</p>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
@@ -109,14 +299,18 @@ export default function CalculsFinanciersPage() {
       <section className="relative w-full bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-4">
-            Calculs financiers divers
+            {safeContent.hero.title}
           </h1>
           <p className="max-w-3xl mx-auto text-[#686868] text-base sm:text-lg font-inter leading-relaxed mb-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius, nunc ut dictum luctus, justo risus posuere sapien.
+            {safeContent.hero.description}
           </p>
           <div className="flex items-center justify-center gap-3">
-            <a href="#calcul" className="inline-flex items-center justify-center bg-[#4EBBBD] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#3DA8AA] transition-colors duration-200">Commencer la simulation</a>
-            <a href="#details" className="inline-flex items-center justify-center bg-transparent border-2 border-[#4EBBBD] text-[#4EBBBD] px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200">En savoir plus</a>
+            <a href="#calcul" className="inline-flex items-center justify-center bg-[#4EBBBD] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#3DA8AA] transition-colors duration-200">
+              {safeContent.hero.ctaPrimary}
+            </a>
+            <a href="#details" className="inline-flex items-center justify-center bg-transparent border-2 border-[#4EBBBD] text-[#4EBBBD] px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200">
+              {safeContent.hero.ctaSecondary}
+            </a>
           </div>
         </div>
       </section>
@@ -126,19 +320,19 @@ export default function CalculsFinanciersPage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
-              <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Lorem ipsum</p>
+              <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Valeur future</p>
               <p className="text-[#112033] text-2xl font-cairo font-semibold">{formatCurrency(futureValue)}</p>
-              <p className="text-[#686868] text-xs mt-1">Dolor sit amet</p>
+              <p className="text-[#686868] text-xs mt-1">Montant final</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
-              <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Consectetur</p>
+              <div className="text-[#686868] text-xs uppercase tracking-wide mb-1">Intérêts générés</div>
               <p className="text-[#112033] text-2xl font-cairo font-semibold">{formatCurrency(interestEarned)}</p>
-              <p className="text-[#686868] text-xs mt-1">Adipiscing elit</p>
+              <p className="text-[#686868] text-xs mt-1">Gains totaux</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
-              <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Sed do</p>
+              <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Versements</p>
               <p className="text-[#112033] text-2xl font-cairo font-semibold">{formatCurrency(totalContrib)}</p>
-              <p className="text-[#686868] text-xs mt-1">Eiusmod tempor</p>
+              <p className="text-[#686868] text-xs mt-1">Apports totaux</p>
             </div>
           </div>
         </div>
@@ -150,11 +344,7 @@ export default function CalculsFinanciersPage() {
           <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
             {/* Tabs */}
             <div className="flex items-center gap-2 p-2 bg-[#F2F2F2]">
-              {[
-                { id: "capitalisation", label: "Capitalisation composée" },
-                { id: "amortissement", label: "Amortissement de prêt" },
-                { id: "roi", label: "Analyse ROI" }
-              ].map((tab) => (
+              {safeContent.calculator.tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
@@ -178,8 +368,12 @@ export default function CalculsFinanciersPage() {
                     <h2 className="text-[#112033] text-xl font-source-sans font-semibold mb-4">Paramètres</h2>
                     <div className="space-y-5">
                       <div>
-                        <label className="block text-[#686868] text-sm font-medium mb-2">Montant initial</label>
-                        <p className="text-[#686868] text-xs mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <label className="block text-[#686868] text-sm font-medium mb-2">
+                          {safeContent.capitalisation.parameters.montantInitial.label}
+                        </label>
+                        <p className="text-[#686868] text-xs mb-2">
+                          {safeContent.capitalisation.parameters.montantInitial.description}
+                        </p>
                         <input
                           type="number"
                           inputMode="decimal"
@@ -192,8 +386,12 @@ export default function CalculsFinanciersPage() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-[#686868] text-sm font-medium mb-2">Taux annuel (%)</label>
-                          <p className="text-[#686868] text-xs mb-2">Sed do eiusmod tempor incididunt ut labore.</p>
+                          <label className="block text-[#686868] text-sm font-medium mb-2">
+                            {safeContent.capitalisation.parameters.tauxAnnuel.label}
+                          </label>
+                          <p className="text-[#686868] text-xs mb-2">
+                            {safeContent.capitalisation.parameters.tauxAnnuel.description}
+                          </p>
                           <input
                             type="number"
                             inputMode="decimal"
@@ -205,8 +403,12 @@ export default function CalculsFinanciersPage() {
                           />
                         </div>
                         <div>
-                          <label className="block text-[#686868] text-sm font-medium mb-2">Durée (années)</label>
-                          <p className="text-[#686868] text-xs mb-2">Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                          <label className="block text-[#686868] text-sm font-medium mb-2">
+                            {safeContent.capitalisation.parameters.duree.label}
+                          </label>
+                          <p className="text-[#686868] text-xs mb-2">
+                            {safeContent.capitalisation.parameters.duree.description}
+                          </p>
                           <input
                             type="number"
                             inputMode="decimal"
@@ -220,8 +422,12 @@ export default function CalculsFinanciersPage() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-[#686868] text-sm font-medium mb-2">Capitalisation</label>
-                          <p className="text-[#686868] text-xs mb-2">Duis aute irure dolor in reprehenderit in voluptate.</p>
+                          <label className="block text-[#686868] text-sm font-medium mb-2">
+                            {safeContent.capitalisation.parameters.capitalisation.label}
+                          </label>
+                          <p className="text-[#686868] text-xs mb-2">
+                            {safeContent.capitalisation.parameters.capitalisation.description}
+                          </p>
                           <select
                             value={periodsPerYear}
                             onChange={(e) => setPeriodsPerYear(Number(e.target.value))}
@@ -233,8 +439,12 @@ export default function CalculsFinanciersPage() {
                           </select>
                         </div>
                         <div>
-                          <label className="block text-[#686868] text-sm font-medium mb-2">Versement périodique</label>
-                          <p className="text-[#686868] text-xs mb-2">Excepteur sint occaecat cupidatat non proident.</p>
+                          <label className="block text-[#686868] text-sm font-medium mb-2">
+                            {safeContent.capitalisation.parameters.versementPeriodique.label}
+                          </label>
+                          <p className="text-[#686868] text-xs mb-2">
+                            {safeContent.capitalisation.parameters.versementPeriodique.description}
+                          </p>
                           <input
                             type="number"
                             inputMode="decimal"
@@ -251,13 +461,13 @@ export default function CalculsFinanciersPage() {
                           onClick={resetInputs}
                           className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-transparent border-2 border-[#B99066] text-[#B99066] text-sm font-medium hover:bg-[#B99066] hover:text-white"
                         >
-                          Réinitialiser
+                          {safeContent.actions.reset}
                         </button>
                         <a
                           href="#"
                           className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#4EBBBD] text-white text-sm font-medium hover:bg-[#3DA8AA]"
                         >
-                          Exporter (PDF)
+                          {safeContent.actions.export}
                         </a>
                       </div>
                     </div>
@@ -269,32 +479,42 @@ export default function CalculsFinanciersPage() {
                     <div className="rounded-xl border border-gray-200 p-6">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">Montant final</p>
+                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
+                            {safeContent.capitalisation.results.sections.montantFinal}
+                          </p>
                           <p className="text-[#112033] text-3xl font-cairo font-semibold">{formatCurrency(futureValue)}</p>
                         </div>
                         <div>
-                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">Intérêts générés</p>
+                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
+                            {safeContent.capitalisation.results.sections.interetsGeneres}
+                          </p>
                           <p className="text-[#112033] text-3xl font-cairo font-semibold">{formatCurrency(interestEarned)}</p>
                         </div>
                       </div>
 
                       <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div className="bg-[#F9FAFB] rounded-lg p-4">
-                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">Capital initial</p>
+                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
+                            {safeContent.capitalisation.results.sections.capitalInitial}
+                          </p>
                           <p className="text-[#112033] font-source-sans font-semibold">{formatCurrency(principal)}</p>
                         </div>
                         <div className="bg-[#F9FAFB] rounded-lg p-4">
-                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">Versements</p>
+                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
+                            {safeContent.capitalisation.results.sections.versements}
+                          </p>
                           <p className="text-[#112033] font-source-sans font-semibold">{formatCurrency(totalContrib)}</p>
                         </div>
                         <div className="bg-[#F9FAFB] rounded-lg p-4">
-                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">CAGR</p>
+                          <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
+                            {safeContent.capitalisation.results.sections.cagr}
+                          </p>
                           <p className="text-[#112033] font-source-sans font-semibold">{isFinite(cagr) && cagr > 0 ? `${(cagr * 100).toFixed(2)}%` : "—"}</p>
                         </div>
                       </div>
 
                       <p className="text-[#686868] text-xs mt-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
+                        {safeContent.methodology.content[0]}
                       </p>
                     </div>
                   </div>
@@ -304,28 +524,38 @@ export default function CalculsFinanciersPage() {
 
             {activeTab === "amortissement" && (
               <div className="p-10 text-center">
-                <h2 className="text-[#0F172A] text-2xl font-source-sans font-semibold mb-3">Amortissement de prêt</h2>
+                <h2 className="text-[#0F172A] text-2xl font-source-sans font-semibold mb-3">
+                  {safeContent.calculator.tabs.find(t => t.id === 'amortissement')?.label}
+                </h2>
                 <p className="text-[#6B7280] max-w-2xl mx-auto">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                  labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+                  {safeContent.calculator.tabs.find(t => t.id === 'amortissement')?.description}
                 </p>
                 <div className="mt-6 inline-flex items-center gap-3">
-                  <a href="#" className="px-4 py-2 rounded-lg bg-[#4EBBBD] text-white text-sm font-medium hover:bg-[#3DA8AA]">Commencer</a>
-                  <a href="#" className="px-4 py-2 rounded-lg bg-[#F3F4F6] text-[#111827] text-sm font-medium hover:bg-[#E5E7EB]">En savoir plus</a>
+                  <a href="#" className="px-4 py-2 rounded-lg bg-[#4EBBBD] text-white text-sm font-medium hover:bg-[#3DA8AA]">
+                    {safeContent.actions.start}
+                  </a>
+                  <a href="#" className="px-4 py-2 rounded-lg bg-[#F3F4F6] text-[#111827] text-sm font-medium hover:bg-[#E5E7EB]">
+                    {safeContent.actions.learnMore}
+                  </a>
                 </div>
               </div>
             )}
 
             {activeTab === "roi" && (
               <div className="p-10 text-center">
-                <h2 className="text-[#0F172A] text-2xl font-source-sans font-semibold mb-3">Analyse ROI</h2>
+                <h2 className="text-[#0F172A] text-2xl font-source-sans font-semibold mb-3">
+                  {safeContent.calculator.tabs.find(t => t.id === 'roi')?.label}
+                </h2>
                 <p className="text-[#6B7280] max-w-2xl mx-auto">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                  labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+                  {safeContent.calculator.tabs.find(t => t.id === 'roi')?.description}
                 </p>
                 <div className="mt-6 inline-flex items-center gap-3">
-                  <a href="#" className="px-4 py-2 rounded-lg bg-[#4EBBBD] text-white text-sm font-medium hover:bg-[#3DA8AA]">Commencer</a>
-                  <a href="#" className="px-4 py-2 rounded-lg bg-[#F3F4F6] text-[#111827] text-sm font-medium hover:bg-[#E5E7EB]">En savoir plus</a>
+                  <a href="#" className="px-4 py-2 rounded-lg bg-[#4EBBBD] text-white text-sm font-medium hover:bg-[#3DA8AA]">
+                    {safeContent.actions.start}
+                  </a>
+                  <a href="#" className="px-4 py-2 rounded-lg bg-[#F3F4F6] text-[#111827] text-sm font-medium hover:bg-[#E5E7EB]">
+                    {safeContent.actions.learnMore}
+                  </a>
                 </div>
               </div>
             )}
@@ -334,28 +564,29 @@ export default function CalculsFinanciersPage() {
           {/* Methodology / details */}
           <div id="details" className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg shadow-lg p-6 lg:col-span-2">
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-3">Détails et méthodologie</h3>
-              <p className="text-[#686868] text-sm leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante
-                dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.
+              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-3">
+                {safeContent.methodology.title}
+              </h3>
+              <p className="text-[#686868] text-sm leading-relaxed mb-4">
+                {safeContent.methodology.description}
               </p>
-              <ul className="mt-4 list-disc list-inside text-[#686868] text-sm space-y-1">
-                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                <li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
-                <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco</li>
+              <ul className="list-disc list-inside text-[#686868] text-sm space-y-1">
+                {safeContent.methodology.content.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
               </ul>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-3">FAQ</h3>
+              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-3">
+                {safeContent.faq.title}
+              </h3>
               <div className="space-y-3 text-sm">
-                <div>
-                  <p className="text-[#112033] font-medium">Lorem ipsum dolor sit amet?</p>
-                  <p className="text-[#686868]">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                </div>
-                <div>
-                  <p className="text-[#112033] font-medium">Duis aute irure dolor in reprehenderit?</p>
-                  <p className="text-[#686868]">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-                </div>
+                {safeContent.faq.questions.map((item, index) => (
+                  <div key={index}>
+                    <p className="text-[#112033] font-medium">{item.question}</p>
+                    <p className="text-[#686868]">{item.answer}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

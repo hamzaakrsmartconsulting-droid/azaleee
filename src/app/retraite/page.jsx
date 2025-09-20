@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../components/common/Header";
+import StockTicker from "../../components/common/StockTicker";
 
 export default function RetraitePage() {
   return (
@@ -12,9 +13,13 @@ export default function RetraitePage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
-            src="/images/retraite-hero-image.png"
-            alt="Retraite Hero"
+            src="/images/retraite.webp"
+            alt="Couple senior consultant un plan de retraite dans un bureau moderne"
             className="w-full h-full object-cover"
+            onError={(e) => {
+              console.log('Retraite hero image failed to load:', e.target.src);
+            }}
+            onLoad={() => console.log('Retraite hero image loaded successfully')}
           />
         </div>
         
@@ -52,54 +57,306 @@ export default function RetraitePage() {
       </section>
       
       {/* Market Data Section */}
-      <section className="w-full bg-[#112033] py-2 sm:py-3">
-        <div className="max-w-[1368px] mx-auto px-2 sm:px-4 lg:px-8">
-          <div className="flex flex-wrap items-center gap-2 sm:gap-4 overflow-x-auto">
-            {/* CAC 40 */}
-            <div className="flex items-center bg-white/10 rounded px-2 sm:px-3 py-1 sm:py-2 min-w-[180px]">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                <span className="text-white text-xs sm:text-sm font-semibold text-center sm:text-left">Cac 40</span>
-                <span className="text-white text-xs sm:text-sm font-semibold">7822.6699</span>
+      <StockTicker />
+
+      {/* Introduction Retraite Section */}
+      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+              Retraite – Préparez vos revenus futurs avec sérénité
+            </h2>
+            <div className="space-y-6">
+              <div className="bg-white rounded-lg p-6 shadow-md">
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4">Introduction</h3>
+                <p className="text-[#374151] text-sm font-inter mb-4">
+                  La retraite est un moment clé de la vie patrimoniale : passage d'un revenu d'activité à un revenu de remplacement.
+                </p>
+                <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-4 text-white">
+                  <p className="text-sm">
+                    👉 Anticiper, c'est éviter la baisse de niveau de vie et protéger sa famille.
+                  </p>
+                </div>
               </div>
-              <div className="flex items-center ml-2 sm:ml-3">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#28A745]" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M7 14l5-5 5 5z"/>
-                </svg>
-                <span className="text-[#28A745] text-xs sm:text-sm font-semibold ml-1">0.07</span>
+              
+              <div className="bg-white rounded-lg p-6 shadow-md">
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4">
+                  Azalée Patrimoine accompagne ses clients dans une vision globale de la retraite :
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <span className="text-[#59E2E4] mt-1">•</span>
+                      <span className="text-[#374151] text-sm font-inter">Épargne retraite (PER, PERCO, PEE…)</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="text-[#59E2E4] mt-1">•</span>
+                      <span className="text-[#374151] text-sm font-inter">Optimisation via le rachat de trimestres</span>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <span className="text-[#B99066] mt-1">•</span>
+                      <span className="text-[#374151] text-sm font-inter">Simulations personnalisées pour anticiper ses revenus futurs</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="text-[#B99066] mt-1">•</span>
+                      <span className="text-[#374151] text-sm font-inter">Mise en place de solutions de prévoyance et de protection familiale</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="text-[#4EBBBD] mt-1">•</span>
+                      <span className="text-[#374151] text-sm font-inter">Diversification avec d'autres solutions retraite (immobilier locatif, SCPI, assurance-vie)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Plan retraite Section */}
+      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+            1. Plan retraite (PER, PERP, PEE, PERCO…)
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            {/* PER */}
+            <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
+              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white text-2xl">📊</span>
+              </div>
+              <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">PER (Plan Épargne Retraite – loi Pacte)</h3>
+              <p className="text-[#374151] text-sm font-inter mb-4">
+                L'enveloppe universelle qui remplace PERP, Madelin, PERCO, Article 83.
+              </p>
+              <ul className="text-[#374151] text-sm font-inter space-y-2">
+                <li>• Avantage fiscal immédiat (versements déductibles)</li>
+                <li>• Sortie en rente, capital ou mixte</li>
+                <li>• Sortie anticipée possible (résidence principale, accident de la vie)</li>
+              </ul>
+            </div>
+            
+            {/* PERCO / PEE */}
+            <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white text-2xl">🏢</span>
+              </div>
+              <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">PERCO / PEE</h3>
+              <p className="text-[#374151] text-sm font-inter mb-4">
+                Dispositifs d'épargne entreprise alimentés par participation, intéressement, abondement.
+              </p>
+              <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-4">
+                <p className="text-[#374151] text-sm font-inter">
+                  <strong>Anciennes enveloppes</strong> (PERP, Madelin, Art. 83) : transférables vers le PER.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-6 text-white text-center">
+            <p className="text-sm">
+              👉 Azalée Patrimoine analyse chaque situation pour choisir le meilleur véhicule d'épargne retraite, en tenant compte de la fiscalité, du statut (salarié, TNS, dirigeant) et des objectifs.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Rachat de trimestres Section */}
+      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+            2. Rachat de trimestres retraite
+          </h2>
+          
+          <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">✅</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Validation d'années</h3>
+                <p className="text-[#374151] text-sm font-inter">Permet de valider des années incomplètes ou des périodes d'études</p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">🎯</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Intérêt</h3>
+                <p className="text-[#374151] text-sm font-inter">Améliorer sa pension de base ou partir plus tôt à taux plein</p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">💰</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Fiscalement</h3>
+                <p className="text-[#374151] text-sm font-inter">Le coût du rachat est déductible du revenu imposable</p>
               </div>
             </div>
             
-            {/* Nasdaq 100 */}
-            <div className="flex items-center bg-white/10 rounded px-2 sm:px-3 py-1 sm:py-2 min-w-[216px]">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                <span className="text-white text-xs sm:text-sm font-semibold text-center sm:text-left">Nasdaq 100</span>
-                <span className="text-white text-xs sm:text-sm font-semibold">23054.2383</span>
+            <div className="mt-8 bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-6 text-white text-center">
+              <p className="text-sm">
+                👉 <strong>Exemple :</strong> un cadre de 50 ans qui rachète 4 trimestres peut gagner jusqu'à <strong>200 € de pension mensuelle supplémentaire</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Simulation retraite Section */}
+      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+            3. Simulation retraite
+          </h2>
+          
+          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">📋</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">État des lieux</h3>
+                <p className="text-[#374151] text-sm font-inter">De vos droits acquis (base + complémentaires)</p>
               </div>
-              <div className="flex items-center ml-2 sm:ml-3">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#28A745]" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M7 14l5-5 5 5z"/>
-                </svg>
-                <span className="text-[#28A745] text-xs sm:text-sm font-semibold ml-1">0.23</span>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">📈</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Projection</h3>
+                <p className="text-[#374151] text-sm font-inter">De vos revenus à la retraite</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">⚖️</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Comparaison</h3>
+                <p className="text-[#374151] text-sm font-inter">Entre pension attendue et niveau de vie souhaité</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">📊</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Plan d'épargne</h3>
+                <p className="text-[#374151] text-sm font-inter">Complémentaire adapté : PER, assurance-vie, immobilier, SCPI</p>
               </div>
             </div>
             
-            {/* Dow Jones */}
-            <div className="flex items-center bg-white/10 rounded px-2 sm:px-3 py-1 sm:py-2 min-w-[202px]">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                <span className="text-white text-xs sm:text-sm font-semibold text-center sm:text-left">Dow Jones</span>
-                <span className="text-white text-xs sm:text-sm font-semibold">44245.15</span>
+            <div className="mt-8 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-6 text-white text-center">
+              <p className="text-sm">
+                👉 Chez Azalée Patrimoine, nous réalisons des <strong>simulations personnalisées</strong> permettant de visualiser vos revenus futurs et d'identifier les <strong>solutions à mettre en place dès aujourd'hui</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Prévoyance / Protection Section */}
+      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+            4. Prévoyance / Protection de la famille
+          </h2>
+          
+          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10">
+            <div className="space-y-6">
+              <p className="text-[#374151] text-sm sm:text-base lg:text-lg font-inter leading-relaxed text-center">
+                La retraite ne se limite pas à l'épargne : il faut aussi <strong>protéger sa famille</strong>.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-2xl">🛡️</span>
+                  </div>
+                  <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Contrats de prévoyance</h3>
+                  <p className="text-[#374151] text-sm font-inter">Pour maintenir un revenu en cas d'invalidité ou décès prématuré</p>
+                </div>
+                
+                <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                  <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-2xl">👨‍👩‍👧‍👦</span>
+                  </div>
+                  <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Maintien du niveau de vie</h3>
+                  <p className="text-[#374151] text-sm font-inter">Du conjoint et des enfants</p>
+                </div>
+                
+                <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                  <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-2xl">🏥</span>
+                  </div>
+                  <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Couverture santé</h3>
+                  <p className="text-[#374151] text-sm font-inter">Complémentaire santé adaptée à la retraite</p>
+                </div>
               </div>
-              <div className="flex items-center ml-2 sm:ml-3">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#EB5E4F] rotate-180" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M7 14l5-5 5 5z"/>
-                </svg>
-                <span className="text-[#EB5E4F] text-xs sm:text-sm font-semibold ml-1">-0.51</span>
+              
+              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-6 text-white text-center">
+                <p className="text-sm">
+                  👉 Azalée Patrimoine propose une approche intégrée : <strong>anticiper les risques de la vie</strong> pour sécuriser la transmission et la stabilité financière de la famille.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Autres solutions retraite Section */}
+      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+            5. Autres solutions retraite
+          </h2>
+          
+          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
+            <p className="text-[#374151] text-sm sm:text-base lg:text-lg font-inter leading-relaxed mb-8 text-center">
+              En complément du PER et des dispositifs d'entreprise :
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 text-center">
+                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">🏠</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Immobilier locatif</h3>
+                <p className="text-[#374151] text-sm font-inter">(classique, LMNP, nue-propriété) pour générer des revenus complémentaires</p>
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 text-center">
+                <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">🏢</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">SCPI de rendement</h3>
+                <p className="text-[#374151] text-sm font-inter">Pour une rente régulière et mutualisée</p>
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 text-center">
+                <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">🛡️</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Assurance-vie</h3>
+                <p className="text-[#374151] text-sm font-inter">Flexibilité, fiscalité douce après 8 ans, transmission optimisée</p>
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 text-center">
+                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">📊</span>
+                </div>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Produits financiers</h3>
+                <p className="text-[#374151] text-sm font-inter">Diversifiés (ETF, UCS, obligations)</p>
               </div>
             </div>
             
-            {/* EUR/USD */}
-            <div className="flex items-center bg-white/10 rounded px-2 sm:px-3 py-1 sm:py-2 min-w-[100px]">
-              <span className="text-white text-xs sm:text-sm font-semibold">EUR/USD : 1.1595</span>
+            <div className="mt-8 bg-gradient-to-r from-[#B99066] to-[#D4A574] rounded-lg p-6 text-white text-center">
+              <p className="text-sm">
+                👉 <strong>Objectif :</strong> créer une <strong>retraite sur-mesure</strong>, adaptée à vos besoins et à votre horizon.
+              </p>
             </div>
           </div>
         </div>

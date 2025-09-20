@@ -7,20 +7,28 @@ const STORAGE_KEY = "pfuContent";
 
 const defaultContent = {
   hero: {
-    title: "Prélèvement Forfaitaire Unique (PFU)",
-    subtitle: "Comprenez le fonctionnement du PFU, ce prélèvement de 30% qui s'applique aux revenus du patrimoine mobilier depuis 2018.",
+    title: "PFU ou Prélèvement Forfaitaire Unique",
+    subtitle: "Tout ce qu'un investisseur doit savoir. Le Prélèvement Forfaitaire Unique (PFU), aussi appelé « flat tax », est une mécanique fiscale clé depuis 2018. Voici une note pédagogique pour tout comprendre.",
     button: "Calculer mon PFU",
-    image: "/images/fiscalite-pfu-hero.jpg"
+    image: "/images/pfu.webp"
   },
   definition: {
-    title: "Qu'est-ce que le PFU ?",
-    description: "Le Prélèvement Forfaitaire Unique (PFU) est un système de taxation simplifié des revenus du patrimoine mobilier, introduit en 2018.",
+    title: "🔄 Qu'est-ce que le PFU ?",
+    description: "Il s'agit d'un prélèvement unique de 30% qui s'applique aux revenus du capital mobilier :",
     details: [
-      "Taux unique de 30% (12.8% d'impôt + 17.2% de prélèvements sociaux)",
-      "S'applique aux dividendes, intérêts et plus-values mobilières",
-      "Alternative à l'imposition au barème progressif de l'impôt sur le revenu",
-      "Choix annuel entre PFU et imposition classique"
+      "12,8% d'impôt sur le revenu",
+      "17,2% de prélèvements sociaux (CSG/CRDS, etc.)",
+      "Le PFU est appliqué automatiquement par les banques, compagnies d'assurance et plateformes d'investissement"
     ]
+  },
+  creation: {
+    title: "🌐 Pourquoi a-t-il été créé ?",
+    description: "Mis en place par la loi de finances 2018, le PFU avait deux objectifs :",
+    objectifs: [
+      "Simplifier la fiscalité du capital pour les contribuables",
+      "Rendre la France plus attractive pour l'investissement (notamment international)"
+    ],
+    contexte: "Avant le PFU, les revenus du capital étaient intégrés au barème progressif de l'impôt sur le revenu, ce qui pouvait conduire à une imposition très élevée (> 45%)."
   },
   taux: {
     title: "Composition du taux de 30%",
@@ -32,23 +40,88 @@ const defaultContent = {
     ]
   },
   revenus: {
-    title: "Revenus concernés par le PFU",
+    title: "🔠 Sur quels revenus le PFU s'applique-t-il ?",
+    description: "Le PFU s'applique aux revenus du capital mobilier suivants :",
     items: [
+      {
+        type: "Intérêts",
+        description: "Livrets non réglementés, comptes à terme",
+        exemples: ["Comptes rémunérés", "Livrets bancaires", "Comptes à terme"]
+      },
       {
         type: "Dividendes",
         description: "Revenus distribués par les sociétés",
         exemples: ["Actions françaises", "Actions étrangères", "Parts de SCPI"]
       },
       {
-        type: "Intérêts",
-        description: "Revenus des placements à revenus fixes",
-        exemples: ["Comptes rémunérés", "Obligations", "Livrets bancaires"]
+        type: "Plus-values de valeurs mobilières",
+        description: "Actions, obligations, OPCVM, ETF",
+        exemples: ["Vente d'actions", "Cession de parts", "Rachat de parts"]
       },
       {
-        type: "Plus-values mobilières",
-        description: "Gains réalisés lors de la cession de titres",
-        exemples: ["Vente d'actions", "Cession de parts", "Rachat de parts"]
+        type: "Assurance vie",
+        description: "Uniquement les gains rachetés (hors abattement, selon durée de détention)",
+        exemples: ["Rachats partiels", "Rachats totaux", "Gains réalisés"]
       }
+    ],
+    exclusions: "Le PFU ne s'applique pas aux livrets réglementés (Livret A, LDDS, LEP), ni aux plus-values immobilières."
+  },
+  avantages: {
+    title: "🌟 Dans quels cas est-il préférable au barème progressif ?",
+    description: "Le PFU est avantageux pour les contribuables ayant une TMI supérieure à 14%, soit la plupart des foyers imposés au taux moyen ou supérieur.",
+    tableau: {
+      headers: ["TMI du foyer", "Option PFU intéressante ?"],
+      rows: [
+        {
+          tmi: "0% ou 11%",
+          option: "Pas toujours : abattements IR peuvent être plus favorables"
+        },
+        {
+          tmi: "30%, 41%, 45%",
+          option: "Oui : PFU souvent plus léger que barème + PS"
+        }
+      ]
+    }
+  },
+  renonciation: {
+    title: "📅 Peut-on renoncer au PFU ?",
+    description: "Oui, sur option expresse, vous pouvez demander l'intégration de vos revenus de capitaux mobiliers au barème progressif.",
+    conditions: [
+      "Cette option est globale et concerne tous les revenus du capital perçus l'année en question",
+      "Elle est à formuler lors de la déclaration de revenus"
+    ],
+    attention: "Attention : en cas d'option, vous bénéficiez d'abattements (ex : 40% sur les dividendes), mais vous payez la CSG non déductible sur l'ensemble."
+  },
+  assuranceVie: {
+    title: "✉ Assurance vie : PFU ou abattement ?",
+    description: "Dans le cadre de l'assurance vie, les rachats sont fiscalisés uniquement sur la quote-part de gain.",
+    regles: [
+      {
+        periode: "Avant 8 ans",
+        fiscalite: "PFU 12,8% ou barème sur option"
+      },
+      {
+        periode: "Après 8 ans",
+        fiscalite: "Abattement annuel de 4 600€ (ou 9 200€ pour un couple) puis taux de 7,5% sur la fraction imposable ≤ 150 000€ de versements (sinon 12,8%)"
+      }
+    ],
+    precision: "Le PFU ne supprime pas l'abattement de l'assurance vie. Il coexiste avec selon la durée de détention."
+  },
+  risques: {
+    title: "⚠ Risques et évolutions possibles",
+    description: "Le PFU pourrait être remis en question politiquement (accusé de favoriser les plus aisés)",
+    evolutions: [
+      "Un retour à l'imposition au barème ou une hausse du taux global (actuellement 30%) sont régulièrement débattus",
+      "Toutefois, toute réforme impliquerait un impact sur l'attractivité fiscale de la France"
+    ]
+  },
+  azaleeRecommendation: {
+    title: "📈 Recommandation Azalée Patrimoine",
+    description: "Nous vous accompagnons pour :",
+    accompagnement: [
+      "Choisir entre PFU et barème IR selon votre TMI et vos objectifs",
+      "Arbitrer vos placements pour lisser la fiscalité dans le temps",
+      "Structurer vos investissements avec assurance vie, contrat de capitalisation, PEA, CTO..."
     ]
   },
   choix: {
@@ -94,10 +167,11 @@ const defaultContent = {
     ]
   },
   cta: {
-    title: "Besoin d'aide pour optimiser votre fiscalité ?",
+    title: "Vous souhaitez savoir quelle option est la plus avantageuse pour vous ?",
     subtitle: "Nos experts vous accompagnent pour choisir entre PFU et imposition classique",
-    primaryButton: "Simulation gratuite",
-    secondaryButton: "Consultation expert"
+    email: "contact@azalee-patrimoine.fr",
+    primaryButton: "Prenez rendez-vous ici",
+    secondaryButton: "Nous écrire"
   }
 };
 
@@ -151,30 +225,32 @@ export default function PFUPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-                Guide fiscal
-              </span>
-              <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
-                {content.hero.title}
-              </h1>
-              <p className="text-[#686868] text-lg leading-relaxed mb-8">
-                {content.hero.subtitle}
-              </p>
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                {content.hero.button}
-              </button>
-            </div>
-            <div className="relative">
-              <img 
-                src={content.hero.image} 
-                alt="PFU" 
-                className="w-full h-[400px] object-cover rounded-xl shadow-2xl"
-              />
-            </div>
+      <section className="relative w-full py-16 sm:py-20 lg:py-24 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/images/pfu.webp')`,
+            filter: 'brightness(0.3)'
+          }}
+        ></div>
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <div className="relative max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 z-10">
+          <div className="text-center">
+            <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+              Guide fiscal
+            </span>
+            <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
+              {content.hero.title}
+            </h1>
+            <p className="text-gray-200 text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
+              {content.hero.subtitle}
+            </p>
+            <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
+              {content.hero.button}
+            </button>
           </div>
         </div>
       </section>
@@ -200,6 +276,35 @@ export default function PFUPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Creation Section */}
+      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <h2 className="text-[#112033] text-2xl font-semibold mb-6 text-center">
+              {content.creation.title}
+            </h2>
+            <p className="text-[#686868] text-lg mb-6 text-center max-w-3xl mx-auto">
+              {content.creation.description}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              {content.creation.objectifs.map((objectif, index) => (
+                <div key={index} className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-4 text-white">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-white text-[#4EBBBD] rounded-full flex items-center justify-center text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <span className="font-medium">{objectif}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="bg-[#FAFFEF] rounded-lg p-6 text-center">
+              <p className="text-[#112033] font-medium">{content.creation.contexte}</p>
             </div>
           </div>
         </div>
@@ -235,7 +340,10 @@ export default function PFUPage() {
           <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
             {content.revenus.title}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.revenus.description}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {content.revenus.items.map((revenu, index) => (
               <div key={index} className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6 shadow-lg">
                 <h3 className="text-[#112033] text-lg font-semibold mb-3">{revenu.type}</h3>
@@ -248,6 +356,147 @@ export default function PFUPage() {
                     </li>
                   ))}
                 </ul>
+              </div>
+            ))}
+          </div>
+          <div className="bg-gradient-to-r from-[#FFE4E1] to-[#FFCCCB] rounded-xl p-6 text-center">
+            <h3 className="text-[#112033] text-lg font-semibold mb-2">⚠️ Exclusions</h3>
+            <p className="text-[#112033] font-medium">{content.revenus.exclusions}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Avantages Section */}
+      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            {content.avantages.title}
+          </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.avantages.description}
+          </p>
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-[#4EBBBD] text-white">
+                    {content.avantages.tableau.headers.map((header, index) => (
+                      <th key={index} className="text-left py-4 px-6 font-semibold">
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {content.avantages.tableau.rows.map((row, index) => (
+                    <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
+                      <td className="py-4 px-6 font-medium text-[#112033]">{row.tmi}</td>
+                      <td className="py-4 px-6 text-[#686868]">{row.option}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Renonciation Section */}
+      <section className="py-12 bg-white">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-8 shadow-lg">
+            <h2 className="text-[#112033] text-2xl font-semibold mb-6 text-center">
+              {content.renonciation.title}
+            </h2>
+            <p className="text-[#686868] text-lg mb-6 text-center max-w-3xl mx-auto">
+              {content.renonciation.description}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              {content.renonciation.conditions.map((condition, index) => (
+                <div key={index} className="bg-white rounded-lg p-4 shadow-md">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <span className="text-[#112033] font-medium">{condition}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="bg-gradient-to-r from-[#FFE4E1] to-[#FFCCCB] rounded-lg p-6 text-center">
+              <p className="text-[#112033] font-medium">{content.renonciation.attention}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Assurance Vie Section */}
+      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            {content.assuranceVie.title}
+          </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.assuranceVie.description}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {content.assuranceVie.regles.map((regle, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-[#112033] text-lg font-semibold mb-3">{regle.periode}</h3>
+                <p className="text-[#686868] text-sm">{regle.fiscalite}</p>
+              </div>
+            ))}
+          </div>
+          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white text-center">
+            <p className="font-medium">{content.assuranceVie.precision}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Risques Section */}
+      <section className="py-12 bg-white">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-8 shadow-lg">
+            <h2 className="text-[#112033] text-2xl font-semibold mb-6 text-center">
+              {content.risques.title}
+            </h2>
+            <p className="text-[#686868] text-lg mb-6 text-center max-w-3xl mx-auto">
+              {content.risques.description}
+            </p>
+            <div className="space-y-4">
+              {content.risques.evolutions.map((evolution, index) => (
+                <div key={index} className="bg-white rounded-lg p-4 shadow-md">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-[#B99066] text-white rounded-full flex items-center justify-center text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <span className="text-[#112033] font-medium">{evolution}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Azalée Recommendation Section */}
+      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            {content.azaleeRecommendation.title}
+          </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.azaleeRecommendation.description}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {content.azaleeRecommendation.accompagnement.map((item, index) => (
+              <div key={index} className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white shadow-lg">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-white text-[#4EBBBD] rounded-full flex items-center justify-center text-xl font-bold">
+                    {index + 1}
+                  </div>
+                  <p className="text-sm font-medium">{item}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -397,12 +646,16 @@ export default function PFUPage() {
             <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
               {content.cta.subtitle}
             </p>
+            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
+              <h3 className="text-xl font-semibold mb-3">📧 {content.cta.email}</h3>
+              <p className="text-sm opacity-90">Prenez rendez-vous pour optimiser votre fiscalité</p>
+            </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                {content.cta.primaryButton}
+                🗓️ {content.cta.primaryButton}
               </button>
               <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
-                {content.cta.secondaryButton}
+                📧 {content.cta.secondaryButton}
               </button>
             </div>
           </div>

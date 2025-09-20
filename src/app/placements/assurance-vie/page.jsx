@@ -1,337 +1,507 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
+
+const STORAGE_KEY = "assuranceVieContent";
+
+const defaultContent = {
+  hero: {
+    title: "Assurance-vie : l'enveloppe incontournable",
+    subtitle: "L'assurance-vie est le placement préféré des Français, avec près de 1 900 milliards d'euros d'encours. Si elle est souvent présentée comme un simple produit d'épargne, elle est en réalité un véritable couteau suisse patrimonial.",
+    description: "Son intérêt dépasse le rendement financier : il tient surtout à sa fiscalité avantageuse et à sa souplesse en matière de transmission.",
+    button: "Demander une étude patrimoniale gratuite",
+    image: "/images/assurance-vie-hero.jpg"
+  },
+  enveloppe: {
+    title: "📌 L'assurance-vie comme enveloppe fiscale",
+    description: "Une assurance-vie n'est pas un placement en soi mais une enveloppe qui peut contenir :",
+    contenus: [
+      "un fonds en euros sécurisé (capital garanti)",
+      "des unités de compte (UC) : actions, ETF, SCPI, obligations, produits structurés…"
+    ],
+    particularite: "La particularité est que cette enveloppe bénéficie d'un régime fiscal spécifique, plus favorable que celui des autres placements financiers."
+  },
+  fiscalite: {
+    title: "📊 La fiscalité des rachats (retraits)",
+    description: "Lorsque vous retirez de l'argent de votre contrat, seule la part des gains (intérêts, plus-values) est imposée. La fiscalité dépend de deux critères :",
+    criteres: [
+      "La durée du contrat (moins ou plus de 8 ans)",
+      "La date des versements (avant ou après le 27 septembre 2017, entrée en vigueur du PFU)"
+    ],
+    avant2017: {
+      title: "Avant le 27/09/2017",
+      options: [
+        "Option pour le PFL (prélèvement forfaitaire libératoire) : 35% avant 4 ans, 15% entre 4 et 8 ans, 7,5% après 8 ans",
+        "Ou imposition au barème de l'IR"
+      ]
+    },
+    depuis2017: {
+      title: "Depuis le 27/09/2017",
+      options: [
+        "Application du PFU (prélèvement forfaitaire unique, ou flat tax) de 30% (12,8% IR + 17,2% PS) pour les versements après cette date",
+        "Après 8 ans, taux réduit de 7,5% (hors PS) dans la limite de 150 000€ de primes versées par assuré, puis 12,8% au-delà"
+      ]
+    },
+    abattement: "Dans tous les cas : abattement annuel de 4 600€ (9 200€ pour un couple) sur les produits après 8 ans."
+  },
+  transmission: {
+    title: "👵 Versements avant et après 70 ans : un impact majeur en transmission",
+    description: "La fiscalité successorale de l'assurance-vie dépend de l'âge de l'assuré au moment des versements :",
+    avant70: {
+      title: "Avant 70 ans (article 990 I du CGI)",
+      description: "chaque bénéficiaire profite d'un abattement de 152 500€, puis taxation forfaitaire (20% jusqu'à 700 000€, puis 31,25%)"
+    },
+    apres70: {
+      title: "Après 70 ans (article 757 B du CGI)",
+      description: "abattement global de 30 500€ sur les primes versées (tous bénéficiaires confondus). Les primes excédentaires sont soumises aux droits de succession selon le lien de parenté."
+    },
+    attention: "Mais attention : les produits (intérêts, plus-values) générés restent exonérés."
+  },
+  clause: {
+    title: "📜 La clause bénéficiaire : souplesse et liberté",
+    description: "L'un des atouts majeurs de l'assurance-vie est la clause bénéficiaire : l'épargnant choisit librement qui recevra le capital à son décès.",
+    avantages: [
+      "Cela peut être le conjoint, les enfants, mais aussi un tiers (ami, concubin, association, etc.)",
+      "La clause est hors succession : les capitaux ne sont pas soumis aux règles classiques de réserve héréditaire"
+    ],
+    exemple: "Exemple : une personne désigne son concubin comme bénéficiaire, alors que les enfants n'ont pas encore de droits sur ce capital. Cela en fait un outil puissant dans les familles recomposées."
+  },
+  jurisprudence: {
+    title: "⚖️ Jurisprudence : primes manifestement exagérées et contentieux familiaux",
+    description: "La liberté offerte par l'assurance-vie peut générer des conflits familiaux. Les héritiers écartés contestent parfois le contrat en invoquant le caractère \"manifestement exagéré\" des primes versées.",
+    points: [
+      "La jurisprudence apprécie au cas par cas : âge du souscripteur, importance des primes par rapport à son patrimoine global, utilité économique du contrat",
+      "Exemple : un retraité de 85 ans qui verse 500 000€ en assurance-vie, alors que son patrimoine est de 600 000€, pourra voir son contrat partiellement réintégré dans la succession",
+      "Les juges examinent si les versements étaient proportionnés aux revenus et à la situation de l'assuré"
+    ],
+    resultat: "Résultat : l'assurance-vie n'est pas \"hors succession absolue\", mais elle reste largement protectrice."
+  },
+  exemple: {
+    title: "💡 Exemple concret",
+    description: "Madame X, 68 ans, verse 200 000€ sur une assurance-vie en 2000. Elle désigne son neveu comme bénéficiaire.",
+    points: [
+      "Fiscalité : ces versements, faits avant ses 70 ans, bénéficient de l'abattement de 152 500€ pour son neveu",
+      "Transmission : malgré la présence d'enfants, le capital ne tombe pas automatiquement dans la succession",
+      "Contestation : les enfants pourraient tenter une action pour primes exagérées si ces 200 000€ représentaient l'essentiel du patrimoine de Madame X"
+    ]
+  },
+  conseil: {
+    title: "🎯 Conseil Azalée Patrimoine",
+    description: "L'assurance-vie est un outil polyvalent : épargne, investissement, optimisation fiscale, transmission. Mais ses subtilités (dates de versements, âge du souscripteur, rédaction de la clause bénéficiaire) en font un produit technique.",
+    accompagnement: "Chez Azalée Patrimoine, nous accompagnons nos clients à :",
+    services: [
+      "Rédiger une clause bénéficiaire adaptée à leur situation familiale (ex. : enfants d'un premier mariage, concubin, partenaire de PACS)",
+      "Arbitrer entre versements avant et après 70 ans",
+      "Sécuriser le contrat pour éviter les litiges familiaux",
+      "Optimiser la fiscalité en phase d'épargne et de transmission"
+    ],
+    conclusion: "L'assurance-vie reste l'outil n°1 de la stratégie patrimoniale. Bien utilisée, elle combine rendement, souplesse et protection successorale."
+  },
+  cta: {
+    title: "📩 Contactez un conseiller Azalée Patrimoine",
+    subtitle: "pour auditer vos contrats d'assurance-vie et sécuriser votre transmission familiale",
+    email: "contact@azalee-patrimoine.fr",
+    primaryButton: "Demander un audit gratuit",
+    secondaryButton: "Prendre rendez-vous"
+  }
+};
 
 export default function AssuranceViePage() {
+  const [content, setContent] = useState(defaultContent);
+  const [activeTab, setActiveTab] = useState("enveloppe");
+
+  // Load content from localStorage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setContent((prev) => ({ ...prev, ...parsed }));
+      }
+    } catch (e) {
+      console.error("Failed to load content", e);
+    }
+  }, []);
+
+  // Live update on CustomEvent from CMS
+  useEffect(() => {
+    const handler = () => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) setContent((prev) => ({ ...prev, ...JSON.parse(saved) }));
+      } catch {}
+    };
+    window.addEventListener("contentUpdated", handler);
+    return () => window.removeEventListener("contentUpdated", handler);
+  }, []);
+
   return (
     <>
       <Header />
-      
+
       {/* Hero Section */}
-      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-            {/* Left Content */}
-            <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
-              {/* Main Title */}
-              <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
-                Assurance Vie – Optimisez votre épargne et préparez votre avenir avec Azalee Wealth
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+                1 900 milliards d'encours
+              </span>
+              <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
+                {content.hero.title}
               </h1>
-              
-              {/* Description */}
-              <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
-                Votre partenaire de confiance en assurance vie depuis plus de 30 ans. Nous vous accompagnons pour optimiser votre épargne, bénéficier d'avantages fiscaux et préparer votre transmission patrimoniale avec des solutions adaptées à vos objectifs.
+              <p className="text-[#686868] text-lg leading-relaxed mb-4">
+                {content.hero.subtitle}
+              </p>
+              <p className="text-[#686868] text-lg leading-relaxed mb-8">
+                {content.hero.description}
+              </p>
+              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
+                {content.hero.button}
+              </button>
+            </div>
+            <div className="relative">
+              <img 
+                src={content.hero.image} 
+                alt="Assurance-vie" 
+                className="w-full h-[400px] object-cover rounded-xl shadow-2xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Navigation Tabs */}
+      <section className="py-8 bg-white border-b border-gray-200">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={() => setActiveTab("enveloppe")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "enveloppe"
+                  ? "bg-[#4EBBBD] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              📌 Enveloppe fiscale
+            </button>
+            <button
+              onClick={() => setActiveTab("fiscalite")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "fiscalite"
+                  ? "bg-[#4EBBBD] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              📊 Fiscalité
+            </button>
+            <button
+              onClick={() => setActiveTab("transmission")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "transmission"
+                  ? "bg-[#4EBBBD] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              👵 Transmission
+            </button>
+            <button
+              onClick={() => setActiveTab("jurisprudence")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "jurisprudence"
+                  ? "bg-[#4EBBBD] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              ⚖️ Jurisprudence
+            </button>
+            <button
+              onClick={() => setActiveTab("conseil")}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                activeTab === "conseil"
+                  ? "bg-[#4EBBBD] text-white"
+                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+              }`}
+            >
+              🎯 Conseil
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Enveloppe Section */}
+      {activeTab === "enveloppe" && (
+        <div className="space-y-12">
+          <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+                {content.enveloppe.title}
+              </h2>
+              <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+                {content.enveloppe.description}
               </p>
               
-              {/* CTA Button */}
-              <div className="flex justify-center lg:justify-start">
-                <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                  Demander une étude patrimoniale gratuite
-                </button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {content.enveloppe.contenus.map((contenu, index) => (
+                  <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
+                      </div>
+                      <p className="text-[#112033] text-sm font-medium">{contenu}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+                <p className="text-lg font-medium">{content.enveloppe.particularite}</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Clause Section */}
+          <section className="py-12 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+                {content.clause.title}
+              </h2>
+              <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+                {content.clause.description}
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {content.clause.avantages.map((avantage, index) => (
+                  <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
+                      </div>
+                      <p className="text-[#112033] text-sm font-medium">{avantage}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white">
+                <h3 className="text-lg font-semibold mb-4">Exemple concret</h3>
+                <p className="text-sm">{content.clause.exemple}</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {/* Fiscalité Section */}
+      {activeTab === "fiscalite" && (
+        <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+              {content.fiscalite.title}
+            </h2>
+            <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+              {content.fiscalite.description}
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {content.fiscalite.criteres.map((critere, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      {index + 1}
+                    </div>
+                    <p className="text-[#112033] text-sm font-medium">{critere}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-[#112033] text-lg font-semibold mb-4">{content.fiscalite.avant2017.title}</h3>
+                <ul className="space-y-2">
+                  {content.fiscalite.avant2017.options.map((option, index) => (
+                    <li key={index} className="text-[#112033] text-sm flex items-start gap-2">
+                      <span className="w-2 h-2 bg-[#4EBBBD] rounded-full mt-2 flex-shrink-0"></span>
+                      {option}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-[#112033] text-lg font-semibold mb-4">{content.fiscalite.depuis2017.title}</h3>
+                <ul className="space-y-2">
+                  {content.fiscalite.depuis2017.options.map((option, index) => (
+                    <li key={index} className="text-[#112033] text-sm flex items-start gap-2">
+                      <span className="w-2 h-2 bg-[#4EBBBD] rounded-full mt-2 flex-shrink-0"></span>
+                      {option}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
             
-            {/* Right Card */}
-            <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
-              {/* Icon */}
-              <div className="flex items-center gap-4 mb-4 sm:mb-6">
-                <img
-                  src="/images/placements-responsive-header-icon-56586a.png"
-                  alt="Expert Icon"
-                  className="w-8 h-8 sm:w-9 sm:h-9"
-                />
-                <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight">
-                  Nos experts à votre service
-                </h2>
-              </div>
-              
-              {/* Floating Price Card */}
-              <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
-                <div className="text-center text-white font-source-sans font-semibold text-xs sm:text-base lg:text-xl leading-tight px-1 sm:px-0">
-                  <span className="hidden sm:block">0 € →<br /></span>
-                  <span className="sm:hidden">0€</span>
-                  <span className="hidden sm:block">Analyse personnalisée gratuite</span>
-                </div>
-              </div>
-              
-              {/* Services List */}
-              <div className="mt-8 sm:mt-12">
-                <ul className="space-y-2 sm:space-y-3 text-white text-xs sm:text-sm font-source-sans font-semibold leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Analyse de votre situation fiscale et patrimoniale</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Optimisation fiscale et transmission patrimoniale</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Conseil en placement et gestion de portefeuille</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-white mt-1">✓</span>
-                    <span>Accompagnement personnalisé et suivi régulier</span>
-                  </li>
-                </ul>
-              </div>
+            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+              <p className="text-lg font-medium">👉 {content.fiscalite.abattement}</p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Content Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
-          <div className="mb-4 sm:mb-6 lg:mb-8">
-            <nav className="flex items-center text-xs sm:text-sm lg:text-base">
-              <a href="/" className="text-[#005C69] font-source-sans font-semibold hover:underline">
-                Accueil
-              </a>
-              <span className="text-[#686868] mx-2">{'>'}</span>
-              <a href="/placements" className="text-[#005C69] font-source-sans font-semibold hover:underline">
-                Solutions de placement
-              </a>
-              <span className="text-[#686868] mx-2">{'>'}</span>
-              <span className="text-[#4EBBBD] font-source-sans font-semibold">
-                Assurance Vie
-              </span>
-            </nav>
-          </div>
-
-          {/* L'essentiel Block */}
-          <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 lg:p-10 mb-8 sm:mb-12 relative">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-t-lg"></div>
-            <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-4 sm:mb-6">
-              L'essentiel de l'Assurance Vie
+      {/* Transmission Section */}
+      {activeTab === "transmission" && (
+        <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+              {content.transmission.title}
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] p-4 rounded-lg">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-base mb-2">Fiscalité avantageuse</h3>
-                <p className="text-[#374151] text-sm font-inter">Bénéficiez d'une fiscalité attractive après 8 ans de détention avec des prélèvements sociaux réduits.</p>
-              </div>
-              <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] p-4 rounded-lg">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-base mb-2">Transmission optimisée</h3>
-                <p className="text-[#374151] text-sm font-inter">Préparez votre transmission avec des abattements fiscaux avantageux pour vos bénéficiaires.</p>
-              </div>
-              <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] p-4 rounded-lg">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-base mb-2">Flexibilité totale</h3>
-                <p className="text-[#374151] text-sm font-inter">Versements libres, rachats partiels possibles et gestion adaptée à vos besoins.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Pourquoi choisir l'Assurance Vie */}
-          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Pourquoi choisir l'Assurance Vie ?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">1</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Épargne sécurisée</h3>
-                <p className="text-[#374151] text-sm font-inter">Placement sécurisé avec un capital garanti et des rendements attractifs.</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">2</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Avantages fiscaux</h3>
-                <p className="text-[#374151] text-sm font-inter">Fiscalité avantageuse après 8 ans et transmission optimisée.</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">3</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Flexibilité</h3>
-                <p className="text-[#374151] text-sm font-inter">Versements libres et rachats partiels selon vos besoins.</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">4</span>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Transmission</h3>
-                <p className="text-[#374151] text-sm font-inter">Préparation optimale de votre transmission patrimoniale.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Nos Solutions d'Assurance Vie */}
-          <div className="mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Nos Solutions d'Assurance Vie
-            </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 border-l-4 border-[#59E2E4]">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-4">Assurance Vie Classique</h3>
-                <ul className="space-y-3 text-[#374151] font-inter">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#59E2E4] mt-1">•</span>
-                    <span>Fonds en euros garantis</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#59E2E4] mt-1">•</span>
-                    <span>Unités de compte pour plus de performance</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#59E2E4] mt-1">•</span>
-                    <span>Gestion pilotée ou libre</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#59E2E4] mt-1">•</span>
-                    <span>Versements programmés ou ponctuels</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 border-l-4 border-[#B99066]">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-4">Assurance Vie Multi-Supports</h3>
-                <ul className="space-y-3 text-[#374151] font-inter">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B99066] mt-1">•</span>
-                    <span>Diversification maximale</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B99066] mt-1">•</span>
-                    <span>Accès aux marchés financiers</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B99066] mt-1">•</span>
-                    <span>Gestion professionnelle</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#B99066] mt-1">•</span>
-                    <span>Potentiel de performance élevé</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Avantages Fiscaux */}
-          <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Les Avantages Fiscaux de l'Assurance Vie
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Avant 8 ans</h3>
-                <ul className="text-[#374151] text-sm font-inter space-y-2">
-                  <li>• Prélèvements sociaux : 17,2%</li>
-                  <li>• Impôt sur le revenu : barème progressif</li>
-                  <li>• Abattement annuel : 4 600€ (célibataire)</li>
-                </ul>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Après 8 ans</h3>
-                <ul className="text-[#374151] text-sm font-inter space-y-2">
-                  <li>• Prélèvements sociaux : 17,2%</li>
-                  <li>• Impôt sur le revenu : 7,5%</li>
-                  <li>• Abattement annuel : 9 200€ (célibataire)</li>
-                </ul>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Transmission</h3>
-                <ul className="text-[#374151] text-sm font-inter space-y-2">
-                  <li>• Abattement : 152 500€ par bénéficiaire</li>
-                  <li>• Taux réduit : 20% à 31,25%</li>
-                  <li>• Hors succession : avantage majeur</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Notre Accompagnement */}
-          <div className="mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Notre Accompagnement Personnalisé
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-12 h-12 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Diagnostic</h3>
-                <p className="text-[#374151] text-sm font-inter">Analyse complète de votre situation financière et fiscale</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Stratégie</h3>
-                <p className="text-[#374151] text-sm font-inter">Élaboration d'une stratégie d'épargne adaptée à vos objectifs</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-12 h-12 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Mise en place</h3>
-                <p className="text-[#374151] text-sm font-inter">Accompagnement dans la souscription et la configuration</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
-                <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Suivi</h3>
-                <p className="text-[#374151] text-sm font-inter">Suivi régulier et ajustements selon l'évolution de vos besoins</p>
-              </div>
-            </div>
-          </div>
-
-          {/* FAQ Section */}
-          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Questions Fréquentes
-            </h2>
-            <div className="space-y-6">
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Quels sont les montants minimum pour souscrire une assurance vie ?</h3>
-                <p className="text-[#374151] font-inter">Les montants minimum varient selon les contrats. Chez Azalee Wealth, nous proposons des solutions adaptées à tous les budgets, à partir de 50€ par versement.</p>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Puis-je retirer de l'argent avant 8 ans ?</h3>
-                <p className="text-[#374151] font-inter">Oui, les rachats sont possibles à tout moment. Cependant, la fiscalité sera moins avantageuse avant 8 ans de détention.</p>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Comment fonctionne la transmission en assurance vie ?</h3>
-                <p className="text-[#374151] font-inter">L'assurance vie permet de transmettre un capital hors succession avec des abattements fiscaux avantageux (152 500€ par bénéficiaire).</p>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">Quelle est la différence entre fonds en euros et unités de compte ?</h3>
-                <p className="text-[#374151] font-inter">Les fonds en euros garantissent le capital et offrent un rendement sécurisé, tandis que les unités de compte offrent un potentiel de performance plus élevé mais avec un risque de perte.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* CTA Final */}
-          <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-8 sm:p-10 lg:p-12 text-center">
-            <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-4 sm:mb-6">
-              Prêt à optimiser votre épargne ?
-            </h2>
-            <p className="text-white text-base sm:text-lg font-inter mb-6 sm:mb-8 max-w-2xl mx-auto">
-              Nos experts Azalee Wealth vous accompagnent pour construire une stratégie d'assurance vie adaptée à vos objectifs et à votre situation.
+            <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+              {content.transmission.description}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-[#005C69] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors duration-200">
-                Demander une étude gratuite
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-[#112033] text-lg font-semibold mb-4">{content.transmission.avant70.title}</h3>
+                <p className="text-[#112033] text-sm">{content.transmission.avant70.description}</p>
+              </div>
+              
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-[#112033] text-lg font-semibold mb-4">{content.transmission.apres70.title}</h3>
+                <p className="text-[#112033] text-sm">{content.transmission.apres70.description}</p>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+              <p className="text-lg font-medium">👉 {content.transmission.attention}</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Jurisprudence Section */}
+      {activeTab === "jurisprudence" && (
+        <div className="space-y-12">
+          <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+                {content.jurisprudence.title}
+              </h2>
+              <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+                {content.jurisprudence.description}
+              </p>
+              
+              <div className="space-y-6 mb-8">
+                {content.jurisprudence.points.map((point, index) => (
+                  <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
+                      </div>
+                      <p className="text-[#112033] text-sm font-medium">{point}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+                <p className="text-lg font-medium">👉 {content.jurisprudence.resultat}</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Exemple Section */}
+          <section className="py-12 bg-white">
+            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+                {content.exemple.title}
+              </h2>
+              <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+                {content.exemple.description}
+              </p>
+              
+              <div className="space-y-6">
+                {content.exemple.points.map((point, index) => (
+                  <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
+                      </div>
+                      <p className="text-[#112033] text-sm font-medium">{point}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {/* Conseil Section */}
+      {activeTab === "conseil" && (
+        <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+              {content.conseil.title}
+            </h2>
+            <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+              {content.conseil.description}
+            </p>
+            
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <h3 className="text-[#112033] text-lg font-semibold mb-6 text-center">
+                {content.conseil.accompagnement}
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {content.conseil.services.map((service, index) => (
+                  <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {index + 1}
+                      </div>
+                      <p className="text-[#112033] text-sm font-medium">{service}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+              <p className="text-lg font-medium">👉 {content.conseil.conclusion}</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-[#F2F2F2] to-[#E5E5E5]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 text-center">
+            <h2 className="text-[#112033] text-2xl lg:text-3xl font-semibold mb-4">
+              {content.cta.title}
+            </h2>
+            <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
+              {content.cta.subtitle}
+            </p>
+            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
+              <h3 className="text-xl font-semibold mb-3">📧 {content.cta.email}</h3>
+              <p className="text-sm opacity-90">Audit gratuit de vos contrats d'assurance-vie</p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
+                🗓️ {content.cta.primaryButton}
               </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#005C69] transition-colors duration-200">
-                Prendre rendez-vous
+              <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
+                📧 {content.cta.secondaryButton}
               </button>
             </div>
           </div>
         </div>
       </section>
+
+      <Footer />
     </>
   );
-} 
+}

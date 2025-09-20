@@ -7,17 +7,75 @@ const STORAGE_KEY = "reductionsImpotDeficitFoncierContent";
 
 const defaultContent = {
   hero: {
-    title: "Réductions d'impôt et déficit foncier",
-    subtitle: "Optimisez votre fiscalité grâce aux réductions d'impôt et au déficit foncier. Découvrez comment transformer vos charges immobilières en avantages fiscaux.",
-    button: "Calculer mes réductions",
+    title: "Déficit foncier et réductions d'impôt",
+    subtitle: "Un levier fiscal puissant pour investisseurs avertis. Pour les investisseurs disposant de revenus fonciers imposables ou d'une tranche marginale d'imposition (TMI) élevée, le déficit foncier permet une double optimisation : réduction de l'impôt sur le revenu et diminution des prélèvements sociaux (CSG/CRDS à 17,2%) sur les revenus fonciers.",
+    button: "Calculer mon déficit foncier",
     image: "/images/fiscalite-deficit-foncier-hero.jpg"
   },
   quickStats: {
     title: "Chiffres clés",
     stats: [
-      { label: "Réduction max", value: "21%", description: "Loi Pinel" },
-      { label: "Déficit foncier", value: "10 700€", description: "Plafond annuel" },
-      { label: "Report", value: "10 ans", description: "Déficit foncier" }
+      { label: "Déficit foncier", value: "10 700€", description: "Plafond annuel déductible" },
+      { label: "Report", value: "10 ans", description: "Sur revenus fonciers" },
+      { label: "Rendement fiscal", value: "58%", description: "TMI 41% + CSG/CRDS" }
+    ]
+  },
+  comparison: {
+    title: "Réduction d'impôt ou déduction du revenu ?",
+    description: "Comprendre la différence entre les deux mécanismes fiscaux",
+    table: {
+      headers: ["Mécanisme", "Effet fiscal", "Bénéfice"],
+      rows: [
+        {
+          mecanisme: "Réduction d'impôt",
+          effet: "Soustraction directe de l'impôt à payer",
+          benefice: "1 000 € réduits = 1 000 € gagnés"
+        },
+        {
+          mecanisme: "Déficit foncier",
+          effet: "Diminution de la base imposable",
+          benefice: "Effet amplifié selon la TMI + économie de CSG/CRDS"
+        }
+      ]
+    },
+    example: {
+      title: "⚡ Exemple pour une TMI à 41% :",
+      scenarios: [
+        {
+          description: "1 000 € de déficit foncier imputé sur le revenu global =",
+          details: [
+            "→ 410 € d'économie d'impôt sur le revenu",
+            "→ 0 € de CSG économisée (car imputé sur le revenu global)"
+          ]
+        },
+        {
+          description: "1 000 € imputés sur les revenus fonciers =",
+          details: [
+            "→ 410 € d'économie IR",
+            "→ 172 € d'économie de prélèvements sociaux",
+            "→ Gain total : 582 €, soit un rendement fiscal de 58%"
+          ]
+        }
+      ]
+    }
+  },
+  investorProfile: {
+    title: "Qui peut en profiter ?",
+    description: "Le déficit foncier s'adresse à des investisseurs spécifiques",
+    profiles: [
+      "Propriétaires de biens locatifs déjà imposables au régime réel (hors micro-foncier)",
+      "Contribuables avec une TMI élevée (30% ou plus)",
+      "Investisseurs souhaitant valoriser des biens anciens avec travaux"
+    ]
+  },
+  conditions: {
+    title: "Conditions pour créer un déficit foncier",
+    description: "Les conditions spécifiques à respecter pour bénéficier du déficit foncier",
+    conditions: [
+      "Bien en location nue (non meublée), soumis au régime réel",
+      "Travaux éligibles : entretien, réparation, amélioration",
+      "Pas d'agrandissement ni de construction neuve",
+      "Travaux réellement payés et effectués avant d'être mis en location"
     ]
   },
   calculator: {
@@ -69,29 +127,74 @@ const defaultContent = {
     ]
   },
   examples: {
-    title: "Exemples concrets",
-    items: [
+    title: "Cas pratique d'optimisation fiscale",
+    description: "Exemple concret avec calcul détaillé",
+    detailedCase: {
+      scenario: "Un contribuable avec :",
+      data: [
+        "Revenu global : 120 000 € (TMI 41%)",
+        "Revenus fonciers nets : 15 000 €",
+        "Travaux réalisés en 2025 : 35 000 €"
+      ],
+      calculation: {
+        title: "Effet fiscal :",
+        steps: [
+          "10 700 € imputés sur le revenu global →",
+          "10 700 × 41% = 4 387 € d'économie IR",
+          "24 300 € imputés sur les revenus fonciers :",
+          "24 300 × (41% + 17,2%) = 14 154 € d'économie fiscale totale"
+        ],
+        result: {
+          title: "✅ Gain fiscal global = 18 541 €",
+          subtitle: "sur un chantier de 35 000 € soit rendement net de 53%"
+        }
+      }
+    }
+  },
+  strategies: {
+    title: "Stratégies associées",
+    description: "Les stratégies complémentaires pour optimiser le déficit foncier",
+    strategies: [
       {
-        scenario: "Investissement Pinel",
-        revenus: "12 000€",
-        charges: "8 000€",
-        reduction: "2 520€",
-        total: "2 520€ d'économie"
+        title: "SCI à l'IR + travaux",
+        description: "Permet de mutualiser le déficit sur plusieurs revenus fonciers"
       },
       {
-        scenario: "Déficit foncier",
-        revenus: "15 000€",
-        charges: "18 000€",
-        deficit: "3 000€",
-        total: "3 000€ de déficit reportable"
+        title: "Déficit foncier + nue-propriété",
+        description: "Transmission anticipée + valorisation du capital sans fiscalité sur la revente"
+      },
+      {
+        title: "Revente après 3 ans de location",
+        description:         "Respect du seuil fiscal pour conserver l'avantage (risque de reprise en cas de revente anticipée)"
       }
     ]
   },
+  risks: {
+    title: "Risques et points de vigilance",
+    description: "Les points d'attention pour éviter les erreurs",
+    risks: [
+      "Travaux non éligibles : extension, piscine, rénovation de luxe",
+      "Justificatifs obligatoires : factures, devis, attestations",
+      "Location effective obligatoire 3 ans sous peine de reprise du déficit",
+      "Pas de cumul possible avec d'autres réductions d'impôt foncier (ex : Cosse)"
+    ]
+  },
+  azaleeRecommendation: {
+    title: "Recommandation Azalée Patrimoine",
+    description: "Notre approche complète pour optimiser votre déficit foncier",
+    recommendations: [
+      "Audit complet de vos revenus fonciers",
+      "Analyse éligibilité / devis travaux / simulation fiscale",
+      "Structuration patrimoniale (SCI, indivision, transmission)",
+      "Intégration dans une stratégie de retraite ou de capitalisation"
+    ]
+  },
   cta: {
-    title: "Prêt à optimiser votre fiscalité ?",
-    subtitle: "Nos experts vous accompagnent pour maximiser vos réductions d'impôt",
-    primaryButton: "Simulation gratuite",
-    secondaryButton: "Consultation expert"
+    title: "Envie d'optimiser votre fiscalité foncière ?",
+    subtitle: "Nos experts vous accompagnent pour maximiser votre déficit foncier",
+    email: "contact@azalee-patrimoine.fr",
+    primaryButton: "Prendre rendez-vous",
+    secondaryButton: "Nous écrire"
   }
 };
 
@@ -191,6 +294,105 @@ export default function ReductionsImpotDeficitFoncierPage() {
                 <div className="text-3xl font-bold text-[#4EBBBD] mb-2">{stat.value}</div>
                 <div className="text-[#112033] font-semibold mb-1">{stat.label}</div>
                 <div className="text-[#686868] text-sm">{stat.description}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Section */}
+      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            {content.comparison.title}
+          </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.comparison.description}
+          </p>
+          
+          {/* Comparison Table */}
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  {content.comparison.table.headers.map((header, index) => (
+                    <th key={index} className="text-left py-3 px-4 font-semibold text-[#112033]">
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {content.comparison.table.rows.map((row, index) => (
+                  <tr key={index} className="border-b border-gray-100">
+                    <td className="py-3 px-4 font-medium text-[#112033]">{row.mecanisme}</td>
+                    <td className="py-3 px-4 text-[#686868]">{row.effet}</td>
+                    <td className="py-3 px-4 text-[#4EBBBD] font-medium">{row.benefice}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Example */}
+          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white">
+            <h3 className="text-xl font-semibold mb-4">{content.comparison.example.title}</h3>
+            <div className="space-y-4">
+              {content.comparison.example.scenarios.map((scenario, index) => (
+                <div key={index}>
+                  <p className="font-medium mb-2">{scenario.description}</p>
+                  <ul className="ml-4 space-y-1">
+                    {scenario.details.map((detail, idx) => (
+                      <li key={idx} className="text-sm opacity-90">{detail}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Investor Profile Section */}
+      <section className="py-12 bg-white">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            {content.investorProfile.title}
+          </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.investorProfile.description}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {content.investorProfile.profiles.map((profile, index) => (
+              <div key={index} className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6 shadow-lg">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-3">
+                    {index + 1}
+                  </div>
+                  <p className="text-[#112033] text-sm font-medium">{profile}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Conditions Section */}
+      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            {content.conditions.title}
+          </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.conditions.description}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {content.conditions.conditions.map((condition, index) => (
+              <div key={index} className="bg-white rounded-xl p-6 shadow-lg">
+                <div className="flex items-start gap-3">
+                  <span className="w-2 h-2 bg-[#4EBBBD] rounded-full mt-2 flex-shrink-0"></span>
+                  <p className="text-[#112033] text-sm">{condition}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -327,34 +529,110 @@ export default function ReductionsImpotDeficitFoncierPage() {
         </div>
       </section>
 
-      {/* Examples */}
+      {/* Detailed Case Study */}
       <section className="py-12 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
             {content.examples.title}
           </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.examples.description}
+          </p>
+          
+          <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-8 shadow-lg">
+            <h3 className="text-[#112033] text-xl font-semibold mb-6">{content.examples.detailedCase.scenario}</h3>
+            
+            {/* Data */}
+            <div className="mb-6">
+              <ul className="space-y-2">
+                {content.examples.detailedCase.data.map((item, index) => (
+                  <li key={index} className="text-[#112033] text-sm flex items-center gap-2">
+                    <span className="w-2 h-2 bg-[#4EBBBD] rounded-full"></span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Calculation */}
+            <div className="bg-white rounded-lg p-6 mb-6">
+              <h4 className="text-[#112033] text-lg font-semibold mb-4">{content.examples.detailedCase.calculation.title}</h4>
+              <ul className="space-y-2">
+                {content.examples.detailedCase.calculation.steps.map((step, index) => (
+                  <li key={index} className="text-[#112033] text-sm flex items-center gap-2">
+                    <span className="w-2 h-2 bg-[#B99066] rounded-full"></span>
+                    {step}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Result */}
+            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-6 text-white text-center">
+              <h4 className="text-xl font-semibold mb-2">{content.examples.detailedCase.calculation.result.title}</h4>
+              <p className="text-sm opacity-90">{content.examples.detailedCase.calculation.result.subtitle}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Strategies Section */}
+      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            {content.strategies.title}
+          </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.strategies.description}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {content.strategies.strategies.map((strategy, index) => (
+              <div key={index} className="bg-white rounded-xl p-6 shadow-lg">
+                <h3 className="text-[#112033] text-lg font-semibold mb-3">{strategy.title}</h3>
+                <p className="text-[#686868] text-sm">{strategy.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Risks Section */}
+      <section className="py-12 bg-white">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            {content.risks.title}
+          </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.risks.description}
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {content.examples.items.map((example, index) => (
-              <div key={index} className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6 shadow-lg">
-                <h3 className="text-[#112033] text-lg font-semibold mb-4">{example.scenario}</h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-[#686868]">Revenus locatifs:</span>
-                    <span className="text-[#112033] font-medium">{example.revenus}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#686868]">Charges:</span>
-                    <span className="text-[#112033] font-medium">{example.charges}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#686868]">Réduction/Déficit:</span>
-                    <span className="text-[#4EBBBD] font-semibold">{example.reduction || example.deficit}</span>
-                  </div>
-                  <div className="pt-3 border-t border-gray-200">
-                    <div className="text-center">
-                      <span className="text-[#112033] font-bold text-lg">{example.total}</span>
-                    </div>
-                  </div>
+            {content.risks.risks.map((risk, index) => (
+              <div key={index} className="bg-gradient-to-br from-[#FFE4E1] to-[#FFCCCB] rounded-xl p-6 shadow-lg">
+                <div className="flex items-start gap-3">
+                  <span className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
+                  <p className="text-[#112033] text-sm">{risk}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Azalée Recommendation Section */}
+      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
+            {content.azaleeRecommendation.title}
+          </h2>
+          <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
+            {content.azaleeRecommendation.description}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {content.azaleeRecommendation.recommendations.map((recommendation, index) => (
+              <div key={index} className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white shadow-lg">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">✔</span>
+                  <p className="text-sm font-medium">{recommendation}</p>
                 </div>
               </div>
             ))}
@@ -372,12 +650,16 @@ export default function ReductionsImpotDeficitFoncierPage() {
             <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
               {content.cta.subtitle}
             </p>
+            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
+              <h3 className="text-xl font-semibold mb-3">📧 {content.cta.email}</h3>
+              <p className="text-sm opacity-90">Prendre rendez-vous pour optimiser votre fiscalité foncière</p>
+            </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                {content.cta.primaryButton}
+                🗓️ {content.cta.primaryButton}
               </button>
               <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
-                {content.cta.secondaryButton}
+                📧 {content.cta.secondaryButton}
               </button>
             </div>
           </div>

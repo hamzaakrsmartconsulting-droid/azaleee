@@ -13,17 +13,18 @@ export default function CreditImmobilierPTZPage() {
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
             {/* Left Content */}
             <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
-              {/* Main Title */}
               <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
-                Crédit Immobilier et PTZ – Financez votre projet avec Azalee Wealth
+                Crédit immobilier et PTZ : le levier incontournable
               </h1>
               
-              {/* Description */}
-              <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
-                Optimisez votre financement immobilier avec nos solutions de crédit adaptées. Bénéficiez du Prêt à Taux Zéro (PTZ) et de nos conseils personnalisés pour obtenir les meilleures conditions. Notre expertise bancaire vous accompagne dans votre projet immobilier.
+              <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-6 sm:mb-8 text-center lg:text-left">
+                Le <strong>crédit immobilier</strong> est au cœur de toute stratégie patrimoniale. Il permet de réaliser un projet immobilier important sans disposer immédiatement de la totalité des fonds. Grâce à l'<strong>effet de levier du crédit</strong>, il est possible d'acheter un bien d'une valeur de 200 000 € avec seulement 20 000 € d'apport.
               </p>
               
-              {/* CTA Button */}
+              <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-6 sm:mb-8 text-center lg:text-left">
+                En parallèle, l'État soutient les primo-accédants grâce au <strong>PTZ (Prêt à Taux Zéro)</strong>. Ce dispositif d'aide permet de financer jusqu'à 40 % du prix d'un logement neuf sans payer d'intérêts, rendant l'accession à la propriété plus accessible.
+              </p>
+              
               <div className="flex justify-center lg:justify-start">
                 <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
                   Simuler mon crédit
@@ -33,7 +34,6 @@ export default function CreditImmobilierPTZPage() {
             
             {/* Right Card */}
             <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
-              {/* Icon */}
               <div className="flex items-center gap-4 mb-4 sm:mb-6">
                 <img
                   src="/images/placements-responsive-header-icon-56586a.png"
@@ -45,33 +45,31 @@ export default function CreditImmobilierPTZPage() {
                 </h2>
               </div>
               
-              {/* Floating Price Card */}
               <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
                 <div className="text-center text-white font-source-sans font-semibold text-xs sm:text-base lg:text-xl leading-tight px-1 sm:px-0">
-                  <span className="hidden sm:block">0% →<br /></span>
-                  <span className="sm:hidden">0%</span>
-                  <span className="hidden sm:block">Taux PTZ</span>
+                  <span className="hidden sm:block">Effet →<br /></span>
+                  <span className="sm:hidden">x10</span>
+                  <span className="hidden sm:block">de levier</span>
                 </div>
               </div>
               
-              {/* Services List */}
               <div className="mt-8 sm:mt-12">
                 <ul className="space-y-2 sm:space-y-3 text-white text-xs sm:text-sm font-source-sans font-semibold leading-relaxed">
                   <li className="flex items-start gap-2">
                     <span className="text-white mt-1">✓</span>
-                    <span>Prêt à Taux Zéro (PTZ)</span>
+                    <span>Effet de levier financier</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white mt-1">✓</span>
-                    <span>Crédit immobilier optimisé</span>
+                    <span>PTZ jusqu'à 40% sans intérêts</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white mt-1">✓</span>
-                    <span>Accompagnement bancaire</span>
+                    <span>Constitution de patrimoine</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white mt-1">✓</span>
-                    <span>Négociation des taux</span>
+                    <span>Optimisation fiscale</span>
                   </li>
                 </ul>
               </div>
@@ -83,64 +81,212 @@ export default function CreditImmobilierPTZPage() {
       {/* Content Section */}
       <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
-          <div className="mb-4 sm:mb-6 lg:mb-8">
-            <nav className="flex items-center text-xs sm:text-sm lg:text-base">
-              <a href="/" className="text-[#005C69] font-source-sans font-semibold hover:underline">
-                Accueil
-              </a>
-              <span className="text-[#686868] mx-2">{'>'}</span>
-              <a href="/immobilier" className="text-[#005C69] font-source-sans font-semibold hover:underline">
-                Immobilier
-              </a>
-              <span className="text-[#686868] mx-2">{'>'}</span>
-              <span className="text-[#4EBBBD] font-source-sans font-semibold">
-                Crédit Immobilier et PTZ
-              </span>
-            </nav>
-          </div>
-
-          {/* Avantages Crédit */}
+          
+          {/* Les avantages du crédit immobilier */}
           <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
             <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
-              Nos Solutions de Financement
+              ✅ Les avantages du crédit immobilier
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white rounded-lg p-6 shadow-md">
                 <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                  </svg>
+                  <span className="text-white text-2xl">📈</span>
                 </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">PTZ</h3>
-                <p className="text-[#374151] text-sm font-inter">Prêt à Taux Zéro</p>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">Effet de levier financier</h3>
+                <p className="text-[#374151] text-sm font-inter">
+                  Le crédit permet d'investir dans un bien immobilier d'une valeur bien supérieure à vos fonds propres. Avec 20 000 € d'apport, vous pouvez financer un projet de 200 000 € et bénéficier des loyers et de la valorisation du bien.
+                </p>
               </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
+              
+              <div className="bg-white rounded-lg p-6 shadow-md">
                 <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
+                  <span className="text-white text-2xl">🏠</span>
                 </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Crédit Classique</h3>
-                <p className="text-[#374151] text-sm font-inter">Taux négociés</p>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">Constitution de patrimoine</h3>
+                <p className="text-[#374151] text-sm font-inter">
+                  Chaque mensualité rembourse une partie de votre emprunt. À terme, vous devenez pleinement propriétaire d'un bien qui peut être transmis à vos enfants ou revendu avec une plus-value.
+                </p>
               </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
+              
+              <div className="bg-white rounded-lg p-6 shadow-md">
                 <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+                  <span className="text-white text-2xl">💰</span>
                 </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Assurance</h3>
-                <p className="text-[#374151] text-sm font-inter">Protection optimisée</p>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">Optimisation fiscale</h3>
+                <p className="text-[#374151] text-sm font-inter">
+                  Dans certains régimes (par exemple pour une SCI à l'IS), les intérêts d'emprunt sont déductibles, ce qui réduit l'imposition des loyers perçus.
+                </p>
               </div>
-              <div className="text-center bg-white rounded-lg p-6 shadow-md">
+              
+              <div className="bg-white rounded-lg p-6 shadow-md">
                 <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                  <span className="text-white text-2xl">🛡️</span>
                 </div>
-                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Accompagnement</h3>
-                <p className="text-[#374151] text-sm font-inter">Suivi personnalisé</p>
+                <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">Sécurité du placement</h3>
+                <p className="text-[#374151] text-sm font-inter">
+                  L'immobilier est un actif tangible. Contrairement aux placements financiers volatils, un bien immobilier conserve une valeur patrimoniale, surtout si son emplacement est bien choisi.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Les inconvénients et risques */}
+          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+              ⚠️ Les inconvénients et risques du crédit immobilier
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-gradient-to-r from-[#FFF4E6] to-[#FFE5E5] rounded-lg p-6">
+                <h3 className="text-[#B99066] font-cairo font-semibold text-lg mb-4">⚠️ Endettement</h3>
+                <p className="text-[#374151] text-sm font-inter">
+                  Un emprunt engage sur le long terme (15 à 25 ans), ce qui réduit la capacité d'emprunt future.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#FFF4E6] to-[#FFE5E5] rounded-lg p-6">
+                <h3 className="text-[#B99066] font-cairo font-semibold text-lg mb-4">📈 Risque de taux</h3>
+                <p className="text-[#374151] text-sm font-inter">
+                  La hausse des taux d'intérêt peut augmenter le coût total du crédit et réduire la rentabilité.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#FFF4E6] to-[#FFE5E5] rounded-lg p-6">
+                <h3 className="text-[#B99066] font-cairo font-semibold text-lg mb-4">🛡️ Assurance emprunteur</h3>
+                <p className="text-[#374151] text-sm font-inter">
+                  Souvent coûteuse, elle peut représenter une charge importante si elle n'est pas renégociée.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#FFF4E6] to-[#FFE5E5] rounded-lg p-6">
+                <h3 className="text-[#B99066] font-cairo font-semibold text-lg mb-4">🏠 Vacance locative</h3>
+                <p className="text-[#374151] text-sm font-inter">
+                  Dans le cas d'un investissement locatif, l'absence de locataire peut déséquilibrer votre trésorerie.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Le PTZ */}
+          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+              🔎 Le PTZ (Prêt à Taux Zéro) : un coup de pouce pour les primo-accédants
+            </h2>
+            <div className="space-y-6">
+              <p className="text-[#374151] text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
+                Le <strong>Prêt à Taux Zéro</strong> est un dispositif de l'État destiné aux ménages achetant leur <strong>résidence principale</strong> pour la première fois. Il finance jusqu'à 40 % du prix du logement <strong>sans intérêts</strong>.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-xl font-bold">40%</span>
+                  </div>
+                  <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Financement</h3>
+                  <p className="text-[#374151] text-sm font-inter">Jusqu'à 40% du prix du logement</p>
+                </div>
+                
+                <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                  <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-xl font-bold">0%</span>
+                  </div>
+                  <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Taux d'intérêt</h3>
+                  <p className="text-[#374151] text-sm font-inter">Aucun intérêt à payer</p>
+                </div>
+                
+                <div className="bg-white rounded-lg p-6 shadow-md text-center">
+                  <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-xl">🏠</span>
+                  </div>
+                  <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-2">Logements éligibles</h3>
+                  <p className="text-[#374151] text-sm font-inter">Neufs ou anciens avec travaux</p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-6 text-white">
+                <h3 className="text-xl font-semibold mb-4">👉 Exemple concret</h3>
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <p className="text-sm">
+                    Un couple achète un logement neuf à 220 000 € dans une zone éligible. Le PTZ finance 88 000 € sans intérêts, le reste est couvert par un crédit classique. Leur charge mensuelle est réduite, ce qui sécurise leur budget et facilite l'accession à la propriété.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Exemple concret d'effet de levier */}
+          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+              💡 Exemple concret d'effet de levier
+            </h2>
+            <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-6 sm:p-8 text-white">
+              <h3 className="text-xl font-semibold mb-6">
+                Un investisseur achète un appartement de 200 000 € avec 20 000 € d'apport et un prêt de 180 000 € sur 20 ans.
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div className="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                  <h4 className="font-semibold mb-2">💰 Loyer perçu</h4>
+                  <p className="text-lg font-bold">900 €/mois</p>
+                </div>
+                <div className="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                  <h4 className="font-semibold mb-2">🏦 Mensualité crédit</h4>
+                  <p className="text-lg font-bold">1 000 €/mois</p>
+                </div>
+                <div className="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                  <h4 className="font-semibold mb-2">💸 Effort d'épargne</h4>
+                  <p className="text-lg font-bold">100 €/mois</p>
+                </div>
+              </div>
+              
+              <div className="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                <h4 className="font-semibold mb-2">📈 Résultat après 20 ans</h4>
+                <p className="text-sm mb-2">
+                  L'investisseur est pleinement propriétaire d'un bien valorisé <strong>240 000 €</strong> grâce à la revalorisation du marché.
+                </p>
+                <p className="text-sm">
+                  Son effort total d'épargne a été de <strong>24 000 €</strong>, pour un patrimoine net <strong>dix fois supérieur</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Conseil Azalée Patrimoine */}
+          <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12 text-white">
+            <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+              🎯 Conseil Azalée Patrimoine
+            </h2>
+            <div className="space-y-6">
+              <p className="text-lg">
+                Le crédit immobilier est un <strong>outil de richesse incomparable</strong>, mais il doit être utilisé avec prudence. La clé est d'adapter le montant emprunté, la durée et le type de crédit à votre situation et à vos objectifs patrimoniaux.
+              </p>
+              
+              <p className="text-lg">
+                Chez <strong>Azalée Patrimoine</strong>, nous aidons nos clients à :
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h3 className="font-semibold mb-2">💰 Négocier les meilleures conditions</h3>
+                  <p className="text-sm">De crédit (taux, assurance, durée)</p>
+                </div>
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h3 className="font-semibold mb-2">📈 Optimiser l'effet de levier</h3>
+                  <p className="text-sm">Tout en gardant une trésorerie saine</p>
+                </div>
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h3 className="font-semibold mb-2">🎯 Profiter des dispositifs d'aide</h3>
+                  <p className="text-sm">Comme le PTZ lorsqu'ils sont éligibles</p>
+                </div>
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h3 className="font-semibold mb-2">🏠 Intégrer le financement</h3>
+                  <p className="text-sm">Dans une stratégie patrimoniale globale</p>
+                </div>
+              </div>
+              
+              <div className="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                <p className="text-sm">
+                  👉 Bien maîtrisé, le crédit immobilier n'est pas une charge : c'est un <strong>levier patrimonial</strong> qui vous permet de transformer une petite mise de départ en un patrimoine solide et transmissible.
+                </p>
               </div>
             </div>
           </div>
@@ -151,7 +297,7 @@ export default function CreditImmobilierPTZPage() {
               Prêt à financer votre projet immobilier ?
             </h2>
             <p className="text-white text-base sm:text-lg font-inter mb-6 sm:mb-8 max-w-2xl mx-auto">
-              Nos experts Azalee Wealth vous accompagnent pour optimiser votre financement immobilier et obtenir les meilleures conditions.
+              Nos experts Azalée Patrimoine vous accompagnent pour simuler votre capacité d'emprunt et découvrir la meilleure stratégie de financement pour vos projets immobiliers.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-white text-[#005C69] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors duration-200">
@@ -166,4 +312,4 @@ export default function CreditImmobilierPTZPage() {
       </section>
     </>
   );
-} 
+}

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import Button from '../ui/Button';
+import Button from '@/components/ui/Button';
 import dynamic from "next/dynamic";
 const LanguageSwitcher = dynamic(() => import("./LanguageSwitcher"), { ssr: false });
 import Link from "next/link";
@@ -249,13 +249,6 @@ const Header = () => {
             <span className="text-global-1">Nos agences</span>
             <div className="w-px h-2.5 bg-header-1"></div>
             <span className="text-global-1">Actualités</span>
-            <Button 
-              variant="primary" 
-              size="xs"
-              className="bg-global-6 text-global-7 px-3 py-1.5 text-xs"
-            >
-              Espace clients
-            </Button>
             {/* Language Switcher */}
             <div className="ml-2">
               <LanguageSwitcher />
