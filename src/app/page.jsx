@@ -19,11 +19,11 @@ const HeroCarousel = ({ content }) => {
     if (!isAutoPlaying) return;
     
     const interval = setInterval(() => {
-      setCurrentBgIndex((prevIndex) => (prevIndex + 1) % content.heroBackgrounds.length);
+      setCurrentBgIndex((prevIndex) => (prevIndex + 1) % (content.heroBackgrounds?.length || 1));
     }, 6000); // Change every 6 seconds
     
     return () => clearInterval(interval);
-  }, [isAutoPlaying, content.heroBackgrounds.length]);
+  }, [isAutoPlaying, content.heroBackgrounds?.length]);
   
   // Handle manual navigation
   const goToSlide = (index) => {
@@ -38,7 +38,7 @@ const HeroCarousel = ({ content }) => {
     <section className="relative w-full min-h-[600px] py-12 sm:py-20">
       {/* Dynamic Background Images */}
       <div className="absolute inset-0 overflow-hidden">
-        {content.heroBackgrounds.map((bg, index) => (
+        {(content.heroBackgrounds || []).map((bg, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
@@ -77,7 +77,7 @@ const HeroCarousel = ({ content }) => {
           
           {/* Dynamic Navigation Dots */}
           <div className="flex justify-center lg:justify-start items-center gap-2 mb-4">
-            {content.heroBackgrounds.map((_, i) => (
+            {(content.heroBackgrounds || []).map((_, i) => (
               <button
                 key={i}
                 onClick={() => goToSlide(i)}
@@ -179,7 +179,7 @@ const PartnersCarousel = ({ content }) => {
                 className="flex transition-transform duration-1000 ease-in-out"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
-                {content.partners.map((src, idx) => (
+                {(Array.isArray(content.partners) ? content.partners : []).map((src, idx) => (
                   <div 
                     key={idx} 
                     className="w-full flex-shrink-0 px-4"
@@ -228,7 +228,7 @@ const PartnersCarousel = ({ content }) => {
           
           {/* Dots Indicator */}
           <div className="flex justify-center items-center gap-3 mt-6">
-            {content.partners.map((_, idx) => (
+            {(Array.isArray(content.partners) ? content.partners : []).map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => goToSlide(idx)}
@@ -385,30 +385,126 @@ const defaultSectionOrder = [
 export default function HomePage() {
   const [content, setContent] = useState(defaultContent);
   const [sectionOrder, setSectionOrder] = useState(defaultSectionOrder);
+  const [isConnectedToUpdates, setIsConnectedToUpdates] = useState(false);
+  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(true);
+  const [contentSource, setContentSource] = useState('default');
+
+  // Load content from CMS database
+  const loadContentFromCMS = async () => {
+    try {
+      console.log('Homepage - Loading content from CMS database...');
+      const response = await fetch('/api/pages/homepage');
+      
+      if (response.ok) {
+        const cmsContent = await response.json();
+        console.log('Homepage - CMS content loaded:', cmsContent);
+        console.log('Homepage - Number of CMS sections:', Object.keys(cmsContent).length);
+        
+        if (Object.keys(cmsContent).length > 0) {
+          // Database has content - use it as primary source
+          console.log('Homepage - Database sections found:', Object.keys(cmsContent));
+          console.log('Homepage - Database content details:', cmsContent);
+          
+          const mergedContent = {
+            ...defaultContent,
+            ...cmsContent
+          };
+          
+          console.log('Homepage - Using database content as primary source');
+          console.log('Homepage - Merged content keys:', Object.keys(mergedContent));
+          console.log('Homepage - Sample merged content:', {
+            hero: mergedContent.hero,
+            partners: mergedContent.partners,
+            testimonials: mergedContent.testimonials
+          });
+          
+          // Force a re-render by updating state
+          setContent({});
+          setTimeout(() => {
+            setContent(mergedContent);
+            setSectionOrder(defaultSectionOrder);
+            setContentSource('database');
+          }, 100);
+        } else {
+          // No database content - use default
+          console.log('Homepage - No database content found, using default content');
+          setContent(defaultContent);
+          setSectionOrder(defaultSectionOrder);
+          setContentSource('default');
+        }
+      } else {
+        console.log('Homepage - CMS API error, using default content');
+        setContent(defaultContent);
+        setSectionOrder(defaultSectionOrder);
+        setContentSource('default');
+      }
+    } catch (error) {
+      console.error('Homepage - Error loading CMS content:', error);
+      console.log('Homepage - Falling back to default content');
+      setContent(defaultContent);
+      setSectionOrder(defaultSectionOrder);
+      setContentSource('default');
+    } finally {
+      setIsLoadingFromDatabase(false);
+    }
+  };
 
   useEffect(() => {
-    // Clear localStorage to prevent flash
-    try {
-      localStorage.clear();
-      console.log('localStorage cleared');
-    } catch (error) {
-      console.error('Error clearing localStorage:', error);
-    }
-
-    // Always start with default content to prevent flash
-    setContent(defaultContent);
-    setSectionOrder(defaultSectionOrder);
-
-    // Disable CMS loading to prevent flash - use default content only
-    console.log('Using default content only - CMS disabled to prevent flash');
+    // Load from database first, then fallback to default content
+    loadContentFromCMS();
     
-    // Listen for custom content update events (but don't auto-load)
+    // Listen for content update events
     const handleContentUpdate = async () => {
-      console.log('Content update event received - but CMS loading is disabled');
+      console.log('Homepage - Content update event received - reloading from CMS');
+      await loadContentFromCMS();
     };
 
+    // Use polling instead of SSE for real-time updates
+    let pollingInterval = null;
+    
+    const startPolling = () => {
+      console.log('Homepage - Starting polling for content updates');
+      setIsConnectedToUpdates(true);
+      
+      pollingInterval = setInterval(async () => {
+        try {
+          // Check if page is visible before polling
+          if (document.visibilityState === 'visible') {
+            console.log('Homepage - Polling for updates...');
+            await loadContentFromCMS();
+          }
+        } catch (error) {
+          console.error('Homepage - Polling error:', error);
+        }
+      }, 5000); // Poll every 5 seconds (less frequent to avoid conflicts)
+    };
+    
+    // Start polling after initial load is complete
+    setTimeout(() => {
+      if (!isLoadingFromDatabase) {
+        startPolling();
+      }
+    }, 2000);
+    
+    // Also keep the old event listeners as backup
     window.addEventListener('contentUpdated', handleContentUpdate);
-    return () => window.removeEventListener('contentUpdated', handleContentUpdate);
+    
+    // Listen for localStorage changes (cross-tab communication)
+    const handleStorageChange = (e) => {
+      if (e.key === 'cms_content_updated') {
+        console.log('Homepage - localStorage change detected - reloading content');
+        loadContentFromCMS();
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
+      window.removeEventListener('contentUpdated', handleContentUpdate);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   // Mapping des sections à afficher dynamiquement
@@ -509,7 +605,7 @@ export default function HomePage() {
               
               {/* Team Values */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {content.teamValues.map((value, index) => (
+                {(content.teamValues || []).map((value, index) => (
                   <div key={index} className="bg-white/95 backdrop-blur-md rounded-2xl p-8 text-center shadow-xl border border-white/20 hover:transform hover:scale-105 transition-all duration-300">
                     <div className="w-16 h-16 bg-gradient-to-r from-[#B99066] to-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-6">
                       <span className="text-white text-2xl">{value.icon}</span>
@@ -597,7 +693,7 @@ export default function HomePage() {
               {/* Mobile/tablet: vertical stack, desktop: original grid */}
               <div className="block lg:hidden">
                 <div className="flex flex-col gap-4">
-                  {content.experts.map((expert, index) => (
+                  {(content.experts || []).map((expert, index) => (
                     <div key={index} className="bg-global-8 rounded-[24px] shadow-[0_0_8px_0_rgba(0,0,0,0.25)] p-6 flex flex-col justify-between min-h-[220px] h-full">
                       <h3 className="text-lg font-cairo text-global-4 mb-2 leading-tight">{expert.title}</h3>
                       <p className="text-sm font-inter text-global-1 mb-4 leading-snug">{expert.desc}</p>
@@ -608,7 +704,7 @@ export default function HomePage() {
               </div>
               {/* Desktop: original grid layout */}
               <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {content.experts.map((expert, index) => (
+                {(content.experts || []).map((expert, index) => (
                   <div key={index} className="bg-global-8 rounded-[24px] shadow-[0_0_8px_0_rgba(0,0,0,0.25)] p-10 flex flex-col justify-between min-h-[320px] h-full">
                     <h3 className="text-[21px] font-cairo text-global-4 mb-2 leading-tight">{expert.title}</h3>
                     <p className="text-[16px] font-inter text-global-1 mb-6 leading-snug">{expert.desc}</p>
@@ -820,7 +916,7 @@ export default function HomePage() {
               </div>
             {/* Stepper Tabs */}
             <div className="flex flex-row justify-center items-end gap-0 mb-8">
-                {content.processSteps.map((step, idx) => (
+                {(content.processSteps || []).map((step, idx) => (
                 <div
                   key={idx}
                   className={`flex flex-col px-10 py-6 border-b-2 ${idx === 0 ? 'bg-white shadow font-bold border-[#4EBBBD] text-[#1A2530]' : 'bg-[#F5F5F5] border-[#E0E0E0] text-[#1A2530]'} transition-all`}
@@ -836,19 +932,19 @@ export default function HomePage() {
               {/* Left: Text */}
               <div className="flex-1 pr-12">
                   <h3 className="text-2xl font-normal text-[#1A2530] mb-6">
-                    {content.processSteps[0].contentTitle}
+                    {content.processSteps?.[0]?.contentTitle || 'Titre par défaut'}
                   </h3>
                 <p className="text-base text-[#757575] mb-8 max-w-xl">
-                    {content.processSteps[0].contentText}
+                    {content.processSteps?.[0]?.contentText || 'Texte par défaut'}
                       </p>
                 <button className="bg-[#B99066] text-white px-8 py-3 rounded shadow font-semibold text-base">
-                    {content.processSteps[0].button}
+                    {content.processSteps?.[0]?.button || 'Bouton par défaut'}
                 </button>
                     </div>
               {/* Right: Circular Image */}
               <div className="flex-shrink-0 flex items-center justify-center">
                 <div className="w-[320px] h-[320px] bg-[#E3F1F6] rounded-full flex items-center justify-center shadow">
-                    <img src={content.processSteps[0].image} alt="Step illustration" className="w-[220px] h-[220px] object-contain" />
+                    <img src={content.processSteps?.[0]?.image || '/images/placeholder.webp'} alt="Step illustration" className="w-[220px] h-[220px] object-contain" />
                   </div>
               </div>
             </div>
@@ -868,7 +964,7 @@ export default function HomePage() {
             </div>
             {/* Stats Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
-                {content.stats.map((stat, index) => (
+                {(content.stats || []).map((stat, index) => (
                   <div key={index}>
                     <div className="text-[40px] font-source-sans font-normal text-[#B99066] leading-[58px]">{stat.value}</div>
                     <div className="text-[11.7px] font-source-sans font-semibold text-[#000] leading-[18px] mt-2">{stat.label}</div>
@@ -995,7 +1091,7 @@ export default function HomePage() {
             {/* Right: Tax Solution Cards (unchanged) */}
             <div className="flex-1 flex flex-col justify-between">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                  {content.taxCards.map((card, index) => (
+                  {(content.taxCards || []).map((card, index) => (
                     <div key={index} className="bg-white rounded-2xl shadow-lg flex flex-col h-full">
                       <img src={card.image} alt={card.title} className="w-full h-[120px] object-cover rounded-t-2xl" />
                   <div className="p-6 flex flex-col flex-1">
@@ -1054,7 +1150,7 @@ export default function HomePage() {
           <div>
             <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Expertise</h3>
             <ul className="space-y-2 text-[#D1D5DB] text-base">
-                  {content.footerExpertise.map((item, index) => (
+                  {(content.footerExpertise || []).map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
             </ul>
@@ -1063,7 +1159,7 @@ export default function HomePage() {
           <div>
             <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Outils</h3>
             <ul className="space-y-2 text-[#D1D5DB] text-base">
-                  {content.footerOutils.map((item, index) => (
+                  {(content.footerOutils || []).map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
             </ul>
@@ -1072,18 +1168,18 @@ export default function HomePage() {
           <div>
             <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Contactez</h3>
             <ul className="space-y-2 text-[#D1D5DB] text-base">
-                  <li>{content.footerContact.address}</li>
-                  <li>{content.footerContact.city}</li>
-                  <li>{content.footerContact.country}</li>
-                  <li>Téléphone : {content.footerContact.phone}</li>
-                  <li>Courriel : <span className="underline">{content.footerContact.email}</span></li>
+                  <li>{content.footerContact?.address || 'Adresse par défaut'}</li>
+                  <li>{content.footerContact?.city || 'Ville par défaut'}</li>
+                  <li>{content.footerContact?.country || 'Pays par défaut'}</li>
+                  <li>Téléphone : {content.footerContact?.phone || 'Téléphone par défaut'}</li>
+                  <li>Courriel : <span className="underline">{content.footerContact?.email || 'email@exemple.com'}</span></li>
             </ul>
           </div>
           {/* Entreprise */}
           <div>
             <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Entreprise</h3>
             <ul className="space-y-2 text-[#D1D5DB] text-base">
-                  {content.footerEntreprise.map((item, index) => (
+                  {(content.footerEntreprise || []).map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
             </ul>
@@ -1093,7 +1189,7 @@ export default function HomePage() {
         <div className="relative max-w-[1368px] mx-auto px-4 flex flex-col md:flex-row justify-between items-center border-t border-[#1F2937] pt-6 text-[#D1D5DB] text-sm gap-2">
               <span>{content.footerCopyright}</span>
           <div className="flex gap-6">
-                {content.footerLinks.map((link, index) => (
+                {(content.footerLinks || []).map((link, index) => (
                   <a key={index} href="#" className="hover:underline text-[#0C2C5D]">{link}</a>
                 ))}
           </div>
@@ -1108,6 +1204,25 @@ export default function HomePage() {
   return (
     <div className="w-full bg-global-8">
       <Header />
+      
+      {/* Loading indicator */}
+      {isLoadingFromDatabase && (
+        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
+          Loading from Database...
+        </div>
+      )}
+      
+      {/* Real-time connection indicator */}
+      {!isLoadingFromDatabase && isConnectedToUpdates && (
+        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+          Auto-Refresh
+        </div>
+      )}
+      
+      
+      
       {sectionOrder.map(renderSection)}
       {/* Add real Figma hero photo below hero section, responsive only on mobile */}
       <div className="w-full flex justify-center items-center my-6 block lg:hidden">

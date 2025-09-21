@@ -1,592 +1,319 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function FiscalitePlacementsCMSPage() {
-  const [content, setContent] = useState({
-    hero: {
-      title: "Fiscalité des placements et investissements",
-      subtitle: "Maîtrisez la fiscalité de vos placements financiers. Découvrez les différents régimes fiscaux et optimisez vos investissements.",
-      ctaPrimary: "Calculer ma fiscalité",
-      ctaSecondary: "Télécharger le guide"
-    },
-    regimes: {
-      title: "Régimes fiscaux des placements",
-      regimes: [
-        {
-          name: "PFU (Prélèvement Forfaitaire Unique)",
-          rate: "30%",
-          description: "Régime par défaut pour les revenus du capital",
-          details: "12,8% d'impôt + 17,2% de prélèvements sociaux"
-        },
-        {
-          name: "Barème progressif",
-          rate: "Tranches IR",
-          description: "Option possible pour certains placements",
-          details: "Revenus ajoutés aux autres revenus imposables"
-        },
-        {
-          name: "Exonérations",
-          rate: "0%",
-          description: "Certains placements bénéficient d'exonérations",
-          details: "PEA, Livret A, LDDS, etc."
-        }
+export default function FiscalitePlacementsCMS() {
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingSection, setEditingSection] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [saving, setSaving] = useState(false);
+  const router = useRouter();
+
+  // Fiscalité placements sections configuration
+  const fiscalitePlacementsSections = [
+    {
+      id: 'hero',
+      name: 'Section Hero',
+      description: 'Titre principal et description',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' }
       ]
     },
-    placements: {
-      title: "Fiscalité par type de placement",
-      categories: [
-        {
-          name: "Actions et obligations",
-          regime: "PFU 30% ou barème progressif",
-          details: "Dividendes, intérêts, plus-values",
-          notes: "Plus-values exonérées après 5 ans pour actions"
-        },
-        {
-          name: "Assurance-vie",
-          regime: "Exonération partielle",
-          details: "Exonération après 8 ans",
-          notes: "Plafond de 4 600 € par an pour les versements"
-        },
-        {
-          name: "PEA",
-          regime: "Exonération totale",
-          details: "Aucune imposition sur les plus-values",
-          notes: "Plafond de 150 000 € pour le PEA classique"
-        },
-        {
-          name: "SCPI/OPCI",
-          regime: "PFU 30%",
-          details: "Revenus fonciers et plus-values",
-          notes: "Fiscalité immobilière applicable"
-        }
+    {
+      id: 'content',
+      name: 'Contenu Principal',
+      description: 'Sections de contenu détaillé',
+      fields: [
+        { key: 'sections', label: 'Sections (JSON)', type: 'textarea' }
       ]
     },
-    plusValues: {
-      title: "Fiscalité des plus-values",
-      description: "Les plus-values de cession de valeurs mobilières sont imposables selon des règles spécifiques.",
-      rules: [
-        "Plus-values immobilières : PFU 30%",
-        "Plus-values mobilières : PFU 30% après 5 ans",
-        "Exonération PEA : Aucune imposition",
-        "Exonération assurance-vie : Après 8 ans"
+    {
+      id: 'cta',
+      name: 'Call-to-Action',
+      description: 'Section d\'appel à l\'action',
+      fields: [
+        { key: 'title', label: 'Titre', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'buttonText', label: 'Texte du Bouton', type: 'text' }
       ]
-    },
-    dividends: {
-      title: "Fiscalité des dividendes",
-      description: "Les dividendes perçus sont soumis à la fiscalité selon le régime choisi.",
-      options: [
-        {
-          option: "PFU 30%",
-          avantage: "Taux fixe et simple",
-          inconvenient: "Pas de déduction des charges"
+    }
+  ];
+
+  useEffect(() => {
+    loadSections();
+  }, []);
+
+  const loadSections = async () => {
+    try {
+      const cmsResponse = await fetch('/api/cms/content/fiscalite-placements');
+      let cmsSections = [];
+      if (cmsResponse.ok) {
+        cmsSections = await cmsResponse.json();
+      }
+
+      const currentContent = {
+        hero: {
+          title: "Fiscalité des placements financiers",
+          description: "Comprendre la fiscalité de vos placements pour optimiser votre rendement net. Découvrez les règles fiscales applicables aux différents types d'investissements."
         },
-        {
-          option: "Barème progressif",
-          avantage: "Taux personnalisé selon revenus",
-          inconvenient: "Complexité administrative"
-        }
-      ]
-    },
-    optimization: {
-      title: "Stratégies d'optimisation fiscale",
-      strategies: [
-        {
-          title: "Utilisation du PEA",
-          description: "Plafond de 150 000 €, exonération totale après 5 ans",
-          avantage: "Aucune imposition sur les plus-values"
-        },
-        {
-          title: "Assurance-vie",
-          description: "Exonération après 8 ans, transmission avantageuse",
-          avantage: "Fiscalité favorable à long terme"
-        },
-        {
-          title: "Diversification des régimes",
-          description: "Combiner différents types de placements",
-          avantage: "Optimisation selon la situation personnelle"
+        content: {
+          sections: [
+            {
+              title: "Placements financiers et fiscalité",
+              content: "La fiscalité des placements financiers varie selon le type d'investissement et le support utilisé."
         }
       ]
     },
     cta: {
-      title: "Besoin d'aide pour optimiser votre fiscalité ?",
-      description: "Nos experts vous accompagnent dans l'optimisation fiscale de vos placements.",
-      buttonText: "Prendre rendez-vous"
+          title: "Optimisez la fiscalité de vos placements",
+          description: "Nos experts vous accompagnent pour choisir les placements les plus avantageux fiscalement.",
+          buttonText: "Demander un conseil"
+        }
+      };
+
+      const mergedSections = fiscalitePlacementsSections.map(section => {
+        const cmsSection = cmsSections.find(s => s.section_name === section.id);
+        const currentSectionContent = currentContent[section.id] || {};
+        
+        return {
+          ...section,
+          cmsData: cmsSection?.content_data ? JSON.parse(cmsSection.content_data) : {},
+          currentData: currentSectionContent,
+          hasCmsContent: !!cmsSection,
+          hasCurrentContent: Object.keys(currentSectionContent).length > 0
+        };
+      });
+
+      setSections(mergedSections);
+    } catch (error) {
+      console.error('Error loading fiscalite-placements sections:', error);
+    } finally {
+      setLoading(false);
     }
-  });
-
-  const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    const savedContent = localStorage.getItem('fiscalite-placements-cms-content');
-    if (savedContent) {
-      setContent(JSON.parse(savedContent));
-    }
-  }, []);
-
-  const saveContent = (newContent) => {
-    setContent(newContent);
-    localStorage.setItem('fiscalite-placements-cms-content', JSON.stringify(newContent));
-    window.dispatchEvent(new CustomEvent('contentUpdated', { detail: { page: 'fiscalite-placements', content: newContent } }));
   };
 
-  const renderEditableField = (section, field, label, type = "text") => {
-    if (isEditing) {
-      if (type === "textarea") {
-        return (
-          <textarea
-            value={content[section][field]}
-            onChange={(e) => {
-              const newContent = { ...content };
-              newContent[section][field] = e.target.value;
-              saveContent(newContent);
-            }}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            rows={3}
-          />
-        );
+  const handleEdit = (section) => {
+    setEditingSection(section.id);
+    const dataToEdit = section.hasCurrentContent ? section.currentData : section.cmsData;
+    setFormData(dataToEdit);
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const response = await fetch('/api/cms/content/fiscalite-placements', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          section: editingSection,
+          data: formData
+        }),
+      });
+
+      if (response.ok) {
+        await loadSections();
+        setEditingSection(null);
+        setFormData({});
+        
+        window.dispatchEvent(new CustomEvent('contentUpdated'));
+        
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('cms_content_updated', Date.now().toString());
+        }
+        
+        alert('Contenu fiscalité placements sauvegardé avec succès!');
+      } else {
+        const responseData = await response.json();
+        alert('Erreur lors de la sauvegarde: ' + (responseData.message || 'Unknown error'));
       }
-      return (
-        <input
-          type={type}
-          value={content[section][field]}
-          onChange={(e) => {
-            const newContent = { ...content };
-            newContent[section][field] = e.target.value;
-            saveContent(newContent);
-          }}
-          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-        />
-      );
+    } catch (error) {
+      console.error('Error saving fiscalite-placements content:', error);
+      alert('Erreur lors de la sauvegarde: ' + error.message);
+    } finally {
+      setSaving(false);
     }
-    return <span>{content[section][field]}</span>;
   };
 
-  const renderEditableList = (section, field, label) => {
-    if (isEditing) {
-      return (
-        <div className="space-y-2">
-          {content[section][field].map((item, index) => (
-            <input
-              key={index}
-              value={item}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          ))}
-        </div>
-      );
-    }
-    return (
-      <div className="space-y-2">
-        {content[section][field].map((item, index) => (
-          <p key={index} className="text-[#686868]">• {item}</p>
-        ))}
-      </div>
-    );
+  const handleCancel = () => {
+    setEditingSection(null);
+    setFormData({});
   };
 
-  const renderEditableCard = (section, field, index, titleField, descriptionField) => {
-    if (isEditing) {
+  const handleInputChange = (key, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
+  if (loading) {
       return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input
-              value={content[section][field][index][titleField]}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index][titleField] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea
-              value={content[section][field][index][descriptionField]}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index][descriptionField] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              rows={3}
-            />
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement du CMS Fiscalité Placements...</p>
           </div>
         </div>
       );
     }
-    return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-[#112033] text-lg font-semibold mb-3">{content[section][field][index][titleField]}</h3>
-        <p className="text-[#686868]">{content[section][field][index][descriptionField]}</p>
-      </div>
-    );
-  };
-
-  const renderEditableRegime = (section, field, index, nameField, rateField, descriptionField, detailsField) => {
-    if (isEditing) {
-      return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Nom du régime</label>
-              <input
-                value={content[section][field][index][nameField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][nameField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Taux</label>
-              <input
-                value={content[section][field][index][rateField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][rateField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              <textarea
-                value={content[section][field][index][descriptionField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][descriptionField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                rows={2}
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-[#686868] mb-2">Détails</label>
-              <input
-                value={content[section][field][index][detailsField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][detailsField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-[#112033] text-lg font-semibold">{content[section][field][index][nameField]}</h3>
-          <span className="text-2xl font-bold text-[#4EBBBD]">{content[section][field][index][rateField]}</span>
-        </div>
-        <p className="text-[#686868] mb-2">{content[section][field][index][descriptionField]}</p>
-        <p className="text-sm text-[#112033] font-medium">{content[section][field][index][detailsField]}</p>
-      </div>
-    );
-  };
-
-  const renderEditablePlacement = (section, field, index, nameField, regimeField, detailsField, notesField) => {
-    if (isEditing) {
-      return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Nom du placement</label>
-              <input
-                value={content[section][field][index][nameField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][nameField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Régime fiscal</label>
-              <input
-                value={content[section][field][index][regimeField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][regimeField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Détails</label>
-              <input
-                value={content[section][field][index][detailsField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][detailsField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Notes</label>
-              <input
-                value={content[section][field][index][notesField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][notesField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-[#112033] text-lg font-semibold mb-3">{content[section][field][index][nameField]}</h3>
-        <p className="text-[#4EBBBD] font-medium mb-2">{content[section][field][index][regimeField]}</p>
-        <p className="text-[#686868] mb-2">{content[section][field][index][detailsField]}</p>
-        <p className="text-sm text-[#112033]">{content[section][field][index][notesField]}</p>
-      </div>
-    );
-  };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-[#112033]">CMS - Fiscalité des placements</h1>
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/cms/dashboard')}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ← Retour au Dashboard
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900">CMS Fiscalité Placements</h1>
+            </div>
+            <div className="flex space-x-2">
+              <button
+                onClick={loadSections}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm"
+              >
+                Recharger CMS
+              </button>
             <button
-              onClick={() => setIsEditing(!isEditing)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                isEditing
-                  ? "bg-[#4EBBBD] text-white hover:bg-[#3DA8AA]"
-                  : "bg-[#B99066] text-white hover:bg-[#A67A5A]"
-              }`}
-            >
-              {isEditing ? "Sauvegarder" : "Modifier"}
+                onClick={() => window.open('http://localhost:4028/fiscalite/fiscalite-placements', '_blank')}
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm"
+              >
+                Voir la Page
             </button>
           </div>
-          <p className="text-[#686868]">
-            Gérez le contenu de la page Fiscalité des placements. Modifiez les informations sur la fiscalité des investissements selon vos besoins.
-          </p>
-        </div>
-
-        {/* Hero Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📈</span>
-            Section Hero
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-              {renderEditableField("hero", "title", "Titre principal")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
-              {renderEditableField("hero", "subtitle", "Sous-titre", "textarea")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton CTA principal</label>
-              {renderEditableField("hero", "ctaPrimary", "Bouton CTA principal")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton CTA secondaire</label>
-              {renderEditableField("hero", "ctaSecondary", "Bouton CTA secondaire")}
             </div>
           </div>
         </div>
 
-        {/* Regimes Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">🏦</span>
-            Régimes fiscaux
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("regimes", "title", "Titre de section")}
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid gap-8">
+          {sections.map((section) => (
+            <div key={section.id} className="bg-white rounded-lg shadow-sm border p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">{section.name}</h3>
+                  <p className="text-sm text-gray-600">{section.description}</p>
           </div>
-          <div className="space-y-4">
-            {content.regimes.regimes.map((regime, index) => (
-              <div key={index}>
-                <h3 className="text-sm font-medium text-[#686868] mb-2">Régime {index + 1}</h3>
-                {renderEditableRegime("regimes", "regimes", index, "name", "rate", "description", "details")}
+                <div className="flex space-x-2">
+                  {!editingSection && (
+                    <button
+                      onClick={() => handleEdit(section)}
+                      className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
+                    >
+                      Modifier
+                    </button>
+                  )}
+          </div>
+        </div>
+
+              {editingSection === section.id ? (
+                <div className="space-y-4">
+                  <div className="grid gap-4">
+                    {section.fields.map((field) => (
+                      <div key={field.key}>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          {field.label}
+                        </label>
+                        {field.type === 'textarea' ? (
+                          <textarea
+                            value={formData[field.key] || ''}
+                            onChange={(e) => handleInputChange(field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            rows={field.key.includes('JSON') ? 6 : 3}
+                            placeholder={`Entrez ${field.label.toLowerCase()}...`}
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            value={formData[field.key] || ''}
+                            onChange={(e) => handleInputChange(field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder={`Entrez ${field.label.toLowerCase()}...`}
+                          />
+                        )}
               </div>
             ))}
-          </div>
         </div>
 
-        {/* Placements Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">💼</span>
-            Fiscalité par type de placement
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("placements", "title", "Titre de section")}
+                  <div className="flex justify-end space-x-2">
+                    <button
+                      onClick={handleCancel}
+                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 text-sm"
+                    >
+                      Annuler
+                    </button>
+                    <button
+                      onClick={handleSave}
+                      disabled={saving}
+                      className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 text-sm"
+                    >
+                      {saving ? 'Sauvegarde...' : 'Sauvegarder'}
+                    </button>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {content.placements.categories.map((placement, index) => (
-              <div key={index}>
-                <h3 className="text-sm font-medium text-[#686868] mb-2">Placement {index + 1}</h3>
-                {renderEditablePlacement("placements", "categories", index, "name", "regime", "details", "notes")}
-              </div>
-            ))}
-          </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex gap-2 text-xs">
+                    {section.hasCurrentContent && (
+                      <span className="px-2 py-1 bg-green-100 text-green-800 rounded">
+                        Contenu actuel affiché
+                      </span>
+                    )}
+                    {section.hasCmsContent && (
+                      <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                        Sauvegardé dans CMS
+                      </span>
+                    )}
+                    {!section.hasCurrentContent && !section.hasCmsContent && (
+                      <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded">
+                        Aucun contenu
+                      </span>
+                    )}
         </div>
 
-        {/* Plus Values Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📊</span>
-            Plus-values
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("plusValues", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("plusValues", "description", "Description", "textarea")}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Règles</label>
-            {renderEditableList("plusValues", "rules", "Règles")}
-          </div>
-        </div>
-
-        {/* Dividends Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">💵</span>
-            Dividendes
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("dividends", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("dividends", "description", "Description", "textarea")}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Options</label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {content.dividends.options.map((option, index) => (
-                <div key={index}>
-                  <h3 className="text-sm font-medium text-[#686868] mb-2">Option {index + 1}</h3>
-                  {renderEditableCard("dividends", "options", index, "option", "avantage")}
-                  <div className="mt-2">
-                    <label className="block text-xs text-[#686868] mb-1">Inconvénient</label>
-                    <input
-                      value={content.dividends.options[index].inconvenient}
-                      onChange={(e) => {
-                        const newContent = { ...content };
-                        newContent.dividends.options[index].inconvenient = e.target.value;
-                        saveContent(newContent);
-                      }}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
+                  {section.hasCurrentContent ? (
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-900 mb-3">Contenu actuellement affiché :</h4>
+                      <div className="space-y-2">
+                        {Object.entries(section.currentData).map(([key, value]) => (
+                          <div key={key} className="text-sm">
+                            <span className="font-medium text-gray-700">{key}:</span>
+                            <div className="text-gray-600 mt-1">
+                              {typeof value === 'object' ? (
+                                <pre className="whitespace-pre-wrap text-xs bg-white p-2 rounded border">
+                                  {JSON.stringify(value, null, 2)}
+                                </pre>
+                              ) : (
+                                <span>{String(value).substring(0, 200)}
+                                {String(value).length > 200 && '...'}</span>
+                              )}
                   </div>
                 </div>
               ))}
             </div>
           </div>
+                  ) : (
+                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                      <p className="text-yellow-800 text-sm">
+                        ⚠️ Cette section utilise le contenu par défaut. Cliquez sur "Modifier" pour personnaliser le contenu.
+                      </p>
         </div>
-
-        {/* Optimization Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">🎯</span>
-            Stratégies d'optimisation
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("optimization", "title", "Titre de section")}
+                  )}
           </div>
-          <div className="space-y-4">
-            {content.optimization.strategies.map((strategy, index) => (
-              <div key={index}>
-                <h3 className="text-sm font-medium text-[#686868] mb-2">Stratégie {index + 1}</h3>
-                {renderEditableCard("optimization", "strategies", index, "title", "description")}
-                <div className="mt-2">
-                  <label className="block text-xs text-[#686868] mb-1">Avantage</label>
-                  <input
-                    value={content.optimization.strategies[index].avantage}
-                    onChange={(e) => {
-                      const newContent = { ...content };
-                      newContent.optimization.strategies[index].avantage = e.target.value;
-                      saveContent(newContent);
-                    }}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  />
-                </div>
+              )}
               </div>
             ))}
           </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">🚀</span>
-            Section Appel à l'action
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("cta", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("cta", "description", "Description", "textarea")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Texte du bouton</label>
-              {renderEditableField("cta", "buttonText", "Texte du bouton")}
-            </div>
-          </div>
-        </div>
-
-        {/* Preview Section */}
-        {isEditing && (
-          <div className="bg-[#F0F9FF] rounded-lg p-6 border border-[#4EBBBD]">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Aperçu des modifications</h3>
-            <div className="text-sm text-[#686868] space-y-2">
-              <p><strong>Hero :</strong> {content.hero.title}</p>
-              <p><strong>Régimes :</strong> {content.regimes.title}</p>
-              <p><strong>Placements :</strong> {content.placements.title}</p>
-              <p><strong>Plus-values :</strong> {content.plusValues.title}</p>
-              <p><strong>Dividendes :</strong> {content.dividends.title}</p>
-              <p><strong>Optimisation :</strong> {content.optimization.title}</p>
-              <p><strong>CTA :</strong> {content.cta.title}</p>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

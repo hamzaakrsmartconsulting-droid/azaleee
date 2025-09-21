@@ -1,449 +1,324 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
+export default function CmsTranchesBaremesPlafondsPage() {
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingSection, setEditingSection] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState('');
+  const router = useRouter();
 
-
-const defaultContent = {
-  hero: {
-    title: "Tranches, barèmes et plafonds",
-    subtitle: "Comprenez le fonctionnement du barème progressif de l'impôt sur le revenu. Découvrez les seuils, taux et calculs pour optimiser votre fiscalité.",
-    image: ""
-  },
-  bareme2024: [
-    { seuil: 0, taux: 0, montant: 0, description: "Jusqu'à" },
-    { seuil: 11294, taux: 11, montant: 0, description: "De" },
-    { seuil: 28797, taux: 30, montant: 1930, description: "De" },
-    { seuil: 82341, taux: 41, montant: 16072, description: "De" },
-    { seuil: 177106, taux: 45, montant: 38845, description: "Au-delà de" }
-  ],
-  plafonds: [
+  // Tranches & Barèmes sections configuration
+  const tranchesBaremesSections = [
     {
-      nom: "Plafond du quotient familial",
-      montant: 1592,
-      description: "Limite de réduction d'impôt pour les enfants à charge et autres personnes à charge."
+      id: 'hero',
+      name: 'Section Hero',
+      description: 'Titre principal, sous-titre et description',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'button', label: 'Texte du Bouton', type: 'text' },
+        { key: 'image', label: 'Image', type: 'text' }
+      ]
     },
     {
-      nom: "Plafond Pinel",
-      montant: 300000,
-      description: "Montant maximum d'investissement pour bénéficier de la réduction d'impôt Pinel."
+      id: 'tranches',
+      name: 'Tranches d\'Imposition',
+      description: 'Tranches d\'imposition 2025',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'tableau', label: 'Tableau Tranches (JSON)', type: 'textarea' }
+      ]
     },
     {
-      nom: "Plafond CSE",
-      montant: 3000,
-      description: "Plafond annuel pour les avantages en nature et chèques cadeaux du CSE."
+      id: 'plafonds',
+      name: 'Plafonds Fiscaux',
+      description: 'Plafonds fiscaux 2025',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'items', label: 'Plafonds (JSON)', type: 'textarea' }
+      ]
+    },
+    {
+      id: 'calculatrice',
+      name: 'Calculateur d\'Impôts',
+      description: 'Estimez le montant de vos impôts',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'fields', label: 'Champs (JSON)', type: 'textarea' }
+      ]
+    },
+    {
+      id: 'cta',
+      name: 'Section CTA',
+      description: 'Call-to-action final',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'buttonText', label: 'Texte du Bouton', type: 'text' }
+      ]
     }
-  ],
-  notes: "**Notes importantes :**\n\n- Les seuils sont revalorisés chaque année selon l'inflation\n- Le quotient familial permet de réduire l'impôt pour les familles\n- Certains plafonds peuvent être modifiés par la loi de finances\n\n> **Conseil :** Consultez un expert pour optimiser votre situation fiscale.",
-  evolutions: "**Évolutions prévues :**\n\n- Revalorisation des seuils en 2025\n- Possible modification du plafond du quotient familial\n- Nouvelles mesures pour les familles monoparentales\n\n### Mesures annoncées :\n\n1. **Revalorisation automatique** des seuils selon l'inflation\n2. **Simplification** du calcul de l'impôt\n3. **Nouvelles déductions** pour la transition écologique",
-  cta: {
-    title: "Besoin d'optimiser votre fiscalité ?",
-    description: "Nos experts vous accompagnent pour identifier les meilleures stratégies d'optimisation fiscale adaptées à votre situation.",
-    primaryButton: "📊 Simulation personnalisée",
-    secondaryButton: "🎯 Consultation gratuite"
-  }
-};
+  ];
 
-export default function TranchesBaremesPlafondsCMS() {
-  const [content, setContent] = useState(defaultContent);
-  const [showToast, setShowToast] = useState(false);
-
-    useEffect(() => {
-    // Charger le contenu depuis la base de données
-    const loadContentFromDatabase = async () => {
-      try {
-        const response = await fetch('/api/pages/content?path=/fiscalite/tranches-baremes-plafonds&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            const parsed = result.content.content;
-            setContent({ ...defaultContent, ...parsed });
-            return;
-          }
+  // Load content from official page
+  const loadContent = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/pages/tranches-baremes-plafonds');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.content && Object.keys(data.content).length > 0) {
+          setFormData(data.content);
+        } else {
+          // Load default content structure
+          const defaultContent = {
+            hero: {
+              title: "Tranches, Barèmes et Plafonds",
+              subtitle: "Comprendre la fiscalité française",
+              description: "Les tranches d'imposition, barèmes et plafonds sont les éléments fondamentaux du système fiscal français. Ils déterminent le montant de vos impôts et influencent vos stratégies d'investissement.",
+              button: "Calculer mes impôts",
+              image: "/images/fiscalite-tranches-hero.jpg"
+            },
+            tranches: {
+              title: "Tranches d'imposition 2025",
+              description: "Les tranches d'imposition déterminent le taux appliqué à chaque partie de vos revenus",
+              tableau: JSON.stringify({
+                headers: ["Revenu imposable", "Taux d'imposition"],
+                rows: [
+                  { revenu: "Jusqu'à 11 294 €", taux: "0 %" },
+                  { revenu: "De 11 295 à 28 797 €", taux: "11 %" },
+                  { revenu: "De 28 798 à 82 341 €", taux: "30 %" },
+                  { revenu: "De 82 342 à 177 106 €", taux: "41 %" },
+                  { revenu: "Au-delà de 177 106 €", taux: "45 %" }
+                ]
+              })
+            },
+            plafonds: {
+              title: "Plafonds fiscaux 2025",
+              description: "Les plafonds limitent les avantages fiscaux de certains dispositifs",
+              items: JSON.stringify([
+                {
+                  name: "Loi Pinel",
+                  plafond: "300 000€",
+                  description: "Plafond annuel d'investissement"
+                },
+                {
+                  name: "PER",
+                  plafond: "10% du revenu",
+                  description: "Plafond de versement annuel"
+                },
+                {
+                  name: "Déficit foncier",
+                  plafond: "10 700€",
+                  description: "Plafond annuel déductible"
+                }
+              ])
+            },
+            calculatrice: {
+              title: "Calculateur d'impôts",
+              description: "Estimez le montant de vos impôts selon votre situation",
+              fields: JSON.stringify([
+                { id: "revenus", label: "Revenus annuels", placeholder: "50000" },
+                { id: "parts", label: "Nombre de parts", placeholder: "1" }
+              ])
+            },
+            cta: {
+              title: "Besoin d'aide pour optimiser votre fiscalité ?",
+              description: "Nos experts vous accompagnent pour comprendre et optimiser votre situation fiscale.",
+              buttonText: "Demander une consultation gratuite"
+            }
+          };
+          setFormData(defaultContent);
         }
-        
-        // Si pas de contenu en base, utiliser le contenu par défaut
-        console.log('Aucun contenu trouvé en base de données, utilisation du contenu par défaut');
-      } catch (error) {
-        console.error('Erreur lors du chargement depuis la base de données:', error);
-        // En cas d'erreur, utiliser le contenu par défaut
       }
-    };
+    } catch (error) {
+      console.error('Error loading content:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    loadContentFromDatabase();
+  useEffect(() => {
+    loadContent();
   }, []);
 
-  const handleChange = (section, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
-    }));
-  };
-
-  const handleArrayChange = (section, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: prev[section][field].map((item, i) => i === index ? value : item)
-      }
-    }));
-  };
-
-  const handleNestedChange = (section, subsection, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: value
-        }
-      }
-    }));
-  };
-
-  const handleNestedArrayChange = (section, subsection, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: prev[section][subsection][field].map((item, i) => i === index ? value : item)
-        }
-      }
-    }));
-  };
-
-    const handleSave = async () => {
+  const handleSave = async () => {
     try {
-      const response = await fetch('/api/pages/content', {
+      setSaving(true);
+      const response = await fetch('/api/cms/content/tranches-baremes-plafonds', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pagePath: '/fiscalite/tranches-baremes-plafonds',
-          pageType: 'cms',
-          content: content,
-          metadata: {
-            lastModified: new Date().toISOString(),
-            modifiedBy: 'admin',
-            pageType: 'cms'
-          }
-        })
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        console.log('Sauvegardé en base de données');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
+        setMessage('Contenu sauvegardé avec succès !');
+        setTimeout(() => setMessage(''), 3000);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
+        setMessage('Erreur lors de la sauvegarde');
+        setTimeout(() => setMessage(''), 3000);
       }
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde: ' + error.message);
+      console.error('Error saving content:', error);
+      setMessage('Erreur lors de la sauvegarde');
+      setTimeout(() => setMessage(''), 3000);
+    } finally {
+      setSaving(false);
     }
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('contentUpdated'));
   };
 
+  const updateContent = (sectionId, fieldKey, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [sectionId]: {
+        ...prev[sectionId],
+        [fieldKey]: value
+      }
+    }));
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#4EBBBD] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Chargement du contenu...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold text-[#112033]">Page Tranches, Barèmes et Plafonds</h1>
-            <p className="text-[#686868]">Modifiez le contenu de la page Tranches, Barèmes et Plafonds</p>
-          </div>
-          <button 
-            onClick={handleSave} 
-            className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors flex items-center gap-2"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Sauvegarder
-          </button>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Hero
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-            <input 
-              value={content.hero.title} 
-              onChange={(e) => handleChange('hero', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
-            <textarea 
-              value={content.hero.subtitle} 
-              onChange={(e) => handleChange('hero', 'subtitle', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Image de fond (URL)</label>
-            <input 
-              value={content.hero.image} 
-              onChange={(e) => handleChange('hero', 'image', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              placeholder="https://example.com/image.jpg"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Barème 2024 Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Barème 2024
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Tranches du barème</label>
-            {content.bareme2024.map((tranche, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Seuil (€)</label>
-                    <input 
-                      type="number"
-                      value={tranche.seuil} 
-                      onChange={(e) => handleNestedArrayChange('bareme2024', 'bareme2024', index, { ...tranche, seuil: parseInt(e.target.value) || 0 })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Taux (%)</label>
-                    <input 
-                      type="number"
-                      value={tranche.taux} 
-                      onChange={(e) => handleNestedArrayChange('bareme2024', 'bareme2024', index, { ...tranche, taux: parseInt(e.target.value) || 0 })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Montant dû (€)</label>
-                    <input 
-                      type="number"
-                      value={tranche.montant} 
-                      onChange={(e) => handleNestedArrayChange('bareme2024', 'bareme2024', index, { ...tranche, montant: parseInt(e.target.value) || 0 })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <input 
-                      value={tranche.description} 
-                      onChange={(e) => handleNestedArrayChange('bareme2024', 'bareme2024', index, { ...tranche, description: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newBareme = content.bareme2024.filter((_, i) => i !== index);
-                    handleChange('bareme2024', 'bareme2024', newBareme);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cette tranche
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newBareme = [...content.bareme2024, { seuil: 0, taux: 0, montant: 0, description: "" }];
-                handleChange('bareme2024', 'bareme2024', newBareme);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une tranche
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Plafonds Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Plafonds
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Plafonds et limites</label>
-            {content.plafonds.map((plafond, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Nom du plafond</label>
-                    <input 
-                      value={plafond.nom} 
-                      onChange={(e) => handleNestedArrayChange('plafonds', 'plafonds', index, { ...plafond, nom: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Montant (€)</label>
-                    <input 
-                      type="number"
-                      value={plafond.montant} 
-                      onChange={(e) => handleNestedArrayChange('plafonds', 'plafonds', index, { ...plafond, montant: parseInt(e.target.value) || 0 })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <textarea 
-                      value={plafond.description} 
-                      onChange={(e) => handleNestedArrayChange('plafonds', 'plafonds', index, { ...plafond, description: e.target.value })} 
-                      rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newPlafonds = content.plafonds.filter((_, i) => i !== index);
-                    handleChange('plafonds', 'plafonds', newPlafonds);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer ce plafond
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newPlafonds = [...content.plafonds, { nom: "", montant: 0, description: "" }];
-                handleChange('plafonds', 'plafonds', newPlafonds);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un plafond
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Notes Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Notes Importantes
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Notes importantes (Markdown supporté)</label>
-            <textarea 
-              value={content.notes} 
-              onChange={(e) => handleChange('notes', 'notes', e.target.value)} 
-              rows={8} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent font-mono text-sm"
-              placeholder="**Gras** *italique* [lien](url) &gt; citation - liste"
-            />
-            <p className="text-xs text-[#686868] mt-1">
-              Support Markdown : **gras**, *italique*, [lien](url), &gt; citation, - liste, `code`
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Evolutions Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Évolutions Prévues
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Évolutions prévues (Markdown supporté)</label>
-            <textarea 
-              value={content.evolutions} 
-              onChange={(e) => handleChange('evolutions', 'evolutions', e.target.value)} 
-              rows={8} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent font-mono text-sm"
-              placeholder="**Gras** *italique* [lien](url) &gt; citation - liste"
-            />
-            <p className="text-xs text-[#686868] mt-1">
-              Support Markdown : **gras**, *italique*, [lien](url), &gt; citation, - liste, `code`
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section CTA
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.cta.title} 
-              onChange={(e) => handleChange('cta', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea 
-              value={content.cta.description} 
-              onChange={(e) => handleChange('cta', 'description', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.cta.primaryButton} 
-                onChange={(e) => handleChange('cta', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/cms/dashboard')}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ← Retour au tableau de bord
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900">CMS - Tranches & Barèmes</h1>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.cta.secondaryButton} 
-                onChange={(e) => handleChange('cta', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => window.open('/fiscalite/tranches-baremes-plafonds', '_blank')}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                Voir la page officielle
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="px-4 py-2 text-sm font-medium text-white bg-[#4EBBBD] border border-transparent rounded-md hover:bg-[#3DA8AA] disabled:opacity-50"
+              >
+                {saving ? 'Sauvegarde...' : 'Sauvegarder'}
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 bg-[#4EBBBD] text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          <span className="font-medium">Contenu sauvegardé avec succès !</span>
+      {/* Message */}
+      {message && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mx-4 mt-4 rounded">
+          {message}
         </div>
       )}
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Sections List */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h2 className="text-lg font-medium text-gray-900">Sections</h2>
+              </div>
+              <div className="p-6">
+                <div className="space-y-2">
+                  {tranchesBaremesSections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => setEditingSection(section.id)}
+                      className={`w-full text-left px-4 py-3 rounded-lg border transition-colors ${
+                        editingSection === section.id
+                          ? 'border-[#4EBBBD] bg-[#4EBBBD]/10 text-[#4EBBBD]'
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="font-medium">{section.name}</div>
+                      <div className="text-sm text-gray-500">{section.description}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Edit Form */}
+          <div className="lg:col-span-2">
+            {editingSection ? (
+              <div className="bg-white rounded-lg shadow">
+                <div className="px-6 py-4 border-b border-gray-200">
+                  <h2 className="text-lg font-medium text-gray-900">
+                    {tranchesBaremesSections.find(s => s.id === editingSection)?.name}
+                  </h2>
+                </div>
+                <div className="p-6">
+                  <div className="space-y-6">
+                    {tranchesBaremesSections.find(s => s.id === editingSection)?.fields.map((field) => (
+                      <div key={field.key}>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {field.label}
+                        </label>
+                        {field.type === 'textarea' ? (
+                          <textarea
+                            value={formData[editingSection]?.[field.key] || ''}
+                            onChange={(e) => updateContent(editingSection, field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                            rows={4}
+                          />
+                        ) : (
+                          <input
+                            type={field.type}
+                            value={formData[editingSection]?.[field.key] || ''}
+                            onChange={(e) => updateContent(editingSection, field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-white rounded-lg shadow p-8 text-center">
+                <div className="text-gray-500">
+                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <h3 className="mt-2 text-sm font-medium text-gray-900">Aucune section sélectionnée</h3>
+                  <p className="mt-1 text-sm text-gray-500">Sélectionnez une section à gauche pour commencer l'édition.</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

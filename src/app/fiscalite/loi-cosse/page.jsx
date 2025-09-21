@@ -1,548 +1,256 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import Header from '../../../components/common/Header';
+import React, { useState, useEffect } from "react";
+import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 
 export default function LoiCossePage() {
-  const [cmsContent, setCmsContent] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [content, setContent] = useState({});
+  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(false);
+  const [contentSource, setContentSource] = useState('Default');
+  const [pollingInterval, setPollingInterval] = useState(null);
 
-  // Load CMS content from database
-  useEffect(() => {
-    const loadCmsContent = async () => {
-      try {
-        const response = await fetch(`/api/pages/content?path=/fiscalite/loi-cosse&type=cms`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success && data.content) {
-            setCmsContent(JSON.parse(data.content.content));
-          }
-        }
-      } catch (error) {
-        console.log('No CMS content found, using defaults');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadCmsContent();
-  }, []);
-
-  // Default content if CMS content is not available
-  const content = cmsContent || {
+  // Default content structure
+  const defaultContent = {
     hero: {
-      title: "Dispositif Cosse",
-      subtitle: "Inciter à louer à loyers modérés via un conventionnement avec l'ANAH",
-      description: "Le dispositif Cosse offre une déduction spécifique sur les revenus fonciers (jusqu'à 85%). Un outil utile pour lisser l'imposition foncière d'un parc existant, nécessitant un calcul précis et une convention avec l'ANAH."
+      title: "Loi Cosse",
+      subtitle: "Dispositif de défiscalisation pour l'investissement immobilier locatif dans les zones tendues",
+      button: "En savoir plus",
+      image: "/images/loi-cosse-hero.jpg"
     },
-    overview: {
-      title: "Présentation du dispositif Cosse",
-      description: "Le dispositif Cosse est un dispositif fiscal qui permet de réduire l'imposition sur les revenus fonciers en louant à loyers modérés via un conventionnement avec l'ANAH. Il vise à inciter les propriétaires à proposer des logements abordables.",
-      keyPoints: [
-        "Déduction spécifique jusqu'à 85%",
-        "Sur les revenus fonciers",
-        "Convention avec l'ANAH obligatoire",
-        "Secteur intermédiaire, social ou très social"
-      ]
-    },
-    benefits: {
-      title: "Avantages fiscaux",
-      benefits: [
-        {
-          title: "Déduction spécifique",
-          description: "Déduction spécifique sur les revenus fonciers jusqu'à 85%",
-          amount: "Jusqu'à 85%",
-          icon: "💰"
-        },
-        {
-          title: "Convention ANAH",
-          description: "Convention signée avec l'ANAH pour secteur social",
-          amount: "Obligatoire",
-          icon: "📋"
-        },
-        {
-          title: "Loyers modérés",
-          description: "Location à loyers plafonnés selon secteur",
-          amount: "Encadré",
-          icon: "🏠"
-        },
-        {
-          title: "Lissage fiscal",
-          description: "Utile pour lisser l'imposition foncière d'un parc existant",
-          amount: "Optimisation",
-          icon: "📈"
-        }
+    definition: {
+      title: "Qu'est-ce que la Loi Cosse ?",
+      description: "La Loi Cosse est un dispositif de défiscalisation qui permet de réduire son impôt sur le revenu en investissant dans l'immobilier locatif dans les zones tendues.",
+      details: [
+        "Réduction d'impôt de 12% du montant investi",
+        "Plafond de 300 000€ par an",
+        "Engagement de location de 9 ans minimum",
+        "Bien situé dans une zone tendue"
       ]
     },
     conditions: {
       title: "Conditions d'éligibilité",
-      conditions: [
-        {
-          category: "Convention",
-          items: [
-            "Convention signée avec l'ANAH",
-            "Secteur intermédiaire, social ou très social",
-            "Respect des conditions d'engagement",
-            "Maintien de la convention pendant la durée"
-          ]
-        },
-        {
-          category: "Location",
-          items: [
-            "Location nue obligatoire",
-            "Respect des plafonds de loyers",
-            "Respect des plafonds de ressources des locataires",
-            "Engagement de 6 ou 9 ans"
-          ]
-        },
-        {
-          category: "Calcul",
-          items: [
-            "Calcul précis nécessaire",
-            "Déduction spécifique sur revenus fonciers",
-            "Abattement jusqu'à 85%",
-            "Optimisation fiscale patrimoniale"
-          ]
-        }
+      description: "Pour bénéficier de la Loi Cosse, plusieurs conditions doivent être respectées :",
+      points: [
+        "Investissement dans un bien neuf ou en VEFA",
+        "Location à usage d'habitation principale",
+        "Engagement de location de 9 ans minimum",
+        "Bien situé dans une zone tendue"
       ]
     },
-    works: {
-      title: "Secteurs ANAH éligibles",
-      works: [
-        {
-          name: "Secteur intermédiaire",
-          description: "Logements à loyer intermédiaire",
-          avantages: "Déduction modérée",
-          icon: "🏠"
-        },
-        {
-          name: "Secteur social",
-          description: "Logements sociaux classiques",
-          avantages: "Déduction importante",
-          icon: "🏘️"
-        },
-        {
-          name: "Secteur très social",
-          description: "Logements très sociaux",
-          avantages: "Déduction maximale",
-          icon: "🏚️"
-        },
-        {
-          name: "Convention ANAH",
-          description: "Conventionnement obligatoire",
-          avantages: "Cadre légal sécurisé",
-          icon: "📋"
-        }
+    avantages: {
+      title: "Avantages du dispositif",
+      description: "Les principaux avantages de la Loi Cosse :",
+      points: [
+        "Réduction d'impôt immédiate",
+        "Plafond élevé (300 000€)",
+        "Pas de condition de ressources",
+        "Compatible avec d'autres dispositifs"
       ]
     },
-    calculation: {
-      title: "Calcul de la déduction fiscale",
-      examples: [
-        {
-          travaux: "Revenus fonciers 12 000 €",
-          reduction: "Abattement 70%",
-          net: "Base fiscale 3 600 €",
-          description: "Cas pratique Azalée"
-        },
-        {
-          travaux: "Revenus fonciers 8 000 €",
-          reduction: "Abattement 70%",
-          net: "Base fiscale 2 400 €",
-          description: "Exemple modéré"
-        },
-        {
-          travaux: "Revenus fonciers 15 000 €",
-          reduction: "Abattement 70%",
-          net: "Base fiscale 4 500 €",
-          description: "Exemple élevé"
-        }
-      ],
-      cas_pratique: {
-        titre: "Cas pratique Azalée Patrimoine",
-        description: "Revenus fonciers 12 000€/an avec abattement de 70% = base fiscale 3 600€",
-        details: [
-          "Revenus fonciers bruts : 12 000€/an",
-          "Abattement Cosse : 70%",
-          "Base fiscale : 3 600€",
-          "Utile pour lisser l'imposition foncière d'un parc existant"
-        ]
-      }
-    },
-    steps: {
-      title: "Étapes d'investissement",
-      steps: [
-        {
-          step: 1,
-          title: "Diagnostic énergétique",
-          description: "Réalisation d'un audit énergétique de votre logement"
-        },
-        {
-          step: 2,
-          title: "Planification des travaux",
-          description: "Définition des travaux prioritaires et devis"
-        },
-        {
-          step: 3,
-          title: "Choix des professionnels",
-          description: "Sélection d'artisans certifiés RGE"
-        },
-        {
-          step: 4,
-          title: "Réalisation des travaux",
-          description: "Exécution des travaux de rénovation"
-        },
-        {
-          step: 5,
-          title: "Contrôle qualité",
-          description: "Vérification de la conformité des travaux"
-        },
-        {
-          step: 6,
-          title: "Déclaration fiscale",
-          description: "Déclaration de la réduction d'impôt"
-        }
-      ]
-    },
-    risks: {
-      title: "Points d'attention",
-      risks: [
-        "Règles complexes",
-        "Rentabilité nette modeste",
-        "Convention ANAH obligatoire",
-        "Respect des plafonds de loyers et ressources",
-        "Engagement de 6 ou 9 ans",
-        "Calcul précis nécessaire"
-      ]
-    },
-    tips: {
-      title: "Recommandation Azalée Patrimoine",
-      tips: [
-        "Utile pour lisser l'imposition foncière d'un parc existant",
-        "Nécessite un calcul précis",
-        "Convention ANAH obligatoire",
-        "Respect des plafonds de loyers et ressources",
-        "Engagement de 6 ou 9 ans selon secteur",
-        "Optimisation fiscale patrimoniale"
-      ]
+    cta: {
+      title: "Besoin d'aide pour votre investissement ?",
+      description: "Nos experts vous accompagnent dans votre projet d'investissement immobilier avec la Loi Cosse.",
+      buttonText: "Demander une consultation gratuite"
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <Header />
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#4EBBBD] border-t-transparent mx-auto mb-6"></div>
-            <p className="text-gray-600 text-lg">Chargement de la loi Cosse...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Load content from CMS
+  const loadContentFromCMS = async () => {
+    try {
+      setIsLoadingFromDatabase(true);
+      const response = await fetch('/api/pages/loi-cosse');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.content && Object.keys(data.content).length > 0) {
+          setContent(data.content);
+          setContentSource('Database');
+          console.log('✅ Loi Cosse content loaded from database');
+        } else {
+          setContent(defaultContent);
+          setContentSource('Default');
+          console.log('⚠️ No database content found, using default');
+        }
+      } else {
+        setContent(defaultContent);
+        setContentSource('Default');
+        console.log('❌ Failed to load from database, using default');
+      }
+    } catch (error) {
+      console.error('Error loading loi-cosse content:', error);
+      setContent(defaultContent);
+      setContentSource('Default');
+    } finally {
+      setIsLoadingFromDatabase(false);
+    }
+  };
+
+  useEffect(() => {
+    // Set default content first
+    setContent(defaultContent);
+    
+    // Load content from CMS
+    loadContentFromCMS();
+    
+    // Start polling after initial load
+    const interval = setInterval(() => {
+      loadContentFromCMS();
+    }, 30000); // Poll every 30 seconds
+    
+    setPollingInterval(interval);
+    
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, []);
+
+  const handleManualReload = () => {
+    loadContentFromCMS();
+  };
 
   return (
     <>
+      {/* Loading indicator */}
+      {isLoadingFromDatabase && (
+        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
+          Loading from Database...
+        </div>
+      )}
+      <div className="fixed top-4 left-4 z-50 flex gap-2">
+        <button
+          onClick={handleManualReload}
+          className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
+        >
+          Reload
+        </button>
+        <button
+          onClick={() => {
+            console.log('Current content:', content);
+            console.log('Content source:', contentSource);
+          }}
+          className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
+        >
+
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-6">
-            <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-              Transition écologique
-            </span>
-          </div>
-          <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
-            {content.hero.title}
-          </h1>
-          <p className="max-w-4xl mx-auto text-[#686868] text-base sm:text-lg leading-relaxed mb-8">
-            {content.hero.description}
-          </p>
-          
-          {/* Law Icon */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3">
-                C
+      <section className="relative w-full bg-gradient-to-br from-[#E8F5E8] via-[#D7E8FF] to-[#FFEFD5] py-16 sm:py-20 lg:py-24">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+                Loi Cosse
+              </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                {content.hero?.title || defaultContent.hero.title}
+              </h1>
+              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                {content.hero?.subtitle || defaultContent.hero.subtitle}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button className="bg-[#4EBBBD] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors">
+                  {content.hero?.button || defaultContent.hero.button}
+                </button>
               </div>
-              <p className="text-[#112033] text-sm font-medium">Cosse</p>
+            </div>
+            <div className="relative">
+              <div className="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src={content.hero?.image || defaultContent.hero.image} 
+                  alt="Loi Cosse"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Tab Navigation */}
-      <section className="py-8 bg-white border-b">
+      {/* Definition Section */}
+      <section className="py-16 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              { key: 'overview', label: 'Présentation', icon: '📋' },
-              { key: 'benefits', label: 'Avantages', icon: '💰' },
-              { key: 'conditions', label: 'Conditions', icon: '📝' },
-              { key: 'works', label: 'Travaux', icon: '🔨' },
-              { key: 'calculation', label: 'Calcul', icon: '🧮' },
-              { key: 'steps', label: 'Étapes', icon: '📈' }
-            ].map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
-                  activeTab === tab.key
-                    ? "bg-[#4EBBBD] text-white shadow-lg"
-                    : "bg-gray-100 text-[#686868] hover:bg-gray-200"
-                }`}
-              >
-                <span>{tab.icon}</span>
-                {tab.label}
-              </button>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              {content.definition?.title || defaultContent.definition.title}
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+              {content.definition?.description || defaultContent.definition.description}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {(content.definition?.details || defaultContent.definition.details).map((detail, index) => (
+              <div key={index} className="bg-gray-50 p-6 rounded-xl text-center">
+                <div className="text-lg font-semibold text-gray-900">{detail}</div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+      {/* Conditions Section */}
+      <section className="py-16 bg-gray-50">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-xl shadow-lg p-6 lg:p-8">
-            {/* Tab Content */}
-            
-            {/* Overview Tab */}
-            {activeTab === 'overview' && (
-              <div className="space-y-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-[#112033] text-2xl font-semibold mb-4">
-                    {content.overview.title}
-                  </h2>
-                  <p className="text-[#686868] text-lg max-w-3xl mx-auto">
-                    {content.overview.description}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {content.overview.keyPoints.map((point, index) => (
-                    <div key={index} className="bg-gradient-to-br from-[#E8F5E8] to-[#D4EDDA] rounded-lg p-6 text-center">
-                      <div className="text-2xl mb-3">🌱</div>
-                      <p className="font-semibold text-[#112033]">{point}</p>
-                    </div>
-                  ))}
-                </div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              {content.conditions?.title || defaultContent.conditions.title}
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+              {content.conditions?.description || defaultContent.conditions.description}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {(content.conditions?.points || defaultContent.conditions.points).map((point, index) => (
+              <div key={index} className="bg-white p-6 rounded-xl shadow-lg">
+                <div className="text-lg font-semibold text-gray-900 mb-2">{point}</div>
               </div>
-            )}
-
-            {/* Benefits Tab */}
-            {activeTab === 'benefits' && (
-              <div className="space-y-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-[#112033] text-2xl font-semibold mb-4">
-                    {content.benefits.title}
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {content.benefits.benefits.map((benefit, index) => (
-                    <div key={index} className="bg-gradient-to-br from-[#E8F5E8] to-[#D4EDDA] rounded-lg p-6">
-                      <div className="flex items-center mb-4">
-                        <div className="text-3xl mr-4">{benefit.icon}</div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-[#112033]">{benefit.title}</h3>
-                          <p className="text-lg font-semibold text-[#4EBBBD]">{benefit.amount}</p>
-                        </div>
-                      </div>
-                      <p className="text-[#112033] text-sm">{benefit.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Conditions Tab */}
-            {activeTab === 'conditions' && (
-              <div className="space-y-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-[#112033] text-2xl font-semibold mb-4">
-                    {content.conditions.title}
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {content.conditions.conditions.map((condition, index) => (
-                    <div key={index} className="bg-gradient-to-br from-[#FFEFD5] to-[#FFE4B5] rounded-lg p-6">
-                      <h3 className="text-lg font-semibold text-[#112033] mb-4 text-center">
-                        📋 {condition.category}
-                      </h3>
-                      <ul className="space-y-2">
-                        {condition.items.map((item, itemIndex) => (
-                          <li key={itemIndex} className="flex items-start gap-2">
-                            <span className="w-2 h-2 bg-[#B99066] rounded-full mt-2 flex-shrink-0"></span>
-                            <span className="text-[#112033] text-sm">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Works Tab */}
-            {activeTab === 'works' && (
-              <div className="space-y-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-[#112033] text-2xl font-semibold mb-4">
-                    {content.works.title}
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {content.works.works.map((work, index) => (
-                    <div key={index} className="bg-gradient-to-br from-[#E8F5E8] to-[#D4EDDA] rounded-lg p-6">
-                      <div className="flex items-center mb-4">
-                        <div className="text-3xl mr-4">{work.icon}</div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-[#112033]">{work.name}</h3>
-                          <p className="text-lg font-semibold text-[#4EBBBD]">{work.avantages}</p>
-                        </div>
-                      </div>
-                      <p className="text-[#112033] text-sm">{work.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Calculation Tab */}
-            {activeTab === 'calculation' && (
-              <div className="space-y-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-[#112033] text-2xl font-semibold mb-4">
-                    {content.calculation.title}
-                  </h2>
-                </div>
-
-                <div className="mb-8">
-                  <h3 className="text-[#112033] text-lg font-semibold mb-4">📊 Exemples de calcul</h3>
-                  <p className="text-[#686868] text-sm mb-6">Déduction spécifique sur les revenus fonciers jusqu'à 85%</p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {content.calculation.examples.map((example, index) => (
-                      <div key={index} className="bg-[#FAFFEF] rounded-lg p-4 text-center">
-                        <div className="text-2xl font-bold text-[#4EBBBD] mb-1">{example.reduction}</div>
-                        <div className="text-[#112033] text-sm font-medium">{example.travaux}</div>
-                        <div className="text-[#686868] text-xs mt-2">{example.description}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Cas pratique Azalée */}
-                {content.calculation.cas_pratique && (
-                  <div className="mb-8">
-                    <h3 className="text-[#112033] text-lg font-semibold mb-4">💡 {content.calculation.cas_pratique.titre}</h3>
-                    <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-6 text-white">
-                      <p className="text-sm font-semibold mb-3">{content.calculation.cas_pratique.description}</p>
-                      <ul className="space-y-2">
-                        {content.calculation.cas_pratique.details.map((detail, index) => (
-                          <li key={index} className="text-sm opacity-90 flex items-start gap-2">
-                            <span className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></span>
-                            {detail}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Steps Tab */}
-            {activeTab === 'steps' && (
-              <div className="space-y-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-[#112033] text-2xl font-semibold mb-4">
-                    {content.steps.title}
-                  </h2>
-                </div>
-
-                <div className="space-y-4">
-                  {content.steps.steps.map((step, index) => (
-                    <div key={index} className="flex items-start gap-4 bg-white rounded-lg p-4 border border-gray-200">
-                      <div className="w-8 h-8 bg-[#4EBBBD] rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                        {step.step}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-[#112033] mb-1">{step.title}</h3>
-                        <p className="text-[#686868] text-sm">{step.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Risks and Tips Section */}
-      <section className="py-12 bg-white">
+      {/* Avantages Section */}
+      <section className="py-16 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Risks */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
-                <span>⚠️</span> {content.risks.title}
-              </h3>
-              <ul className="space-y-2">
-                {content.risks.risks.map((risk, index) => (
-                  <li key={index} className="text-[#112033] text-sm flex items-start gap-2">
-                    <span className="w-2 h-2 bg-[#B99066] rounded-full mt-2 flex-shrink-0"></span>
-                    {risk}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Tips */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
-                <span>💡</span> {content.tips.title}
-              </h3>
-              <ul className="space-y-2">
-                {content.tips.tips.map((tip, index) => (
-                  <li key={index} className="text-[#112033] text-sm flex items-start gap-2">
-                    <span className="w-2 h-2 bg-[#4EBBBD] rounded-full mt-2 flex-shrink-0"></span>
-                    {tip}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              {content.avantages?.title || defaultContent.avantages.title}
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+              {content.avantages?.description || defaultContent.avantages.description}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {(content.avantages?.points || defaultContent.avantages.points).map((point, index) => (
+              <div key={index} className="bg-gray-50 p-6 rounded-xl text-center">
+                <div className="text-4xl mb-4">✅</div>
+                <div className="text-lg font-semibold text-gray-900">{point}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-[#F2F2F2] to-[#E5E5E5]">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 text-center">
-            <h2 className="text-[#112033] text-2xl lg:text-3xl font-semibold mb-4">
-              Optimiser votre fiscalité avec le dispositif Cosse ?
-            </h2>
-            <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
-              Nos experts vous accompagnent pour lisser l'imposition foncière de votre parc existant avec le dispositif Cosse
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                🎯 Demander un conseil
-              </button>
-              <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
-                🧮 Calculer ma réduction
-              </button>
-            </div>
-          </div>
+      <section className="py-16 bg-[#4EBBBD]">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">
+            {content.cta?.title || defaultContent.cta.title}
+          </h2>
+          <p className="text-lg text-white/90 mb-8 max-w-3xl mx-auto">
+            {content.cta?.description || defaultContent.cta.description}
+          </p>
+          <button className="bg-white text-[#4EBBBD] px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+            {content.cta?.buttonText || defaultContent.cta.buttonText}
+          </button>
         </div>
       </section>
+
+      <Footer />
     </>
   );
 }
-
-
-

@@ -1,98 +1,121 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
 import Footer from "../../../components/common/Footer";
 
-const STORAGE_KEY = "defiscalisationCasSpecifiquesContent";
-
-const defaultContent = {
-  hero: {
-    title: "Défiscalisation - Cas spéciaux",
-    subtitle: "Découvrez les dispositifs de défiscalisation spécifiques et les situations particulières qui peuvent vous permettre d'optimiser votre fiscalité.",
-    button: "Étudier mon cas",
-    image: "/images/fiscalite-cas-specifiques-hero.jpg"
-  },
-  casSpecifiques: {
-    title: "Cas spéciaux de défiscalisation",
-    items: [
-      {
-        nom: "Défiscalisation outre-mer",
-        description: "Dispositifs spécifiques pour les investissements en outre-mer",
-        avantages: ["Réduction jusqu'à 40%", "Investissement plafonné à 300k€", "Engagement 5 ans minimum"],
-        conditions: ["Bien situé en outre-mer", "Location à usage d'habitation", "Investissement direct ou SCPI"]
-      },
-      {
-        nom: "Défiscalisation monuments historiques",
-        description: "Réduction d'impôt pour la rénovation de monuments classés",
-        avantages: ["Réduction jusqu'à 30%", "Plafond 400k€", "Engagement 9 ans minimum"],
-        conditions: ["Bien classé ou inscrit", "Rénovation aux normes", "Location 9 ans minimum"]
-      },
-      {
-        nom: "Défiscalisation rénovation énergétique",
-        description: "Réduction d'impôt pour les travaux de rénovation énergétique",
-        avantages: ["Réduction jusqu'à 30%", "Plafond 8k€", "Engagement 3 ans"],
-        conditions: ["Résidence principale", "Travaux énergétiques", "Engagement 3 ans"]
-      }
-    ]
-  },
-  situationsParticulieres: {
-    title: "Situations particulières",
-    items: [
-      {
-        situation: "Investisseur étranger",
-        description: "Fiscalité spécifique pour les non-résidents",
-        points: ["Imposition différente", "Conventions fiscales", "Obligations déclaratives"]
-      },
-      {
-        situation: "Expatrié",
-        description: "Optimisation fiscale pour les expatriés",
-        points: ["Résidence fiscale", "Imposition des revenus", "Défiscalisation à distance"]
-      },
-      {
-        situation: "Retraité",
-        description: "Stratégies fiscales pour les retraités",
-        points: ["TMI réduit", "Défiscalisation adaptée", "Transmission optimisée"]
-      }
-    ]
-  },
-  cta: {
-    title: "Votre cas est-il éligible ?",
-    subtitle: "Nos experts analysent votre situation pour identifier les dispositifs applicables",
-    primaryButton: "Analyse gratuite",
-    secondaryButton: "Consultation spécialisée"
-  }
-};
-
 export default function DefiscalisationCasSpecifiquesPage() {
-  const [content, setContent] = useState(defaultContent);
+  const [content, setContent] = useState({});
+  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(false);
+  const [contentSource, setContentSource] = useState('Default');
+  const [pollingInterval, setPollingInterval] = useState(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setContent((prev) => ({ ...prev, ...parsed }));
-      }
-    } catch (e) {
-      console.error("Failed to load content", e);
+  // Default content structure
+  const defaultContent = {
+    hero: {
+      title: "Défiscalisation - Cas spéciaux",
+      subtitle: "Découvrez les dispositifs de défiscalisation spécifiques et les situations particulières qui peuvent vous permettre d'optimiser votre fiscalité.",
+      button: "Étudier mon cas",
+      image: "/images/fiscalite-cas-specifiques-hero.jpg"
+    },
+    casSpecifiques: {
+      title: "Cas spéciaux de défiscalisation",
+      items: [
+        {
+          nom: "Défiscalisation outre-mer",
+          description: "Dispositifs spécifiques pour les investissements en outre-mer",
+          avantages: ["Réduction jusqu'à 40%", "Investissement plafonné à 300k€", "Engagement 5 ans minimum"],
+          conditions: ["Bien situé en outre-mer", "Location à usage d'habitation", "Investissement direct ou SCPI"]
+        },
+        {
+          nom: "Défiscalisation monuments historiques",
+          description: "Réduction d'impôt pour la rénovation de monuments classés",
+          avantages: ["Réduction jusqu'à 30%", "Plafond 400k€", "Engagement 9 ans minimum"],
+          conditions: ["Bien classé ou inscrit", "Rénovation aux normes", "Location 9 ans minimum"]
+        },
+        {
+          nom: "Défiscalisation rénovation énergétique",
+          description: "Réduction d'impôt pour les travaux de rénovation énergétique",
+          avantages: ["Réduction jusqu'à 30%", "Plafond 8k€", "Engagement 3 ans"],
+          conditions: ["Résidence principale", "Travaux énergétiques", "Engagement 3 ans"]
+        }
+      ]
+    },
+    situationsParticulieres: {
+      title: "Situations particulières",
+      items: [
+        {
+          situation: "Investisseur étranger",
+          description: "Fiscalité spécifique pour les non-résidents",
+          points: ["Imposition différente", "Conventions fiscales", "Obligations déclaratives"]
+        },
+        {
+          situation: "Expatrié",
+          description: "Optimisation fiscale pour les expatriés",
+          points: ["Résidence fiscale", "Imposition des revenus", "Défiscalisation à distance"]
+        },
+        {
+          situation: "Retraité",
+          description: "Stratégies fiscales pour les retraités",
+          points: ["TMI réduit", "Défiscalisation adaptée", "Transmission optimisée"]
+        }
+      ]
+    },
+    cta: {
+      title: "Votre cas est-il éligible ?",
+      subtitle: "Nos experts analysent votre situation pour identifier les dispositifs applicables",
+      primaryButton: "Analyse gratuite",
+      secondaryButton: "Consultation spécialisée"
     }
-  }, []);
+  };
 
-  useEffect(() => {
-    const handler = () => {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) setContent((prev) => ({ ...prev, ...JSON.parse(saved) }));
-      } catch {}
-    };
-    window.addEventListener("contentUpdated", handler);
-    return () => window.removeEventListener("contentUpdated", handler);
-  }, []);
+  // Load content from CMS
+  const loadContentFromCMS = async () => {
+    try {
+      setIsLoadingFromDatabase(true);
+      const response = await fetch('/api/pages/defiscalisation-cas-specifiques');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.content && Object.keys(data.content).length > 0) {
+          setContent(data.content);
+          setContentSource('Database');
+          console.log('✅ Defiscalisation-cas-specifiques content loaded from database');
+        } else {
+          setContent(defaultContent);
+          setContentSource('Default');
+          console.log('⚠️ No database content found, using default');
+        }
+      } else {
+        setContent(defaultContent);
+        setContentSource('Default');
+        console.log('❌ Failed to load from database, using default');
+      }
+    } catch (error) {
+      console.error('Error loading defiscalisation-cas-specifiques content:', error);
+      setContent(defaultContent);
+      setContentSource('Default');
+    } finally {
+      setIsLoadingFromDatabase(false);
+    }
+  };
 
-  return (
-    <>
-      <Header />
+  // Reload content manually
+  const reloadContent = async () => {
+    await loadContentFromCMS();
+  };
+
+          {isLoadingFromDatabase && (
+            <div className="flex items-center gap-1 text-blue-600">
+              <div className="animate-spin w-3 h-3 border border-blue-600 border-t-transparent rounded-full"></div>
+              <span>Loading...</span>
+            </div>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={reloadContent}
+            className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
+          >
+      </div>
 
       {/* Hero Section */}
       <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
@@ -103,18 +126,18 @@ export default function DefiscalisationCasSpecifiquesPage() {
                 Cas spéciaux
               </span>
               <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
-                {content.hero.title}
+                {content.hero?.title || defaultContent.hero.title}
               </h1>
               <p className="text-[#686868] text-lg leading-relaxed mb-8">
-                {content.hero.subtitle}
+                {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
               <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                {content.hero.button}
+                {content.hero?.button || defaultContent.hero.button}
               </button>
             </div>
             <div className="relative">
               <img 
-                src={content.hero.image} 
+                src={content.hero?.image || defaultContent.hero.image} 
                 alt="Défiscalisation cas spéciaux" 
                 className="w-full h-[400px] object-cover rounded-xl shadow-2xl"
               />
@@ -127,10 +150,10 @@ export default function DefiscalisationCasSpecifiquesPage() {
       <section className="py-12 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
-            {content.casSpecifiques.title}
+            {content.casSpecifiques?.title || defaultContent.casSpecifiques.title}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {content.casSpecifiques.items.map((cas, index) => (
+            {(content.casSpecifiques?.items || defaultContent.casSpecifiques.items).map((cas, index) => (
               <div key={index} className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6 shadow-lg">
                 <h3 className="text-[#112033] text-lg font-semibold mb-3">{cas.nom}</h3>
                 <p className="text-[#686868] text-sm mb-4">{cas.description}</p>
@@ -138,7 +161,7 @@ export default function DefiscalisationCasSpecifiquesPage() {
                 <div className="mb-4">
                   <h4 className="text-[#112033] font-medium mb-2 text-green-600">✅ Avantages</h4>
                   <ul className="space-y-1">
-                    {cas.avantages.map((avantage, idx) => (
+                    {(cas.avantages || []).map((avantage, idx) => (
                       <li key={idx} className="text-[#112033] text-sm flex items-center gap-2">
                         <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                         {avantage}
@@ -150,7 +173,7 @@ export default function DefiscalisationCasSpecifiquesPage() {
                 <div>
                   <h4 className="text-[#112033] font-medium mb-2 text-blue-600">📋 Conditions</h4>
                   <ul className="space-y-1">
-                    {cas.conditions.map((condition, idx) => (
+                    {(cas.conditions || []).map((condition, idx) => (
                       <li key={idx} className="text-[#112033] text-sm flex items-center gap-2">
                         <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
                         {condition}
@@ -168,15 +191,15 @@ export default function DefiscalisationCasSpecifiquesPage() {
       <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
-            {content.situationsParticulieres.title}
+            {content.situationsParticulieres?.title || defaultContent.situationsParticulieres.title}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {content.situationsParticulieres.items.map((situation, index) => (
+            {(content.situationsParticulieres?.items || defaultContent.situationsParticulieres.items).map((situation, index) => (
               <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="text-[#112033] text-lg font-semibold mb-3">{situation.situation}</h3>
                 <p className="text-[#686868] text-sm mb-4">{situation.description}</p>
                 <ul className="space-y-2">
-                  {situation.points.map((point, idx) => (
+                  {(situation.points || []).map((point, idx) => (
                     <li key={idx} className="text-[#112033] text-sm flex items-center gap-2">
                       <span className="w-2 h-2 bg-[#4EBBBD] rounded-full"></span>
                       {point}
@@ -194,17 +217,17 @@ export default function DefiscalisationCasSpecifiquesPage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 text-center">
             <h2 className="text-[#112033] text-2xl lg:text-3xl font-semibold mb-4">
-              {content.cta.title}
+              {content.cta?.title || defaultContent.cta.title}
             </h2>
             <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
-              {content.cta.subtitle}
+              {content.cta?.subtitle || defaultContent.cta.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                {content.cta.primaryButton}
+                {content.cta?.primaryButton || defaultContent.cta.primaryButton}
               </button>
               <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
-                {content.cta.secondaryButton}
+                {content.cta?.secondaryButton || defaultContent.cta.secondaryButton}
               </button>
             </div>
           </div>

@@ -1,800 +1,998 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { 
+  PencilIcon, 
+  EyeIcon, 
+  CheckIcon, 
+  XMarkIcon,
+  PlusIcon,
+  TrashIcon,
+  ArrowUpIcon,
+  ArrowDownIcon
+} from '@heroicons/react/24/outline';
 
+export default function CmsPlanRetraitePage() {
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingSection, setEditingSection] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [saving, setSaving] = useState(false);
+  const router = useRouter();
 
-
-const defaultContent = {
-  hero: {
-    title: "Planification de la retraite",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    primaryButton: "Commencer ma planification",
-    secondaryButton: "Télécharger le guide"
-  },
-  timeline: {
-    steps: [
-      {
-        icon: "📊",
-        title: "Évaluation",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."
-      },
-      {
-        icon: "🎯",
-        title: "Stratégie",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."
-      },
-      {
-        icon: "🚀",
-        title: "Mise en œuvre",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."
-      }
-    ]
-  },
-  chart: {
-    title: "Indicateurs de retraite",
-    data: [
-      { label: "Âge de départ moyen", value: "62.5 ans" },
-      { label: "Montant moyen par mois", value: "€1,850" },
-      { label: "Taux de remplacement", value: "74.2%" },
-      { label: "Durée de cotisation", value: "42 ans" },
-      { label: "Espérance de vie", value: "85.3 ans" }
-    ]
-  },
-  planningPhases: {
-    title: "Phases de planification",
-    steps: [
-      {
-        number: "1",
-        title: "Lorem ipsum dolor sit",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
-      },
-      {
-        number: "2",
-        title: "Consectetur adipiscing elit",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation."
-      },
-      {
-        number: "3",
-        title: "Sed do eiusmod tempor",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud."
-      }
-    ],
-    calculator: {
-      title: "Simulateur de retraite",
+  // Plan Retraite sections configuration
+  const planRetraiteSections = [
+    {
+      id: 'hero',
+      name: 'Section Hero',
+      description: 'Titre principal et introduction',
       fields: [
-        { label: "Âge actuel", placeholder: "35" },
-        { label: "Revenu annuel", placeholder: "€45,000" },
-        { label: "Âge de départ souhaité", placeholder: "60 ans" }
-      ],
-      button: "Calculer ma retraite",
-      result: {
-        title: "Pension estimée :",
-        value: "€2,150",
-        subtitle: "par mois"
-      }
-    }
-  },
-  solutions: {
-    title: "Solutions de retraite",
-    cards: [
-      {
-        icon: "🏦",
-        title: "Lorem ipsum",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."
-      },
-      {
-        icon: "📈",
-        title: "Dolor sit amet",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."
-      },
-      {
-        icon: "🛡️",
-        title: "Consectetur elit",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."
-      },
-      {
-        icon: "💰",
-        title: "Sed eiusmod",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor."
-      }
-    ]
-  },
-  expertAdvice: {
-    title: "Lorem ipsum dolor sit amet",
-    items: [
-      {
-        icon: "✓",
-        title: "Lorem ipsum dolor sit",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-      },
-      {
-        icon: "✓",
-        title: "Consectetur adipiscing elit",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-      },
-      {
-        icon: "✓",
-        title: "Sed do eiusmod tempor",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-      }
-    ],
-    statistics: {
-      title: "Lorem ipsum dolor sit",
-      items: [
-        { label: "Lorem ipsum", value: "85%" },
-        { label: "Dolor sit amet", value: "72%" },
-        { label: "Consectetur elit", value: "68%" }
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre', type: 'textarea' },
+        { key: 'solutions', label: 'Solutions', type: 'solutions' },
+        { key: 'ctaButtons', label: 'Boutons CTA', type: 'ctaButtons' }
+      ]
+    },
+    {
+      id: 'chart',
+      name: 'Graphique',
+      description: 'Caractéristiques des plans retraite',
+      fields: [
+        { key: 'title', label: 'Titre du Graphique', type: 'text' },
+        { key: 'chartImage', label: 'Image du Graphique', type: 'text' },
+        { key: 'chartData', label: 'Données du Graphique', type: 'chartData' }
+      ]
+    },
+    {
+      id: 'per',
+      name: 'Section PER',
+      description: 'Plan Épargne Retraite - loi Pacte',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'features', label: 'Caractéristiques', type: 'perFeatures' }
+      ]
+    },
+    {
+      id: 'perco',
+      name: 'Section PERCO/PEE',
+      description: 'Dispositifs d\'épargne entreprise',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'benefits', label: 'Avantages', type: 'percoBenefits' },
+        { key: 'oldEnvelopes', label: 'Anciennes Enveloppes', type: 'oldEnvelopes' }
+      ]
+    },
+    {
+      id: 'conseil',
+      name: 'Conseil Azalée',
+      description: 'Conseil et accompagnement',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'analysis', label: 'Analyse', type: 'analysis' }
+      ]
+    },
+    {
+      id: 'cta',
+      name: 'Call to Action',
+      description: 'Appel à l\'action final',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'buttonText', label: 'Texte du Bouton', type: 'text' }
       ]
     }
-  },
-  cta: {
-    title: "Lorem ipsum dolor sit amet ?",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    button: "Commencer maintenant"
-  }
-};
+  ];
 
-export default function RetraitePlanRetraiteCMS() {
-  const [content, setContent] = useState(defaultContent);
-  const [showToast, setShowToast] = useState(false);
-
-    useEffect(() => {
-    // Charger le contenu depuis la base de données
-    const loadContentFromDatabase = async () => {
-      try {
-        const response = await fetch('/api/pages/content?path=/retraite/plan-retraite&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            const parsed = result.content.content;
-            setContent({ ...defaultContent, ...parsed });
-            return;
-          }
+  // Default content extracted from the real plan-retraite page
+  const defaultContent = {
+    hero: {
+      title: "Plan retraite (PER, PERP, PEE, PERCO…)",
+      subtitle: "L'épargne retraite est un pilier essentiel de votre stratégie patrimoniale. Découvrez les solutions adaptées à votre statut et vos objectifs.",
+      solutions: [
+        {
+          title: "PER",
+          description: "L'enveloppe universelle qui remplace PERP, Madelin, PERCO, Article 83",
+          icon: "📊",
+          color: "#4EBBBD"
+        },
+        {
+          title: "PERCO / PEE",
+          description: "Dispositifs d'épargne entreprise alimentés par participation, intéressement, abondement",
+          icon: "🏢",
+          color: "#B99066"
+        },
+        {
+          title: "Anciennes enveloppes",
+          description: "PERP, Madelin, Art. 83 : transférables vers le PER",
+          icon: "🔄",
+          color: "#59E2E4"
         }
-        
-        // Si pas de contenu en base, utiliser le contenu par défaut
-        console.log('Aucun contenu trouvé en base de données, utilisation du contenu par défaut');
-      } catch (error) {
-        console.error('Erreur lors du chargement depuis la base de données:', error);
-        // En cas d'erreur, utiliser le contenu par défaut
-      }
-    };
-
-    loadContentFromDatabase();
-  }, []);
-
-  const handleChange = (section, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
-    }));
-  };
-
-  const handleArrayChange = (section, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: prev[section][field].map((item, i) => i === index ? value : item)
-      }
-    }));
-  };
-
-  const handleNestedChange = (section, subsection, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: value
+      ],
+      ctaButtons: [
+        {
+          text: "Analyser ma situation",
+          type: "primary",
+          color: "#B99066"
+        },
+        {
+          text: "Comparer les solutions",
+          type: "secondary",
+          color: "#B99066"
         }
-      }
-    }));
-  };
-
-  const handleNestedArrayChange = (section, subsection, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: prev[section][subsection][field].map((item, i) => i === index ? value : item)
+      ]
+    },
+    chart: {
+      title: "Caractéristiques des plans retraite",
+      chartImage: "/images/variation-chart-image-944f04.png",
+      chartData: [
+        { label: "PER - Enveloppe universelle", value: "100%" },
+        { label: "Versements déductibles", value: "€10,000" },
+        { label: "Sortie en rente/capital", value: "Mixte" },
+        { label: "Sortie anticipée", value: "Possible" },
+        { label: "Transfert anciennes enveloppes", value: "✓" }
+      ]
+    },
+    per: {
+      title: "PER (Plan Épargne Retraite – loi Pacte)",
+      description: "L'enveloppe universelle qui remplace PERP, Madelin, PERCO, Article 83",
+      features: [
+        {
+          title: "Avantage fiscal immédiat",
+          description: "Versements déductibles du revenu imposable",
+          icon: "💰",
+          color: "#4EBBBD"
+        },
+        {
+          title: "Sortie flexible",
+          description: "Sortie en rente, capital ou mixte",
+          icon: "🔄",
+          color: "#B99066"
+        },
+        {
+          title: "Sortie anticipée",
+          description: "Possible (résidence principale, accident de la vie)",
+          icon: "🏠",
+          color: "#59E2E4"
         }
-      }
-    }));
+      ]
+    },
+    perco: {
+      title: "PERCO / PEE",
+      description: "Dispositifs d'épargne entreprise alimentés par participation, intéressement, abondement",
+      benefits: [
+        {
+          title: "Dispositifs d'épargne entreprise",
+          description: "Alimentés par participation, intéressement, abondement",
+          icon: "✓"
+        },
+        {
+          title: "Abondement employeur",
+          description: "Complément de versement de l'entreprise sur vos cotisations",
+          icon: "✓"
+        },
+        {
+          title: "Transfert vers PER",
+          description: "Possibilité de transférer vers un PER individuel",
+          icon: "✓"
+        }
+      ],
+      oldEnvelopes: [
+        { name: "PERP", status: "Transférable" },
+        { name: "Madelin", status: "Transférable" },
+        { name: "Article 83", status: "Transférable" },
+        { name: "PERCO", status: "Transférable" }
+      ]
+    },
+    conseil: {
+      title: "👉 Conseil Azalée Patrimoine",
+      description: "Azalée Patrimoine analyse chaque situation pour choisir le meilleur véhicule d'épargne retraite, en tenant compte de la fiscalité, du statut (salarié, TNS, dirigeant) et des objectifs.",
+      analysis: [
+        {
+          title: "📊 Analyse fiscale",
+          description: "Optimisation selon votre tranche d'imposition"
+        },
+        {
+          title: "👔 Statut professionnel",
+          description: "Salarié, TNS, dirigeant : solutions adaptées"
+        },
+        {
+          title: "🎯 Objectifs personnels",
+          description: "Horizon, montant, flexibilité"
+        }
+      ]
+    },
+    cta: {
+      title: "Prêt à optimiser votre épargne retraite ?",
+      description: "Nos experts Azalée Patrimoine vous accompagnent pour choisir la meilleure solution d'épargne retraite adaptée à votre situation.",
+      buttonText: "Analyser ma situation"
+    }
   };
 
-    const handleSave = async () => {
+  // Load sections from CMS
+  const loadSections = async () => {
     try {
-      const response = await fetch('/api/pages/content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pagePath: '/retraite/plan-retraite',
-          pageType: 'cms',
-          content: content,
-          metadata: {
-            lastModified: new Date().toISOString(),
-            modifiedBy: 'admin',
-            pageType: 'cms'
-          }
-        })
-      });
-
-      if (response.ok) {
-        console.log('Sauvegardé en base de données');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
+      const response = await fetch('/api/cms/content/plan-retraite');
+      const data = await response.json();
+      
+      if (data.success && data.content) {
+        const mergedSections = planRetraiteSections.map(section => {
+          const cmsData = data.content[section.id] || {};
+          return {
+            ...section,
+            cmsData,
+            hasCmsContent: Object.keys(cmsData).length > 0,
+            currentData: { ...defaultContent[section.id], ...cmsData }
+          };
+        });
+        setSections(mergedSections);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
+        // No CMS content, use default
+        const sectionsWithDefaults = planRetraiteSections.map(section => ({
+          ...section,
+          cmsData: {},
+          hasCmsContent: false,
+          currentData: defaultContent[section.id] || {}
+        }));
+        setSections(sectionsWithDefaults);
       }
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde: ' + error.message);
+      console.error('Error loading sections:', error);
+      // Fallback to default content
+      const sectionsWithDefaults = planRetraiteSections.map(section => ({
+        ...section,
+        cmsData: {},
+        hasCmsContent: false,
+        currentData: defaultContent[section.id] || {}
+      }));
+      setSections(sectionsWithDefaults);
+    } finally {
+      setLoading(false);
     }
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('contentUpdated'));
   };
 
-  return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold text-[#112033]">Page Planification Retraite</h1>
-            <p className="text-[#686868]">Modifiez le contenu de la page Planification Retraite</p>
-          </div>
-          <button 
-            onClick={handleSave} 
-            className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors flex items-center gap-2"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Sauvegarder
-          </button>
-        </div>
-      </div>
+  useEffect(() => {
+    loadSections();
+  }, []);
 
-      {/* Hero Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Hero
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-            <input 
-              value={content.hero.title} 
-              onChange={(e) => handleChange('hero', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea 
-              value={content.hero.description} 
-              onChange={(e) => handleChange('hero', 'description', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.hero.primaryButton} 
-                onChange={(e) => handleChange('hero', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+  const handleEditSection = (section) => {
+    setEditingSection(section);
+    setFormData(section.currentData || {});
+  };
+
+  const handleSaveSection = async () => {
+    if (!editingSection) return;
+    
+    setSaving(true);
+    try {
+      const response = await fetch('/api/cms/content/plan-retraite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sectionId: editingSection.id,
+          content: formData
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        // Update the section with new content
+        setSections(prev => prev.map(section => 
+          section.id === editingSection.id 
+            ? { 
+                ...section, 
+                cmsData: formData, 
+                hasCmsContent: true,
+                currentData: { ...defaultContent[section.id], ...formData }
+              }
+            : section
+        ));
+        setEditingSection(null);
+        setFormData({});
+        
+        // Trigger page refresh
+        window.dispatchEvent(new CustomEvent('cmsContentUpdated', { 
+          detail: { pageSlug: 'plan-retraite' } 
+        }));
+      }
+    } catch (error) {
+      console.error('Error saving section:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleInitializeDefaultContent = () => {
+    if (!editingSection) return;
+    setFormData(defaultContent[editingSection.id] || {});
+  };
+
+  const renderField = (field, value, onChange) => {
+    if (!field) return null;
+    
+    switch (field.type) {
+      case 'text':
+        return (
+          <input
+            type="text"
+            value={value || ''}
+            onChange={(e) => onChange(field.key, e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+            placeholder={field.label}
+          />
+        );
+      
+      case 'textarea':
+        return (
+          <textarea
+            value={value || ''}
+            onChange={(e) => onChange(field.key, e.target.value)}
+            rows={field.rows || 3}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+            placeholder={field.label}
+          />
+        );
+      
+      case 'solutions':
+        return renderSolutions(value || [], onChange, field.key);
+      
+      case 'ctaButtons':
+        return renderCtaButtons(value || [], onChange, field.key);
+      
+      case 'chartData':
+        return renderChartData(value || [], onChange, field.key);
+      
+      case 'perFeatures':
+        return renderPerFeatures(value || [], onChange, field.key);
+      
+      case 'percoBenefits':
+        return renderPercoBenefits(value || [], onChange, field.key);
+      
+      case 'oldEnvelopes':
+        return renderOldEnvelopes(value || [], onChange, field.key);
+      
+      case 'analysis':
+        return renderAnalysis(value || [], onChange, field.key);
+      
+      default:
+        return (
+          <input
+            type="text"
+            value={value || ''}
+            onChange={(e) => onChange(field.key, e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+            placeholder={field.label}
+          />
+        );
+    }
+  };
+
+  const renderSolutions = (solutions, onChange, fieldKey) => {
+    const addSolution = () => {
+      const newSolutions = [...solutions, { title: '', description: '', icon: '', color: '' }];
+      onChange(fieldKey, newSolutions);
+    };
+
+    const removeSolution = (index) => {
+      const newSolutions = solutions.filter((_, i) => i !== index);
+      onChange(fieldKey, newSolutions);
+    };
+
+    const updateSolution = (index, field, value) => {
+      const newSolutions = [...solutions];
+      newSolutions[index] = { ...newSolutions[index], [field]: value };
+      onChange(fieldKey, newSolutions);
+    };
+
+    return (
+      <div className="space-y-4">
+        {solutions.map((solution, index) => (
+          <div key={index} className="border border-gray-300 rounded-lg p-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-3">
+              <input
+                type="text"
+                value={solution.title || ''}
+                onChange={(e) => updateSolution(index, 'title', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Titre"
+              />
+              <input
+                type="text"
+                value={solution.description || ''}
+                onChange={(e) => updateSolution(index, 'description', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Description"
+              />
+              <input
+                type="text"
+                value={solution.icon || ''}
+                onChange={(e) => updateSolution(index, 'icon', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Icône (emoji)"
+              />
+              <input
+                type="text"
+                value={solution.color || ''}
+                onChange={(e) => updateSolution(index, 'color', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Couleur (#hex)"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.hero.secondaryButton} 
-                onChange={(e) => handleChange('hero', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+            <button
+              type="button"
+              onClick={() => removeSolution(index)}
+              className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addSolution}
+          className="flex items-center gap-2 px-4 py-2 bg-[#4EBBBD] text-white rounded-md hover:bg-[#3A9A9C]"
+        >
+          <PlusIcon className="w-4 h-4" />
+          Ajouter une solution
+        </button>
+      </div>
+    );
+  };
+
+  const renderCtaButtons = (buttons, onChange, fieldKey) => {
+    const addButton = () => {
+      const newButtons = [...buttons, { text: '', type: 'primary', color: '' }];
+      onChange(fieldKey, newButtons);
+    };
+
+    const removeButton = (index) => {
+      const newButtons = buttons.filter((_, i) => i !== index);
+      onChange(fieldKey, newButtons);
+    };
+
+    const updateButton = (index, field, value) => {
+      const newButtons = [...buttons];
+      newButtons[index] = { ...newButtons[index], [field]: value };
+      onChange(fieldKey, newButtons);
+    };
+
+    return (
+      <div className="space-y-4">
+        {buttons.map((button, index) => (
+          <div key={index} className="border border-gray-300 rounded-lg p-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+              <input
+                type="text"
+                value={button.text || ''}
+                onChange={(e) => updateButton(index, 'text', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Texte du bouton"
               />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Timeline Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Timeline
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Étapes du timeline</label>
-            {content.timeline.steps.map((step, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Icône</label>
-                    <input 
-                      value={step.icon} 
-                      onChange={(e) => handleNestedArrayChange('timeline', 'steps', index, { ...step, icon: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Titre</label>
-                    <input 
-                      value={step.title} 
-                      onChange={(e) => handleNestedArrayChange('timeline', 'steps', index, { ...step, title: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <textarea 
-                      value={step.description} 
-                      onChange={(e) => handleNestedArrayChange('timeline', 'steps', index, { ...step, description: e.target.value })} 
-                      rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newSteps = content.timeline.steps.filter((_, i) => i !== index);
-                    handleChange('timeline', 'steps', newSteps);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cette étape
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newSteps = [...content.timeline.steps, { icon: '', title: '', description: '' }];
-                handleChange('timeline', 'steps', newSteps);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une étape
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Chart Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Graphique
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre du graphique</label>
-            <input 
-              value={content.chart.title} 
-              onChange={(e) => handleChange('chart', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Données du graphique</label>
-            {content.chart.data.map((item, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Label</label>
-                    <input 
-                      value={item.label} 
-                      onChange={(e) => handleNestedArrayChange('chart', 'data', index, { ...item, label: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Valeur</label>
-                    <input 
-                      value={item.value} 
-                      onChange={(e) => handleNestedArrayChange('chart', 'data', index, { ...item, value: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newData = content.chart.data.filter((_, i) => i !== index);
-                    handleChange('chart', 'data', newData);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cet élément
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newData = [...content.chart.data, { label: '', value: '' }];
-                handleChange('chart', 'data', newData);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un élément
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Planning Phases Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Phases de Planification
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-            <input 
-              value={content.planningPhases.title} 
-              onChange={(e) => handleChange('planningPhases', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          {/* Planning Steps */}
-          <div className="border border-gray-200 rounded-lg p-4">
-            <h3 className="text-md font-semibold text-[#112033] mb-3">Étapes de planification</h3>
-            <div className="space-y-3">
-              {content.planningPhases.steps.map((step, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div>
-                      <label className="block text-sm font-medium text-[#686868] mb-1">Numéro</label>
-                      <input 
-                        value={step.number} 
-                        onChange={(e) => {
-                          const newSteps = [...content.planningPhases.steps];
-                          newSteps[index] = { ...step, number: e.target.value };
-                          handleChange('planningPhases', 'steps', newSteps);
-                        }} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-[#686868] mb-1">Titre</label>
-                      <input 
-                        value={step.title} 
-                        onChange={(e) => {
-                          const newSteps = [...content.planningPhases.steps];
-                          newSteps[index] = { ...step, title: e.target.value };
-                          handleChange('planningPhases', 'steps', newSteps);
-                        }} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                      <textarea 
-                        value={step.description} 
-                        onChange={(e) => {
-                          const newSteps = [...content.planningPhases.steps];
-                          newSteps[index] = { ...step, description: e.target.value };
-                          handleChange('planningPhases', 'steps', newSteps);
-                        }} 
-                        rows={2}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => {
-                      const newSteps = content.planningPhases.steps.filter((_, i) => i !== index);
-                      handleChange('planningPhases', 'steps', newSteps);
-                    }}
-                    className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                  >
-                    Supprimer cette étape
-                  </button>
-                </div>
-              ))}
-              <button 
-                onClick={() => {
-                  const newSteps = [...content.planningPhases.steps, { number: '', title: '', description: '' }];
-                  handleChange('planningPhases', 'steps', newSteps);
-                }}
-                className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
+              <select
+                value={button.type || 'primary'}
+                onChange={(e) => updateButton(index, 'type', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
               >
-                Ajouter une étape
+                <option value="primary">Primary</option>
+                <option value="secondary">Secondary</option>
+              </select>
+              <input
+                type="text"
+                value={button.color || ''}
+                onChange={(e) => updateButton(index, 'color', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Couleur (#hex)"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => removeButton(index)}
+              className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addButton}
+          className="flex items-center gap-2 px-4 py-2 bg-[#4EBBBD] text-white rounded-md hover:bg-[#3A9A9C]"
+        >
+          <PlusIcon className="w-4 h-4" />
+          Ajouter un bouton
+        </button>
+      </div>
+    );
+  };
+
+  const renderChartData = (data, onChange, fieldKey) => {
+    const addData = () => {
+      const newData = [...data, { label: '', value: '' }];
+      onChange(fieldKey, newData);
+    };
+
+    const removeData = (index) => {
+      const newData = data.filter((_, i) => i !== index);
+      onChange(fieldKey, newData);
+    };
+
+    const updateData = (index, field, value) => {
+      const newData = [...data];
+      newData[index] = { ...newData[index], [field]: value };
+      onChange(fieldKey, newData);
+    };
+
+    return (
+      <div className="space-y-3">
+        {data.map((item, index) => (
+          <div key={index} className="flex gap-2">
+            <input
+              type="text"
+              value={item.label || ''}
+              onChange={(e) => updateData(index, 'label', e.target.value)}
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+              placeholder="Label"
+            />
+            <input
+              type="text"
+              value={item.value || ''}
+              onChange={(e) => updateData(index, 'value', e.target.value)}
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+              placeholder="Valeur"
+            />
+            <button
+              type="button"
+              onClick={() => removeData(index)}
+              className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addData}
+          className="flex items-center gap-2 px-4 py-2 bg-[#4EBBBD] text-white rounded-md hover:bg-[#3A9A9C]"
+        >
+          <PlusIcon className="w-4 h-4" />
+          Ajouter une donnée
+        </button>
+      </div>
+    );
+  };
+
+  const renderPerFeatures = (features, onChange, fieldKey) => {
+    const addFeature = () => {
+      const newFeatures = [...features, { title: '', description: '', icon: '', color: '' }];
+      onChange(fieldKey, newFeatures);
+    };
+
+    const removeFeature = (index) => {
+      const newFeatures = features.filter((_, i) => i !== index);
+      onChange(fieldKey, newFeatures);
+    };
+
+    const updateFeature = (index, field, value) => {
+      const newFeatures = [...features];
+      newFeatures[index] = { ...newFeatures[index], [field]: value };
+      onChange(fieldKey, newFeatures);
+    };
+
+    return (
+      <div className="space-y-4">
+        {features.map((feature, index) => (
+          <div key={index} className="border border-gray-300 rounded-lg p-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-3">
+              <input
+                type="text"
+                value={feature.title || ''}
+                onChange={(e) => updateFeature(index, 'title', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Titre"
+              />
+              <input
+                type="text"
+                value={feature.description || ''}
+                onChange={(e) => updateFeature(index, 'description', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Description"
+              />
+              <input
+                type="text"
+                value={feature.icon || ''}
+                onChange={(e) => updateFeature(index, 'icon', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Icône (emoji)"
+              />
+              <input
+                type="text"
+                value={feature.color || ''}
+                onChange={(e) => updateFeature(index, 'color', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Couleur (#hex)"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => removeFeature(index)}
+              className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addFeature}
+          className="flex items-center gap-2 px-4 py-2 bg-[#4EBBBD] text-white rounded-md hover:bg-[#3A9A9C]"
+        >
+          <PlusIcon className="w-4 h-4" />
+          Ajouter une caractéristique
+        </button>
+      </div>
+    );
+  };
+
+  const renderPercoBenefits = (benefits, onChange, fieldKey) => {
+    const addBenefit = () => {
+      const newBenefits = [...benefits, { title: '', description: '', icon: '' }];
+      onChange(fieldKey, newBenefits);
+    };
+
+    const removeBenefit = (index) => {
+      const newBenefits = benefits.filter((_, i) => i !== index);
+      onChange(fieldKey, newBenefits);
+    };
+
+    const updateBenefit = (index, field, value) => {
+      const newBenefits = [...benefits];
+      newBenefits[index] = { ...newBenefits[index], [field]: value };
+      onChange(fieldKey, newBenefits);
+    };
+
+    return (
+      <div className="space-y-4">
+        {benefits.map((benefit, index) => (
+          <div key={index} className="border border-gray-300 rounded-lg p-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+              <input
+                type="text"
+                value={benefit.title || ''}
+                onChange={(e) => updateBenefit(index, 'title', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Titre"
+              />
+              <input
+                type="text"
+                value={benefit.description || ''}
+                onChange={(e) => updateBenefit(index, 'description', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Description"
+              />
+              <input
+                type="text"
+                value={benefit.icon || ''}
+                onChange={(e) => updateBenefit(index, 'icon', e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+                placeholder="Icône (emoji)"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => removeBenefit(index)}
+              className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addBenefit}
+          className="flex items-center gap-2 px-4 py-2 bg-[#4EBBBD] text-white rounded-md hover:bg-[#3A9A9C]"
+        >
+          <PlusIcon className="w-4 h-4" />
+          Ajouter un avantage
+        </button>
+      </div>
+    );
+  };
+
+  const renderOldEnvelopes = (envelopes, onChange, fieldKey) => {
+    const addEnvelope = () => {
+      const newEnvelopes = [...envelopes, { name: '', status: '' }];
+      onChange(fieldKey, newEnvelopes);
+    };
+
+    const removeEnvelope = (index) => {
+      const newEnvelopes = envelopes.filter((_, i) => i !== index);
+      onChange(fieldKey, newEnvelopes);
+    };
+
+    const updateEnvelope = (index, field, value) => {
+      const newEnvelopes = [...envelopes];
+      newEnvelopes[index] = { ...newEnvelopes[index], [field]: value };
+      onChange(fieldKey, newEnvelopes);
+    };
+
+    return (
+      <div className="space-y-3">
+        {envelopes.map((envelope, index) => (
+          <div key={index} className="flex gap-2">
+            <input
+              type="text"
+              value={envelope.name || ''}
+              onChange={(e) => updateEnvelope(index, 'name', e.target.value)}
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+              placeholder="Nom de l'enveloppe"
+            />
+            <input
+              type="text"
+              value={envelope.status || ''}
+              onChange={(e) => updateEnvelope(index, 'status', e.target.value)}
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+              placeholder="Statut"
+            />
+            <button
+              type="button"
+              onClick={() => removeEnvelope(index)}
+              className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addEnvelope}
+          className="flex items-center gap-2 px-4 py-2 bg-[#4EBBBD] text-white rounded-md hover:bg-[#3A9A9C]"
+        >
+          <PlusIcon className="w-4 h-4" />
+          Ajouter une enveloppe
+        </button>
+      </div>
+    );
+  };
+
+  const renderAnalysis = (analysis, onChange, fieldKey) => {
+    const addAnalysis = () => {
+      const newAnalysis = [...analysis, { title: '', description: '' }];
+      onChange(fieldKey, newAnalysis);
+    };
+
+    const removeAnalysis = (index) => {
+      const newAnalysis = analysis.filter((_, i) => i !== index);
+      onChange(fieldKey, newAnalysis);
+    };
+
+    const updateAnalysis = (index, field, value) => {
+      const newAnalysis = [...analysis];
+      newAnalysis[index] = { ...newAnalysis[index], [field]: value };
+      onChange(fieldKey, newAnalysis);
+    };
+
+    return (
+      <div className="space-y-3">
+        {analysis.map((item, index) => (
+          <div key={index} className="flex gap-2">
+            <input
+              type="text"
+              value={item.title || ''}
+              onChange={(e) => updateAnalysis(index, 'title', e.target.value)}
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+              placeholder="Titre"
+            />
+            <input
+              type="text"
+              value={item.description || ''}
+              onChange={(e) => updateAnalysis(index, 'description', e.target.value)}
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD]"
+              placeholder="Description"
+            />
+            <button
+              type="button"
+              onClick={() => removeAnalysis(index)}
+              className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addAnalysis}
+          className="flex items-center gap-2 px-4 py-2 bg-[#4EBBBD] text-white rounded-md hover:bg-[#3A9A9C]"
+        >
+          <PlusIcon className="w-4 h-4" />
+          Ajouter une analyse
+        </button>
+      </div>
+    );
+  };
+
+  const handleFormChange = (key, value) => {
+    setFormData(prev => ({ ...prev, [key]: value }));
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement des sections...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <Image
+                src="/images/logo-azalee.png"
+                alt="Azalee Wealth"
+                width={40}
+                height={40}
+                className="mr-3"
+              />
+              <div>
+                <h1 className="text-xl font-semibold text-gray-900">CMS Plan Retraite</h1>
+                <p className="text-sm text-gray-500">Gestion du contenu de la page plan retraite</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/cms/dashboard')}
+                className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Dashboard
+              </button>
+              <button
+                onClick={() => router.push('/retraite/plan-retraite')}
+                className="px-4 py-2 bg-[#4EBBBD] text-white rounded-md hover:bg-[#3A9A9C] transition-colors"
+              >
+                Voir Page Plan Retraite
+              </button>
+              <button
+                onClick={handleInitializeDefaultContent}
+                className="px-4 py-2 bg-[#B99066] text-white rounded-md hover:bg-[#A67A5A] transition-colors"
+              >
+                Initialiser Contenu
+              </button>
+              <button
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+              >
+                Recharger Site
               </button>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Calculator */}
-          <div className="border border-gray-200 rounded-lg p-4">
-            <h3 className="text-md font-semibold text-[#112033] mb-3">Calculateur</h3>
-            <div className="space-y-3">
-              <div>
-                <label className="block text-sm font-medium text-[#686868] mb-2">Titre du calculateur</label>
-                <input 
-                  value={content.planningPhases.calculator.title} 
-                  onChange={(e) => handleNestedChange('planningPhases', 'calculator', 'title', e.target.value)} 
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-[#686868] mb-2">Champs du calculateur</label>
-                {content.planningPhases.calculator.fields.map((field, index) => (
-                  <div key={index} className="flex gap-2 mb-2">
-                    <input 
-                      value={field.label} 
-                      onChange={(e) => {
-                        const newFields = [...content.planningPhases.calculator.fields];
-                        newFields[index] = { ...field, label: e.target.value };
-                        handleNestedChange('planningPhases', 'calculator', 'fields', newFields);
-                      }} 
-                      placeholder="Label"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                    <input 
-                      value={field.placeholder} 
-                      onChange={(e) => {
-                        const newFields = [...content.planningPhases.calculator.fields];
-                        newFields[index] = { ...field, placeholder: e.target.value };
-                        handleNestedChange('planningPhases', 'calculator', 'fields', newFields);
-                      }} 
-                      placeholder="Placeholder"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                    <button 
-                      onClick={() => {
-                        const newFields = content.planningPhases.calculator.fields.filter((_, i) => i !== index);
-                        handleNestedChange('planningPhases', 'calculator', 'fields', newFields);
-                      }}
-                      className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left: Sections List */}
+          <div className="space-y-6">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Sections de Contenu</h2>
+            
+            {sections.map((section) => (
+              <div key={section.id} className="bg-white rounded-lg shadow-sm border p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">{section.name}</h3>
+                    <p className="text-sm text-gray-500">{section.description}</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {section.hasCmsContent && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <CheckIcon className="w-3 h-3 mr-1" />
+                        CMS
+                      </span>
+                    )}
+                    <button
+                      onClick={() => handleEditSection(section)}
+                      className="p-2 text-gray-400 hover:text-[#4EBBBD] transition-colors"
                     >
-                      Supprimer
+                      <PencilIcon className="w-5 h-5" />
                     </button>
                   </div>
+                </div>
+                
+                {/* Content Preview */}
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-medium text-gray-900 mb-3">Aperçu du contenu :</h4>
+                  <div className="space-y-2">
+                    {Object.entries(section.currentData || {}).map(([key, value]) => (
+                      <div key={key} className="text-sm">
+                        <span className="font-medium text-gray-700">{key}:</span>
+                        <div className="text-gray-600 mt-1">
+                          {Array.isArray(value) ? (
+                            <ul className="list-disc list-inside space-y-1">
+                              {value.map((item, index) => (
+                                <li key={index}>
+                                  {typeof item === 'object' ? (
+                                    <span>{item.title || item.name || item.text || JSON.stringify(item)}</span>
+                                  ) : (
+                                    <span>{item}</span>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : typeof value === 'object' ? (
+                            <span>{value.title || value.name || value.text || JSON.stringify(value)}</span>
+                          ) : (
+                            <span>{value}</span>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Right: Edit Form */}
+          {editingSection && (
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-gray-900">
+                  Modifier : {editingSection.name}
+                </h2>
+                <button
+                  onClick={() => setEditingSection(null)}
+                  className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <XMarkIcon className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={(e) => { e.preventDefault(); handleSaveSection(); }} className="space-y-6">
+                {editingSection.fields.map((field) => (
+                  <div key={field.key}>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {field.label}
+                      {field.required && <span className="text-red-500 ml-1">*</span>}
+                    </label>
+                    {renderField(field, formData[field.key], handleFormChange)}
+                    {field.help && (
+                      <p className="mt-1 text-sm text-gray-500">{field.help}</p>
+                    )}
+                  </div>
                 ))}
-                <button 
-                  onClick={() => {
-                    const newFields = [...content.planningPhases.calculator.fields, { label: '', placeholder: '' }];
-                    handleNestedChange('planningPhases', 'calculator', 'fields', newFields);
-                  }}
-                  className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-                >
-                  Ajouter un champ
-                </button>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-[#686868] mb-2">Bouton du calculateur</label>
-                <input 
-                  value={content.planningPhases.calculator.button} 
-                  onChange={(e) => handleNestedChange('planningPhases', 'calculator', 'button', e.target.value)} 
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-[#686868] mb-2">Titre du résultat</label>
-                  <input 
-                    value={content.planningPhases.calculator.result.title} 
-                    onChange={(e) => handleNestedChange('planningPhases', 'calculator', 'result', { ...content.planningPhases.calculator.result, title: e.target.value })} 
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  />
+
+                <div className="flex items-center justify-end space-x-4 pt-6 border-t">
+                  <button
+                    type="button"
+                    onClick={() => setEditingSection(null)}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={saving}
+                    className="px-6 py-2 bg-[#4EBBBD] text-white rounded-md hover:bg-[#3A9A9C] transition-colors disabled:opacity-50"
+                  >
+                    {saving ? 'Sauvegarde...' : 'Sauvegarder'}
+                  </button>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-[#686868] mb-2">Valeur du résultat</label>
-                  <input 
-                    value={content.planningPhases.calculator.result.value} 
-                    onChange={(e) => handleNestedChange('planningPhases', 'calculator', 'result', { ...content.planningPhases.calculator.result, value: e.target.value })} 
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre du résultat</label>
-                  <input 
-                    value={content.planningPhases.calculator.result.subtitle} 
-                    onChange={(e) => handleNestedChange('planningPhases', 'calculator', 'result', { ...content.planningPhases.calculator.result, subtitle: e.target.value })} 
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  />
-                </div>
-              </div>
+              </form>
             </div>
-          </div>
+          )}
         </div>
       </div>
-
-      {/* Solutions Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Solutions
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-            <input 
-              value={content.solutions.title} 
-              onChange={(e) => handleChange('solutions', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Cartes de solutions</label>
-            {content.solutions.cards.map((card, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Icône</label>
-                    <input 
-                      value={card.icon} 
-                      onChange={(e) => handleNestedArrayChange('solutions', 'cards', index, { ...card, icon: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Titre</label>
-                    <input 
-                      value={card.title} 
-                      onChange={(e) => handleNestedArrayChange('solutions', 'cards', index, { ...card, title: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <textarea 
-                      value={card.description} 
-                      onChange={(e) => handleNestedArrayChange('solutions', 'cards', index, { ...card, description: e.target.value })} 
-                      rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newCards = content.solutions.cards.filter((_, i) => i !== index);
-                    handleChange('solutions', 'cards', newCards);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cette carte
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newCards = [...content.solutions.cards, { icon: '', title: '', description: '' }];
-                handleChange('solutions', 'cards', newCards);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une carte
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Expert Advice Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Conseil Expert
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-            <input 
-              value={content.expertAdvice.title} 
-              onChange={(e) => handleChange('expertAdvice', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Éléments de conseil</label>
-            {content.expertAdvice.items.map((item, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Icône</label>
-                    <input 
-                      value={item.icon} 
-                      onChange={(e) => handleNestedArrayChange('expertAdvice', 'items', index, { ...item, icon: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Titre</label>
-                    <input 
-                      value={item.title} 
-                      onChange={(e) => handleNestedArrayChange('expertAdvice', 'items', index, { ...item, title: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <textarea 
-                      value={item.description} 
-                      onChange={(e) => handleNestedArrayChange('expertAdvice', 'items', index, { ...item, description: e.target.value })} 
-                      rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newItems = content.expertAdvice.items.filter((_, i) => i !== index);
-                    handleChange('expertAdvice', 'items', newItems);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cet élément
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.expertAdvice.items, { icon: '', title: '', description: '' }];
-                handleChange('expertAdvice', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un élément
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section CTA
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.cta.title} 
-              onChange={(e) => handleChange('cta', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea 
-              value={content.cta.description} 
-              onChange={(e) => handleChange('cta', 'description', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Bouton</label>
-            <input 
-              value={content.cta.button} 
-              onChange={(e) => handleChange('cta', 'button', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 bg-[#4EBBBD] text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          <span className="font-medium">Contenu sauvegardé avec succès !</span>
-        </div>
-      )}
     </div>
   );
 }

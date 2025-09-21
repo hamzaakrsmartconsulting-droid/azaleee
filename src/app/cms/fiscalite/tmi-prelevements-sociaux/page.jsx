@@ -1,623 +1,320 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
-export default function TMIPrelevementsSociauxCMSPage() {
-  const [content, setContent] = useState({
-    hero: {
-      title: "TMI et prélèvements sociaux",
-      subtitle: "Comprenez votre Taux Marginal d'Imposition (TMI) et les prélèvements sociaux. Découvrez comment ils impactent vos revenus et vos investissements.",
-      ctaPrimary: "Calculer mon TMI",
-      ctaSecondary: "Télécharger le guide"
-    },
-    tmi: {
-      title: "Taux Marginal d'Imposition (TMI)",
-      description: "Le TMI est le taux d'imposition qui s'applique à votre dernière tranche de revenus imposables.",
-      explanation: "Il détermine le taux d'imposition sur vos revenus supplémentaires et influence vos décisions d'investissement.",
-      tranches: [
-        {
-          seuil: "Jusqu'à 11 294 €",
-          taux: "0%",
-          description: "Seuil de non-imposition"
-        },
-        {
-          seuil: "De 11 295 € à 28 797 €",
-          taux: "11%",
-          description: "Première tranche imposable"
-        },
-        {
-          seuil: "De 28 798 € à 82 341 €",
-          taux: "30%",
-          description: "Tranche intermédiaire"
-        },
-        {
-          seuil: "De 82 342 € à 177 106 €",
-          taux: "41%",
-          description: "Tranche élevée"
-        },
-        {
-          seuil: "Au-delà de 177 106 €",
-          taux: "45%",
-          description: "Tranche maximale"
-        }
+export default function CmsTmiPrelevementsSociauxPage() {
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingSection, setEditingSection] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState('');
+  const router = useRouter();
+
+  // TMI & Prélèvements Sociaux sections configuration
+  const tmiPrelevementsSections = [
+    {
+      id: 'hero',
+      name: 'Section Hero',
+      description: 'Titre principal, sous-titre et description',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'button', label: 'Texte du Bouton', type: 'text' },
+        { key: 'image', label: 'Image', type: 'text' }
       ]
     },
-    prelevementsSociaux: {
-      title: "Prélèvements sociaux",
-      description: "Les prélèvements sociaux s'ajoutent à l'impôt sur le revenu et s'appliquent sur les revenus du capital.",
-      taux: "17,2%",
-      composition: [
-        "CSG (Contribution Sociale Généralisée) : 9,2%",
-        "CRDS (Contribution au Remboursement de la Dette Sociale) : 0,5%",
-        "Prélèvement de solidarité : 7,5%"
-      ],
-      application: [
-        "Dividendes et intérêts",
-        "Plus-values mobilières",
-        "Revenus fonciers",
-        "Certains revenus de placement"
+    {
+      id: 'definition',
+      name: 'Définition TMI',
+      description: 'Qu\'est-ce que la TMI',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'tableau', label: 'Tableau TMI (JSON)', type: 'textarea' },
+        { key: 'precision', label: 'Précision', type: 'textarea' }
       ]
     },
-    impact: {
-      title: "Impact sur vos revenus",
-      description: "Le TMI et les prélèvements sociaux ont un impact direct sur la rentabilité de vos investissements.",
-      examples: [
-        {
-          scenario: "Revenus de 50 000 €",
-          tmi: "30%",
-          prelevements: "17,2%",
-          total: "47,2%",
-          explication: "TMI 30% + prélèvements sociaux 17,2% = 47,2% de prélèvements totaux"
-        },
-        {
-          scenario: "Revenus de 100 000 €",
-          tmi: "41%",
-          prelevements: "17,2%",
-          total: "58,2%",
-          explication: "TMI 41% + prélèvements sociaux 17,2% = 58,2% de prélèvements totaux"
-        }
+    {
+      id: 'prelevementsSociaux',
+      name: 'Prélèvements Sociaux',
+      description: 'Les prélèvements sociaux (17,2%)',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'details', label: 'Détails (JSON)', type: 'textarea' }
       ]
     },
-    optimisation: {
-      title: "Stratégies d'optimisation",
-      strategies: [
-        {
-          title: "Utilisation du PEA",
-          description: "Exonération totale des prélèvements sociaux",
-          avantage: "Aucun prélèvement sur les plus-values et dividendes"
-        },
-        {
-          title: "Assurance-vie",
-          description: "Exonération partielle après 8 ans",
-          avantage: "Fiscalité favorable à long terme"
-        },
-        {
-          title: "Déficit foncier",
-          description: "Imputation sur les autres revenus",
-          avantage: "Réduction de l'assiette imposable"
-        },
-        {
-          title: "Donations",
-          description: "Réduction de l'assiette imposable",
-          avantage: "Optimisation de la transmission"
-        }
+    {
+      id: 'impact',
+      name: 'Impact sur Investissements',
+      description: 'Impact sur vos investissements',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'examples', label: 'Exemples (JSON)', type: 'textarea' }
       ]
     },
-    declaration: {
-      title: "Déclaration et calcul",
-      procedure: [
-        "Calcul automatique par l'administration fiscale",
-        "Déclaration de tous les revenus",
-        "Application des tranches progressives",
-        "Calcul des prélèvements sociaux"
-      ],
-      documents: [
-        "Relevés de salaires",
-        "Attestations de revenus",
-        "Relevés bancaires",
-        "Justificatifs de déductions"
+    {
+      id: 'cta',
+      name: 'Section CTA',
+      description: 'Call-to-action final',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'buttonText', label: 'Texte du Bouton', type: 'text' }
       ]
-    },
-    cta: {
-      title: "Besoin d'aide pour optimiser votre fiscalité ?",
-      description: "Nos experts vous accompagnent dans la compréhension et l'optimisation de votre TMI et de vos prélèvements sociaux.",
-      buttonText: "Prendre rendez-vous"
     }
-  });
+  ];
 
-  const [isEditing, setIsEditing] = useState(false);
+  // Load content from official page
+  const loadContent = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/pages/tmi-prelevements-sociaux');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.content && Object.keys(data.content).length > 0) {
+          setFormData(data.content);
+        } else {
+          // Load default content structure
+          const defaultContent = {
+            hero: {
+              title: "Tranche Marginale d'Imposition (TMI) + Prélèvements sociaux",
+              subtitle: "Ce que tout investisseur doit comprendre",
+              description: "La fiscalité des placements dépend en grande partie de votre Tranche Marginale d'Imposition (TMI). Couplée aux prélèvements sociaux (17,2%), elle conditionne le rendement net de vos investissements.",
+              button: "Calculer ma TMI",
+              image: "/images/fiscalite-tmi-hero.jpg"
+            },
+            definition: {
+              title: "Qu'est-ce que la TMI ?",
+              description: "La TMI correspond au taux d'imposition marginal auquel sont soumis vos derniers euros de revenu imposable.",
+              tableau: JSON.stringify({
+                headers: ["Revenu imposable (2024)", "Taux TMI"],
+                rows: [
+                  { revenu: "Jusqu'à 11 294 €", taux: "0 %" },
+                  { revenu: "De 11 295 à 28 797 €", taux: "11 %" },
+                  { revenu: "De 28 798 à 82 341 €", taux: "30 %" },
+                  { revenu: "De 82 342 à 177 106 €", taux: "41 %" },
+                  { revenu: "Au-delà de 177 106 €", taux: "45 %" }
+                ]
+              }),
+              precision: "Il s'agit d'un taux marginal, et non global : seule la fraction de revenu correspondante est taxée à ce taux."
+            },
+            prelevementsSociaux: {
+              title: "Prélèvements sociaux (17,2%)",
+              description: "Les prélèvements sociaux s'ajoutent à l'impôt sur le revenu pour certains placements",
+              details: JSON.stringify([
+                "CSG (Contribution Sociale Généralisée) : 9,2%",
+                "CRDS (Contribution au Remboursement de la Dette Sociale) : 0,5%",
+                "Prélèvement social : 7,5%",
+                "Total : 17,2%"
+              ])
+            },
+            impact: {
+              title: "Impact sur vos investissements",
+              description: "La TMI et les prélèvements sociaux déterminent le rendement net de vos placements",
+              examples: JSON.stringify([
+                {
+                  title: "Placement à 4% avec TMI 30%",
+                  description: "Rendement net : 4% - (4% × 30%) - (4% × 17,2%) = 2,11%"
+                },
+                {
+                  title: "Placement à 4% avec TMI 41%",
+                  description: "Rendement net : 4% - (4% × 41%) - (4% × 17,2%) = 1,67%"
+                }
+              ])
+            },
+            cta: {
+              title: "Besoin d'aide pour optimiser votre fiscalité ?",
+              description: "Nos experts vous accompagnent pour comprendre et optimiser votre situation fiscale.",
+              buttonText: "Demander une consultation gratuite"
+            }
+          };
+          setFormData(defaultContent);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading content:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const savedContent = localStorage.getItem('tmi-prelevements-sociaux-cms-content');
-    if (savedContent) {
-      setContent(JSON.parse(savedContent));
-    }
+    loadContent();
   }, []);
 
-  const saveContent = (newContent) => {
-    setContent(newContent);
-    localStorage.setItem('tmi-prelevements-sociaux-cms-content', JSON.stringify(newContent));
-    window.dispatchEvent(new CustomEvent('contentUpdated', { detail: { page: 'tmi-prelevements-sociaux', content: newContent } }));
-  };
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+      const response = await fetch('/api/cms/content/tmi-prelevements-sociaux', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-  const renderEditableField = (section, field, label, type = "text") => {
-    if (isEditing) {
-      if (type === "textarea") {
-        return (
-          <textarea
-            value={content[section][field]}
-            onChange={(e) => {
-              const newContent = { ...content };
-              newContent[section][field] = e.target.value;
-              saveContent(newContent);
-            }}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            rows={3}
-          />
-        );
+      if (response.ok) {
+        setMessage('Contenu sauvegardé avec succès !');
+        setTimeout(() => setMessage(''), 3000);
+      } else {
+        setMessage('Erreur lors de la sauvegarde');
+        setTimeout(() => setMessage(''), 3000);
       }
-      return (
-        <input
-          type={type}
-          value={content[section][field]}
-          onChange={(e) => {
-            const newContent = { ...content };
-            newContent[section][field] = e.target.value;
-            saveContent(newContent);
-          }}
-          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-        />
-      );
+    } catch (error) {
+      console.error('Error saving content:', error);
+      setMessage('Erreur lors de la sauvegarde');
+      setTimeout(() => setMessage(''), 3000);
+    } finally {
+      setSaving(false);
     }
-    return <span>{content[section][field]}</span>;
   };
 
-  const renderEditableList = (section, field, label) => {
-    if (isEditing) {
-      return (
-        <div className="space-y-2">
-          {content[section][field].map((item, index) => (
-            <input
-              key={index}
-              value={item}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          ))}
-        </div>
-      );
-    }
-    return (
-      <div className="space-y-2">
-        {content[section][field].map((item, index) => (
-          <p key={index} className="text-[#686868]">• {item}</p>
-        ))}
-      </div>
-    );
+  const updateContent = (sectionId, fieldKey, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [sectionId]: {
+        ...prev[sectionId],
+        [fieldKey]: value
+      }
+    }));
   };
 
-  const renderEditableCard = (section, field, index, titleField, descriptionField) => {
-    if (isEditing) {
-      return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input
-              value={content[section][field][index][titleField]}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index][titleField] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea
-              value={content[section][field][index][descriptionField]}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index][descriptionField] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              rows={3}
-            />
-          </div>
-        </div>
-      );
-    }
+  if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-[#112033] text-lg font-semibold mb-3">{content[section][field][index][titleField]}</h3>
-        <p className="text-[#686868]">{content[section][field][index][descriptionField]}</p>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#4EBBBD] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Chargement du contenu...</p>
+        </div>
       </div>
     );
-  };
-
-  const renderEditableTranche = (section, field, index, seuilField, tauxField, descriptionField) => {
-    if (isEditing) {
-      return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Seuil</label>
-              <input
-                value={content[section][field][index][seuilField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][seuilField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Taux</label>
-              <input
-                value={content[section][field][index][tauxField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][tauxField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              <input
-                value={content[section][field][index][descriptionField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][descriptionField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-[#112033] text-lg font-semibold">{content[section][field][index][seuilField]}</h3>
-          <span className="text-2xl font-bold text-[#4EBBBD]">{content[section][field][index][tauxField]}</span>
-        </div>
-        <p className="text-[#686868]">{content[section][field][index][descriptionField]}</p>
-      </div>
-    );
-  };
-
-  const renderEditableImpact = (section, field, index, scenarioField, tmiField, prelevementsField, totalField, explicationField) => {
-    if (isEditing) {
-      return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Scénario</label>
-              <input
-                value={content[section][field][index][scenarioField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][scenarioField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">TMI</label>
-              <input
-                value={content[section][field][index][tmiField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][tmiField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Prélèvements sociaux</label>
-              <input
-                value={content[section][field][index][prelevementsField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][prelevementsField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Total</label>
-              <input
-                value={content[section][field][index][totalField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][totalField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-[#686868] mb-2">Explication</label>
-              <input
-                value={content[section][field][index][explicationField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][explicationField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-[#112033] text-lg font-semibold mb-3">{content[section][field][index][scenarioField]}</h3>
-        <div className="grid grid-cols-3 gap-4 mb-3">
-          <div className="text-center">
-            <p className="text-sm text-[#686868]">TMI</p>
-            <p className="text-xl font-bold text-[#4EBBBD]">{content[section][field][index][tmiField]}</p>
-          </div>
-          <div className="text-center">
-            <p className="text-sm text-[#686868]">Prélèvements</p>
-            <p className="text-xl font-bold text-[#4EBBBD]">{content[section][field][index][prelevementsField]}</p>
-          </div>
-          <div className="text-center">
-            <p className="text-sm text-[#686868]">Total</p>
-            <p className="text-2xl font-bold text-[#112033]">{content[section][field][index][totalField]}</p>
-          </div>
-        </div>
-        <p className="text-[#686868] text-sm">{content[section][field][index][explicationField]}</p>
-      </div>
-    );
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-[#112033]">CMS - TMI et prélèvements sociaux</h1>
-            <button
-              onClick={() => setIsEditing(!isEditing)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                isEditing
-                  ? "bg-[#4EBBBD] text-white hover:bg-[#3DA8AA]"
-                  : "bg-[#B99066] text-white hover:bg-[#A67A5A]"
-              }`}
-            >
-              {isEditing ? "Sauvegarder" : "Modifier"}
-            </button>
-          </div>
-          <p className="text-[#686868]">
-            Gérez le contenu de la page TMI et prélèvements sociaux. Modifiez les informations sur la fiscalité selon vos besoins.
-          </p>
-        </div>
-
-        {/* Hero Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📊</span>
-            Section Hero
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-              {renderEditableField("hero", "title", "Titre principal")}
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/cms/dashboard')}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ← Retour au tableau de bord
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900">CMS - TMI & Prélèvements Sociaux</h1>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
-              {renderEditableField("hero", "subtitle", "Sous-titre", "textarea")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton CTA principal</label>
-              {renderEditableField("hero", "ctaPrimary", "Bouton CTA principal")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton CTA secondaire</label>
-              {renderEditableField("hero", "ctaSecondary", "Bouton CTA secondaire")}
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => window.open('/fiscalite/tmi-prelevements-sociaux', '_blank')}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                Voir la page officielle
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="px-4 py-2 text-sm font-medium text-white bg-[#4EBBBD] border border-transparent rounded-md hover:bg-[#3DA8AA] disabled:opacity-50"
+              >
+                {saving ? 'Sauvegarde...' : 'Sauvegarder'}
+              </button>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* TMI Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📈</span>
-            Taux Marginal d'Imposition
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("tmi", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("tmi", "description", "Description", "textarea")}
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-[#686868] mb-2">Explication</label>
-              {renderEditableField("tmi", "explanation", "Explication", "textarea")}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Tranches d'imposition</label>
-            <div className="space-y-4">
-              {content.tmi.tranches.map((tranche, index) => (
-                <div key={index}>
-                  <h3 className="text-sm font-medium text-[#686868] mb-2">Tranche {index + 1}</h3>
-                  {renderEditableTranche("tmi", "tranches", index, "seuil", "taux", "description")}
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* Message */}
+      {message && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mx-4 mt-4 rounded">
+          {message}
         </div>
+      )}
 
-        {/* Prélèvements sociaux Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">💰</span>
-            Prélèvements sociaux
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("prelevementsSociaux", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("prelevementsSociaux", "description", "Description", "textarea")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Taux</label>
-              {renderEditableField("prelevementsSociaux", "taux", "Taux")}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Composition</label>
-            {renderEditableList("prelevementsSociaux", "composition", "Composition")}
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Application</label>
-            {renderEditableList("prelevementsSociaux", "application", "Application")}
-          </div>
-        </div>
-
-        {/* Impact Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📊</span>
-            Impact sur vos revenus
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("impact", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("impact", "description", "Description", "textarea")}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Exemples d'impact</label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {content.impact.examples.map((example, index) => (
-                <div key={index}>
-                  <h3 className="text-sm font-medium text-[#686868] mb-2">Exemple {index + 1}</h3>
-                  {renderEditableImpact("impact", "examples", index, "scenario", "tmi", "prelevements", "total", "explication")}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Optimisation Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">🎯</span>
-            Stratégies d'optimisation
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("optimisation", "title", "Titre de section")}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {content.optimisation.strategies.map((strategy, index) => (
-              <div key={index}>
-                <h3 className="text-sm font-medium text-[#686868] mb-2">Stratégie {index + 1}</h3>
-                {renderEditableCard("optimisation", "strategies", index, "title", "description")}
-                <div className="mt-2">
-                  <label className="block text-xs text-[#686868] mb-1">Avantage</label>
-                  <input
-                    value={content.optimisation.strategies[index].avantage}
-                    onChange={(e) => {
-                      const newContent = { ...content };
-                      newContent.optimisation.strategies[index].avantage = e.target.value;
-                      saveContent(newContent);
-                    }}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                  />
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Sections List */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h2 className="text-lg font-medium text-gray-900">Sections</h2>
+              </div>
+              <div className="p-6">
+                <div className="space-y-2">
+                  {tmiPrelevementsSections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => setEditingSection(section.id)}
+                      className={`w-full text-left px-4 py-3 rounded-lg border transition-colors ${
+                        editingSection === section.id
+                          ? 'border-[#4EBBBD] bg-[#4EBBBD]/10 text-[#4EBBBD]'
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="font-medium">{section.name}</div>
+                      <div className="text-sm text-gray-500">{section.description}</div>
+                    </button>
+                  ))}
                 </div>
               </div>
-            ))}
+            </div>
+          </div>
+
+          {/* Edit Form */}
+          <div className="lg:col-span-2">
+            {editingSection ? (
+              <div className="bg-white rounded-lg shadow">
+                <div className="px-6 py-4 border-b border-gray-200">
+                  <h2 className="text-lg font-medium text-gray-900">
+                    {tmiPrelevementsSections.find(s => s.id === editingSection)?.name}
+                  </h2>
+                </div>
+                <div className="p-6">
+                  <div className="space-y-6">
+                    {tmiPrelevementsSections.find(s => s.id === editingSection)?.fields.map((field) => (
+                      <div key={field.key}>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {field.label}
+                        </label>
+                        {field.type === 'textarea' ? (
+                          <textarea
+                            value={formData[editingSection]?.[field.key] || ''}
+                            onChange={(e) => updateContent(editingSection, field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                            rows={4}
+                          />
+                        ) : (
+                          <input
+                            type={field.type}
+                            value={formData[editingSection]?.[field.key] || ''}
+                            onChange={(e) => updateContent(editingSection, field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-white rounded-lg shadow p-8 text-center">
+                <div className="text-gray-500">
+                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <h3 className="mt-2 text-sm font-medium text-gray-900">Aucune section sélectionnée</h3>
+                  <p className="mt-1 text-sm text-gray-500">Sélectionnez une section à gauche pour commencer l'édition.</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Declaration Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📝</span>
-            Déclaration et calcul
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("declaration", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Procédure</label>
-              {renderEditableList("declaration", "procedure", "Procédure")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Documents nécessaires</label>
-              {renderEditableList("declaration", "documents", "Documents nécessaires")}
-            </div>
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">🚀</span>
-            Section Appel à l'action
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("cta", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("cta", "description", "Description", "textarea")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Texte du bouton</label>
-              {renderEditableField("cta", "buttonText", "Texte du bouton")}
-            </div>
-          </div>
-        </div>
-
-        {/* Preview Section */}
-        {isEditing && (
-          <div className="bg-[#F0F9FF] rounded-lg p-6 border border-[#4EBBBD]">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Aperçu des modifications</h3>
-            <div className="text-sm text-[#686868] space-y-2">
-              <p><strong>Hero :</strong> {content.hero.title}</p>
-              <p><strong>TMI :</strong> {content.tmi.title}</p>
-              <p><strong>Prélèvements sociaux :</strong> {content.prelevementsSociaux.title}</p>
-              <p><strong>Impact :</strong> {content.impact.title}</p>
-              <p><strong>Optimisation :</strong> {content.optimisation.title}</p>
-              <p><strong>Déclaration :</strong> {content.declaration.title}</p>
-              <p><strong>CTA :</strong> {content.cta.title}</p>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

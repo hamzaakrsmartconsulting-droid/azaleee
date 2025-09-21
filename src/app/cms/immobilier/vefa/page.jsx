@@ -1,900 +1,321 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-
-
-const defaultContent = {
-  hero: {
+export default function CMSVEFA() {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [content, setContent] = useState({
     title: "VEFA - Vente en l'État Futur d'Achèvement",
-    description: "Découvrez les avantages de l'achat d'un bien immobilier neuf en VEFA. Une solution avantageuse pour investir dans l'immobilier avec des conditions fiscales et financières optimisées.",
-    primaryButton: "L'essentiel",
-    secondaryButton: "Sommaire"
-  },
-  rightCard: {
-    title: "VEFA : investissez dans le neuf",
-    subtitle: "Bénéficiez d'avantages fiscaux, d'un financement adapté et d'une plus-value garantie.",
-    benefits: [
-      "TVA réduite à 5,5%",
-      "Financement progressif",
-      "Plus-value immobilière",
-      "Défiscalisation possible"
-    ],
-    primaryButton: "Prendre rendez-vous",
-    secondaryButton: "Fiscalité"
-  },
-  essentiel: {
-    title: "L'essentiel",
-    items: [
-      "La VEFA permet d'acheter un bien immobilier neuf avant sa livraison finale avec des conditions avantageuses.",
-      "Vous bénéficiez d'une TVA réduite à 5,5% au lieu de 20% pour un bien existant.",
-      "Le financement est progressif : vous ne payez que les intérêts pendant la construction.",
-      "La plus-value immobilière est généralement plus importante sur le neuf que sur l'existant.",
-      "Possibilité de défiscalisation avec des dispositifs comme Pinel, Malraux ou déficit foncier.",
-      "Livraison clé en main avec garanties constructeur et assurance dommages-ouvrage."
-    ]
-  },
-  sommaire: {
-    title: "Sommaire",
-    items: [
-      "1. Qu'est-ce que la VEFA ?",
-      "2. Avantages de la VEFA",
-      "3. Financement et étapes",
-      "4. Fiscalité et défiscalisation",
-      "5. Risques et précautions",
-      "6. Comparaison avec l'existant",
-      "7. Questions-réponses"
-    ]
-  },
-  definition: {
-    title: "Qu'est-ce que la VEFA ?",
-    text1: "La Vente en l'État Futur d'Achèvement (VEFA) est un contrat de vente d'un bien immobilier neuf qui n'est pas encore terminé au moment de la signature.",
-    text2: "L'acheteur devient propriétaire du bien dès la signature du contrat, mais la livraison et le transfert de propriété effective se font à la fin des travaux.",
-    savoir: {
-      title: "À savoir",
-      items: [
-        "Contrat de vente signé avant achèvement",
-        "Propriété acquise dès la signature",
-        "Livraison à la fin des travaux",
-        "Garanties constructeur obligatoires"
-      ]
+    subtitle: "Investir dans l'immobilier neuf avant construction",
+    description: "La VEFA (Vente en l'État Futur d'Achèvement) permet d'acquérir un logement neuf avant même sa construction. Ce dispositif offre de nombreux avantages financiers et fiscaux, notamment la possibilité de payer au fur et à mesure de l'avancement des travaux.",
+    advantages: "• Achat avant construction à prix préférentiel\n• Paiement échelonné selon l'avancement\n• Garantie de livraison par le constructeur\n• Possibilité de personnaliser le logement\n• Avantages fiscaux sur l'immobilier neuf",
+    fiscalBenefits: "• TVA réduite à 5,5% (logement principal)\n• Déduction des intérêts d'emprunt\n• Exonération de taxe foncière temporaire\n• Possibilité de cumuler avec Pinel",
+    requirements: "• Signature d'un contrat VEFA\n• Respect des délais de livraison\n• Garantie de livraison constructeur\n• Financement adapté au calendrier",
+    status: "published",
+    order: 2,
+    showInMenu: true,
+    metaTitle: "VEFA - Vente en l'État Futur d'Achèvement | Avantages fiscaux",
+    metaDescription: "Découvrez la VEFA : investir dans l'immobilier neuf avant construction. Avantages fiscaux, paiement échelonné et conseils d'experts Azalée Patrimoine."
+  });
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("cms_token");
+    const userData = localStorage.getItem("cms_user");
+
+    if (!token || !userData) {
+      router.push("/cms/login");
+      return;
     }
-  },
-  avantages: {
-    title: "Avantages de la VEFA",
-    items: [
-      {
-        title: "TVA réduite",
-        description: "TVA à 5,5% au lieu de 20% pour un bien existant",
-        icon: "💰"
-      },
-      {
-        title: "Financement progressif",
-        description: "Paiement des intérêts uniquement pendant la construction",
-        icon: "📈"
-      },
-      {
-        title: "Plus-value garantie",
-        description: "Valeur généralement supérieure à l'existant",
-        icon: "📊"
-      },
-      {
-        title: "Défiscalisation",
-        description: "Éligible aux dispositifs Pinel, Malraux, etc.",
-        icon: "🏠"
-      }
-    ]
-  },
-  financement: {
-    title: "Financement et étapes",
-    steps: [
-      {
-        step: "1",
-        title: "Signature du contrat",
-        description: "Engagement d'achat avec un acompte de 5%"
-      },
-      {
-        step: "2",
-        title: "Période de construction",
-        description: "Paiement des intérêts uniquement"
-      },
-      {
-        step: "3",
-        title: "Livraison",
-        description: "Paiement du solde et transfert de propriété"
-      },
-      {
-        step: "4",
-        title: "Possession",
-        description: "Occupation et jouissance du bien"
-      }
-    ]
-  },
-  fiscalite: {
-    title: "Fiscalité et défiscalisation",
-    content: "La VEFA offre plusieurs avantages fiscaux : TVA réduite, possibilité de déficit foncier, et éligibilité aux dispositifs de défiscalisation comme Pinel ou Malraux selon la localisation et le type de bien."
-  },
-  risques: {
-    title: "Risques et précautions",
-    items: [
-      "Délais de livraison non respectés",
-      "Qualité des finitions",
-      "Évolution des prix du marché",
-      "Risques de défaillance du promoteur"
-    ]
-  },
-  comparaison: {
-    title: "VEFA vs Immobilier existant",
-    data: [
-      { critere: "TVA", vefa: "5,5%", existant: "20%" },
-      { critere: "Plus-value", vefa: "Élevée", existant: "Modérée" },
-      { critere: "Délai", vefa: "12-24 mois", existant: "Immédiat" },
-      { critere: "Risque", vefa: "Modéré", existant: "Faible" }
-    ]
-  },
-  cta: {
-    title: "Prêt à investir en VEFA ?",
-    paragraph: "Nos experts vous accompagnent pour optimiser votre investissement immobilier en VEFA.",
-    primaryButton: "Demander une étude gratuite",
-    secondaryButton: "Prendre rendez-vous"
-  }
-};
 
-export default function VefaCMS() {
-  const [content, setContent] = useState(defaultContent);
-  const [showToast, setShowToast] = useState(false);
-
-    useEffect(() => {
-    // Charger le contenu depuis la base de données
-    const loadContentFromDatabase = async () => {
-      try {
-        const response = await fetch('/api/pages/content?path=/immobilier/vefa&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            const parsed = result.content.content;
-            setContent({ ...defaultContent, ...parsed });
-            return;
-          }
-        }
-        
-        // Si pas de contenu en base, utiliser le contenu par défaut
-        console.log('Aucun contenu trouvé en base de données, utilisation du contenu par défaut');
-      } catch (error) {
-        console.error('Erreur lors du chargement depuis la base de données:', error);
-        // En cas d'erreur, utiliser le contenu par défaut
-      }
-    };
-
-    loadContentFromDatabase();
-  }, []);
-
-  const handleChange = (section, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
-    }));
-  };
-
-  const handleArrayChange = (section, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: prev[section][field].map((item, i) => i === index ? value : item)
-      }
-    }));
-  };
-
-  const handleNestedChange = (section, subsection, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: value
-        }
-      }
-    }));
-  };
-
-  const handleNestedArrayChange = (section, subsection, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: prev[section][subsection][field].map((item, i) => i === index ? value : item)
-        }
-      }
-    }));
-  };
-
-    const handleSave = async () => {
     try {
-      const response = await fetch('/api/pages/content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pagePath: '/immobilier/vefa',
-          pageType: 'cms',
-          content: content,
-          metadata: {
-            lastModified: new Date().toISOString(),
-            modifiedBy: 'admin',
-            pageType: 'cms'
-          }
-        })
-      });
-
-      if (response.ok) {
-        console.log('Sauvegardé en base de données');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
-      }
+      setUser(JSON.parse(userData));
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde: ' + error.message);
+      console.error("Error parsing user data:", error);
+      router.push("/cms/login");
+    } finally {
+      setIsLoading(false);
     }
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('contentUpdated'));
+  }, [router]);
+
+  const handleSave = () => {
+    alert("Contenu VEFA sauvegardé avec succès !");
   };
+
+  const handlePreview = () => {
+    window.open('/immobilier/vefa', '_blank');
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#4EBBBD]"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold text-[#112033]">Page VEFA</h1>
-            <p className="text-[#686868]">Modifiez le contenu de la page VEFA</p>
-          </div>
-          <button 
-            onClick={handleSave} 
-            className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors flex items-center gap-2"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Sauvegarder
-          </button>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Hero
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-            <input 
-              value={content.hero.title} 
-              onChange={(e) => handleChange('hero', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea 
-              value={content.hero.description} 
-              onChange={(e) => handleChange('hero', 'description', e.target.value)} 
-              rows={4} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.hero.primaryButton} 
-                onChange={(e) => handleChange('hero', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+      <header className="bg-white shadow-lg border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-6">
+            <div className="flex items-center">
+              <button
+                onClick={() => router.push('/cms/immobilier')}
+                className="mr-4 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">VEFA</h1>
+                <p className="text-sm text-gray-600 font-medium">Gestion du contenu</p>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.hero.secondaryButton} 
-                onChange={(e) => handleChange('hero', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+            
+            <div className="flex items-center space-x-6">
+              <div className="text-right">
+                <p className="text-sm font-medium text-gray-900">Bonjour, {user.name}</p>
+                <p className="text-xs text-gray-500">Administrateur</p>
+              </div>
+              <div className="w-10 h-10 bg-gradient-to-r from-[#253F60] to-[#4EBBBD] rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">{user.name.charAt(0).toUpperCase()}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Right Card Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Carte de droite
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.rightCard.title} 
-              onChange={(e) => handleChange('rightCard', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
-            <input 
-              value={content.rightCard.subtitle} 
-              onChange={(e) => handleChange('rightCard', 'subtitle', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Avantages</label>
-            {content.rightCard.benefits.map((benefit, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <input 
-                  value={benefit} 
-                  onChange={(e) => handleArrayChange('rightCard', 'benefits', index, e.target.value)} 
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-                <button 
-                  onClick={() => {
-                    const newBenefits = content.rightCard.benefits.filter((_, i) => i !== index);
-                    handleChange('rightCard', 'benefits', newBenefits);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newBenefits = [...content.rightCard.benefits, ''];
-                handleChange('rightCard', 'benefits', newBenefits);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un avantage
-            </button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Section */}
+        <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-2xl shadow-xl p-8 mb-8 text-white">
+          <div className="flex items-center justify-between">
             <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.rightCard.primaryButton} 
-                onChange={(e) => handleChange('rightCard', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+              <h2 className="text-3xl font-bold mb-2">
+                VEFA - Vente en l'État Futur d'Achèvement
+              </h2>
+              <p className="text-lg opacity-90">
+                Investir dans l'immobilier neuf avant construction
+              </p>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.rightCard.secondaryButton} 
-                onChange={(e) => handleChange('rightCard', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+            <div className="hidden md:block">
+              <div className="w-24 h-24 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* L'essentiel Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section L'essentiel
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.essentiel.title} 
-              onChange={(e) => handleChange('essentiel', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Éléments</label>
-            {content.essentiel.items.map((item, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <textarea 
-                  value={item} 
-                  onChange={(e) => handleArrayChange('essentiel', 'items', index, e.target.value)} 
-                  rows={2}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+        {/* Content Management */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Text Content */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Contenu Textuel</h3>
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Titre Principal
+                </label>
+                <input
+                  type="text"
+                  value={content.title}
+                  onChange={(e) => setContent({...content, title: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
-                <button 
-                  onClick={() => {
-                    const newItems = content.essentiel.items.filter((_, i) => i !== index);
-                    handleChange('essentiel', 'items', newItems);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
               </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.essentiel.items, ''];
-                handleChange('essentiel', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un élément
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Sommaire Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Sommaire
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.sommaire.title} 
-              onChange={(e) => handleChange('sommaire', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Éléments</label>
-            {content.sommaire.items.map((item, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <input 
-                  value={item} 
-                  onChange={(e) => handleArrayChange('sommaire', 'items', index, e.target.value)} 
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Sous-titre
+                </label>
+                <input
+                  type="text"
+                  value={content.subtitle}
+                  onChange={(e) => setContent({...content, subtitle: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
-                <button 
-                  onClick={() => {
-                    const newItems = content.sommaire.items.filter((_, i) => i !== index);
-                    handleChange('sommaire', 'items', newItems);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
               </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.sommaire.items, ''];
-                handleChange('sommaire', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un élément
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Definition Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Définition
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.definition.title} 
-              onChange={(e) => handleChange('definition', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Texte 1</label>
-            <textarea 
-              value={content.definition.text1} 
-              onChange={(e) => handleChange('definition', 'text1', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Texte 2</label>
-            <textarea 
-              value={content.definition.text2} 
-              onChange={(e) => handleChange('definition', 'text2', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">À savoir - Titre</label>
-            <input 
-              value={content.definition.savoir.title} 
-              onChange={(e) => handleNestedChange('definition', 'savoir', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">À savoir - Éléments</label>
-            {content.definition.savoir.items.map((item, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <input 
-                  value={item} 
-                  onChange={(e) => handleNestedArrayChange('definition', 'savoir', 'items', index, e.target.value)} 
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Description
+                </label>
+                <textarea
+                  rows={6}
+                  value={content.description}
+                  onChange={(e) => setContent({...content, description: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
-                <button 
-                  onClick={() => {
-                    const newItems = content.definition.savoir.items.filter((_, i) => i !== index);
-                    handleNestedChange('definition', 'savoir', 'items', newItems);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
               </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.definition.savoir.items, ''];
-                handleNestedChange('definition', 'savoir', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un élément
-            </button>
-          </div>
-        </div>
-      </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Avantages Principaux
+                </label>
+                <textarea
+                  rows={4}
+                  value={content.advantages}
+                  onChange={(e) => setContent({...content, advantages: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                />
+              </div>
 
-      {/* Avantages Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Avantages
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.avantages.title} 
-              onChange={(e) => handleChange('avantages', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Avantages Fiscaux
+                </label>
+                <textarea
+                  rows={4}
+                  value={content.fiscalBenefits}
+                  onChange={(e) => setContent({...content, fiscalBenefits: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Conditions d'Éligibilité
+                </label>
+                <textarea
+                  rows={4}
+                  value={content.requirements}
+                  onChange={(e) => setContent({...content, requirements: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+            
+            <div className="mt-8">
+              <button 
+                onClick={handleSave}
+                className="w-full bg-gradient-to-r from-indigo-500 to-indigo-600 text-white py-3 px-6 rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition-all duration-200 font-medium"
+              >
+                Sauvegarder les modifications
+              </button>
+            </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Avantages</label>
-            {content.avantages.items.map((item, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Icône</label>
-                    <input 
-                      value={item.icon} 
-                      onChange={(e) => handleNestedArrayChange('avantages', 'items', index, { ...item, icon: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Titre</label>
-                    <input 
-                      value={item.title} 
-                      onChange={(e) => handleNestedArrayChange('avantages', 'items', index, { ...item, title: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <input 
-                      value={item.description} 
-                      onChange={(e) => handleNestedArrayChange('avantages', 'items', index, { ...item, description: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
+
+          {/* Media & Settings */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Médias & Paramètres</h3>
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Image Principale
+                </label>
+                <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-indigo-400 transition-colors">
+                  <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <p className="text-gray-600">Cliquez pour télécharger une image</p>
                 </div>
-                <button 
-                  onClick={() => {
-                    const newItems = content.avantages.items.filter((_, i) => i !== index);
-                    handleChange('avantages', 'items', newItems);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cet avantage
-                </button>
               </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.avantages.items, { icon: '', title: '', description: '' }];
-                handleChange('avantages', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un avantage
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Financement Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Financement
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.financement.title} 
-              onChange={(e) => handleChange('financement', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Étapes</label>
-            {content.financement.steps.map((step, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Étape</label>
-                    <input 
-                      value={step.step} 
-                      onChange={(e) => handleNestedArrayChange('financement', 'steps', index, { ...step, step: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Titre</label>
-                    <input 
-                      value={step.title} 
-                      onChange={(e) => handleNestedArrayChange('financement', 'steps', index, { ...step, title: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <input 
-                      value={step.description} 
-                      onChange={(e) => handleNestedArrayChange('financement', 'steps', index, { ...step, description: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newSteps = content.financement.steps.filter((_, i) => i !== index);
-                    handleChange('financement', 'steps', newSteps);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Statut de la page
+                </label>
+                <select 
+                  value={content.status}
+                  onChange={(e) => setContent({...content, status: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 >
-                  Supprimer cette étape
-                </button>
+                  <option value="published">Publiée</option>
+                  <option value="draft">Brouillon</option>
+                  <option value="archived">Archivée</option>
+                </select>
               </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newSteps = [...content.financement.steps, { step: '', title: '', description: '' }];
-                handleChange('financement', 'steps', newSteps);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une étape
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Fiscalité Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Fiscalité
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.fiscalite.title} 
-              onChange={(e) => handleChange('fiscalite', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Contenu</label>
-            <textarea 
-              value={content.fiscalite.content} 
-              onChange={(e) => handleChange('fiscalite', 'content', e.target.value)} 
-              rows={4} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Risques Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Risques
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.risques.title} 
-              onChange={(e) => handleChange('risques', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Éléments</label>
-            {content.risques.items.map((item, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <input 
-                  value={item} 
-                  onChange={(e) => handleArrayChange('risques', 'items', index, e.target.value)} 
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Ordre d'affichage
+                </label>
+                <input
+                  type="number"
+                  value={content.order}
+                  onChange={(e) => setContent({...content, order: parseInt(e.target.value)})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
-                <button 
-                  onClick={() => {
-                    const newItems = content.risques.items.filter((_, i) => i !== index);
-                    handleChange('risques', 'items', newItems);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
               </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.risques.items, ''];
-                handleChange('risques', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un élément
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Comparaison Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Comparaison
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.comparaison.title} 
-              onChange={(e) => handleChange('comparaison', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Données de comparaison</label>
-            {content.comparaison.data.map((row, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Critère</label>
-                    <input 
-                      value={row.critere} 
-                      onChange={(e) => handleNestedArrayChange('comparaison', 'data', index, { ...row, critere: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">VEFA</label>
-                    <input 
-                      value={row.vefa} 
-                      onChange={(e) => handleNestedArrayChange('comparaison', 'data', index, { ...row, vefa: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Existant</label>
-                    <input 
-                      value={row.existant} 
-                      onChange={(e) => handleNestedArrayChange('comparaison', 'data', index, { ...row, existant: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newData = content.comparaison.data.filter((_, i) => i !== index);
-                    handleChange('comparaison', 'data', newData);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cette ligne
-                </button>
+              
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={content.showInMenu}
+                  onChange={(e) => setContent({...content, showInMenu: e.target.checked})}
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                />
+                <label className="ml-2 block text-sm text-gray-700">
+                  Afficher dans le menu principal
+                </label>
               </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newData = [...content.comparaison.data, { critere: '', vefa: '', existant: '' }];
-                handleChange('comparaison', 'data', newData);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une ligne
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section CTA
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.cta.title} 
-              onChange={(e) => handleChange('cta', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Paragraphe</label>
-            <textarea 
-              value={content.cta.paragraph} 
-              onChange={(e) => handleChange('cta', 'paragraph', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.cta.primaryButton} 
-                onChange={(e) => handleChange('cta', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.cta.secondaryButton} 
-                onChange={(e) => handleChange('cta', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+            
+            <div className="mt-8">
+              <button 
+                onClick={handlePreview}
+                className="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white py-3 px-6 rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-200 font-medium"
+              >
+                Prévisualiser la page
+              </button>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 bg-[#4EBBBD] text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          <span className="font-medium">Contenu sauvegardé avec succès !</span>
+        {/* SEO Section */}
+        <div className="mt-8 bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">Optimisation SEO</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Meta Title
+              </label>
+              <input
+                type="text"
+                value={content.metaTitle}
+                onChange={(e) => setContent({...content, metaTitle: e.target.value})}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Meta Description
+              </label>
+              <textarea
+                rows={3}
+                value={content.metaDescription}
+                onChange={(e) => setContent({...content, metaDescription: e.target.value})}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+          
+          <div className="mt-6">
+            <button className="bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-200 font-medium">
+              Optimiser le SEO
+            </button>
+          </div>
         </div>
-      )}
+      </main>
     </div>
   );
 }

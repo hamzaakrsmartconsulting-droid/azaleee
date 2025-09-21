@@ -121,34 +121,142 @@ const convertCMSContentToPageFormat = (cmsContent) => {
 
 export default function FiscalitePage() {
   const [content, setContent] = useState(defaultContent);
+  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(true);
+  const [contentSource, setContentSource] = useState('default');
 
-  // Clear localStorage and disable CMS/database loading
-  useEffect(() => {
-    // Clear localStorage immediately
+  // Load content from CMS database
+  const loadContentFromCMS = async () => {
     try {
-      localStorage.clear();
-      console.log('Fiscalité page: localStorage cleared');
+      console.log('Fiscalité - Loading content from CMS database...');
+      const response = await fetch('/api/pages/fiscalite');
+      
+      if (response.ok) {
+        const cmsContent = await response.json();
+        console.log('Fiscalité - CMS content loaded:', cmsContent);
+        console.log('Fiscalité - Number of CMS sections:', Object.keys(cmsContent).length);
+        
+        if (Object.keys(cmsContent).length > 0) {
+          // Database has content - merge it with default content
+          console.log('Fiscalité - Database sections found:', Object.keys(cmsContent));
+          console.log('Fiscalité - Database content details:', cmsContent);
+          
+          const mergedContent = { ...defaultContent };
+          
+          // Merge each CMS section with default content
+          Object.keys(cmsContent).forEach(sectionKey => {
+            if (mergedContent[sectionKey]) {
+              mergedContent[sectionKey] = {
+                ...mergedContent[sectionKey],
+                ...cmsContent[sectionKey]
+              };
+            } else {
+              mergedContent[sectionKey] = cmsContent[sectionKey];
+            }
+          });
+          
+          console.log('Fiscalité - Using database content merged with default');
+          console.log('Fiscalité - Merged content keys:', Object.keys(mergedContent));
+          
+          setContent(mergedContent);
+          setContentSource('database');
+        } else {
+          // No database content - use default
+          console.log('Fiscalité - No database content found, using default content');
+          setContent(defaultContent);
+          setContentSource('default');
+        }
+      } else {
+        console.log('Fiscalité - CMS API error, using default content');
+        setContent(defaultContent);
+        setContentSource('default');
+      }
     } catch (error) {
-      console.error('Error clearing localStorage:', error);
+      console.error('Fiscalité - Error loading CMS content:', error);
+      console.log('Fiscalité - Falling back to default content');
+      setContent(defaultContent);
+      setContentSource('default');
+    } finally {
+      setIsLoadingFromDatabase(false);
     }
+  };
 
-    // Always use default content to prevent flash
-    setContent(defaultContent);
-    console.log('Fiscalité page: Using default content only - CMS disabled to prevent flash');
+  useEffect(() => {
+    // Load from database first, then fallback to default content
+    loadContentFromCMS();
     
-    // Listen for custom content update events (but don't auto-load)
+    // Listen for content update events
     const handleContentUpdate = async () => {
-      console.log('Fiscalité page: Content update event received - but CMS loading is disabled');
+      console.log('Fiscalité - Content update event received - reloading from CMS');
+      await loadContentFromCMS();
     };
 
+    // Use polling for real-time updates
+    let pollingInterval = null;
+    
+    const startPolling = () => {
+      console.log('Fiscalité - Starting polling for content updates');
+      
+      pollingInterval = setInterval(async () => {
+        try {
+          // Check if page is visible before polling
+          if (document.visibilityState === 'visible') {
+            console.log('Fiscalité - Polling for updates...');
+            await loadContentFromCMS();
+          }
+        } catch (error) {
+          console.error('Fiscalité - Polling error:', error);
+        }
+      }, 3000); // Poll every 3 seconds for faster updates
+    };
+    
+    // Start polling after initial load is complete
+    setTimeout(() => {
+      if (!isLoadingFromDatabase) {
+        startPolling();
+      }
+    }, 2000);
+    
+    // Also keep the old event listeners as backup
     window.addEventListener('contentUpdated', handleContentUpdate);
-    return () => window.removeEventListener('contentUpdated', handleContentUpdate);
+    
+    // Listen for localStorage changes (cross-tab communication)
+    const handleStorageChange = (e) => {
+      if (e.key === 'cms_content_updated') {
+        console.log('Fiscalité - localStorage change detected - reloading content');
+        loadContentFromCMS();
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
+      window.removeEventListener('contentUpdated', handleContentUpdate);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const sections = useMemo(() => content.sectionOrder || defaultContent.sectionOrder, [content.sectionOrder]);
 
   return (
     <>
+      {/* Loading indicator */}
+      {isLoadingFromDatabase && (
+        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
+          Loading Fiscalité from Database...
+        </div>
+      )}
+      
+      {/* Content source indicator */}
+      {!isLoadingFromDatabase && (
+        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full"></div>
+          Content: {contentSource === 'database' ? 'CMS Database' : 'Default'}
+        </div>
+      )}
+
       <Header />
 
       {sections.includes("hero") && (
@@ -174,10 +282,10 @@ export default function FiscalitePage() {
           <div className="relative z-10 max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-12 flex flex-col items-center lg:items-start justify-center text-center lg:text-left min-h-[600px]">
             <div className="max-w-2xl">
               <h1 className="text-white text-[12px] sm:text-lg md:text-xl lg:text-4xl font-cairo font-semibold uppercase mb-4 leading-snug">
-                {content.hero.title}
+                {content.hero?.title || defaultContent.hero.title}
               </h1>
               <p className="text-white text-[10px] sm:text-base md:text-lg lg:text-xl mb-8 font-inter leading-relaxed">
-                {content.hero.paragraph}
+                {content.hero?.paragraph || defaultContent.hero.paragraph}
               </p>
               
               {/* CTA Button */}
@@ -205,7 +313,7 @@ export default function FiscalitePage() {
                 <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
                   <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-6">Nos domaines d'expertise</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {content.sommaire.leftItems.map((item, index) => {
+                    {(content.sommaire?.leftItems || defaultContent.sommaire.leftItems).map((item, index) => {
                       const pageUrl = getPageUrl(item);
                       const isClickable = pageUrl !== null;
                       
@@ -231,7 +339,7 @@ export default function FiscalitePage() {
               {/* Right: Service Cards */}
               <div className="lg:col-span-5">
                 <div className="grid grid-cols-1 gap-6">
-                  {content.sommaire.boxes.map((service, index) => (
+                  {(content.sommaire?.boxes || defaultContent.sommaire.boxes).map((service, index) => (
                     <div key={index} className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-white">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
@@ -270,12 +378,12 @@ export default function FiscalitePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
               <div className="order-2 lg:order-1">
                 <div className="w-12 h-[1.6px] bg-[#4EBBBD] mb-6" />
-                <h3 className="uppercase text-[#112033] text-xl font-normal leading-snug mb-4">{content.lli.title}</h3>
-                <p className="text-[#686868] text-[14.4px] leading-7 mb-6 whitespace-pre-line" dangerouslySetInnerHTML={{ __html: content.lli.html.replace(/\n/g, '<br />') }} />
-                <button className="rounded-lg px-6 py-3 bg-[#B99066] text-white font-semibold shadow">{content.lli.button}</button>
+                <h3 className="uppercase text-[#112033] text-xl font-normal leading-snug mb-4">{content.lli?.title || defaultContent.lli.title}</h3>
+                <p className="text-[#686868] text-[14.4px] leading-7 mb-6 whitespace-pre-line" dangerouslySetInnerHTML={{ __html: (content.lli?.html || defaultContent.lli.html).replace(/\n/g, '<br />') }} />
+                <button className="rounded-lg px-6 py-3 bg-[#B99066] text-white font-semibold shadow">{content.lli?.button || defaultContent.lli.button}</button>
               </div>
               <div className="order-1 lg:order-2">
-                <img src={content.lli.image} alt="Investissement LLI" className="w-full h-[360px] sm:h-[440px] lg:h-[620px] object-cover rounded-xl" />
+                <img src={content.lli?.image || defaultContent.lli.image} alt="Investissement LLI" className="w-full h-[360px] sm:h-[440px] lg:h-[620px] object-cover rounded-xl" />
               </div>
             </div>
           </div>

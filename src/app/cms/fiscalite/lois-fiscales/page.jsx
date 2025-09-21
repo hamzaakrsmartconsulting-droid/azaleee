@@ -1,627 +1,288 @@
-"use client";
-import React, { useState, useEffect } from 'react';
+'use client';
 
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
+export default function CMSLoisFiscales() {
+  const router = useRouter();
+  const [content, setContent] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [message, setMessage] = useState('');
 
-const defaultContent = {
-  hero: {
-    title: "Lois fiscales",
-    description: "Découvrez les principales lois fiscales qui peuvent vous permettre d'optimiser votre situation fiscale. Chaque dispositif a ses spécificités et conditions d'application."
-  },
-  categories: [
-    { id: "immobilier", label: "Immobilier", icon: "🏠" },
-    { id: "entreprise", label: "Entreprise", icon: "💼" },
-    { id: "patrimoine", label: "Patrimoine", icon: "💰" },
-    { id: "retraite", label: "Retraite", icon: "👴" }
-  ],
-  loisImmobilieres: [
-    {
-      id: "pinel",
-      name: "Loi Pinel",
-      shortName: "Pinel",
-      description: "Réduction d'impôt pour investissement immobilier neuf",
-      avantages: [
-        "Réduction d'impôt jusqu'à 21%",
-        "Investissement plafonné à 300 000€",
-        "Engagement de location 6, 9 ou 12 ans",
-        "TVA réduite à 5,5% ou 10%"
-      ],
-      conditions: [
-        "Bien neuf ou en VEFA",
-        "Location à usage d'habitation principale",
-        "Respect des plafonds de loyer",
-        "Respect des plafonds de ressources"
-      ],
-      taux: [
-        { annees: "6 ans", reduction: "12%" },
-        { annees: "9 ans", reduction: "18%" },
-        { annees: "12 ans", reduction: "21%" }
-      ],
-      plafonds: {
-        loyer: "Selon zone et surface",
-        ressources: "Selon composition du foyer",
-        investissement: "300 000€ max"
-      }
-    },
-    {
-      id: "girardin",
-      name: "Loi Girardin",
-      shortName: "Girardin",
-      description: "Défiscalisation outre-mer pour investissement immobilier",
-      avantages: [
-        "Réduction d'impôt jusqu'à 40%",
-        "Investissement plafonné à 300 000€",
-        "Engagement de location 5 ans minimum",
-        "Possibilité de location saisonnière"
-      ],
-      conditions: [
-        "Bien situé en outre-mer",
-        "Location à usage d'habitation",
-        "Respect des plafonds de loyer",
-        "Investissement en direct ou via SCPI"
-      ],
-      taux: [
-        { annees: "5 ans", reduction: "40%" },
-        { annees: "6 ans", reduction: "40%" },
-        { annees: "7 ans", reduction: "40%" }
-      ],
-      plafonds: {
-        loyer: "Selon zone et surface",
-        ressources: "Non applicable",
-        investissement: "300 000€ max"
-      }
-    }
-  ],
-  loisEntreprise: [
-    {
-      id: "madelin",
-      name: "Loi Madelin",
-      shortName: "Madelin",
-      description: "Déduction des cotisations de retraite et prévoyance",
-      avantages: [
-        "Déduction des cotisations retraite",
-        "Déduction des cotisations prévoyance",
-        "Déduction des cotisations santé",
-        "Plafonds annuels variables"
-      ],
-      conditions: [
-        "Profession libérale ou artisan",
-        "Cotisations versées à des organismes agréés",
-        "Respect des plafonds annuels",
-        "Justificatifs des versements"
+  const loisFiscalesSections = {
+    hero: {
+      title: 'Hero Section',
+      fields: [
+        { key: 'title', label: 'Titre principal', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'backgroundImage', label: 'Image de fond', type: 'text' },
+        { key: 'ctaText', label: 'Texte du bouton', type: 'text' },
+        { key: 'ctaLink', label: 'Lien du bouton', type: 'text' }
       ]
-    }
-  ],
-  loisPatrimoine: [
-    {
-      id: "pacte",
-      name: "Loi PACTE",
-      shortName: "PACTE",
-      description: "Plan d'action pour la croissance et la transformation des entreprises",
-      avantages: [
-        "Épargne retraite collective",
-        "Plan d'épargne entreprise",
-        "Actions gratuites",
-        "Incitations à l'investissement"
-      ]
-    }
-  ],
-  loisRetraite: [
-    {
-      id: "per",
-      name: "Plan Épargne Retraite",
-      shortName: "PER",
-      description: "Épargne retraite avec avantages fiscaux",
-      avantages: [
-        "Déduction des versements",
-        "Report d'imposition des plus-values",
-        "Sortie en capital ou rente",
-        "Transmission optimisée"
-      ]
-    }
-  ],
-  faq: [
-    {
-      question: "Puis-je cumuler plusieurs dispositifs ?",
-      answer: "Oui, dans certains cas, vous pouvez cumuler plusieurs dispositifs fiscaux. Par exemple, la loi Pinel peut être combinée avec le prêt à taux zéro (PTZ) ou d'autres aides régionales."
     },
-    {
-      question: "Quand dois-je m'engager ?",
-      answer: "L'engagement de location doit généralement être pris dès l'acquisition du bien. La durée varie selon le dispositif : 6, 9 ou 12 ans pour Pinel, 9 ans pour Malraux, etc."
-    },
-    {
-      question: "Quels sont les risques ?",
-      answer: "Les principaux risques sont la non-respect des conditions d'engagement, la baisse de la valeur du bien, et les évolutions législatives qui peuvent modifier les avantages fiscaux."
-    },
-    {
-      question: "Quels documents fournir ?",
-      answer: "Vous devrez fournir les justificatifs d'acquisition, les contrats de location, les attestations de loyer, et respecter les déclarations fiscales annuelles."
-    }
-  ],
-  cta: {
-    title: "Besoin d'optimiser votre fiscalité ?",
-    description: "Nos experts analysent votre situation et vous proposent les dispositifs les plus adaptés pour réduire vos impôts en toute légalité.",
-    primaryButton: "🎯 Audit fiscal gratuit",
-    secondaryButton: "📚 Télécharger le guide"
-  }
-};
-
-export default function LoisFiscalesCMS() {
-  const [content, setContent] = useState(defaultContent);
-  const [showToast, setShowToast] = useState(false);
-
-    useEffect(() => {
-    // Charger le contenu depuis la base de données
-    const loadContentFromDatabase = async () => {
-      try {
-        const response = await fetch('/api/pages/content?path=/fiscalite/lois-fiscales&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            const parsed = result.content.content;
-            setContent({ ...defaultContent, ...parsed });
-            return;
-          }
+    stats: {
+      title: 'Statistiques',
+      fields: [
+        { key: 'title', label: 'Titre de la section', type: 'text' },
+        { key: 'items', label: 'Éléments de statistiques', type: 'array', 
+          subFields: [
+            { key: 'number', label: 'Nombre', type: 'text' },
+            { key: 'label', label: 'Libellé', type: 'text' },
+            { key: 'description', label: 'Description', type: 'text' }
+          ]
         }
-        
-        // Si pas de contenu en base, utiliser le contenu par défaut
-        console.log('Aucun contenu trouvé en base de données, utilisation du contenu par défaut');
-      } catch (error) {
-        console.error('Erreur lors du chargement depuis la base de données:', error);
-        // En cas d'erreur, utiliser le contenu par défaut
-      }
-    };
+      ]
+    },
+    avantages: {
+      title: 'Avantages',
+      fields: [
+        { key: 'title', label: 'Titre de la section', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre', type: 'text' },
+        { key: 'items', label: 'Liste des avantages', type: 'array',
+          subFields: [
+            { key: 'title', label: 'Titre', type: 'text' },
+            { key: 'description', label: 'Description', type: 'textarea' },
+            { key: 'icon', label: 'Icône', type: 'text' }
+          ]
+        }
+      ]
+    },
+    conditions: {
+      title: 'Conditions',
+      fields: [
+        { key: 'title', label: 'Titre de la section', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre', type: 'text' },
+        { key: 'items', label: 'Liste des conditions', type: 'array',
+          subFields: [
+            { key: 'condition', label: 'Condition', type: 'text' },
+            { key: 'description', label: 'Description', type: 'textarea' }
+          ]
+        }
+      ]
+    },
+    cta: {
+      title: 'Call to Action',
+      fields: [
+        { key: 'title', label: 'Titre', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre', type: 'text' },
+        { key: 'primaryButton', label: 'Bouton principal', type: 'text' },
+        { key: 'secondaryButton', label: 'Bouton secondaire', type: 'text' }
+      ]
+    }
+  };
 
-    loadContentFromDatabase();
+  useEffect(() => {
+    loadContent();
   }, []);
 
-  const handleChange = (section, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
-    }));
-  };
-
-  const handleArrayChange = (section, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: prev[section][field].map((item, i) => i === index ? value : item)
-      }
-    }));
-  };
-
-  const handleNestedChange = (section, subsection, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: value
-        }
-      }
-    }));
-  };
-
-  const handleNestedArrayChange = (section, subsection, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: prev[section][subsection][field].map((item, i) => i === index ? value : item)
-        }
-      }
-    }));
-  };
-
-    const handleSave = async () => {
+  const loadContent = async () => {
     try {
-      const response = await fetch('/api/pages/content', {
+      const response = await fetch('/api/pages/lois-fiscales');
+      if (response.ok) {
+        const data = await response.json();
+        setContent(data.content || {});
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement du contenu:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/cms/content/lois-fiscales', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pagePath: '/fiscalite/lois-fiscales',
-          pageType: 'cms',
-          content: content,
-          metadata: {
-            lastModified: new Date().toISOString(),
-            modifiedBy: 'admin',
-            pageType: 'cms'
-          }
-        })
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content }),
       });
 
       if (response.ok) {
-        console.log('Sauvegardé en base de données');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
+        setMessage('Contenu sauvegardé avec succès !');
+        setTimeout(() => setMessage(''), 3000);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
+        setMessage('Erreur lors de la sauvegarde');
       }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde: ' + error.message);
+      setMessage('Erreur lors de la sauvegarde');
+    } finally {
+      setIsSaving(false);
     }
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('contentUpdated'));
   };
 
+  const updateContent = (section, field, value, index = null) => {
+    setContent(prev => {
+      const newContent = { ...prev };
+      if (!newContent[section]) newContent[section] = {};
+      
+      if (index !== null) {
+        if (!newContent[section][field]) newContent[section][field] = [];
+        newContent[section][field][index] = value;
+      } else {
+        newContent[section][field] = value;
+      }
+      return newContent;
+    });
+  };
+
+  const addArrayItem = (section, field) => {
+    const sectionConfig = loisFiscalesSections[section];
+    const fieldConfig = sectionConfig.fields.find(f => f.key === field);
+    const newItem = {};
+    
+    fieldConfig.subFields.forEach(subField => {
+      newItem[subField.key] = '';
+    });
+
+    setContent(prev => {
+      const newContent = { ...prev };
+      if (!newContent[section]) newContent[section] = {};
+      if (!newContent[section][field]) newContent[section][field] = [];
+      newContent[section][field].push(newItem);
+      return newContent;
+    });
+  };
+
+  const removeArrayItem = (section, field, index) => {
+    setContent(prev => {
+      const newContent = { ...prev };
+      if (newContent[section] && newContent[section][field]) {
+        newContent[section][field].splice(index, 1);
+      }
+      return newContent;
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement du contenu...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold text-[#112033]">Page Lois Fiscales</h1>
-            <p className="text-[#686868]">Modifiez le contenu de la page Lois Fiscales</p>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">CMS - Lois Fiscales</h1>
+              <p className="text-gray-600">Gérez le contenu de la page Lois Fiscales</p>
+            </div>
+            <div className="flex gap-4">
+              <button
+                onClick={() => router.push('/fiscalite/lois-fiscales')}
+                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Voir la page
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={isSaving}
+                className="px-6 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA] transition-colors disabled:opacity-50"
+              >
+                {isSaving ? 'Sauvegarde...' : 'Sauvegarder'}
+              </button>
+            </div>
           </div>
-          <button 
-            onClick={handleSave} 
-            className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors flex items-center gap-2"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Sauvegarder
-          </button>
-        </div>
-      </div>
 
-      {/* Hero Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Hero
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-            <input 
-              value={content.hero.title} 
-              onChange={(e) => handleChange('hero', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea 
-              value={content.hero.description} 
-              onChange={(e) => handleChange('hero', 'description', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-        </div>
-      </div>
+          {message && (
+            <div className={`mb-6 p-4 rounded-lg ${
+              message.includes('succès') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+            }`}>
+              {message}
+            </div>
+          )}
 
-      {/* Categories Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Catégories
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Catégories de lois</label>
-            {content.categories.map((category, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">ID</label>
-                    <input 
-                      value={category.id} 
-                      onChange={(e) => handleNestedArrayChange('categories', 'categories', index, { ...category, id: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Label</label>
-                    <input 
-                      value={category.label} 
-                      onChange={(e) => handleNestedArrayChange('categories', 'categories', index, { ...category, label: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Icône</label>
-                    <input 
-                      value={category.icon} 
-                      onChange={(e) => handleNestedArrayChange('categories', 'categories', index, { ...category, icon: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newCategories = content.categories.filter((_, i) => i !== index);
-                    handleChange('categories', 'categories', newCategories);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cette catégorie
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newCategories = [...content.categories, { id: "", label: "", icon: "" }];
-                handleChange('categories', 'categories', newCategories);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une catégorie
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Lois Immobilières Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Lois Immobilières
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Lois immobilières</label>
-            {content.loisImmobilieres.map((loi, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">ID</label>
-                    <input 
-                      value={loi.id} 
-                      onChange={(e) => handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, id: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Nom</label>
-                    <input 
-                      value={loi.name} 
-                      onChange={(e) => handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, name: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Nom court</label>
-                    <input 
-                      value={loi.shortName} 
-                      onChange={(e) => handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, shortName: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <textarea 
-                      value={loi.description} 
-                      onChange={(e) => handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, description: e.target.value })} 
-                      rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
+          <div className="space-y-8">
+            {Object.entries(loisFiscalesSections).map(([sectionKey, sectionConfig]) => (
+              <div key={sectionKey} className="border border-gray-200 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">{sectionConfig.title}</h2>
                 
-                {/* Avantages */}
-                <div className="mb-3">
-                  <label className="block text-sm font-medium text-[#686868] mb-2">Avantages</label>
-                  {loi.avantages.map((avantage, avIndex) => (
-                    <div key={avIndex} className="flex gap-2 mb-2">
-                      <input 
-                        value={avantage} 
-                        onChange={(e) => {
-                          const newAvantages = [...loi.avantages];
-                          newAvantages[avIndex] = e.target.value;
-                          handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, avantages: newAvantages });
-                        }} 
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                {sectionConfig.fields.map(field => (
+                  <div key={field.key} className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {field.label}
+                    </label>
+                    
+                    {field.type === 'textarea' ? (
+                      <textarea
+                        value={content[sectionKey]?.[field.key] || ''}
+                        onChange={(e) => updateContent(sectionKey, field.key, e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                        rows={4}
                       />
-                      <button 
-                        onClick={() => {
-                          const newAvantages = loi.avantages.filter((_, i) => i !== avIndex);
-                          handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, avantages: newAvantages });
-                        }}
-                        className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                  ))}
-                  <button 
-                    onClick={() => {
-                      const newAvantages = [...loi.avantages, ""];
-                      handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, avantages: newAvantages });
-                    }}
-                    className="px-3 py-1 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA] text-sm"
-                  >
-                    Ajouter un avantage
-                  </button>
-                </div>
-
-                {/* Conditions */}
-                <div className="mb-3">
-                  <label className="block text-sm font-medium text-[#686868] mb-2">Conditions</label>
-                  {loi.conditions.map((condition, condIndex) => (
-                    <div key={condIndex} className="flex gap-2 mb-2">
-                      <input 
-                        value={condition} 
-                        onChange={(e) => {
-                          const newConditions = [...loi.conditions];
-                          newConditions[condIndex] = e.target.value;
-                          handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, conditions: newConditions });
-                        }} 
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                    ) : field.type === 'array' ? (
+                      <div>
+                        {(content[sectionKey]?.[field.key] || []).map((item, index) => (
+                          <div key={index} className="border border-gray-200 rounded-lg p-4 mb-4">
+                            <div className="flex justify-between items-center mb-3">
+                              <h4 className="font-medium text-gray-900">Élément {index + 1}</h4>
+                              <button
+                                onClick={() => removeArrayItem(sectionKey, field.key, index)}
+                                className="text-red-600 hover:text-red-800 text-sm"
+                              >
+                                Supprimer
+                              </button>
+                            </div>
+                            {field.subFields.map(subField => (
+                              <div key={subField.key} className="mb-3">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                  {subField.label}
+                                </label>
+                                {subField.type === 'textarea' ? (
+                                  <textarea
+                                    value={item[subField.key] || ''}
+                                    onChange={(e) => updateContent(sectionKey, field.key, e.target.value, index)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                                    rows={3}
+                                  />
+                                ) : (
+                                  <input
+                                    type="text"
+                                    value={item[subField.key] || ''}
+                                    onChange={(e) => updateContent(sectionKey, field.key, e.target.value, index)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                                  />
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                        <button
+                          onClick={() => addArrayItem(sectionKey, field.key)}
+                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm"
+                        >
+                          + Ajouter un élément
+                        </button>
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        value={content[sectionKey]?.[field.key] || ''}
+                        onChange={(e) => updateContent(sectionKey, field.key, e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
                       />
-                      <button 
-                        onClick={() => {
-                          const newConditions = loi.conditions.filter((_, i) => i !== condIndex);
-                          handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, conditions: newConditions });
-                        }}
-                        className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                  ))}
-                  <button 
-                    onClick={() => {
-                      const newConditions = [...loi.conditions, ""];
-                      handleNestedArrayChange('loisImmobilieres', 'loisImmobilieres', index, { ...loi, conditions: newConditions });
-                    }}
-                    className="px-3 py-1 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA] text-sm"
-                  >
-                    Ajouter une condition
-                  </button>
-                </div>
-
-                <button 
-                  onClick={() => {
-                    const newLois = content.loisImmobilieres.filter((_, i) => i !== index);
-                    handleChange('loisImmobilieres', 'loisImmobilieres', newLois);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cette loi
-                </button>
+                    )}
+                  </div>
+                ))}
               </div>
             ))}
-            <button 
-              onClick={() => {
-                const newLois = [...content.loisImmobilieres, {
-                  id: "",
-                  name: "",
-                  shortName: "",
-                  description: "",
-                  avantages: [""],
-                  conditions: [""]
-                }];
-                handleChange('loisImmobilieres', 'loisImmobilieres', newLois);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une loi immobilière
-            </button>
           </div>
         </div>
       </div>
-
-      {/* FAQ Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section FAQ
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Questions fréquentes</label>
-            {content.faq.map((item, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Question</label>
-                    <input 
-                      value={item.question} 
-                      onChange={(e) => handleNestedArrayChange('faq', 'faq', index, { ...item, question: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Réponse</label>
-                    <textarea 
-                      value={item.answer} 
-                      onChange={(e) => handleNestedArrayChange('faq', 'faq', index, { ...item, answer: e.target.value })} 
-                      rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newFaq = content.faq.filter((_, i) => i !== index);
-                    handleChange('faq', 'faq', newFaq);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cette FAQ
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newFaq = [...content.faq, { question: "", answer: "" }];
-                handleChange('faq', 'faq', newFaq);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une FAQ
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section CTA
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.cta.title} 
-              onChange={(e) => handleChange('cta', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea 
-              value={content.cta.description} 
-              onChange={(e) => handleChange('cta', 'description', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.cta.primaryButton} 
-                onChange={(e) => handleChange('cta', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.cta.secondaryButton} 
-                onChange={(e) => handleChange('cta', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 bg-[#4EBBBD] text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          <span className="font-medium">Contenu sauvegardé avec succès !</span>
-        </div>
-      )}
     </div>
   );
 }

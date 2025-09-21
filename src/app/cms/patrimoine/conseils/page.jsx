@@ -1,550 +1,563 @@
 "use client";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { 
+  ArrowLeftIcon, 
+  HomeIcon, 
+  EyeIcon, 
+  ArrowPathIcon, 
+  CheckCircleIcon,
+  XMarkIcon,
+  PlusIcon,
+  TrashIcon,
+  PencilIcon
+} from '@heroicons/react/24/outline';
 
-import React, { useState, useEffect } from 'react';
+export default function CmsPatrimoineConseilsPage() {
+  const router = useRouter();
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingSection, setEditingSection] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [saving, setSaving] = useState(false);
 
-
-
-const defaultContent = {
-  hero: {
-    title: "Conseils patrimoniaux",
-    paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    primaryButton: "Consulter un expert",
-    secondaryButton: "Prendre rendez-vous",
-    benefits: [
-      {
-        title: "Lorem ipsum",
-        icon: "💡",
-        value: "15+",
-        description: "Dolor sit amet"
-      },
-      {
-        title: "Consectetur",
-        icon: "👥",
-        value: "500+",
-        description: "Adipiscing elit"
-      },
-      {
-        title: "Sed eiusmod",
-        icon: "⭐",
-        value: "4.9/5",
-        description: "Tempor incididunt"
-      }
-    ]
-  },
-  chart: {
-    title: "Indicateurs de conseils",
-    data: [
-      { label: "Experts disponibles", value: "15+" },
-      { label: "Clients satisfaits", value: "500+" },
-      { label: "Note moyenne", value: "4.9/5" },
-      { label: "Durée consultation", value: "1h30" },
-      { label: "Suivi personnalisé", value: "12 mois" }
-    ],
-    chartImage: "/images/variation-chart-image-944f04.png"
-  },
-  conseilsTypes: {
-    title: "Lorem ipsum dolor sit amet",
-    types: [
-      {
-        title: "Lorem ipsum",
-        icon: "📊",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-        features: [
-          "Lorem ipsum dolor sit",
-          "Consectetur adipiscing",
-          "Sed do eiusmod tempor"
-        ]
-      },
-      {
-        title: "Dolor sit amet",
-        icon: "💰",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-        features: [
-          "Lorem ipsum dolor sit",
-          "Consectetur adipiscing",
-          "Sed do eiusmod tempor"
-        ]
-      },
-      {
-        title: "Consectetur elit",
-        icon: "🛡️",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-        features: [
-          "Lorem ipsum dolor sit",
-          "Consectetur adipiscing",
-          "Sed do eiusmod tempor"
-        ]
-      }
-    ]
-  },
-  advantages: {
-    title: "Lorem ipsum dolor sit amet",
-    benefits: [
-      {
-        title: "Lorem ipsum dolor sit",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-      },
-      {
-        title: "Consectetur adipiscing elit",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-      },
-      {
-        title: "Sed do eiusmod tempor",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-      }
-    ]
-  },
-  cta: {
-    title: "Lorem ipsum dolor sit amet ?",
-    paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    button: "Consulter un expert"
-  }
-};
-
-// Composant d'import d'image en base64
-const ImageImporter = ({ value, onChange, placeholder, label }) => {
-  const [showImporter, setShowImporter] = useState(false);
-  const [base64Input, setBase64Input] = useState('');
-
-  const handleBase64Import = () => {
-    if (base64Input.trim()) {
-      if (base64Input.startsWith('data:image/')) {
-        onChange(base64Input);
-        setShowImporter(false);
-        setBase64Input('');
-      } else {
-        try {
-          onChange(base64Input);
-          setShowImporter(false);
-          setBase64Input('');
-        } catch (error) {
-          alert('Format d\'image invalide. Utilisez un chemin d\'image ou une image base64.');
+  // Default content
+  const defaultContent = {
+    hero: {
+      title: "Conseils Patrimoine",
+      subtitle: "Nos experts vous accompagnent dans la gestion de votre patrimoine avec des conseils personnalisés.",
+      highlight: "👉 Des conseils adaptés à votre situation et vos objectifs.",
+      buttons: [
+        { text: "Demander un conseil", type: "primary" },
+        { text: "Prendre rendez-vous", type: "secondary" }
+      ]
+    },
+    chart: {
+      title: "Indicateurs Conseils Patrimoine",
+      data: [
+        { label: "Conseils donnés", value: "500+" },
+        { label: "Clients satisfaits", value: "98%" },
+        { label: "Économies moyennes", value: "€25,000" },
+        { label: "Durée conseil", value: "2h" },
+        { label: "Suivi personnalisé", value: "Oui" }
+      ],
+      chartImage: "/images/variation-chart-image-944f04.png"
+    },
+    content: {
+      title: "Nos conseils patrimoniaux",
+      subtitle: "Des conseils adaptés à votre situation",
+      items: [
+        {
+          title: "Conseil en investissement",
+          description: "Optimisation de vos placements financiers"
+        },
+        {
+          title: "Conseil fiscal", 
+          description: "Réduction de votre fiscalité"
+        },
+        {
+          title: "Conseil en transmission",
+          description: "Préparation de la transmission de votre patrimoine"
         }
-      }
+      ]
+    },
+    cta: {
+      title: "Besoin de conseils personnalisés ?",
+      subtitle: "Nos experts vous accompagnent dans la gestion de votre patrimoine.",
+      buttonText: "Demander un conseil"
     }
   };
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        onChange(e.target.result);
-        setShowImporter(false);
-      };
-      reader.readAsDataURL(file);
+  // Sections configuration
+  const patrimoineConseilsSections = [
+    {
+      id: 'hero',
+      title: 'Section Hero',
+      description: 'Titre principal et navigation',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text', required: true },
+        { key: 'subtitle', label: 'Sous-titre', type: 'textarea', rows: 3 },
+        { key: 'highlight', label: 'Texte de mise en avant', type: 'textarea', rows: 2 },
+        { key: 'buttons', label: 'Boutons CTA', type: 'ctaButtons', help: 'Boutons d\'action' }
+      ]
+    },
+    {
+      id: 'chart',
+      title: 'Section Graphique',
+      description: 'Indicateurs et données visuelles',
+      fields: [
+        { key: 'title', label: 'Titre du graphique', type: 'text' },
+        { key: 'data', label: 'Données du graphique', type: 'chartData', help: 'Données à afficher' },
+        { key: 'chartImage', label: 'Image du graphique', type: 'text' }
+      ]
+    },
+    {
+      id: 'content',
+      title: 'Contenu Principal',
+      description: 'Contenu principal de la page',
+      fields: [
+        { key: 'title', label: 'Titre de la section', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre', type: 'textarea', rows: 2 },
+        { key: 'items', label: 'Éléments', type: 'itemsList', help: 'Liste des éléments' }
+      ]
+    },
+    {
+      id: 'cta',
+      title: 'Section CTA',
+      description: 'Appel à l\'action final',
+      fields: [
+        { key: 'title', label: 'Titre CTA', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre CTA', type: 'textarea', rows: 2 },
+        { key: 'buttonText', label: 'Texte du bouton', type: 'text' }
+      ]
     }
-  };
+  ];
 
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-3">
-        <input
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-          placeholder={placeholder}
-        />
-        <button
-          type="button"
-          onClick={() => setShowImporter(!showImporter)}
-          className="px-3 py-2 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          📁 Importer
-        </button>
-      </div>
-      
-      {value && (
-        <img 
-          src={value} 
-          alt="Aperçu" 
-          className="w-16 h-16 object-cover rounded border"
-          onError={(e) => e.target.style.display = 'none'}
-        />
-      )}
-
-      {showImporter && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Importer une image</h3>
-            
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-[#686868] mb-2">
-                📁 Choisir un fichier
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileUpload}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-[#686868] mb-2">
-                📋 Coller une image base64
-              </label>
-              <textarea
-                value={base64Input}
-                onChange={(e) => setBase64Input(e.target.value)}
-                placeholder="Collez ici le code base64 de votre image..."
-                rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono text-xs"
-              />
-            </div>
-
-            <div className="flex gap-2">
-              <button
-                onClick={handleBase64Import}
-                className="flex-1 px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-              >
-                Importer
-              </button>
-              <button
-                onClick={() => setShowImporter(false)}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
-              >
-                Annuler
-              </button>
-            </div>
-            
-            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-              <p className="text-xs text-gray-600">
-                <strong>💡 Comment obtenir une image base64 :</strong><br/>
-                1. Ouvrez votre image dans un éditeur<br/>
-                2. Copiez le code base64 généré<br/>
-                3. Collez-le dans le champ ci-dessus
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default function ConseilsCMSPage() {
-  const [content, setContent] = useState(defaultContent);
-  const [showToast, setShowToast] = useState(false);
-
-    useEffect(() => {
-    // Charger le contenu depuis la base de données
-    const loadContentFromDatabase = async () => {
-      try {
-        const response = await fetch('/api/pages/content?path=/patrimoine/conseils&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            const parsed = result.content.content;
-            setContent({ ...defaultContent, ...parsed });
-            return;
-          }
-        }
-        
-        // Si pas de contenu en base, utiliser le contenu par défaut
-        console.log('Aucun contenu trouvé en base de données, utilisation du contenu par défaut');
-      } catch (error) {
-        console.error('Erreur lors du chargement depuis la base de données:', error);
-        // En cas d'erreur, utiliser le contenu par défaut
-      }
-    };
-
-    loadContentFromDatabase();
-  }, []);
-
-  const handleChange = (section, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
-    }));
-  };
-
-  const handleArrayChange = (section, arrayField, idx, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [arrayField]: prev[section][arrayField].map((item, index) => 
-          index === idx ? { ...item, [field]: value } : item
-        )
-      }
-    }));
-  };
-
-    const handleSave = async () => {
+  // Load sections from CMS
+  const loadSections = async () => {
     try {
-      const response = await fetch('/api/pages/content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pagePath: '/patrimoine/conseils',
-          pageType: 'cms',
-          content: content,
-          metadata: {
-            lastModified: new Date().toISOString(),
-            modifiedBy: 'admin',
-            pageType: 'cms'
-          }
-        })
-      });
-
-      if (response.ok) {
-        console.log('Sauvegardé en base de données');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
+      const response = await fetch('/api/cms/content/patrimoine-conseils');
+      const data = await response.json();
+      
+      if (data.success && data.content) {
+        const mergedSections = patrimoineConseilsSections.map(section => ({
+          ...section,
+          cmsData: data.content[section.id] || {},
+          hasCmsContent: !!data.content[section.id]
+        }));
+        setSections(mergedSections);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
+        const defaultSections = patrimoineConseilsSections.map(section => ({
+          ...section,
+          cmsData: {},
+          hasCmsContent: false
+        }));
+        setSections(defaultSections);
       }
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde: ' + error.message);
+      console.error('Error loading sections:', error);
+      const defaultSections = patrimoineConseilsSections.map(section => ({
+        ...section,
+        cmsData: {},
+        hasCmsContent: false
+      }));
+      setSections(defaultSections);
+    } finally {
+      setLoading(false);
     }
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('contentUpdated'));
   };
 
-  if (!content || !content.hero) {
+  // Handle edit section
+  const handleEditSection = (section) => {
+    setEditingSection(section);
+    const currentData = section.hasCmsContent ? section.cmsData : defaultContent[section.id] || {};
+    setFormData(currentData);
+  };
+
+  // Handle save section
+  const handleSaveSection = async () => {
+    if (!editingSection) return;
+    
+    setSaving(true);
+    try {
+      const response = await fetch('/api/cms/content/patrimoine-conseils', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sectionId: editingSection.id,
+          content: formData
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        // Update local state
+        setSections(prev => prev.map(section => 
+          section.id === editingSection.id 
+            ? { ...section, cmsData: formData, hasCmsContent: true }
+            : section
+        ));
+        
+        setEditingSection(null);
+        setFormData({});
+        
+        // Trigger real-time update
+        window.dispatchEvent(new CustomEvent('cmsContentUpdated'));
+        
+        alert('Contenu sauvegardé avec succès !');
+      } else {
+        alert('Erreur lors de la sauvegarde');
+      }
+    } catch (error) {
+      console.error('Error saving section:', error);
+      alert('Erreur lors de la sauvegarde');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // Handle initialize default content
+  const handleInitializeDefaultContent = () => {
+    if (!editingSection) return;
+    const defaultData = defaultContent[editingSection.id] || {};
+    setFormData(defaultData);
+  };
+
+  // Custom renderers
+  const renderCtaButtons = (field, value, onChange) => {
+    const buttons = value || [];
+    
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="space-y-4">
+        {buttons.map((button, index) => (
+          <div key={index} className="border border-gray-300 rounded-lg p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Texte du bouton</label>
+                <input
+                  type="text"
+                  value={button.text || ''}
+                  onChange={(e) => {
+                    const newButtons = [...buttons];
+                    newButtons[index] = { ...button, text: e.target.value };
+                    onChange(newButtons);
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Action principale"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                <select
+                  value={button.type || 'primary'}
+                  onChange={(e) => {
+                    const newButtons = [...buttons];
+                    newButtons[index] = { ...button, type: e.target.value };
+                    onChange(newButtons);
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="primary">Principal</option>
+                  <option value="secondary">Secondaire</option>
+                </select>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const newButtons = buttons.filter((_, i) => i !== index);
+                onChange(newButtons);
+              }}
+              className="mt-2 text-red-600 hover:text-red-800 text-sm flex items-center gap-1"
+            >
+              <TrashIcon className="w-4 h-4" />
+              Supprimer
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => onChange([...buttons, { text: '', type: 'primary' }])}
+          className="w-full border-2 border-dashed border-gray-300 rounded-lg p-4 text-gray-600 hover:border-gray-400 hover:text-gray-800 flex items-center justify-center gap-2"
+        >
+          <PlusIcon className="w-5 h-5" />
+          Ajouter un bouton
+        </button>
+      </div>
+    );
+  };
+
+  const renderChartData = (field, value, onChange) => {
+    const data = value || [];
+    
+    return (
+      <div className="space-y-4">
+        {data.map((item, index) => (
+          <div key={index} className="border border-gray-300 rounded-lg p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Label</label>
+                <input
+                  type="text"
+                  value={item.label || ''}
+                  onChange={(e) => {
+                    const newData = [...data];
+                    newData[index] = { ...item, label: e.target.value };
+                    onChange(newData);
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Indicateur 1"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Valeur</label>
+                <input
+                  type="text"
+                  value={item.value || ''}
+                  onChange={(e) => {
+                    const newData = [...data];
+                    newData[index] = { ...item, value: e.target.value };
+                    onChange(newData);
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Valeur 1"
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const newData = data.filter((_, i) => i !== index);
+                onChange(newData);
+              }}
+              className="mt-2 text-red-600 hover:text-red-800 text-sm flex items-center gap-1"
+            >
+              <TrashIcon className="w-4 h-4" />
+              Supprimer
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => onChange([...data, { label: '', value: '' }])}
+          className="w-full border-2 border-dashed border-gray-300 rounded-lg p-4 text-gray-600 hover:border-gray-400 hover:text-gray-800 flex items-center justify-center gap-2"
+        >
+          <PlusIcon className="w-5 h-5" />
+          Ajouter une donnée
+        </button>
+      </div>
+    );
+  };
+
+  const renderItemsList = (field, value, onChange) => {
+    const items = value || [];
+    
+    return (
+      <div className="space-y-4">
+        {items.map((item, index) => (
+          <div key={index} className="border border-gray-300 rounded-lg p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Titre</label>
+                <input
+                  type="text"
+                  value={item.title || ''}
+                  onChange={(e) => {
+                    const newItems = [...items];
+                    newItems[index] = { ...item, title: e.target.value };
+                    onChange(newItems);
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Élément 1"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea
+                  value={item.description || ''}
+                  onChange={(e) => {
+                    const newItems = [...items];
+                    newItems[index] = { ...item, description: e.target.value };
+                    onChange(newItems);
+                  }}
+                  rows={2}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Description de l'élément"
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const newItems = items.filter((_, i) => i !== index);
+                onChange(newItems);
+              }}
+              className="mt-2 text-red-600 hover:text-red-800 text-sm flex items-center gap-1"
+            >
+              <TrashIcon className="w-4 h-4" />
+              Supprimer
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => onChange([...items, { title: '', description: '' }])}
+          className="w-full border-2 border-dashed border-gray-300 rounded-lg p-4 text-gray-600 hover:border-gray-400 hover:text-gray-800 flex items-center justify-center gap-2"
+        >
+          <PlusIcon className="w-5 h-5" />
+          Ajouter un élément
+        </button>
+      </div>
+    );
+  };
+
+  // Render field based on type
+  const renderField = (field, value, onChange) => {
+    switch (field.type) {
+      case 'ctaButtons':
+        return renderCtaButtons(field, value, onChange);
+      case 'chartData':
+        return renderChartData(field, value, onChange);
+      case 'itemsList':
+        return renderItemsList(field, value, onChange);
+      case 'textarea':
+        return (
+          <textarea
+            value={value || ''}
+            onChange={(e) => onChange(e.target.value)}
+            rows={field.rows || 3}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder={field.placeholder}
+          />
+        );
+      default:
+        return (
+          <input
+            type={field.type || 'text'}
+            value={value || ''}
+            onChange={(e) => onChange(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder={field.placeholder}
+            required={field.required}
+          />
+        );
+    }
+  };
+
+  useEffect(() => {
+    loadSections();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
-          <p className="text-[#686868]">Chargement du CMS...</p>
+          <p className="text-gray-600">Chargement des sections...</p>
         </div>
       </div>
     );
   }
-              
+
   return (
-    <div className="space-y-6 p-6">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold text-[#112033]">CMS Conseils Patrimoniaux</h1>
-            <p className="text-[#686868]">Gérez le contenu de la page conseils patrimoniaux</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleSave}
-              className="bg-[#4EBBBD] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#3DA8AA]"
-            >
-              Sauvegarder
-            </button>
+      <header className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-6">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-xl flex items-center justify-center mr-4">
+                <span className="text-white font-bold text-lg">A</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">CMS Patrimoine Conseils</h1>
+                <p className="text-sm text-gray-600">Gestion du contenu de la page conseils patrimoine</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/cms/dashboard')}
+                className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <HomeIcon className="w-5 h-5 mr-2" />
+                Dashboard
+              </button>
+              <button
+                onClick={() => window.open('/patrimoine/conseils', '_blank')}
+                className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <EyeIcon className="w-5 h-5 mr-2" />
+                Voir Page Patrimoine Conseils
+              </button>
+              <button
+                onClick={handleInitializeDefaultContent}
+                className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                <ArrowPathIcon className="w-5 h-5 mr-2" />
+                Initialiser Contenu
+              </button>
+              <button
+                onClick={() => window.location.reload()}
+                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <ArrowPathIcon className="w-5 h-5 mr-2" />
+                Recharger Site
+              </button>
+            </div>
           </div>
         </div>
-        
-        {/* Guide des images */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
-          <h3 className="text-sm font-medium text-blue-800 mb-2">📸 Guide de gestion des images</h3>
-          <div className="text-xs text-blue-700 space-y-1">
-            <p>• <strong>Format recommandé :</strong> JPG, PNG, WebP (max 2MB)</p>
-            <p>• <strong>Dossier :</strong> Placez vos images dans <code className="bg-blue-100 px-1 rounded">/public/images/</code></p>
-            <p>• <strong>Exemple :</strong> <code className="bg-blue-100 px-1 rounded">/images/ma-photo.jpg</code></p>
-            <p>• <strong>Optimisation :</strong> Utilisez des images de 800x600px pour de meilleures performances</p>
-            <p>• <strong>Nouveau :</strong> Cliquez sur "📁 Importer" pour uploader des fichiers ou coller du base64</p>
-          </div>
-        </div>
-      </div>
+      </header>
 
-      {/* Hero Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Hero</h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-            <input
-              value={content.hero.title} 
-              onChange={(e) => handleChange('hero', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Paragraphe principal</label>
-            <textarea
-              value={content.hero.paragraph} 
-              onChange={(e) => handleChange('hero', 'paragraph', e.target.value)} 
-              rows={4} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-            <input
-              value={content.hero.primaryButton} 
-              onChange={(e) => handleChange('hero', 'primaryButton', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-            <input
-              value={content.hero.secondaryButton} 
-              onChange={(e) => handleChange('hero', 'secondaryButton', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-
-          <div className="border-t pt-4">
-            <h3 className="text-md font-medium text-[#112033] mb-3">Cartes d'avantages</h3>
-            {content.hero.benefits.map((benefit, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-4">
-                <h4 className="text-sm font-medium text-[#112033] mb-3">Avantage {index + 1}</h4>
-                <div className="space-y-3">
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Sections List */}
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-900">Sections de Contenu</h2>
+            
+            {sections.map((section) => (
+              <div key={section.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-4">
                   <div>
-                    <label className="block text-xs text-[#686868] mb-1">Titre</label>
-                    <input
-                      value={benefit.title} 
-                      onChange={(e) => handleArrayChange('hero', 'benefits', index, 'title', e.target.value)} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
+                    <h3 className="text-lg font-medium text-gray-900">{section.title}</h3>
+                    <p className="text-sm text-gray-600">{section.description}</p>
                   </div>
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Icône</label>
-                    <input
-                      value={benefit.icon} 
-                      onChange={(e) => handleArrayChange('hero', 'benefits', index, 'icon', e.target.value)} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Valeur</label>
-                    <input
-                      value={benefit.value} 
-                      onChange={(e) => handleArrayChange('hero', 'benefits', index, 'value', e.target.value)} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Description</label>
-                    <input
-                      value={benefit.description} 
-                      onChange={(e) => handleArrayChange('hero', 'benefits', index, 'description', e.target.value)} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
+                  <div className="flex items-center space-x-2">
+                    {section.hasCmsContent && (
+                      <CheckCircleIcon className="w-5 h-5 text-green-500" />
+                    )}
+                    <button
+                      onClick={() => handleEditSection(section)}
+                      className="flex items-center px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                    >
+                      <PencilIcon className="w-4 h-4 mr-1" />
+                      Modifier
+                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Chart Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Graphique</h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre du graphique</label>
-            <input
-              value={content.chart.title} 
-              onChange={(e) => handleChange('chart', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Image du graphique</label>
-            <ImageImporter
-              value={content.chart.chartImage}
-              onChange={(value) => handleChange('chart', 'chartImage', value)}
-              placeholder="/images/variation-chart-image-944f04.png"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Données du graphique</label>
-            {content.chart.data.map((item, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-3 mb-3">
-                <h4 className="text-sm font-medium text-[#112033] mb-2">Donnée {index + 1}</h4>
-                <div className="space-y-2">
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Label</label>
-                    <input
-                      value={item.label} 
-                      onChange={(e) => handleArrayChange('chart', 'data', index, 'label', e.target.value)} 
-                      className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Valeur</label>
-                    <input
-                      value={item.value} 
-                      onChange={(e) => handleArrayChange('chart', 'data', index, 'value', e.target.value)} 
-                      className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Conseils Types Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Types de Conseils</h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-            <input
-              value={content.conseilsTypes.title} 
-              onChange={(e) => handleChange('conseilsTypes', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Types de conseils</label>
-            {content.conseilsTypes.types.map((type, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-4">
-                <h4 className="text-sm font-medium text-[#112033] mb-3">Type {index + 1}</h4>
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Titre</label>
-                    <input
-                      value={type.title} 
-                      onChange={(e) => handleArrayChange('conseilsTypes', 'types', index, 'title', e.target.value)} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Icône</label>
-                    <input
-                      value={type.icon} 
-                      onChange={(e) => handleArrayChange('conseilsTypes', 'types', index, 'icon', e.target.value)} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Description</label>
-                    <textarea
-                      value={type.description} 
-                      onChange={(e) => handleArrayChange('conseilsTypes', 'types', index, 'description', e.target.value)} 
-                      rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Fonctionnalités</label>
-                    {type.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="mb-2">
-                        <input
-                          value={feature} 
-                          onChange={(e) => {
-                            const newFeatures = [...type.features];
-                            newFeatures[featureIndex] = e.target.value;
-                            handleArrayChange('conseilsTypes', 'types', index, 'features', newFeatures);
-                          }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                        />
+                
+                {/* Content Preview */}
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-medium text-gray-900 mb-3">Aperçu du contenu :</h4>
+                  <div className="space-y-2">
+                    {Object.entries(section.hasCmsContent ? section.cmsData : defaultContent[section.id] || {}).map(([key, value]) => (
+                      <div key={key} className="text-sm">
+                        <span className="font-medium text-gray-700">{key}:</span>
+                        <div className="text-gray-600 mt-1">
+                          {Array.isArray(value) ? (
+                            <div className="space-y-1">
+                              {value.map((item, index) => (
+                                <div key={index} className="pl-4">
+                                  {typeof item === 'object' ? (
+                                    <div className="space-y-1">
+                                      {Object.entries(item).map(([subKey, subValue]) => (
+                                        <div key={subKey} className="text-xs">
+                                          <span className="font-medium">{subKey}:</span> {String(subValue || '')}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  ) : (
+                                    String(item || '')
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          ) : typeof value === 'object' ? (
+                            <div className="space-y-1">
+                              {Object.entries(value).map(([subKey, subValue]) => (
+                                <div key={subKey} className="text-xs">
+                                  <span className="font-medium">{subKey}:</span> {String(subValue || '')}
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            String(value || '')
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -552,92 +565,60 @@ export default function ConseilsCMSPage() {
               </div>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Advantages Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Avantages</h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-            <input
-              value={content.advantages.title} 
-              onChange={(e) => handleChange('advantages', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Avantages</label>
-            {content.advantages.benefits.map((benefit, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-4">
-                <h4 className="text-sm font-medium text-[#112033] mb-3">Avantage {index + 1}</h4>
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Titre</label>
-                    <input
-                      value={benefit.title} 
-                      onChange={(e) => handleArrayChange('advantages', 'benefits', index, 'title', e.target.value)} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-[#686868] mb-1">Description</label>
-                    <textarea
-                      value={benefit.description} 
-                      onChange={(e) => handleArrayChange('advantages', 'benefits', index, 'description', e.target.value)} 
-                      rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
+          {/* Edit Form */}
+          {editingSection && (
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-medium text-gray-900">
+                  Modifier : {editingSection.title}
+                </h3>
+                <button
+                  onClick={() => setEditingSection(null)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <XMarkIcon className="w-6 h-6" />
+                </button>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
-      {/* CTA Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4">Section Call-to-Action</h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input
-              value={content.cta.title} 
-              onChange={(e) => handleChange('cta', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Paragraphe</label>
-            <textarea
-              value={content.cta.paragraph} 
-              onChange={(e) => handleChange('cta', 'paragraph', e.target.value)} 
-              rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Bouton</label>
-            <input
-              value={content.cta.button} 
-              onChange={(e) => handleChange('cta', 'button', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-        </div>
-      </div>
+              <form className="space-y-6">
+                {editingSection.fields.map((field) => (
+                  <div key={field.key}>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {field.label}
+                      {field.required && <span className="text-red-500 ml-1">*</span>}
+                    </label>
+                    {field.help && (
+                      <p className="text-xs text-gray-500 mb-2">{field.help}</p>
+                    )}
+                    {renderField(field, formData[field.key], (value) => {
+                      setFormData(prev => ({ ...prev, [field.key]: value }));
+                    })}
+                  </div>
+                ))}
 
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 bg-[#4EBBBD] text-white px-6 py-3 rounded-lg shadow-lg z-50">
-          Contenu sauvegardé avec succès !
+                <div className="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+                  <button
+                    type="button"
+                    onClick={() => setEditingSection(null)}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSaveSection}
+                    disabled={saving}
+                    className="px-6 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3A9B9D] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {saving ? 'Sauvegarde...' : 'Sauvegarder'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
         </div>
-      )}
+      </main>
     </div>
   );
 }

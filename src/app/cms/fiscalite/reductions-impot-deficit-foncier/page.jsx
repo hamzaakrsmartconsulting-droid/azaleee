@@ -1,790 +1,336 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
+export default function CmsReductionsImpotDeficitFoncierPage() {
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingSection, setEditingSection] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState('');
+  const router = useRouter();
 
+  // Réductions d'impôt sections configuration
+  const reductionsImpotSections = [
+    {
+      id: 'hero',
+      name: 'Section Hero',
+      description: 'Titre principal, sous-titre et description',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'subtitle', label: 'Sous-titre', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'button', label: 'Texte du Bouton', type: 'text' },
+        { key: 'image', label: 'Image', type: 'text' }
+      ]
+    },
+    {
+      id: 'quickStats',
+      name: 'Chiffres Clés',
+      description: 'Statistiques rapides et chiffres importants',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'stats', label: 'Statistiques (JSON)', type: 'textarea' }
+      ]
+    },
+    {
+      id: 'comparison',
+      name: 'Comparaison',
+      description: 'Comparaison entre réduction d\'impôt et déduction',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'table', label: 'Tableau (JSON)', type: 'textarea' }
+      ]
+    },
+    {
+      id: 'investorProfile',
+      name: 'Profil Investisseur',
+      description: 'Qui peut en profiter',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'profiles', label: 'Profils (JSON)', type: 'textarea' }
+      ]
+    },
+    {
+      id: 'conditions',
+      name: 'Conditions',
+      description: 'Conditions pour créer un déficit foncier',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'conditions', label: 'Conditions (JSON)', type: 'textarea' }
+      ]
+    },
+    {
+      id: 'cta',
+      name: 'Section CTA',
+      description: 'Call-to-action final',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'buttonText', label: 'Texte du Bouton', type: 'text' }
+      ]
+    }
+  ];
 
-const defaultContent = {
-  hero: {
-    title: "Réductions d'impôt et déficit foncier",
-    subtitle: "Optimisez votre fiscalité grâce aux réductions d'impôt et au déficit foncier. Découvrez comment transformer vos charges immobilières en avantages fiscaux.",
-    button: "Calculer mes réductions",
-    image: "/images/fiscalite-deficit-foncier-hero.jpg"
-  },
-  quickStats: {
-    title: "Chiffres clés",
-    stats: [
-      { label: "Réduction max", value: "21%", description: "Loi Pinel" },
-      { label: "Déficit foncier", value: "10 700€", description: "Plafond annuel" },
-      { label: "Report", value: "10 ans", description: "Déficit foncier" }
-    ]
-  },
-  calculator: {
-    title: "Calculateur de réductions d'impôt",
-    description: "Estimez vos réductions d'impôt et votre déficit foncier",
-    fields: [
-      { id: "revenus", label: "Revenus locatifs", placeholder: "15000" },
-      { id: "charges", label: "Charges déductibles", placeholder: "8000" },
-      { id: "interets", label: "Intérêts d'emprunt", placeholder: "5000" },
-      { id: "amortissement", label: "Amortissement", placeholder: "3000" }
-    ]
-  },
-  reductions: {
-    title: "Types de réductions d'impôt",
-    items: [
-      {
-        name: "Loi Pinel",
-        reduction: "21%",
-        description: "Investissement immobilier neuf",
-        conditions: ["Bien neuf", "Location 12 ans", "Plafond 300k€"]
-      },
-      {
-        name: "Loi Denormandie",
-        reduction: "22%",
-        description: "Rénovation de logements anciens",
-        conditions: ["Bien ancien", "Rénovation", "Location 12 ans"]
-      },
-      {
-        name: "Loi Malraux",
-        reduction: "30%",
-        description: "Rénovation monuments historiques",
-        conditions: ["Bien classé", "Rénovation", "Location 9 ans"]
-      }
-    ]
-  },
-  deficitFoncier: {
-    title: "Déficit foncier",
-    description: "Le déficit foncier permet de déduire les charges immobilières de vos revenus globaux",
-    avantages: [
-      "Déduction des charges d'exploitation",
-      "Déduction des intérêts d'emprunt",
-      "Déduction des travaux d'amélioration",
-      "Report sur 10 ans"
-    ],
-    plafonds: [
-      { label: "Plafond annuel", value: "10 700€" },
-      { label: "Report maximum", value: "10 ans" },
-      { label: "Déduction charges", value: "100%" }
-    ]
-  },
-  examples: {
-    title: "Exemples concrets",
-    items: [
-      {
-        scenario: "Investissement Pinel",
-        revenus: "12 000€",
-        charges: "8 000€",
-        reduction: "2 520€",
-        total: "2 520€ d'économie"
-      },
-      {
-        scenario: "Déficit foncier",
-        revenus: "15 000€",
-        charges: "18 000€",
-        deficit: "3 000€",
-        total: "3 000€ de déficit reportable"
-      }
-    ]
-  },
-  cta: {
-    title: "Prêt à optimiser votre fiscalité ?",
-    subtitle: "Nos experts vous accompagnent pour maximiser vos réductions d'impôt",
-    primaryButton: "Simulation gratuite",
-    secondaryButton: "Consultation expert"
-  }
-};
-
-export default function ReductionsImpotDeficitFoncierCMS() {
-  const [content, setContent] = useState(defaultContent);
-  const [showToast, setShowToast] = useState(false);
-
-    useEffect(() => {
-    // Charger le contenu depuis la base de données
-    const loadContentFromDatabase = async () => {
-      try {
-        const response = await fetch('/api/pages/content?path=/fiscalite/reductions-impot-deficit-foncier&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            const parsed = result.content.content;
-            setContent({ ...defaultContent, ...parsed });
-            return;
-          }
+  // Load content from official page
+  const loadContent = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/pages/reductions-impot-deficit-foncier');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.content && Object.keys(data.content).length > 0) {
+          setFormData(data.content);
+        } else {
+          // Load default content structure
+          const defaultContent = {
+            hero: {
+              title: "Déficit foncier et réductions d'impôt",
+              subtitle: "Un levier fiscal puissant pour investisseurs avertis",
+              description: "Pour les investisseurs disposant de revenus fonciers imposables ou d'une tranche marginale d'imposition (TMI) élevée, le déficit foncier permet une double optimisation : réduction de l'impôt sur le revenu et diminution des prélèvements sociaux (CSG/CRDS à 17,2%) sur les revenus fonciers.",
+              button: "Calculer mon déficit foncier",
+              image: "/images/fiscalite-deficit-foncier-hero.jpg"
+            },
+            quickStats: {
+              title: "Chiffres clés",
+              stats: JSON.stringify([
+                { label: "Déficit foncier", value: "10 700€", description: "Plafond annuel déductible" },
+                { label: "Report", value: "10 ans", description: "Sur revenus fonciers" },
+                { label: "Rendement fiscal", value: "58%", description: "TMI 41% + CSG/CRDS" }
+              ])
+            },
+            comparison: {
+              title: "Réduction d'impôt ou déduction du revenu ?",
+              description: "Comprendre la différence entre les deux mécanismes fiscaux",
+              table: JSON.stringify({
+                headers: ["Mécanisme", "Effet fiscal", "Bénéfice"],
+                rows: [
+                  {
+                    mecanisme: "Réduction d'impôt",
+                    effet: "Soustraction directe de l'impôt à payer",
+                    benefice: "1 000 € réduits = 1 000 € gagnés"
+                  },
+                  {
+                    mecanisme: "Déficit foncier",
+                    effet: "Diminution de la base imposable",
+                    benefice: "Effet amplifié selon la TMI + économie de CSG/CRDS"
+                  }
+                ]
+              })
+            },
+            investorProfile: {
+              title: "Qui peut en profiter ?",
+              description: "Le déficit foncier s'adresse à des investisseurs spécifiques",
+              profiles: JSON.stringify([
+                "Propriétaires de biens locatifs déjà imposables au régime réel (hors micro-foncier)",
+                "Contribuables avec une TMI élevée (30% ou plus)",
+                "Investisseurs souhaitant valoriser des biens anciens avec travaux"
+              ])
+            },
+            conditions: {
+              title: "Conditions pour créer un déficit foncier",
+              description: "Les conditions spécifiques à respecter pour bénéficier du déficit foncier",
+              conditions: JSON.stringify([
+                "Bien en location nue (non meublée), soumis au régime réel",
+                "Travaux éligibles : entretien, réparation, amélioration",
+                "Pas d'agrandissement ni de construction neuve",
+                "Travaux réellement payés et effectués avant d'être mis en location"
+              ])
+            },
+            cta: {
+              title: "Besoin d'aide pour optimiser votre fiscalité ?",
+              description: "Nos experts vous accompagnent dans votre stratégie de déficit foncier et réductions d'impôt.",
+              buttonText: "Demander une consultation gratuite"
+            }
+          };
+          setFormData(defaultContent);
         }
-        
-        // Si pas de contenu en base, utiliser le contenu par défaut
-        console.log('Aucun contenu trouvé en base de données, utilisation du contenu par défaut');
-      } catch (error) {
-        console.error('Erreur lors du chargement depuis la base de données:', error);
-        // En cas d'erreur, utiliser le contenu par défaut
       }
-    };
+    } catch (error) {
+      console.error('Error loading content:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    loadContentFromDatabase();
+  useEffect(() => {
+    loadContent();
   }, []);
 
-  const handleChange = (section, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
-    }));
-  };
-
-  const handleArrayChange = (section, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: prev[section][field].map((item, i) => i === index ? value : item)
-      }
-    }));
-  };
-
-  const handleNestedChange = (section, subsection, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: value
-        }
-      }
-    }));
-  };
-
-  const handleNestedArrayChange = (section, subsection, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: prev[section][subsection][field].map((item, i) => i === index ? value : item)
-        }
-      }
-    }));
-  };
-
-    const handleSave = async () => {
+  const handleSave = async () => {
     try {
-      const response = await fetch('/api/pages/content', {
+      setSaving(true);
+      const response = await fetch('/api/cms/content/reductions-impot-deficit-foncier', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pagePath: '/fiscalite/reductions-impot-deficit-foncier',
-          pageType: 'cms',
-          content: content,
-          metadata: {
-            lastModified: new Date().toISOString(),
-            modifiedBy: 'admin',
-            pageType: 'cms'
-          }
-        })
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        console.log('Sauvegardé en base de données');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
+        setMessage('Contenu sauvegardé avec succès !');
+        setTimeout(() => setMessage(''), 3000);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
+        setMessage('Erreur lors de la sauvegarde');
+        setTimeout(() => setMessage(''), 3000);
       }
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde: ' + error.message);
+      console.error('Error saving content:', error);
+      setMessage('Erreur lors de la sauvegarde');
+      setTimeout(() => setMessage(''), 3000);
+    } finally {
+      setSaving(false);
     }
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('contentUpdated'));
   };
 
+  const updateContent = (sectionId, fieldKey, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [sectionId]: {
+        ...prev[sectionId],
+        [fieldKey]: value
+      }
+    }));
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#4EBBBD] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Chargement du contenu...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold text-[#112033]">Page Réductions d'Impôt et Déficit Foncier</h1>
-            <p className="text-[#686868]">Modifiez le contenu de la page Réductions d'Impôt et Déficit Foncier</p>
-          </div>
-          <button 
-            onClick={handleSave} 
-            className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors flex items-center gap-2"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Sauvegarder
-          </button>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Hero
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-            <input 
-              value={content.hero.title} 
-              onChange={(e) => handleChange('hero', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
-            <textarea 
-              value={content.hero.subtitle} 
-              onChange={(e) => handleChange('hero', 'subtitle', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Bouton</label>
-            <input 
-              value={content.hero.button} 
-              onChange={(e) => handleChange('hero', 'button', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Image (URL)</label>
-            <input 
-              value={content.hero.image} 
-              onChange={(e) => handleChange('hero', 'image', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              placeholder="/images/fiscalite-deficit-foncier-hero.jpg"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Stats Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Chiffres Clés
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-            <input 
-              value={content.quickStats.title} 
-              onChange={(e) => handleChange('quickStats', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Statistiques</label>
-            {content.quickStats.stats.map((stat, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Label</label>
-                    <input 
-                      value={stat.label} 
-                      onChange={(e) => handleNestedArrayChange('quickStats', 'stats', index, { ...stat, label: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Valeur</label>
-                    <input 
-                      value={stat.value} 
-                      onChange={(e) => handleNestedArrayChange('quickStats', 'stats', index, { ...stat, value: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <input 
-                      value={stat.description} 
-                      onChange={(e) => handleNestedArrayChange('quickStats', 'stats', index, { ...stat, description: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newStats = content.quickStats.stats.filter((_, i) => i !== index);
-                    handleChange('quickStats', 'stats', newStats);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cette statistique
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newStats = [...content.quickStats.stats, { label: "", value: "", description: "" }];
-                handleChange('quickStats', 'stats', newStats);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une statistique
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Calculator Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Calculateur
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre du calculateur</label>
-            <input 
-              value={content.calculator.title} 
-              onChange={(e) => handleChange('calculator', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description du calculateur</label>
-            <textarea 
-              value={content.calculator.description} 
-              onChange={(e) => handleChange('calculator', 'description', e.target.value)} 
-              rows={2} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Champs du calculateur</label>
-            {content.calculator.fields.map((field, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">ID</label>
-                    <input 
-                      value={field.id} 
-                      onChange={(e) => handleNestedArrayChange('calculator', 'fields', index, { ...field, id: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Label</label>
-                    <input 
-                      value={field.label} 
-                      onChange={(e) => handleNestedArrayChange('calculator', 'fields', index, { ...field, label: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Placeholder</label>
-                    <input 
-                      value={field.placeholder} 
-                      onChange={(e) => handleNestedArrayChange('calculator', 'fields', index, { ...field, placeholder: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newFields = content.calculator.fields.filter((_, i) => i !== index);
-                    handleChange('calculator', 'fields', newFields);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer ce champ
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newFields = [...content.calculator.fields, { id: "", label: "", placeholder: "" }];
-                handleChange('calculator', 'fields', newFields);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un champ
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Reductions Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Types de Réductions
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-            <input 
-              value={content.reductions.title} 
-              onChange={(e) => handleChange('reductions', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Types de réductions</label>
-            {content.reductions.items.map((item, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Nom</label>
-                    <input 
-                      value={item.name} 
-                      onChange={(e) => handleNestedArrayChange('reductions', 'items', index, { ...item, name: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Réduction</label>
-                    <input 
-                      value={item.reduction} 
-                      onChange={(e) => handleNestedArrayChange('reductions', 'items', index, { ...item, reduction: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Description</label>
-                    <textarea 
-                      value={item.description} 
-                      onChange={(e) => handleNestedArrayChange('reductions', 'items', index, { ...item, description: e.target.value })} 
-                      rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                
-                {/* Conditions */}
-                <div className="mb-3">
-                  <label className="block text-sm font-medium text-[#686868] mb-2">Conditions</label>
-                  {item.conditions.map((condition, condIndex) => (
-                    <div key={condIndex} className="flex gap-2 mb-2">
-                      <input 
-                        value={condition} 
-                        onChange={(e) => {
-                          const newConditions = [...item.conditions];
-                          newConditions[condIndex] = e.target.value;
-                          handleNestedArrayChange('reductions', 'items', index, { ...item, conditions: newConditions });
-                        }} 
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                      />
-                      <button 
-                        onClick={() => {
-                          const newConditions = item.conditions.filter((_, i) => i !== condIndex);
-                          handleNestedArrayChange('reductions', 'items', index, { ...item, conditions: newConditions });
-                        }}
-                        className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                  ))}
-                  <button 
-                    onClick={() => {
-                      const newConditions = [...item.conditions, ""];
-                      handleNestedArrayChange('reductions', 'items', index, { ...item, conditions: newConditions });
-                    }}
-                    className="px-3 py-1 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA] text-sm"
-                  >
-                    Ajouter une condition
-                  </button>
-                </div>
-
-                <button 
-                  onClick={() => {
-                    const newItems = content.reductions.items.filter((_, i) => i !== index);
-                    handleChange('reductions', 'items', newItems);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cette réduction
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.reductions.items, {
-                  name: "",
-                  reduction: "",
-                  description: "",
-                  conditions: [""]
-                }];
-                handleChange('reductions', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter une réduction
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Déficit Foncier Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Déficit Foncier
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-            <input 
-              value={content.deficitFoncier.title} 
-              onChange={(e) => handleChange('deficitFoncier', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea 
-              value={content.deficitFoncier.description} 
-              onChange={(e) => handleChange('deficitFoncier', 'description', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          
-          {/* Avantages */}
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Avantages</label>
-            {content.deficitFoncier.avantages.map((avantage, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <input 
-                  value={avantage} 
-                  onChange={(e) => {
-                    const newAvantages = [...content.deficitFoncier.avantages];
-                    newAvantages[index] = e.target.value;
-                    handleChange('deficitFoncier', 'avantages', newAvantages);
-                  }} 
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-                <button 
-                  onClick={() => {
-                    const newAvantages = content.deficitFoncier.avantages.filter((_, i) => i !== index);
-                    handleChange('deficitFoncier', 'avantages', newAvantages);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newAvantages = [...content.deficitFoncier.avantages, ""];
-                handleChange('deficitFoncier', 'avantages', newAvantages);
-              }}
-              className="px-3 py-1 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA] text-sm"
-            >
-              Ajouter un avantage
-            </button>
-          </div>
-
-          {/* Plafonds */}
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Plafonds</label>
-            {content.deficitFoncier.plafonds.map((plafond, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Label</label>
-                    <input 
-                      value={plafond.label} 
-                      onChange={(e) => handleNestedArrayChange('deficitFoncier', 'plafonds', index, { ...plafond, label: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Valeur</label>
-                    <input 
-                      value={plafond.value} 
-                      onChange={(e) => handleNestedArrayChange('deficitFoncier', 'plafonds', index, { ...plafond, value: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newPlafonds = content.deficitFoncier.plafonds.filter((_, i) => i !== index);
-                    handleChange('deficitFoncier', 'plafonds', newPlafonds);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer ce plafond
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newPlafonds = [...content.deficitFoncier.plafonds, { label: "", value: "" }];
-                handleChange('deficitFoncier', 'plafonds', newPlafonds);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un plafond
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Examples Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Exemples Concrets
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de la section</label>
-            <input 
-              value={content.examples.title} 
-              onChange={(e) => handleChange('examples', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Exemples</label>
-            {content.examples.items.map((example, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 mb-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Scénario</label>
-                    <input 
-                      value={example.scenario} 
-                      onChange={(e) => handleNestedArrayChange('examples', 'items', index, { ...example, scenario: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Revenus</label>
-                    <input 
-                      value={example.revenus} 
-                      onChange={(e) => handleNestedArrayChange('examples', 'items', index, { ...example, revenus: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Charges</label>
-                    <input 
-                      value={example.charges} 
-                      onChange={(e) => handleNestedArrayChange('examples', 'items', index, { ...example, charges: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Réduction/Déficit</label>
-                    <input 
-                      value={example.reduction || example.deficit} 
-                      onChange={(e) => {
-                        if (example.reduction) {
-                          handleNestedArrayChange('examples', 'items', index, { ...example, reduction: e.target.value });
-                        } else {
-                          handleNestedArrayChange('examples', 'items', index, { ...example, deficit: e.target.value });
-                        }
-                      }} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-[#686868] mb-1">Total</label>
-                    <input 
-                      value={example.total} 
-                      onChange={(e) => handleNestedArrayChange('examples', 'items', index, { ...example, total: e.target.value })} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    const newItems = content.examples.items.filter((_, i) => i !== index);
-                    handleChange('examples', 'items', newItems);
-                  }}
-                  className="mt-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  Supprimer cet exemple
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.examples.items, {
-                  scenario: "",
-                  revenus: "",
-                  charges: "",
-                  reduction: "",
-                  total: ""
-                }];
-                handleChange('examples', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un exemple
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section CTA
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.cta.title} 
-              onChange={(e) => handleChange('cta', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
-            <textarea 
-              value={content.cta.subtitle} 
-              onChange={(e) => handleChange('cta', 'subtitle', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.cta.primaryButton} 
-                onChange={(e) => handleChange('cta', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/cms/dashboard')}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ← Retour au tableau de bord
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900">CMS - Réductions d'impôt</h1>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.cta.secondaryButton} 
-                onChange={(e) => handleChange('cta', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => window.open('/fiscalite/reductions-impot-deficit-foncier', '_blank')}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                Voir la page officielle
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="px-4 py-2 text-sm font-medium text-white bg-[#4EBBBD] border border-transparent rounded-md hover:bg-[#3DA8AA] disabled:opacity-50"
+              >
+                {saving ? 'Sauvegarde...' : 'Sauvegarder'}
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 bg-[#4EBBBD] text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          <span className="font-medium">Contenu sauvegardé avec succès !</span>
+      {/* Message */}
+      {message && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mx-4 mt-4 rounded">
+          {message}
         </div>
       )}
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Sections List */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h2 className="text-lg font-medium text-gray-900">Sections</h2>
+              </div>
+              <div className="p-6">
+                <div className="space-y-2">
+                  {reductionsImpotSections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => setEditingSection(section.id)}
+                      className={`w-full text-left px-4 py-3 rounded-lg border transition-colors ${
+                        editingSection === section.id
+                          ? 'border-[#4EBBBD] bg-[#4EBBBD]/10 text-[#4EBBBD]'
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="font-medium">{section.name}</div>
+                      <div className="text-sm text-gray-500">{section.description}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Edit Form */}
+          <div className="lg:col-span-2">
+            {editingSection ? (
+              <div className="bg-white rounded-lg shadow">
+                <div className="px-6 py-4 border-b border-gray-200">
+                  <h2 className="text-lg font-medium text-gray-900">
+                    {reductionsImpotSections.find(s => s.id === editingSection)?.name}
+                  </h2>
+                </div>
+                <div className="p-6">
+                  <div className="space-y-6">
+                    {reductionsImpotSections.find(s => s.id === editingSection)?.fields.map((field) => (
+                      <div key={field.key}>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {field.label}
+                        </label>
+                        {field.type === 'textarea' ? (
+                          <textarea
+                            value={formData[editingSection]?.[field.key] || ''}
+                            onChange={(e) => updateContent(editingSection, field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                            rows={4}
+                          />
+                        ) : (
+                          <input
+                            type={field.type}
+                            value={formData[editingSection]?.[field.key] || ''}
+                            onChange={(e) => updateContent(editingSection, field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-white rounded-lg shadow p-8 text-center">
+                <div className="text-gray-500">
+                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <h3 className="mt-2 text-sm font-medium text-gray-900">Aucune section sélectionnée</h3>
+                  <p className="mt-1 text-sm text-gray-500">Sélectionnez une section à gauche pour commencer l'édition.</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

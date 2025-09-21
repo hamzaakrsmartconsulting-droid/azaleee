@@ -1,10 +1,191 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "../../components/common/Header";
 
 export default function PlacementsPage() {
+  const [content, setContent] = useState({});
+  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(true);
+  const [contentSource, setContentSource] = useState('default');
+
+  // Default content structure
+  const defaultContent = {
+    hero: {
+      title: "Placements Financiers – Optimisez votre épargne avec Azalée Patrimoine",
+      description: "Votre partenaire de confiance en gestion de patrimoine depuis plus de 30 ans. Nous vous accompagnons pour diversifier vos placements, optimiser vos rendements, et construire un portefeuille d'investissements adapté à vos objectifs et votre profil de risque.",
+      ctaText: "Demander une étude patrimoniale gratuite",
+      image: "/images/placement.webp"
+    },
+    essentiel: {
+      title: "L'essentiel",
+      content: "Le bilan patrimonial a pour vocation d'apporter une vision claire de votre situation financière et de vos objectifs à moyen et long terme.\n\nGrâce à cette analyse, vous identifiez les leviers pertinents pour :\n• Faire grandir votre patrimoine\n• Protéger vos proches\n• Optimiser durablement votre fiscalité",
+      image: "/images/placements-responsive-content-image-94979.png"
+    },
+    definition: {
+      title: "Gestion de patrimoine : Définition",
+      content: "Le patrimoine peut inclure différents types d'actifs, notamment :\n• Biens immobiliers\n• Placements financiers\n• Participations professionnelles\n• Actifs mobiliers\n• Droits d'usufruit\n• Propriétés intellectuelles\n• Droits à la retraite et rentes"
+    },
+    services: {
+      title: "Nos Services de Placement",
+      services: [
+        { name: "Assurance Vie", description: "Placement sécurisé avec avantages fiscaux" },
+        { name: "Compte Titres", description: "Investissement en actions et obligations" },
+        { name: "PEA/PER", description: "Épargne retraite avec avantages fiscaux" },
+        { name: "SCPI/OPCI", description: "Investissement immobilier indirect" },
+        { name: "ETF", description: "Fonds négociés en bourse" },
+        { name: "Livrets", description: "Placements sécurisés et liquides" }
+      ]
+    },
+    advantages: {
+      title: "Pourquoi choisir Azalée Patrimoine ?",
+      advantages: [
+        { title: "Expertise", description: "30 ans d'expérience en gestion patrimoniale" },
+        { title: "Personnalisation", description: "Solutions adaptées à votre profil" },
+        { title: "Transparence", description: "Conseils clairs et indépendants" },
+        { title: "Suivi", description: "Accompagnement personnalisé" }
+      ]
+    },
+    cta: {
+      title: "Prêt à optimiser vos placements ?",
+      description: "Contactez nos experts pour une analyse personnalisée de votre situation patrimoniale et découvrez les meilleures opportunités d'investissement.",
+      buttonText: "Demander une consultation gratuite"
+    }
+  };
+
+  // Load content from CMS database
+  const loadContentFromCMS = async () => {
+    try {
+      console.log('Placements - Loading content from CMS database...');
+      const response = await fetch('/api/pages/placements');
+      
+      if (response.ok) {
+        const cmsContent = await response.json();
+        console.log('Placements - CMS content loaded:', cmsContent);
+        console.log('Placements - Number of CMS sections:', Object.keys(cmsContent).length);
+        
+        if (Object.keys(cmsContent).length > 0) {
+          // Database has content - merge it with default content
+          console.log('Placements - Database sections found:', Object.keys(cmsContent));
+          console.log('Placements - Database content details:', cmsContent);
+          
+          const mergedContent = { ...defaultContent };
+          
+          // Merge each CMS section with default content
+          Object.keys(cmsContent).forEach(sectionKey => {
+            if (mergedContent[sectionKey]) {
+              mergedContent[sectionKey] = {
+                ...mergedContent[sectionKey],
+                ...cmsContent[sectionKey]
+              };
+            } else {
+              mergedContent[sectionKey] = cmsContent[sectionKey];
+            }
+          });
+          
+          console.log('Placements - Using database content merged with default');
+          console.log('Placements - Merged content keys:', Object.keys(mergedContent));
+          
+          setContent(mergedContent);
+          setContentSource('database');
+        } else {
+          // No database content - use default
+          console.log('Placements - No database content found, using default content');
+          setContent(defaultContent);
+          setContentSource('default');
+        }
+      } else {
+        console.log('Placements - CMS API error, using default content');
+        setContent(defaultContent);
+        setContentSource('default');
+      }
+    } catch (error) {
+      console.error('Placements - Error loading CMS content:', error);
+      console.log('Placements - Falling back to default content');
+      setContent(defaultContent);
+      setContentSource('default');
+    } finally {
+      setIsLoadingFromDatabase(false);
+    }
+  };
+
+  useEffect(() => {
+    // Always set default content first to prevent empty state
+    setContent(defaultContent);
+    setContentSource('default');
+    
+    // Then load from database and merge
+    loadContentFromCMS();
+    
+    // Listen for content update events
+    const handleContentUpdate = async () => {
+      console.log('Placements - Content update event received - reloading from CMS');
+      await loadContentFromCMS();
+    };
+
+    // Use polling for real-time updates
+    let pollingInterval = null;
+    
+    const startPolling = () => {
+      console.log('Placements - Starting polling for content updates');
+      
+      pollingInterval = setInterval(async () => {
+        try {
+          // Check if page is visible before polling
+          if (document.visibilityState === 'visible') {
+            console.log('Placements - Polling for updates...');
+            await loadContentFromCMS();
+          }
+        } catch (error) {
+          console.error('Placements - Polling error:', error);
+        }
+      }, 3000); // Poll every 3 seconds for faster updates
+    };
+    
+    // Start polling after initial load is complete
+    setTimeout(() => {
+      if (!isLoadingFromDatabase) {
+        startPolling();
+      }
+    }, 2000);
+    
+    // Also keep the old event listeners as backup
+    window.addEventListener('contentUpdated', handleContentUpdate);
+    
+    // Listen for localStorage changes (cross-tab communication)
+    const handleStorageChange = (e) => {
+      if (e.key === 'cms_content_updated') {
+        console.log('Placements - localStorage change detected - reloading content');
+        loadContentFromCMS();
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
+      window.removeEventListener('contentUpdated', handleContentUpdate);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   return (
     <>
+      {/* Loading indicator */}
+      {isLoadingFromDatabase && (
+        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
+          Loading Placements from Database...
+        </div>
+      )}
+      
+      {/* Content source indicator */}
+      {!isLoadingFromDatabase && (
+        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full"></div>
+          Content: {contentSource === 'database' ? 'CMS Database' : 'Default'}
+        </div>
+      )}
+
       <Header />
       
       {/* Hero Section */}
@@ -15,18 +196,18 @@ export default function PlacementsPage() {
             <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               {/* Main Title */}
               <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
-                Placements Financiers – Optimisez votre épargne avec Azalee Wealth
+                {content.hero?.title || defaultContent.hero.title}
               </h1>
               
               {/* Description */}
               <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
-                Votre partenaire de confiance en gestion de patrimoine depuis plus de 30 ans. Nous vous accompagnons pour diversifier vos placements, optimiser vos rendements, et construire un portefeuille d'investissements adapté à vos objectifs et votre profil de risque.
+                {content.hero?.description || defaultContent.hero.description}
               </p>
               
               {/* CTA Button */}
               <div className="flex justify-center lg:justify-start">
                 <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                  Demander une étude patrimoniale gratuite
+                  {content.hero?.ctaText || defaultContent.hero.ctaText}
                 </button>
               </div>
             </div>
@@ -39,7 +220,7 @@ export default function PlacementsPage() {
                 
                 {/* Main image */}
                 <img
-                  src="/images/placement.webp"
+                  src={content.hero?.image || defaultContent.hero.image}
                   alt="Expert en placements financiers consultant des graphiques et analyses de marché"
                   className="relative z-10 w-full max-w-md lg:max-w-lg rounded-2xl shadow-2xl object-cover border-4 border-white"
                   style={{ aspectRatio: '4/3' }}
@@ -92,7 +273,7 @@ export default function PlacementsPage() {
               {/* Left: Image */}
               <div className="w-full lg:w-[96px] flex-shrink-0 flex justify-center lg:justify-start">
                 <img
-                  src="/images/placements-responsive-content-image-94979.png"
+                  src={content.essentiel?.image || defaultContent.essentiel.image}
                   alt="L'essentiel"
                   className="w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24 rounded-lg"
                 />
@@ -102,26 +283,14 @@ export default function PlacementsPage() {
               <div className="flex-1">
                 {/* Title */}
                 <h2 className="text-[#EB5E4F] text-xs sm:text-sm lg:text-4xl font-source-sans font-semibold leading-tight mb-2 sm:mb-3 lg:mb-8">
-                  L'essentiel
+                  {content.essentiel?.title || defaultContent.essentiel.title}
                 </h2>
                 
                 {/* Content */}
                 <div className="text-black text-xs sm:text-sm lg:text-lg font-source-sans font-semibold leading-relaxed">
-                  <p className="mb-2 sm:mb-3 lg:mb-4">
-                    Le bilan patrimonial a pour vocation d'apporter une vision claire de votre situation financière et de vos objectifs à moyen et long terme.
-                  </p>
-                  <p className="mb-2 sm:mb-3 lg:mb-4">
-                    Grâce à cette analyse, vous identifiez les leviers pertinents pour :
-                  </p>
-                  <p className="mb-1 sm:mb-2 lg:mb-4">
-                    Faire grandir votre patrimoine,
-                  </p>
-                  <p className="mb-1 sm:mb-2 lg:mb-4">
-                    Protéger vos proches,
-                  </p>
-                  <p>
-                    Optimiser durablement votre fiscalité.
-                  </p>
+                  <div dangerouslySetInnerHTML={{ 
+                    __html: (content.essentiel?.content || defaultContent.essentiel.content).replace(/\n/g, '<br />') 
+                  }} />
                 </div>
               </div>
             </div>
@@ -130,37 +299,20 @@ export default function PlacementsPage() {
           {/* Wealth Management Definition */}
           <div className="mb-6 sm:mb-8 lg:mb-12">
             <h3 className="text-black text-xs sm:text-lg lg:text-4xl font-source-sans font-normal leading-tight mb-3 sm:mb-4 lg:mb-8">
-              Gestion de patrimoine : Définition
+              {content.definition?.title || defaultContent.definition.title}
             </h3>
             <div className="text-black text-xs sm:text-sm lg:text-lg font-source-sans leading-relaxed">
-              <p className="mb-2 sm:mb-3 lg:mb-4">
-                Le patrimoine peut inclure différents types d'actifs, notamment :
-              </p>
-              <p className="mb-1 sm:mb-2">Biens immobiliers</p>
-              <p className="mb-1 sm:mb-2">Placements financiers</p>
-              <p className="mb-1 sm:mb-2">Participations professionnelles</p>
-              <p className="mb-1 sm:mb-2">Actifs mobiliers</p>
-              <p className="mb-1 sm:mb-2">Droits d'usufruit</p>
-              <p className="mb-1 sm:mb-2">Propriétés intellectuelles</p>
-              <p>
-                Droits à la retraite et rentes
-              </p>
+              <div dangerouslySetInnerHTML={{ 
+                __html: (content.definition?.content || defaultContent.definition.content).replace(/\n/g, '<br />') 
+              }} />
             </div>
           </div>
 
           {/* Bottom Content */}
           <div className="text-[#686868] text-xs sm:text-sm lg:text-lg font-source-sans leading-relaxed">
-            <p className="mb-2 sm:mb-3 lg:mb-4">
-              Le bilan patrimonial a pour vocation d'apporter une vision claire de votre situation financière et de vos objectifs à moyen et long terme.
-            </p>
-            <p className="mb-2 sm:mb-3 lg:mb-4">
-              Grâce à cette analyse, vous identifiez les leviers pertinents pour :
-            </p>
-            <ul className="list-disc list-inside space-y-1 sm:space-y-2 ml-2 sm:ml-4">
-              <li>Faire grandir votre patrimoine,</li>
-              <li>Protéger vos proches,</li>
-              <li>Optimiser durablement votre fiscalité.</li>
-            </ul>
+            <div dangerouslySetInnerHTML={{ 
+              __html: (content.essentiel?.content || defaultContent.essentiel.content).replace(/\n/g, '<br />') 
+            }} />
           </div>
         </div>
       </section>
@@ -181,23 +333,72 @@ export default function PlacementsPage() {
             {/* Right: Content */}
             <div className="flex-1">
               <div className="text-black text-xs sm:text-sm lg:text-2xl font-source-sans leading-relaxed">
-                <p className="mb-3 sm:mb-4 lg:mb-6 font-semibold">
-                  Le patrimoine peut inclure différents types d'actifs, notamment :
-                </p>
-                <ul className="space-y-1 sm:space-y-2 lg:space-y-3">
-                  <li>• Biens immobiliers</li>
-                  <li>• Placements financiers</li>
-                  <li>• Participations professionnelles</li>
-                  <li>• Actifs mobiliers</li>
-                  <li>• Droits d'usufruit</li>
-                  <li>• Propriétés intellectuelles</li>
-                  <li>• Droits à la retraite et rentes</li>
-                </ul>
+                <div dangerouslySetInnerHTML={{ 
+                  __html: (content.definition?.content || defaultContent.definition.content).replace(/\n/g, '<br />') 
+                }} />
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Services Section */}
+      {content.services && (
+        <section className="w-full bg-gray-50 py-8 sm:py-12 lg:py-16">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-8 sm:mb-12 text-center">
+              {content.services.title || defaultContent.services.title}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(content.services.services || defaultContent.services.services).map((service, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                  <h4 className="text-[#005C69] text-lg font-semibold mb-3">{service.name}</h4>
+                  <p className="text-gray-600 text-sm">{service.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Advantages Section */}
+      {content.advantages && (
+        <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-8 sm:mb-12 text-center">
+              {content.advantages.title || defaultContent.advantages.title}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {(content.advantages.advantages || defaultContent.advantages.advantages).map((advantage, index) => (
+                <div key={index} className="text-center">
+                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-xl font-bold">{index + 1}</span>
+                  </div>
+                  <h4 className="text-[#005C69] text-lg font-semibold mb-2">{advantage.title}</h4>
+                  <p className="text-gray-600 text-sm">{advantage.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section */}
+      {content.cta && (
+        <section className="w-full bg-[#005C69] py-8 sm:py-12 lg:py-16">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-4">
+              {content.cta.title || defaultContent.cta.title}
+            </h3>
+            <p className="text-gray-200 text-base sm:text-lg mb-8 max-w-3xl mx-auto">
+              {content.cta.description || defaultContent.cta.description}
+            </p>
+            <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-semibold text-lg hover:bg-[#A67A5A] transition-colors duration-200">
+              {content.cta.buttonText || defaultContent.cta.buttonText}
+            </button>
+          </div>
+        </section>
+      )}
 
       {/* Wealth Management Advisor Section */}
       <section className="w-full bg-white py-8 sm:py-12 lg:py-16 relative">
