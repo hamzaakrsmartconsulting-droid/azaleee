@@ -133,21 +133,21 @@ export default function LoiMalrauxPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-[#E8F5E8] via-[#D7E8FF] to-[#FFEFD5] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-br from-[#E8F5E8] via-[#D7E8FF] to-[#FFEFD5] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+              <h1 className="text-2xl sm:text-3xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
                 {content.hero?.title || defaultContent.hero.title}
               </h1>
-              <p className="text-lg text-gray-700 mb-4 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 mb-3 sm:mb-4 leading-relaxed">
                 {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
-              <p className="text-gray-600 mb-8">
+              <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
                 {content.hero?.description || defaultContent.hero.description}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-[#4EBBBD] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <button className="bg-[#4EBBBD] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors text-sm sm:text-base">
                   {content.hero?.button || defaultContent.hero.button}
                 </button>
               </div>

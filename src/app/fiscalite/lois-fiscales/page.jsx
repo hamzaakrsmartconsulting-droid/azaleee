@@ -141,17 +141,17 @@ export default function LoisFiscalesPage() {
       </div>
 
       {/* Hero Section with Law Icons */}
-      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-6">
-            <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="mb-4 sm:mb-6">
+            <span className="inline-block bg-[#4EBBBD] text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
               {content.hero?.subtitle || defaultContent.hero.subtitle}
             </span>
           </div>
-          <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
+          <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-5xl font-semibold leading-tight mb-4 sm:mb-6">
             {content.hero?.title || defaultContent.hero.title}
           </h1>
-          <p className="max-w-4xl mx-auto text-[#686868] text-base sm:text-lg leading-relaxed mb-8">
+          <p className="max-w-4xl mx-auto text-[#686868] text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8">
             {content.hero?.description || defaultContent.hero.description}
           </p>
           

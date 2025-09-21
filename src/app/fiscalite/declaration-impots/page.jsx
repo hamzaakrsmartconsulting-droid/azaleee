@@ -218,14 +218,14 @@ export default function DeclarationImpotsPage() {
       <Header />
 
       {/* Hero Section with Gradient Background */}
-      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-6">
-            <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="mb-4 sm:mb-6">
+            <span className="inline-block bg-[#4EBBBD] text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
               Guide complet
             </span>
           </div>
-          <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
+          <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-5xl font-semibold leading-tight mb-4 sm:mb-6">
             {content.hero?.title || defaultContent.hero.title}
           </h1>
           <p className="max-w-4xl mx-auto text-[#686868] text-base sm:text-lg leading-relaxed mb-8">
@@ -272,14 +272,14 @@ export default function DeclarationImpotsPage() {
       </div>
 
       {/* Tab Navigation */}
-      <section className="py-12 bg-white">
+      <section className="py-8 sm:py-12 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                className={`flex items-center gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-medium text-xs sm:text-sm transition-all duration-200 ${
                   activeTab === tab.id
                     ? "bg-[#4EBBBD] text-white shadow-lg"
                     : "bg-gray-100 text-[#686868] hover:bg-gray-200"
@@ -294,14 +294,14 @@ export default function DeclarationImpotsPage() {
           <div className="min-h-[400px]">
             {activeTab === "general" && (
               <div className="space-y-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-[#112033] text-2xl font-semibold mb-4">Prélèvement à la source depuis 2019</h2>
-                  <p className="text-[#686868] text-lg">Les contribuables sont imposés au fil de l'eau, mais la déclaration reste obligatoire</p>
+                <div className="text-center mb-6 sm:mb-8">
+                  <h2 className="text-[#112033] text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Prélèvement à la source depuis 2019</h2>
+                  <p className="text-[#686868] text-sm sm:text-base lg:text-lg">Les contribuables sont imposés au fil de l'eau, mais la déclaration reste obligatoire</p>
                 </div>
                 
-                <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-                  <h3 className="text-[#112033] text-xl font-semibold mb-4">Pourquoi la déclaration reste-t-elle obligatoire ?</h3>
-                  <p className="text-[#374151] text-base leading-relaxed mb-4">
+                <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+                  <h3 className="text-[#112033] text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Pourquoi la déclaration reste-t-elle obligatoire ?</h3>
+                  <p className="text-[#374151] text-sm sm:text-base leading-relaxed mb-3 sm:mb-4">
                     Depuis la mise en place du prélèvement à la source, les contribuables sont imposés au fil de l'eau. 
                     Pourtant, la déclaration reste obligatoire car elle permet de régulariser la situation.
                   </p>

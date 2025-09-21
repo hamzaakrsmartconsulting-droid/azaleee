@@ -165,26 +165,26 @@ export default function TranchesBaremesPlafondsPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-[#E8F5E8] via-[#D7E8FF] to-[#FFEFD5] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-br from-[#E8F5E8] via-[#D7E8FF] to-[#FFEFD5] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
             <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+              <h1 className="text-2xl sm:text-3xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
                 {content.hero?.title || defaultContent.hero.title}
               </h1>
-              <p className="text-lg text-gray-700 mb-4 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 mb-3 sm:mb-4 leading-relaxed">
                 {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
-              <p className="text-gray-600 mb-8">
+              <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
                 {content.hero?.description || defaultContent.hero.description}
               </p>
             </div>
             <div className="relative">
-              <div className="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="aspect-w-16 aspect-h-9 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
                 <img 
                   src={content.hero?.image || defaultContent.hero.image} 
                   alt="Tranches & Barèmes"
-                  className="w-full h-full object-cover"
+                  className="w-full h-[250px] sm:h-[300px] lg:h-full object-cover"
                 />
               </div>
             </div>
