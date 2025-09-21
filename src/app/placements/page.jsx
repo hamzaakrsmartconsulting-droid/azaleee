@@ -207,7 +207,7 @@ export default function PlacementsPage() {
               {/* CTA Button */}
               <div className="flex justify-center lg:justify-start">
                 <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                  {content.hero?.ctaText || defaultContent.hero.ctaText}
+                  lien manquant
                 </button>
               </div>
             </div>
@@ -361,28 +361,6 @@ export default function PlacementsPage() {
         </section>
       )}
 
-      {/* Advantages Section */}
-      {content.advantages && (
-        <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-8 sm:mb-12 text-center">
-              {content.advantages.title || defaultContent.advantages.title}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {(content.advantages.advantages || defaultContent.advantages.advantages).map((advantage, index) => (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-xl font-bold">{index + 1}</span>
-                  </div>
-                  <h4 className="text-[#005C69] text-lg font-semibold mb-2">{advantage.title}</h4>
-                  <p className="text-gray-600 text-sm">{advantage.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* CTA Section */}
       {content.cta && (
         <section className="w-full bg-[#005C69] py-8 sm:py-12 lg:py-16">
@@ -394,7 +372,7 @@ export default function PlacementsPage() {
               {content.cta.description || defaultContent.cta.description}
             </p>
             <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-semibold text-lg hover:bg-[#A67A5A] transition-colors duration-200">
-              {content.cta.buttonText || defaultContent.cta.buttonText}
+              lien manquant
             </button>
           </div>
         </section>
@@ -490,7 +468,7 @@ export default function PlacementsPage() {
           {/* CTA Button */}
           <div className="flex justify-center">
             <button className="bg-gradient-to-r from-[#B99066] to-[#B99066] text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg shadow-lg font-source-sans font-semibold text-base sm:text-lg lg:text-xl hover:bg-[#A67A5A] transition-colors duration-200">
-              J'optimise mon patrimoine dès maintenant
+              lien manquant
             </button>
           </div>
         </div>
@@ -585,7 +563,7 @@ export default function PlacementsPage() {
           {/* CTA Button */}
           <div className="flex justify-center mb-8 sm:mb-12">
             <button className="bg-[#B99066] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg shadow-lg font-source-sans font-semibold text-sm sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-              En savoir plus
+              lien manquant
             </button>
           </div>
 
@@ -704,7 +682,7 @@ export default function PlacementsPage() {
                 nous vous proposons des solutions pour vous constituer, à long terme, un complément de retraite adéquat à vos besoins.
               </span>
               <button className="bg-[#B99066] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg shadow-lg font-source-sans font-semibold text-sm sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                En savoir plus
+                lien manquant
               </button>
             </div>
           </div>
@@ -741,7 +719,7 @@ export default function PlacementsPage() {
             
             <div className="flex justify-center">
               <button className="bg-[#B99066] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg shadow-lg font-source-sans font-semibold text-sm sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                En savoir plus
+                lien manquant
               </button>
             </div>
           </div>
@@ -815,7 +793,7 @@ export default function PlacementsPage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
             <button className="bg-[#B99066] text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg shadow-lg font-source-sans font-semibold text-sm sm:text-base lg:text-lg hover:bg-[#A67A5A] transition-colors duration-200">
-              En savoir plus
+              lien manquant
             </button>
           </div>
         </div>

@@ -319,7 +319,6 @@ export default function FiscalitePage() {
                       
                       return (
                         <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
-                          <div className="w-2 h-2 bg-[#4EBBBD] rounded-full mt-2 flex-shrink-0"></div>
                           {isClickable ? (
                             <Link href={pageUrl} className="text-[#374151] font-inter text-sm leading-relaxed hover:text-[#4EBBBD] hover:underline transition-colors duration-200 cursor-pointer">
                               {item}
@@ -342,11 +341,6 @@ export default function FiscalitePage() {
                   {(content.sommaire?.boxes || defaultContent.sommaire.boxes).map((service, index) => (
                     <div key={index} className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-white">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                          <span className="text-white text-xl">
-                            {index === 0 ? '🎯' : index === 1 ? '💼' : '🤝'}
-                          </span>
-                        </div>
                         <div>
                           <h3 className="font-cairo font-semibold text-lg mb-1">{service}</h3>
                           <p className="text-white/90 text-sm font-inter">

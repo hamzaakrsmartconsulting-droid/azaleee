@@ -5,6 +5,39 @@ import Footer from "../../../components/common/Footer";
 
 export default function LoisFiscalesPage() {
   const [selectedLaw, setSelectedLaw] = useState("pinel");
+  
+  // Mock data for selected law
+  const selectedLawData = {
+    name: "Loi Pinel",
+    description: "Dispositif de défiscalisation immobilière",
+    avantages: [
+      "Réduction d'impôt de 12% par an",
+      "Investissement dans le neuf uniquement",
+      "Engagement de location de 9 ans"
+    ],
+    conditions: [
+      "Plafond de 300 000€ par an",
+      "Respect des plafonds de loyers",
+      "Respect des plafonds de ressources des locataires"
+    ],
+    taux: [
+      { reduction: "12%", annees: "6 ans" },
+      { reduction: "12%", annees: "9 ans" },
+      { reduction: "12%", annees: "12 ans" }
+    ],
+    plafonds: {
+      "Plafond annuel": "300 000€",
+      "Plafond loyer": "Selon zone",
+      "Plafond ressources": "Selon zone"
+    },
+    risques: [
+      "Non-respect des conditions d'engagement",
+      "Baisse de la valeur du bien",
+      "Évolutions législatives"
+    ],
+    cas_pratique: "Exemple : Investissement de 200 000€ dans un appartement Pinel à Paris. Réduction d'impôt de 24 000€ par an pendant 9 ans, soit 216 000€ au total.",
+    recommandation: "La loi Pinel est un excellent dispositif pour réduire ses impôts tout en investissant dans l'immobilier neuf. Elle convient particulièrement aux contribuables imposés souhaitant diversifier leur patrimoine."
+  };
   const [selectedCategory, setSelectedCategory] = useState("immobilier");
   const [content, setContent] = useState({});
   const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(false);
@@ -19,17 +52,17 @@ export default function LoisFiscalesPage() {
       description: "Optimiser sa fiscalité, c'est protéger et valoriser durablement son patrimoine. Les dispositifs fiscaux d'investissement immobilier offrent des leviers puissants pour réduire son imposition, préparer sa retraite ou transmettre plus efficacement. Ce guide décrypte les 7 principaux régimes en vigueur, à jour des dernières réformes, pour vous aider à arbitrer en toute connaissance de cause."
     },
     categories: [
-      { id: "immobilier", label: "Immobilier", icon: "🏠" },
-      { id: "entreprise", label: "Entreprise", icon: "💼" },
-      { id: "patrimoine", label: "Patrimoine", icon: "💰" },
-      { id: "retraite", label: "Retraite", icon: "👴" }
+      { id: "immobilier", label: "Immobilier" },
+      { id: "entreprise", label: "Entreprise" },
+      { id: "patrimoine", label: "Patrimoine" },
+      { id: "retraite", label: "Retraite" }
     ],
     cta: {
       title: "Prêt à optimiser votre fiscalité ?",
       subtitle: "Nos experts vous accompagnent pour identifier le dispositif le plus adapté à votre situation.",
       buttons: [
-        { text: "🧮 Simuler mes avantages", type: "primary" },
-        { text: "📞 Consulter un expert", type: "secondary" }
+        { text: "Simuler mes avantages", type: "primary" },
+        { text: "Consulter un expert", type: "secondary" }
       ]
     },
     finalCta: {
@@ -38,8 +71,8 @@ export default function LoisFiscalesPage() {
       email: "contact@azalee-patrimoine.fr",
       emailSubtitle: "Prendre rendez-vous pour un arbitrage personnalisé",
       buttons: [
-        { text: "🗓️ Prendre rendez-vous", type: "primary" },
-        { text: "📧 Nous écrire", type: "secondary" }
+        { text: "Prendre rendez-vous", type: "primary" },
+        { text: "Nous écrire", type: "secondary" }
       ]
     }
   };
@@ -79,11 +112,6 @@ export default function LoisFiscalesPage() {
     await loadContentFromCMS();
   };
 
-        </div>
-      </>
-    );
-  }
-
   return (
     <>
       <Header />
@@ -107,6 +135,9 @@ export default function LoisFiscalesPage() {
             onClick={reloadContent}
             className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
           >
+            Reload
+          </button>
+        </div>
       </div>
 
       {/* Hero Section with Law Icons */}
@@ -126,7 +157,15 @@ export default function LoisFiscalesPage() {
           
           {/* Law Icons Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 max-w-6xl mx-auto">
-            {loisImmobilieres.map((law, index) => (
+            {[
+              { id: 1, shortName: "Pinel" },
+              { id: 2, shortName: "Malraux" },
+              { id: 3, shortName: "Cosse" },
+              { id: 4, shortName: "Denormandie" },
+              { id: 5, shortName: "Girardin" },
+              { id: 6, shortName: "Monument" },
+              { id: 7, shortName: "LLI" }
+            ].map((law, index) => (
               <div key={law.id} className="bg-white rounded-xl shadow-lg p-4 text-center hover:shadow-xl transition-shadow cursor-pointer">
                 <div className="w-12 h-12 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-2">
                   {law.shortName.charAt(0)}
@@ -142,7 +181,12 @@ export default function LoisFiscalesPage() {
       <section className="py-8 bg-white border-b">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((category) => (
+            {[
+              { id: 'immobilier', label: 'Immobilier' },
+              { id: 'entreprise', label: 'Entreprise' },
+              { id: 'patrimoine', label: 'Patrimoine' },
+              { id: 'retraite', label: 'Retraite' }
+            ].map((category) => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
@@ -152,7 +196,6 @@ export default function LoisFiscalesPage() {
                     : "bg-gray-100 text-[#686868] hover:bg-gray-200"
                 }`}
               >
-                <span>{category.icon}</span>
                 {category.label}
               </button>
             ))}
@@ -169,7 +212,15 @@ export default function LoisFiscalesPage() {
             <div className="lg:col-span-1">
               <h2 className="text-[#112033] text-xl font-semibold mb-6">Dispositifs disponibles</h2>
               <div className="space-y-3">
-                {getLoisByCategory().map((law) => (
+                {[
+                  { id: 1, name: "Loi Pinel", category: "immobilier" },
+                  { id: 2, name: "Loi Malraux", category: "immobilier" },
+                  { id: 3, name: "Loi Cosse", category: "immobilier" },
+                  { id: 4, name: "Loi Denormandie", category: "immobilier" },
+                  { id: 5, name: "Loi Girardin", category: "immobilier" },
+                  { id: 6, name: "Monument Historique", category: "immobilier" },
+                  { id: 7, name: "LLI", category: "immobilier" }
+                ].filter(law => selectedCategory === 'immobilier' || selectedCategory === law.category).map((law) => (
                   <button
                     key={law.id}
                     onClick={() => setSelectedLaw(law.id)}
@@ -204,7 +255,7 @@ export default function LoisFiscalesPage() {
                   {selectedLawData.avantages && (
                     <div className="bg-gradient-to-br from-[#E8F5E8] to-[#D4EDDA] rounded-lg p-6">
                       <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
-                        <span>✅</span> Avantages
+                        Avantages
                       </h3>
                       <ul className="space-y-2">
                         {selectedLawData.avantages.map((avantage, index) => (
@@ -220,7 +271,7 @@ export default function LoisFiscalesPage() {
                   {selectedLawData.conditions && (
                     <div className="bg-gradient-to-br from-[#FFEFD5] to-[#FFE4B5] rounded-lg p-6">
                       <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
-                        <span>📋</span> Conditions
+                        Conditions
                       </h3>
                       <ul className="space-y-2">
                         {selectedLawData.conditions.map((condition, index) => (
@@ -237,7 +288,7 @@ export default function LoisFiscalesPage() {
                 {/* Taux et Plafonds */}
                 {selectedLawData.taux && (
                   <div className="mb-8">
-                    <h3 className="text-[#112033] text-lg font-semibold mb-4">📊 Taux de réduction</h3>
+                    <h3 className="text-[#112033] text-lg font-semibold mb-4">Taux de réduction</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {selectedLawData.taux.map((taux, index) => (
                         <div key={index} className="bg-[#FAFFEF] rounded-lg p-4 text-center">
@@ -252,7 +303,7 @@ export default function LoisFiscalesPage() {
                 {/* Plafonds */}
                 {selectedLawData.plafonds && (
                   <div className="mb-8">
-                    <h3 className="text-[#112033] text-lg font-semibold mb-4">💰 Plafonds applicables</h3>
+                    <h3 className="text-[#112033] text-lg font-semibold mb-4">Plafonds applicables</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {Object.entries(selectedLawData.plafonds).map(([key, value]) => (
                         <div key={key} className="bg-white border border-gray-200 rounded-lg p-4">
@@ -268,7 +319,7 @@ export default function LoisFiscalesPage() {
                 {selectedLawData.risques && (
                   <div className="mb-8">
                     <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
-                      <span>⚠️</span> Risques
+                      Risques
                     </h3>
                     <div className="bg-gradient-to-br from-[#FFE4E1] to-[#FFCCCB] rounded-lg p-6">
                       <ul className="space-y-2">
@@ -287,7 +338,7 @@ export default function LoisFiscalesPage() {
                 {selectedLawData.cas_pratique && (
                   <div className="mb-8">
                     <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
-                      <span>📊</span> Cas pratique
+                      Cas pratique
                     </h3>
                     <div className="bg-gradient-to-r from-[#E3F2FD] to-[#BBDEFB] rounded-lg p-6 border-l-4 border-[#4EBBBD]">
                       <p className="text-[#112033] text-sm leading-relaxed">{selectedLawData.cas_pratique}</p>
@@ -299,7 +350,7 @@ export default function LoisFiscalesPage() {
                 {selectedLawData.recommandation && (
                   <div className="mb-8">
                     <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
-                      <span>💡</span> Recommandation Azalée
+                      Recommandation Azalée
                     </h3>
                     <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-6 text-white">
                       <p className="text-sm leading-relaxed opacity-90">{selectedLawData.recommandation}</p>
@@ -323,7 +374,7 @@ export default function LoisFiscalesPage() {
                             : 'border-2 border-white text-white hover:bg-white hover:text-[#4EBBBD]'
                         }`}
                       >
-                        {button.text}
+                        lien manquant
                       </button>
                     ))}
                   </div>
@@ -353,7 +404,15 @@ export default function LoisFiscalesPage() {
                 </tr>
               </thead>
               <tbody>
-                {loisImmobilieres.map((law, index) => (
+                {[
+                  { id: 1, name: "Loi Pinel", shortName: "Pinel", reduction: "12%", plafond: "300 000€", engagement: "6-12 ans", type: "Neuf" },
+                  { id: 2, name: "Loi Malraux", shortName: "Malraux", reduction: "30%", plafond: "100 000€", engagement: "9 ans", type: "Ancien" },
+                  { id: 3, name: "Loi Cosse", shortName: "Cosse", reduction: "12%", plafond: "300 000€", engagement: "9 ans", type: "Neuf" },
+                  { id: 4, name: "Loi Denormandie", shortName: "Denormandie", reduction: "12%", plafond: "300 000€", engagement: "9 ans", type: "Neuf" },
+                  { id: 5, name: "Loi Girardin", shortName: "Girardin", reduction: "25%", plafond: "300 000€", engagement: "5 ans", type: "Neuf" },
+                  { id: 6, name: "Monument Historique", shortName: "Monument", reduction: "18%", plafond: "400 000€", engagement: "15 ans", type: "Ancien" },
+                  { id: 7, name: "LLI", shortName: "LLI", reduction: "TVA 10%", plafond: "300 000€", engagement: "9 ans", type: "Neuf" }
+                ].map((law, index) => (
                   <tr key={law.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -400,7 +459,7 @@ export default function LoisFiscalesPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-[#112033] text-lg font-semibold mb-3">🤔 Puis-je cumuler plusieurs dispositifs ?</h3>
+              <h3 className="text-[#112033] text-lg font-semibold mb-3">Puis-je cumuler plusieurs dispositifs ?</h3>
               <p className="text-[#686868] text-sm">
                 Oui, dans certains cas, vous pouvez cumuler plusieurs dispositifs fiscaux. 
                 Par exemple, la loi Pinel peut être combinée avec le prêt à taux zéro (PTZ) 
@@ -409,7 +468,7 @@ export default function LoisFiscalesPage() {
             </div>
             
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-[#112033] text-lg font-semibold mb-3">⏰ Quand dois-je m'engager ?</h3>
+              <h3 className="text-[#112033] text-lg font-semibold mb-3">Quand dois-je m'engager ?</h3>
               <p className="text-[#686868] text-sm">
                 L'engagement de location doit généralement être pris dès l'acquisition du bien. 
                 La durée varie selon le dispositif : 6, 9 ou 12 ans pour Pinel, 9 ans pour Malraux, etc.
@@ -417,7 +476,7 @@ export default function LoisFiscalesPage() {
             </div>
             
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-[#112033] text-lg font-semibold mb-3">💰 Quels sont les risques ?</h3>
+              <h3 className="text-[#112033] text-lg font-semibold mb-3">Quels sont les risques ?</h3>
               <p className="text-[#686868] text-sm">
                 Les principaux risques sont la non-respect des conditions d'engagement, 
                 la baisse de la valeur du bien, et les évolutions législatives qui peuvent 
@@ -426,7 +485,7 @@ export default function LoisFiscalesPage() {
             </div>
             
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-[#112033] text-lg font-semibold mb-3">📋 Quels documents fournir ?</h3>
+              <h3 className="text-[#112033] text-lg font-semibold mb-3">Quels documents fournir ?</h3>
               <p className="text-[#686868] text-sm">
                 Vous devrez fournir les justificatifs d'acquisition, les contrats de location, 
                 les attestations de loyer, et respecter les déclarations fiscales annuelles.
@@ -447,7 +506,7 @@ export default function LoisFiscalesPage() {
               {content.finalCta?.description || defaultContent.finalCta.description}
             </p>
             <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
-              <h3 className="text-xl font-semibold mb-3">✉️ {content.finalCta?.email || defaultContent.finalCta.email}</h3>
+              <h3 className="text-xl font-semibold mb-3">{content.finalCta?.email || defaultContent.finalCta.email}</h3>
               <p className="text-sm opacity-90">{content.finalCta?.emailSubtitle || defaultContent.finalCta.emailSubtitle}</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -460,7 +519,7 @@ export default function LoisFiscalesPage() {
                       : 'border-2 border-[#4EBBBD] text-[#4EBBBD] hover:bg-[#4EBBBD] hover:text-white'
                   }`}
                 >
-                  {button.text}
+                  lien manquant
                 </button>
               ))}
             </div>

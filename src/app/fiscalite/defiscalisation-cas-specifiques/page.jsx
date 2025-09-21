@@ -103,6 +103,10 @@ export default function DefiscalisationCasSpecifiquesPage() {
     await loadContentFromCMS();
   };
 
+  return (
+    <>
+      <div className="fixed top-4 left-4 z-50 flex items-center gap-2">
+        <div className="flex items-center gap-1">
           {isLoadingFromDatabase && (
             <div className="flex items-center gap-1 text-blue-600">
               <div className="animate-spin w-3 h-3 border border-blue-600 border-t-transparent rounded-full"></div>
@@ -115,7 +119,21 @@ export default function DefiscalisationCasSpecifiquesPage() {
             onClick={reloadContent}
             className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
           >
+            Reload
+          </button>
+          <button
+            onClick={() => {
+              console.log('Current content:', content);
+              console.log('Content source:', contentSource);
+            }}
+            className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
+          >
+            Debug
+          </button>
+        </div>
       </div>
+
+      <Header />
 
       {/* Hero Section */}
       <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">

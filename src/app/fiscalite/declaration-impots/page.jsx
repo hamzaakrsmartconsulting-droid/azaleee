@@ -17,10 +17,10 @@ export default function DeclarationImpotsPage() {
     },
     tabs: {
       tabs: [
-        { id: "general", label: "Prélèvement à la source", icon: "💧" },
-        { id: "dates", label: "Régularisation", icon: "📅" },
-        { id: "documents", label: "Questions fréquentes", icon: "❓" },
-        { id: "erreurs", label: "Accompagnement", icon: "🤝" }
+        { id: "general", label: "Prélèvement à la source" },
+        { id: "dates", label: "Régularisation" },
+        { id: "documents", label: "Questions fréquentes" },
+        { id: "erreurs", label: "Accompagnement" }
       ]
     },
     steps: {
@@ -248,7 +248,6 @@ export default function DeclarationImpotsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 text-center">
               <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-white text-xl">📊</span>
               </div>
               <p className="text-[#686868] text-sm uppercase tracking-wide mb-1">Régularisation</p>
               <p className="text-[#112033] text-2xl font-semibold">Septembre</p>
@@ -256,7 +255,6 @@ export default function DeclarationImpotsPage() {
             </div>
             <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 text-center">
               <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-white text-xl">⏰</span>
               </div>
               <p className="text-[#686868] text-sm uppercase tracking-wide mb-1">Prélèvement</p>
               <p className="text-[#112033] text-2xl font-semibold">À la source</p>
@@ -264,7 +262,6 @@ export default function DeclarationImpotsPage() {
             </div>
             <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 text-center">
               <div className="w-12 h-12 bg-[#008D78] rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-white text-xl">✅</span>
               </div>
               <p className="text-[#686868] text-sm uppercase tracking-wide mb-1">Obligatoire</p>
               <p className="text-[#112033] text-2xl font-semibold">Déclaration</p>
@@ -288,7 +285,6 @@ export default function DeclarationImpotsPage() {
                     : "bg-gray-100 text-[#686868] hover:bg-gray-200"
                 }`}
               >
-                <span>{tab.icon}</span>
                 {tab.label}
               </button>
             ))}
@@ -320,7 +316,6 @@ export default function DeclarationImpotsPage() {
                   <div className="bg-gradient-to-br from-[#E8F5E8] to-[#D4EDDA] rounded-xl p-6 shadow-md">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center text-xl font-bold">
-                        💰
                       </div>
                       <h3 className="text-[#112033] text-lg font-semibold">Vous avez payé trop d'impôt</h3>
                     </div>
@@ -335,7 +330,6 @@ export default function DeclarationImpotsPage() {
                   <div className="bg-gradient-to-br from-[#FFE4E1] to-[#FFCCCB] rounded-xl p-6 shadow-md">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center text-xl font-bold">
-                        📈
                       </div>
                       <h3 className="text-[#112033] text-lg font-semibold">Vous n'avez pas assez payé</h3>
                         </div>
@@ -375,7 +369,7 @@ export default function DeclarationImpotsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
                     <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
-                      <span>📊</span> Calcul du taux de prélèvement
+                      Calcul du taux de prélèvement
                     </h3>
                     <ul className="space-y-2 text-[#686868] text-sm">
                       <li>• Basé sur les revenus imposables</li>
@@ -387,7 +381,7 @@ export default function DeclarationImpotsPage() {
                 
                   <div className="bg-gradient-to-br from-[#FFEFD5] to-[#FFE4B5] rounded-xl p-6">
                     <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
-                      <span>⚠️</span> Risques d'une déclaration incomplète
+                      Risques d'une déclaration incomplète
                     </h3>
                     <ul className="space-y-2 text-[#686868] text-sm">
                       <li>• Régularisations défavorables</li>
@@ -454,7 +448,6 @@ export default function DeclarationImpotsPage() {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="bg-gradient-to-br from-[#E8F5E8] to-[#D4EDDA] rounded-xl p-6 text-center">
                       <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-3">
-                        <span className="text-white text-xl">🎯</span>
                       </div>
                       <h4 className="text-[#112033] font-semibold mb-2">Taux optimisé</h4>
                       <p className="text-[#686868] text-sm">Plus proche de votre charge fiscale effective</p>
@@ -462,7 +455,6 @@ export default function DeclarationImpotsPage() {
                     
                     <div className="bg-gradient-to-br from-[#FFEFD5] to-[#FFE4B5] rounded-xl p-6 text-center">
                       <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-3">
-                        <span className="text-white text-xl">⚠️</span>
                       </div>
                       <h4 className="text-[#112033] font-semibold mb-2">Éviter les surprises</h4>
                       <p className="text-[#686868] text-sm">Pas de mauvaises surprises lors de la régularisation</p>
@@ -470,8 +462,7 @@ export default function DeclarationImpotsPage() {
                     
                     <div className="bg-gradient-to-br from-[#E3F2FD] to-[#BBDEFB] rounded-xl p-6 text-center">
                       <div className="w-12 h-12 bg-[#008D78] rounded-full flex items-center justify-center mx-auto mb-3">
-                        <span className="text-white text-xl">📈</span>
-                        </div>
+                      </div>
                       <h4 className="text-[#112033] font-semibold mb-2">Stratégie patrimoniale</h4>
                       <p className="text-[#686868] text-sm">Anticiper et optimiser sur plusieurs années</p>
                         </div>
@@ -513,17 +504,17 @@ export default function DeclarationImpotsPage() {
               la charge fiscale de l'année suivante.
             </p>
             <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
-              <h3 className="text-xl font-semibold mb-3">👉 Évaluez dès maintenant votre impôt réel avec un conseiller Azalée Patrimoine</h3>
+              <h3 className="text-xl font-semibold mb-3">Évaluez dès maintenant votre impôt réel avec un conseiller Azalée Patrimoine</h3>
               <p className="text-sm opacity-90">
                 Transformez votre déclaration en véritable outil d'optimisation patrimoniale
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                🧮 Évaluer mon impôt réel
+                Évaluer mon impôt réel
               </button>
               <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
-                📞 Prendre rendez-vous
+                Prendre rendez-vous
               </button>
             </div>
           </div>

@@ -132,6 +132,9 @@ export default function LoiCossePage() {
           }}
           className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
         >
+          Debug
+        </button>
+      </div>
 
       <Header />
 

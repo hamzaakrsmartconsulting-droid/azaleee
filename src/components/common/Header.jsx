@@ -224,26 +224,16 @@ const Header = () => {
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 w-full lg:w-auto">
           <div className="flex items-center gap-2">
             <img src="/images/img_component_1.svg" className="w-4 h-4" alt="phone" />
-            <span className="text-sm font-segoe text-header-1">+1 (555) 123-4567</span>
+            <span className="text-sm font-segoe text-header-1">Lorem ipsum dolor</span>
           </div>
           <div className="flex items-center gap-2">
             <img src="/images/img_component_1_light_green_400.svg" className="w-4 h-4" alt="email" />
-            <span className="text-sm font-inter text-header-1">contact@azaleewealth.com</span>
+            <span className="text-sm font-inter text-header-1">lorem@ipsum.com</span>
           </div>
         </div>
 
         {/* Right Section */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full lg:w-auto">
-          {/* Search */}
-          <div className="flex items-center bg-gray-50 rounded px-3 py-2 w-full sm:w-auto lg:w-[200px]">
-            <input 
-              type="text" 
-              placeholder="Recherche …" 
-              className="bg-transparent text-xs font-source-sans text-header-2 outline-none flex-1"
-            />
-            <img src="/images/img_button_svg.svg" className="w-2.5 h-2.5 ml-2" alt="search" />
-          </div>
-
           {/* Navigation Links */}
           <div className="flex items-center gap-3 text-xs font-source-sans">
             <span className="text-global-1">Nos agences</span>

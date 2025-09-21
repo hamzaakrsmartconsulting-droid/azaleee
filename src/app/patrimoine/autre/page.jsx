@@ -39,11 +39,11 @@ export default function AutrePatrimoinePage() {
     chart: {
       title: "Indicateurs de solutions alternatives",
       data: [
-        { label: "Solutions alternatives", value: "3" },
-        { label: "Exonération IFI", value: "75%" },
-        { label: "Ticket minimum", value: "€5,000" },
-        { label: "Rendement moyen", value: "1-3%" },
-        { label: "Avantages fiscaux", value: "Multiples" }
+    { label: "Solutions alternatives", value: "3" },
+    { label: "Exonération IFI", value: "75%" },
+    { label: "Ticket minimum", value: "€5,000" },
+    { label: "Rendement moyen", value: "1-3%" },
+    { label: "Avantages fiscaux", value: "Multiples" }
       ],
       chartImage: "/images/variation-chart-image-944f04.png"
     },
@@ -203,9 +203,9 @@ export default function AutrePatrimoinePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
               {(content.hero?.benefits || []).map((benefit, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6">
-                  <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white text-xl">{benefit.icon}</span>
-                  </div>
+                </div>
                   <h3 className="text-[#112033] font-semibold mb-2">{benefit.title}</h3>
                   <p className="text-[#686868] text-sm">{benefit.description}</p>
                 </div>
@@ -230,7 +230,7 @@ export default function AutrePatrimoinePage() {
                 } px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg transition-colors duration-200`}
               >
                 {button.text}
-              </button>
+            </button>
             ))}
           </div>
         </div>
@@ -255,43 +255,43 @@ export default function AutrePatrimoinePage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {(content.solutions?.solutions || []).map((solution, index) => (
               <div key={index} className={`bg-gradient-to-br ${solution.color} rounded-lg shadow-lg p-8 text-white`}>
-                <div className="text-center mb-6">
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className={`text-2xl ${solution.color.includes('#4EBBBD') ? 'text-[#4EBBBD]' : solution.color.includes('#B99066') ? 'text-[#B99066]' : 'text-[#59E2E4]'}`}>{solution.icon}</span>
-                  </div>
+                </div>
                   <h3 className="text-2xl font-semibold mb-2">{solution.title}</h3>
                   <p className="text-sm font-medium">{solution.subtitle}</p>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">📋 Définition</h4>
+                  <p className="text-xs">
+                      {solution.definition}
+                  </p>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2">📋 Définition</h4>
-                    <p className="text-xs">
-                      {solution.definition}
-                    </p>
-                  </div>
-                  
-                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2">✅ Avantages</h4>
-                    <ul className="text-xs space-y-1">
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">✅ Avantages</h4>
+                  <ul className="text-xs space-y-1">
                       {(solution.advantages || []).map((advantage, advIndex) => (
                         <li key={advIndex}>• {advantage}</li>
                       ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2">⚠️ Inconvénients</h4>
-                    <ul className="text-xs space-y-1">
+                  </ul>
+                </div>
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">⚠️ Inconvénients</h4>
+                  <ul className="text-xs space-y-1">
                       {(solution.disadvantages || []).map((disadvantage, disIndex) => (
                         <li key={disIndex}>• {disadvantage}</li>
                       ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2">💰 Ticket minimum</h4>
-                    <p className="text-xs">
+                  </ul>
+                </div>
+                
+                <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">💰 Ticket minimum</h4>
+                  <p className="text-xs">
                       {solution.ticketMinimum}
                     </p>
                   </div>
@@ -313,9 +313,9 @@ export default function AutrePatrimoinePage() {
           </p>
           <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-full font-source-sans font-semibold text-lg hover:bg-gray-100 transition-colors">
             {content.cta?.buttonText || "Demander un conseil personnalisé"}
-          </button>
+            </button>
         </div>
       </section>
     </>
   );
-}
+} 

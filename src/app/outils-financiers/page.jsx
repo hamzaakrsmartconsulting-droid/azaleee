@@ -238,7 +238,7 @@ export default function OutilsFinanciersPage() {
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
-              🛠️ Nos outils
+              Nos outils
             </button>
             <button
               onClick={() => setActiveTab("innovation")}
@@ -248,7 +248,7 @@ export default function OutilsFinanciersPage() {
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
-              🚀 Innovation
+              Innovation
             </button>
             <button
               onClick={() => setActiveTab("faq")}
@@ -258,7 +258,7 @@ export default function OutilsFinanciersPage() {
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
-              ❓ FAQ
+              FAQ
             </button>
           </div>
         </div>
@@ -275,11 +275,10 @@ export default function OutilsFinanciersPage() {
               {content.outils.items.map((outil, index) => (
                 <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="text-3xl">{outil.icon}</div>
                     <h3 className="text-[#112033] text-xl font-semibold">{outil.title}</h3>
                   </div>
                   <p className="text-[#686868] text-lg mb-4 font-medium">
-                    👉 {outil.description}
+                    {outil.description}
                   </p>
                   <ul className="space-y-2">
                     {outil.details.map((detail, idx) => (
@@ -347,7 +346,7 @@ export default function OutilsFinanciersPage() {
           <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
-                {content.digitalisation.title}
+                Digitalisation & proximité humaine
               </h2>
               <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
                 {content.digitalisation.description}
@@ -376,7 +375,7 @@ export default function OutilsFinanciersPage() {
           <section className="py-12 bg-white">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
-                {content.promesse.title}
+                La promesse Azalée Patrimoine
               </h2>
               <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
                 {content.promesse.description}
@@ -432,21 +431,21 @@ export default function OutilsFinanciersPage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 text-center">
             <h2 className="text-[#112033] text-2xl lg:text-3xl font-semibold mb-4">
-              {content.cta.title}
+              Demandez votre accès gratuit à l'agrégateur de comptes
             </h2>
             <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
               {content.cta.subtitle}
             </p>
             <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
-              <h3 className="text-xl font-semibold mb-3">📧 {content.cta.email}</h3>
+              <h3 className="text-xl font-semibold mb-3">{content.cta.email}</h3>
               <p className="text-sm opacity-90">Découvrez la gestion patrimoniale nouvelle génération</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                🗓️ {content.cta.primaryButton}
+                {content.cta.primaryButton}
               </button>
               <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
-                📧 {content.cta.secondaryButton}
+                {content.cta.secondaryButton}
               </button>
             </div>
           </div>
