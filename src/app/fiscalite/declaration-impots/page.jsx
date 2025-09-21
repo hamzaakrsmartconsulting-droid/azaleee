@@ -232,11 +232,11 @@ export default function DeclarationImpotsPage() {
             {content.hero?.description || defaultContent.hero.description}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200">
+            <button 
+              className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200"
+              onClick={() => window.location.href = '/outils/calculatrice-impots'}
+            >
               Simuler ma déclaration
-            </button>
-            <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-6 py-3 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200">
-              Télécharger le guide
             </button>
           </div>
         </div>
@@ -480,7 +480,10 @@ export default function DeclarationImpotsPage() {
                     <button className="bg-white text-[#005C69] px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200">
                       {content.cta?.buttonText || defaultContent.cta.buttonText}
                     </button>
-                    <button className="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-[#005C69] transition-colors duration-200">
+                    <button 
+                      className="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-[#005C69] transition-colors duration-200"
+                      onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
+                    >
                       Prendre rendez-vous
                     </button>
                   </div>
@@ -510,10 +513,10 @@ export default function DeclarationImpotsPage() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                Évaluer mon impôt réel
-              </button>
-              <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
+              <button 
+                className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg"
+                onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
+              >
                 Prendre rendez-vous
               </button>
             </div>

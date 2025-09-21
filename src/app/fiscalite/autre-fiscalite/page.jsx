@@ -105,6 +105,10 @@ export default function AutreFiscalitePage() {
     await loadContentFromCMS();
   };
 
+  return (
+    <>
+      <div className="fixed top-4 left-4 z-50 flex items-center gap-2">
+        <div className="flex items-center gap-1">
           {isLoadingFromDatabase && (
             <div className="flex items-center gap-1 text-blue-600">
               <div className="animate-spin w-3 h-3 border border-blue-600 border-t-transparent rounded-full"></div>
@@ -117,32 +121,33 @@ export default function AutreFiscalitePage() {
             onClick={reloadContent}
             className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
           >
+            Reload
+          </button>
+          <button
+            onClick={() => {
+              console.log('Current content:', content);
+              console.log('Content source:', contentSource);
+            }}
+            className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
+          >
+            Debug
+          </button>
+        </div>
       </div>
+
+      <Header />
 
       {/* Hero Section */}
       <section className="relative w-full bg-gradient-to-br from-[#E8F5E8] via-[#D7E8FF] to-[#FFEFD5] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-4xl mx-auto">
             <div>
-              <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-                Fiscalité diversifiée
-              </span>
               <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
                 {content.hero?.title || defaultContent.hero.title}
               </h1>
               <p className="text-[#686868] text-lg leading-relaxed mb-8">
                 {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                lien manquant
-              </button>
-            </div>
-            <div className="relative">
-              <img 
-                src={content.hero?.image || defaultContent.hero.image} 
-                alt="Autres sujets fiscaux" 
-                className="w-full h-[400px] object-cover rounded-xl shadow-2xl"
-              />
             </div>
           </div>
         </div>

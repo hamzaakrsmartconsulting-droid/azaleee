@@ -364,20 +364,6 @@ export default function LoisFiscalesPage() {
                   <p className="text-sm opacity-90 mb-4">
                     {content.cta?.subtitle || defaultContent.cta.subtitle}
                   </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                    {(content.cta?.buttons || defaultContent.cta.buttons).map((button, index) => (
-                      <button 
-                        key={index}
-                        className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
-                          button.type === 'primary' 
-                            ? 'bg-white text-[#4EBBBD] hover:bg-gray-100' 
-                            : 'border-2 border-white text-white hover:bg-white hover:text-[#4EBBBD]'
-                        }`}
-                      >
-                        lien manquant
-                      </button>
-                    ))}
-                  </div>
                 </div>
               </div>
             </div>
@@ -385,70 +371,6 @@ export default function LoisFiscalesPage() {
         </div>
       </section>
 
-      {/* Comparison Table */}
-      <section className="py-12 bg-white">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-[#112033] text-2xl font-semibold text-center mb-8">
-            Comparatif des dispositifs immobiliers
-          </h2>
-          
-          <div className="overflow-x-auto">
-            <table className="w-full bg-white rounded-xl shadow-lg overflow-hidden">
-              <thead className="bg-[#4EBBBD] text-white">
-                <tr>
-                  <th className="px-6 py-4 text-left font-semibold">Dispositif</th>
-                  <th className="px-6 py-4 text-center font-semibold">Réduction max</th>
-                  <th className="px-6 py-4 text-center font-semibold">Plafond</th>
-                  <th className="px-6 py-4 text-center font-semibold">Engagement</th>
-                  <th className="px-6 py-4 text-center font-semibold">Type de bien</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { id: 1, name: "Loi Pinel", shortName: "Pinel", reduction: "12%", plafond: "300 000€", engagement: "6-12 ans", type: "Neuf" },
-                  { id: 2, name: "Loi Malraux", shortName: "Malraux", reduction: "30%", plafond: "100 000€", engagement: "9 ans", type: "Ancien" },
-                  { id: 3, name: "Loi Cosse", shortName: "Cosse", reduction: "12%", plafond: "300 000€", engagement: "9 ans", type: "Neuf" },
-                  { id: 4, name: "Loi Denormandie", shortName: "Denormandie", reduction: "12%", plafond: "300 000€", engagement: "9 ans", type: "Neuf" },
-                  { id: 5, name: "Loi Girardin", shortName: "Girardin", reduction: "25%", plafond: "300 000€", engagement: "5 ans", type: "Neuf" },
-                  { id: 6, name: "Monument Historique", shortName: "Monument", reduction: "18%", plafond: "400 000€", engagement: "15 ans", type: "Ancien" },
-                  { id: 7, name: "LLI", shortName: "LLI", reduction: "TVA 10%", plafond: "300 000€", engagement: "9 ans", type: "Neuf" }
-                ].map((law, index) => (
-                  <tr key={law.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold">
-                          {law.shortName.charAt(0)}
-                        </div>
-                        <div>
-                          <div className="text-[#112033] font-semibold">{law.name}</div>
-                          <div className="text-[#686868] text-sm">{law.shortName}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      <span className="inline-block bg-[#B99066] text-white px-3 py-1 rounded-full text-sm font-bold">
-                        {law.taux?.[law.taux.length - 1]?.reduction || "N/A"}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-center text-[#112033] font-medium">
-                      {law.plafonds?.investissement || "N/A"}
-                    </td>
-                    <td className="px-6 py-4 text-center text-[#112033] font-medium">
-                      {law.taux?.[0]?.annees || "N/A"}
-                    </td>
-                    <td className="px-6 py-4 text-center text-[#686868] text-sm">
-                      {law.id === "pinel" ? "Neuf" : 
-                       law.id === "denormandie" ? "Rénové" :
-                       law.id === "malraux" ? "Historique" :
-                       law.id === "cosse" ? "Résidence" : "Variable"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
 
       {/* FAQ Section */}
       <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
@@ -509,19 +431,13 @@ export default function LoisFiscalesPage() {
               <h3 className="text-xl font-semibold mb-3">{content.finalCta?.email || defaultContent.finalCta.email}</h3>
               <p className="text-sm opacity-90">{content.finalCta?.emailSubtitle || defaultContent.finalCta.emailSubtitle}</p>
             </div>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              {(content.finalCta?.buttons || defaultContent.finalCta.buttons).map((button, index) => (
-                <button 
-                  key={index}
-                  className={`px-8 py-4 rounded-lg font-medium transition-colors duration-200 text-lg ${
-                    button.type === 'primary' 
-                      ? 'bg-[#4EBBBD] text-white hover:bg-[#3DA8AA]' 
-                      : 'border-2 border-[#4EBBBD] text-[#4EBBBD] hover:bg-[#4EBBBD] hover:text-white'
-                  }`}
-                >
-                  lien manquant
-                </button>
-              ))}
+            <div className="flex justify-center">
+              <button 
+                className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg shadow-lg"
+                onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
+              >
+                Prendre un rendez-vous
+              </button>
             </div>
           </div>
         </div>
