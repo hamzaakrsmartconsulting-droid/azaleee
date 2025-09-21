@@ -1,544 +1,200 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
+export default function CMSSci() {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
+  useEffect(() => {
+    const token = localStorage.getItem("cms_token");
+    const userData = localStorage.getItem("cms_user");
 
-const defaultContent = {
-  hero: {
-    title: "Découvrir la Société Civile Immobilière (SCI)",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. La SCI permet de gérer et transmettre un patrimoine immobilier à plusieurs avec une grande souplesse statutaire et fiscale.",
-    primaryButton: "L'essentiel",
-    secondaryButton: "Sommaire"
-  },
-  rightCard: {
-    title: "SCI : gérez et transmettez",
-    subtitle: "Optimisez la gestion, facilitez la transmission, choisissez votre fiscalité.",
-    benefits: [
-      "Gestion mutualisée du patrimoine",
-      "Transmission familiale allégée",
-      "Choix IR / IS"
-    ],
-    primaryButton: "Prendre rendez-vous",
-    secondaryButton: "Fiscalité"
-  },
-  essentiel: {
-    title: "L'essentiel",
-    items: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. (#1)",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. (#2)",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. (#3)",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. (#4)",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. (#5)",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. (#6)"
-    ]
-  },
-  sommaire: {
-    title: "Sommaire",
-    items: [
-      "1. Qu'est-ce qu'une SCI ?",
-      "2. Comment fonctionne une SCI ?",
-      "3. Caractéristiques principales",
-      "4. Pourquoi créer une SCI ?",
-      "5. Les différentes formes",
-      "6. Fiscalité : IR ou IS",
-      "7. Questions-réponses"
-    ]
-  },
-  definition: {
-    title: "Qu'est-ce qu'une SCI ?",
-    text1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. La SCI est une société civile destinée à la détention et à la gestion de biens immobiliers par plusieurs associés.",
-    text2: "Elle dissocie le patrimoine immobilier du patrimoine privé des associés et offre une grande liberté statutaire.",
-    savoir: {
-      title: "À savoir",
-      items: [
-        "Au moins deux associés",
-        "Objet civil (pas d'activité commerciale)",
-        "Durée jusqu'à 99 ans"
-      ]
+    if (!token || !userData) {
+      router.push("/cms/login");
+      return;
     }
-  },
-  cta: {
-    title: "Lorem Ipsum Dolor Sit Amet ?",
-    paragraph: "Consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
-    primaryButton: "Lorem Ipsum",
-    secondaryButton: "Dolor Sit Amet"
-  }
-};
 
-export default function SciCMS() {
-  const [content, setContent] = useState(defaultContent);
-  const [showToast, setShowToast] = useState(false);
-
-    useEffect(() => {
-    // Charger le contenu depuis la base de données
-    const loadContentFromDatabase = async () => {
-      try {
-        const response = await fetch('/api/pages/content?path=/immobilier/sci&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            const parsed = result.content.content;
-            setContent({ ...defaultContent, ...parsed });
-            return;
-          }
-        }
-        
-        // Si pas de contenu en base, utiliser le contenu par défaut
-        console.log('Aucun contenu trouvé en base de données, utilisation du contenu par défaut');
-      } catch (error) {
-        console.error('Erreur lors du chargement depuis la base de données:', error);
-        // En cas d'erreur, utiliser le contenu par défaut
-      }
-    };
-
-    loadContentFromDatabase();
-  }, []);
-
-  const handleChange = (section, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
-    }));
-  };
-
-  const handleArrayChange = (section, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: prev[section][field].map((item, i) => i === index ? value : item)
-      }
-    }));
-  };
-
-  const handleNestedChange = (section, subsection, field, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: value
-        }
-      }
-    }));
-  };
-
-  const handleNestedArrayChange = (section, subsection, field, index, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [subsection]: {
-          ...prev[section][subsection],
-          [field]: prev[section][subsection][field].map((item, i) => i === index ? value : item)
-        }
-      }
-    }));
-  };
-
-    const handleSave = async () => {
     try {
-      const response = await fetch('/api/pages/content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pagePath: '/immobilier/sci',
-          pageType: 'cms',
-          content: content,
-          metadata: {
-            lastModified: new Date().toISOString(),
-            modifiedBy: 'admin',
-            pageType: 'cms'
-          }
-        })
-      });
-
-      if (response.ok) {
-        console.log('Sauvegardé en base de données');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erreur lors de la sauvegarde');
-      }
+      setUser(JSON.parse(userData));
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde: ' + error.message);
+      console.error("Error parsing user data:", error);
+      router.push("/cms/login");
+    } finally {
+      setIsLoading(false);
     }
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('contentUpdated'));
-  };
+  }, [router]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#4EBBBD]"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold text-[#112033]">Page SCI</h1>
-            <p className="text-[#686868]">Modifiez le contenu de la page SCI</p>
-          </div>
-          <button 
-            onClick={handleSave} 
-            className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors flex items-center gap-2"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Sauvegarder
-          </button>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Hero
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-            <input 
-              value={content.hero.title} 
-              onChange={(e) => handleChange('hero', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea 
-              value={content.hero.description} 
-              onChange={(e) => handleChange('hero', 'description', e.target.value)} 
-              rows={4} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.hero.primaryButton} 
-                onChange={(e) => handleChange('hero', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.hero.secondaryButton} 
-                onChange={(e) => handleChange('hero', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Card Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Carte de droite
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.rightCard.title} 
-              onChange={(e) => handleChange('rightCard', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
-            <input 
-              value={content.rightCard.subtitle} 
-              onChange={(e) => handleChange('rightCard', 'subtitle', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Avantages</label>
-            {content.rightCard.benefits.map((benefit, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <input 
-                  value={benefit} 
-                  onChange={(e) => handleArrayChange('rightCard', 'benefits', index, e.target.value)} 
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-                <button 
-                  onClick={() => {
-                    const newBenefits = content.rightCard.benefits.filter((_, i) => i !== index);
-                    handleChange('rightCard', 'benefits', newBenefits);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
+      <header className="bg-white shadow-lg border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-6">
+            <div className="flex items-center">
+              <button
+                onClick={() => router.push('/cms/immobilier')}
+                className="mr-4 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
               </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newBenefits = [...content.rightCard.benefits, ''];
-                handleChange('rightCard', 'benefits', newBenefits);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un avantage
-            </button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.rightCard.primaryButton} 
-                onChange={(e) => handleChange('rightCard', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.rightCard.secondaryButton} 
-                onChange={(e) => handleChange('rightCard', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* L'essentiel Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section L'essentiel
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.essentiel.title} 
-              onChange={(e) => handleChange('essentiel', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Éléments</label>
-            {content.essentiel.items.map((item, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <textarea 
-                  value={item} 
-                  onChange={(e) => handleArrayChange('essentiel', 'items', index, e.target.value)} 
-                  rows={2}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-                <button 
-                  onClick={() => {
-                    const newItems = content.essentiel.items.filter((_, i) => i !== index);
-                    handleChange('essentiel', 'items', newItems);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">SCI</h1>
+                <p className="text-sm text-gray-600 font-medium">Gestion du contenu</p>
               </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.essentiel.items, ''];
-                handleChange('essentiel', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un élément
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Sommaire Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Sommaire
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.sommaire.title} 
-              onChange={(e) => handleChange('sommaire', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Éléments</label>
-            {content.sommaire.items.map((item, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <input 
-                  value={item} 
-                  onChange={(e) => handleArrayChange('sommaire', 'items', index, e.target.value)} 
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-                <button 
-                  onClick={() => {
-                    const newItems = content.sommaire.items.filter((_, i) => i !== index);
-                    handleChange('sommaire', 'items', newItems);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.sommaire.items, ''];
-                handleChange('sommaire', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un élément
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Definition Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section Définition
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.definition.title} 
-              onChange={(e) => handleChange('definition', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Texte 1</label>
-            <textarea 
-              value={content.definition.text1} 
-              onChange={(e) => handleChange('definition', 'text1', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Texte 2</label>
-            <textarea 
-              value={content.definition.text2} 
-              onChange={(e) => handleChange('definition', 'text2', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">À savoir - Titre</label>
-            <input 
-              value={content.definition.savoir.title} 
-              onChange={(e) => handleNestedChange('definition', 'savoir', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">À savoir - Éléments</label>
-            {content.definition.savoir.items.map((item, index) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <input 
-                  value={item} 
-                  onChange={(e) => handleNestedArrayChange('definition', 'savoir', 'items', index, e.target.value)} 
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-                <button 
-                  onClick={() => {
-                    const newItems = content.definition.savoir.items.filter((_, i) => i !== index);
-                    handleNestedChange('definition', 'savoir', 'items', newItems);
-                  }}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                >
-                  Supprimer
-                </button>
-              </div>
-            ))}
-            <button 
-              onClick={() => {
-                const newItems = [...content.definition.savoir.items, ''];
-                handleNestedChange('definition', 'savoir', 'items', newItems);
-              }}
-              className="px-4 py-2 bg-[#4EBBBD] text-white rounded-lg hover:bg-[#3DA8AA]"
-            >
-              Ajouter un élément
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-[#112033] mb-4 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#4EBBBD]"></div>
-          Section CTA
-        </h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input 
-              value={content.cta.title} 
-              onChange={(e) => handleChange('cta', 'title', e.target.value)} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Paragraphe</label>
-            <textarea 
-              value={content.cta.paragraph} 
-              onChange={(e) => handleChange('cta', 'paragraph', e.target.value)} 
-              rows={3} 
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton principal</label>
-              <input 
-                value={content.cta.primaryButton} 
-                onChange={(e) => handleChange('cta', 'primaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton secondaire</label>
-              <input 
-                value={content.cta.secondaryButton} 
-                onChange={(e) => handleChange('cta', 'secondaryButton', e.target.value)} 
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
+            
+            <div className="flex items-center space-x-6">
+              <div className="text-right">
+                <p className="text-sm font-medium text-gray-900">Bonjour, {user.name}</p>
+                <p className="text-xs text-gray-500">Administrateur</p>
+              </div>
+              <div className="w-10 h-10 bg-gradient-to-r from-[#253F60] to-[#4EBBBD] rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">{user.name.charAt(0).toUpperCase()}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 bg-[#4EBBBD] text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          <span className="font-medium">Contenu sauvegardé avec succès !</span>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Section */}
+        <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl shadow-xl p-8 mb-8 text-white">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">
+                SCI (Société Civile Immobilière)
+              </h2>
+              <p className="text-lg opacity-90">
+                Gérez le contenu de la page SCI
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <div className="w-24 h-24 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* Content Management */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Text Content */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Contenu Textuel</h3>
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Titre Principal
+                </label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="Titre de la page SCI"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Description SCI
+                </label>
+                <textarea
+                  rows={6}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="Description de la SCI..."
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Avantages
+                </label>
+                <textarea
+                  rows={4}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="Liste des avantages de la SCI..."
+                />
+              </div>
+            </div>
+            
+            <div className="mt-8">
+              <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-6 rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-200 font-medium">
+                Sauvegarder les modifications
+              </button>
+            </div>
+          </div>
+
+          {/* Media & Settings */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Médias & Paramètres</h3>
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Image Principale
+                </label>
+                <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-purple-400 transition-colors">
+                  <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <p className="text-gray-600">Cliquez pour télécharger une image</p>
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Statut de la page
+                </label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                  <option value="published">Publiée</option>
+                  <option value="draft">Brouillon</option>
+                  <option value="archived">Archivée</option>
+                </select>
+              </div>
+              
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                />
+                <label className="ml-2 block text-sm text-gray-700">
+                  Afficher dans le menu principal
+                </label>
+              </div>
+            </div>
+            
+            <div className="mt-8">
+              <button className="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white py-3 px-6 rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-200 font-medium">
+                Prévisualiser la page
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
-} 
+}

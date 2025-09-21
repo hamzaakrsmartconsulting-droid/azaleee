@@ -13,7 +13,7 @@ const formatCurrency = (amount) => {
 };
 
 const formatPercentage = (value) => {
-  return `${value.toFixed(2)}%`;
+  return `${typeof value === 'number' && !isNaN(value) ? value.toFixed(2) : '0.00'}%`;
 };
 
 const calculateInvestmentGrowth = (initialAmount, monthlyContribution, annualReturn, years) => {

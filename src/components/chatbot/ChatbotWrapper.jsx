@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import SarahChatbot from "./SarahChatbot";
+import SaraChatbot from "./SaraChatbot";
 
 export default function ChatbotWrapper() {
   const pathname = usePathname();
@@ -11,9 +11,5 @@ export default function ChatbotWrapper() {
     return null;
   }
 
-  return <SarahChatbot />;
+  return <SaraChatbot />;
 }
-
-
-
-

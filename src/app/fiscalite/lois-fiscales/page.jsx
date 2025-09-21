@@ -1,359 +1,84 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
 import Footer from "../../../components/common/Footer";
 
 export default function LoisFiscalesPage() {
   const [selectedLaw, setSelectedLaw] = useState("pinel");
   const [selectedCategory, setSelectedCategory] = useState("immobilier");
+  const [content, setContent] = useState({});
+  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(false);
+  const [contentSource, setContentSource] = useState('Default');
+  const [pollingInterval, setPollingInterval] = useState(null);
 
-  const categories = [
-    { id: "immobilier", label: "Immobilier", icon: "🏠" },
-    { id: "entreprise", label: "Entreprise", icon: "💼" },
-    { id: "patrimoine", label: "Patrimoine", icon: "💰" },
-    { id: "retraite", label: "Retraite", icon: "👴" }
-  ];
-
-  const loisImmobilieres = [
-    {
-      id: "pinel",
-      name: "Loi Pinel",
-      shortName: "Pinel",
-      description: "Soutenir l'investissement locatif dans le neuf, tout en encadrant les loyers",
-      objectif: "Soutenir l'investissement locatif dans le neuf, tout en encadrant les loyers",
-      avantages: [
-        "Réduction d'impôt de 10,5% à 17,5% du prix d'acquisition",
-        "Selon la durée de location (6, 9 ou 12 ans)",
-        "Bien neuf ou rénové à neuf",
-        "Zone tendue (A bis, A, B1)"
-      ],
-      conditions: [
-        "Bien neuf ou rénové à neuf",
-        "Zone tendue (A bis, A, B1)",
-        "Plafonds de loyer et de ressources des locataires",
-        "Engagement de location nue non meublée"
-      ],
-      taux: [
-        { annees: "6 ans", reduction: "10,5%" },
-        { annees: "9 ans", reduction: "13,5%" },
-        { annees: "12 ans", reduction: "17,5%" }
-      ],
-      plafonds: {
-        loyer: "Selon zone et surface",
-        ressources: "Selon composition du foyer",
-        investissement: "300 000€ max",
-        prix_m2: "5 500€/m²"
-      },
-      risques: [
-        "Surcote du neuf",
-        "Faible rendement net (souvent <3%)",
-        "Exigence de location stricte"
-      ],
-      cas_pratique: "Un contribuable à 40% IR investit 270 000€ sur 9 ans : Réduction d'impôt totale : 13,5% soit 36 450€",
-      recommandation: "Pertinent en zone urbaine tendue, avec gestion sécurisée. Attention à l'emplacement et à l'analyse fine du rendement locatif net."
+  // Default content structure
+  const defaultContent = {
+    hero: {
+      title: "Lois fiscales",
+      subtitle: "Guide complet",
+      description: "Optimiser sa fiscalité, c'est protéger et valoriser durablement son patrimoine. Les dispositifs fiscaux d'investissement immobilier offrent des leviers puissants pour réduire son imposition, préparer sa retraite ou transmettre plus efficacement. Ce guide décrypte les 7 principaux régimes en vigueur, à jour des dernières réformes, pour vous aider à arbitrer en toute connaissance de cause."
     },
-    {
-      id: "girardin",
-      name: "Loi Girardin industriel",
-      shortName: "Girardin",
-      description: "Financer l'économie ultramarine via des investissements productifs",
-      objectif: "Financer l'économie ultramarine via des investissements productifs",
-      avantages: [
-        "Réduction d'impôt \"one shot\" supérieure à l'investissement",
-        "Jusqu'à 110% du montant investi",
-        "Investissement via une société de portage en DOM-TOM",
-        "Risque industriel réel : aucun remboursement du capital"
-      ],
-      conditions: [
-        "Investissement via une société de portage en DOM-TOM",
-        "Risque industriel réel : aucun remboursement du capital"
-      ],
-      taux: [
-        { annees: "One shot", reduction: "110%" }
-      ],
-      plafonds: {
-        loyer: "Non applicable",
-        ressources: "Non applicable",
-        investissement: "Variable"
-      },
-      risques: [
-        "Risque juridique (non-respect des conditions)",
-        "Risque de défiscalisation requalifiée"
-      ],
-      cas_pratique: "100 000€ investis en 2025 pour 110 000€ de réduction d'impôt. Le gain net d'impôt est de 10 000€.",
-      recommandation: "Pour contribuables très fortement imposés (>30k€ d'impôt), acceptant un placement à fonds perdus mais sûr juridiquement (via opérateur labellisé)."
-    },
-    {
-      id: "denormandie",
-      name: "Loi Denormandie",
-      shortName: "Denormandie",
-      description: "Relancer la rénovation dans les centres-villes anciens",
-      objectif: "Relancer la rénovation dans les centres-villes anciens",
-      avantages: [
-        "Même réduction d'impôt que Pinel",
-        "Mais pour de l'ancien avec travaux",
-        "Travaux = ≥ 25% du coût total",
-        "Location nue à loyer plafonné"
-      ],
-      conditions: [
-        "Biens situés dans une ville éligible (liste préfectorale)",
-        "Travaux = ≥ 25% du coût total",
-        "Location nue à loyer plafonné"
-      ],
-      taux: [
-        { annees: "6 ans", reduction: "10,5%" },
-        { annees: "9 ans", reduction: "13,5%" },
-        { annees: "12 ans", reduction: "17,5%" }
-      ],
-      plafonds: {
-        loyer: "Selon zone et surface",
-        ressources: "Selon composition du foyer",
-        investissement: "300 000€ max"
-      },
-      risques: [
-        "Mauvaise estimation du coût des travaux",
-        "Délais de rénovation et non-respect des conditions"
-      ],
-      cas_pratique: "Achat ancien 100 000€ + travaux 50 000€ = base fiscale 150 000€ pour réduction Pinel",
-      recommandation: "Attractif pour investisseurs actifs ou appuyés par un bon promoteur. Fiscalement efficace mais technique."
-    },
-    {
-      id: "malraux",
-      name: "Loi Malraux",
-      shortName: "Malraux",
-      description: "Restaurer des biens immobiliers situés dans des secteurs historiques",
-      objectif: "Restaurer des biens immobiliers situés dans des secteurs historiques",
-      avantages: [
-        "Réduction d'impôt sur le montant des travaux engagés",
-        "22 à 30% selon le secteur",
-        "Immeuble situé en SPR, PSMV ou QAD",
-        "Travaux encadrés par architecte des Bâtiments de France"
-      ],
-      conditions: [
-        "Immeuble situé en SPR, PSMV ou QAD",
-        "Travaux encadrés par architecte des Bâtiments de France",
-        "Location nue pendant 9 ans"
-      ],
-      taux: [
-        { annees: "9 ans", reduction: "22-30%" }
-      ],
-      plafonds: {
-        loyer: "Non applicable",
-        ressources: "Non applicable",
-        investissement: "400 000€ max",
-        travaux: "400 000€ sur 4 ans max"
-      },
-      risques: [
-        "Délais de livraison",
-        "Coût des travaux",
-        "Location obligatoire"
-      ],
-      cas_pratique: "200 000€ de travaux en secteur sauvegardé = 60 000€ d'économie fiscale",
-      recommandation: "Pour investisseurs hauts revenus, amateurs de pierre de caractère. Stratégie de conservation long terme."
-    },
-    {
-      id: "cosse",
-      name: "Dispositif Cosse",
-      shortName: "Cosse",
-      description: "Inciter à louer à loyers modérés via un conventionnement avec l'ANAH",
-      objectif: "Inciter à louer à loyers modérés via un conventionnement avec l'ANAH",
-      avantages: [
-        "Déduction spécifique sur les revenus fonciers",
-        "Jusqu'à 85%",
-        "Convention signée avec l'ANAH",
-        "Secteur intermédiaire, social ou très social"
-      ],
-      conditions: [
-        "Convention signée avec l'ANAH (secteur intermédiaire, social ou très social)",
-        "Location nue, respect des plafonds de loyers et de ressources",
-        "Engagement de 6 ou 9 ans"
-      ],
-      taux: [
-        { annees: "6-9 ans", reduction: "Jusqu'à 85%" }
-      ],
-      plafonds: {
-        loyer: "Plafonnés",
-        ressources: "Plafonnées",
-        investissement: "Non applicable"
-      },
-      risques: [
-        "Règles complexes",
-        "Rentabilité nette modeste"
-      ],
-      cas_pratique: "Revenus fonciers 12 000€/an avec abattement de 70% = base fiscale 3 600€",
-      recommandation: "Utile pour lisser l'imposition foncière d'un parc existant. Nécessite un calcul précis."
-    },
-    {
-      id: "monuments",
-      name: "Monuments Historiques",
-      shortName: "MH",
-      description: "Conserver le patrimoine classé ou inscrit à l'inventaire",
-      objectif: "Conserver le patrimoine classé ou inscrit à l'inventaire",
-      avantages: [
-        "Déduction des dépenses de travaux",
-        "100% imputables sur le revenu global",
-        "Immeuble classé ou inscrit",
-        "Travaux validés par les ABF"
-      ],
-      conditions: [
-        "Immeuble classé ou inscrit",
-        "Travaux validés par les ABF",
-        "Conservation du bien pendant 15 ans",
-        "Location possible mais non obligatoire"
-      ],
-      taux: [
-        { annees: "15 ans", reduction: "100%" }
-      ],
-      plafonds: {
-        loyer: "Non applicable",
-        ressources: "Non applicable",
-        investissement: "Non plafonné"
-      },
-      risques: [
-        "Très long terme",
-        "Coût de rénovation",
-        "Fiscalité très favorable mais à forte contrepartie"
-      ],
-      cas_pratique: "Travaux de 200 000€ imputés sur un revenu de 150 000€ : effacement de l'impôt sur 2 ans.",
-      recommandation: "Outil d'excellence pour hauts revenus amoureux de la pierre et acceptant une durée d'immobilisation longue."
-    },
-    {
-      id: "lli",
-      name: "LLI (Location Longue Intermédiaire)",
-      shortName: "LLI",
-      description: "Créer des logements abordables dans les zones tendues sans engagement ANAH",
-      objectif: "Créer des logements abordables dans les zones tendues sans engagement ANAH",
-      avantages: [
-        "Abattement forfaitaire sur les loyers perçus",
-        "Si location à loyer intermédiaire",
-        "Location à un locataire aux revenus plafonnés",
-        "Loyer encadré, mais plus haut que Cosse"
-      ],
-      conditions: [
-        "Location à un locataire aux revenus plafonnés",
-        "Loyer encadré, mais plus haut que Cosse",
-        "Pas de convention ANAH"
-      ],
-      taux: [
-        { annees: "Variable", reduction: "Abattement 30%" }
-      ],
-      plafonds: {
-        loyer: "Encadré",
-        ressources: "Plafonnées",
-        investissement: "Non applicable"
-      },
-      risques: [
-        "Moins de contraintes administratives",
-        "Montages plus souples"
-      ],
-      cas_pratique: "Loyer brut annuel de 10 000€ → abattement fiscal de 30% = base imposable 7 000€",
-      recommandation: "Très intéressant pour biens en zone A/B1 non éligibles à Pinel. Combine flexibilité et fiscalité adoucie."
-    }
-  ];
-
-  const loisEntreprise = [
-    {
-      id: "madelin",
-      name: "Loi Madelin",
-      shortName: "Madelin",
-      description: "Déduction des cotisations de retraite et prévoyance",
-      avantages: [
-        "Déduction des cotisations retraite",
-        "Déduction des cotisations prévoyance",
-        "Déduction des cotisations santé",
-        "Plafonds annuels variables"
-      ],
-      conditions: [
-        "Profession libérale ou artisan",
-        "Cotisations versées à des organismes agréés",
-        "Respect des plafonds annuels",
-        "Justificatifs des versements"
+    categories: [
+      { id: "immobilier", label: "Immobilier", icon: "🏠" },
+      { id: "entreprise", label: "Entreprise", icon: "💼" },
+      { id: "patrimoine", label: "Patrimoine", icon: "💰" },
+      { id: "retraite", label: "Retraite", icon: "👴" }
+    ],
+    cta: {
+      title: "Prêt à optimiser votre fiscalité ?",
+      subtitle: "Nos experts vous accompagnent pour identifier le dispositif le plus adapté à votre situation.",
+      buttons: [
+        { text: "🧮 Simuler mes avantages", type: "primary" },
+        { text: "📞 Consulter un expert", type: "secondary" }
       ]
     },
-    {
-      id: "censi-bouvard",
-      name: "Loi Censi-Bouvard",
-      shortName: "Censi-Bouvard",
-      description: "Réduction d'impôt pour investissement en résidence services",
-      avantages: [
-        "Réduction d'impôt jusqu'à 11%",
-        "Investissement plafonné à 300 000€",
-        "Engagement de location 9 ans minimum",
-        "Services inclus dans la location"
-      ],
-      conditions: [
-        "Résidence services seniors",
-        "Location à usage d'habitation",
-        "Services minimum inclus",
-        "Engagement de location 9 ans"
+    finalCta: {
+      title: "Besoin d'un arbitrage personnalisé ?",
+      description: "Chaque situation fiscale est unique. Chez Azalée, nous vous aidons à intégrer ces dispositifs dans une stratégie globale patrimoniale (transmission, SCI, IR/IFI, assurance vie...)",
+      email: "contact@azalee-patrimoine.fr",
+      emailSubtitle: "Prendre rendez-vous pour un arbitrage personnalisé",
+      buttons: [
+        { text: "🗓️ Prendre rendez-vous", type: "primary" },
+        { text: "📧 Nous écrire", type: "secondary" }
       ]
-    }
-  ];
-
-  const loisPatrimoine = [
-    {
-      id: "pacte",
-      name: "Loi PACTE",
-      shortName: "PACTE",
-      description: "Plan d'action pour la croissance et la transformation des entreprises",
-      avantages: [
-        "Épargne retraite collective",
-        "Plan d'épargne entreprise",
-        "Actions gratuites",
-        "Incitations à l'investissement"
-      ]
-    },
-    {
-      id: "tepa",
-      name: "Loi TEPA",
-      shortName: "TEPA",
-      description: "Travail, emploi et pouvoir d'achat",
-      avantages: [
-        "Exonération des heures supplémentaires",
-        "Exonération des primes",
-        "Exonération des stock-options",
-        "Plafonds annuels variables"
-      ]
-    }
-  ];
-
-  const loisRetraite = [
-    {
-      id: "per",
-      name: "Plan Épargne Retraite",
-      shortName: "PER",
-      description: "Épargne retraite avec avantages fiscaux",
-      avantages: [
-        "Déduction des versements",
-        "Report d'imposition des plus-values",
-        "Sortie en capital ou rente",
-        "Transmission optimisée"
-      ]
-    }
-  ];
-
-  const getLoisByCategory = () => {
-    switch(selectedCategory) {
-      case "immobilier": return loisImmobilieres;
-      case "entreprise": return loisEntreprise;
-      case "patrimoine": return loisPatrimoine;
-      case "retraite": return loisRetraite;
-      default: return loisImmobilieres;
     }
   };
 
-  const selectedLawData = getLoisByCategory().find(law => law.id === selectedLaw) || getLoisByCategory()[0];
+  // Load content from CMS
+  const loadContentFromCMS = async () => {
+    try {
+      setIsLoadingFromDatabase(true);
+      const response = await fetch('/api/pages/lois-fiscales');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.content && Object.keys(data.content).length > 0) {
+          setContent(data.content);
+          setContentSource('Database');
+          console.log('✅ Lois-fiscales content loaded from database');
+        } else {
+          setContent(defaultContent);
+          setContentSource('Default');
+          console.log('⚠️ No database content found, using default');
+        }
+      } else {
+        setContent(defaultContent);
+        setContentSource('Default');
+        console.log('❌ Failed to load from database, using default');
+      }
+    } catch (error) {
+      console.error('Error loading lois-fiscales content:', error);
+      setContent(defaultContent);
+      setContentSource('Default');
+    } finally {
+      setIsLoadingFromDatabase(false);
+    }
+  };
 
-  // Safety check to prevent crashes
-  if (!selectedLawData) {
-    return (
-      <>
-        <Header />
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
-            <p className="text-[#686868]">Chargement des données...</p>
-          </div>
+  // Reload content manually
+  const reloadContent = async () => {
+    await loadContentFromCMS();
+  };
+
         </div>
       </>
     );
@@ -363,22 +88,40 @@ export default function LoisFiscalesPage() {
     <>
       <Header />
 
+      {/* Debug Indicators */}
+      <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
+        <div className="bg-white rounded-lg shadow-lg p-3 text-xs">
+          <div className="flex items-center gap-2 mb-1">
+            <span className={`w-2 h-2 rounded-full ${contentSource === 'Database' ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+            <span className="font-medium">Lois-fiscales Content: {contentSource}</span>
+          </div>
+          {isLoadingFromDatabase && (
+            <div className="flex items-center gap-1 text-blue-600">
+              <div className="animate-spin w-3 h-3 border border-blue-600 border-t-transparent rounded-full"></div>
+              <span>Loading...</span>
+            </div>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={reloadContent}
+            className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
+          >
+      </div>
+
       {/* Hero Section with Law Icons */}
       <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-6">
             <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-              Guide complet
+              {content.hero?.subtitle || defaultContent.hero.subtitle}
             </span>
           </div>
           <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
-            Lois fiscales
+            {content.hero?.title || defaultContent.hero.title}
           </h1>
           <p className="max-w-4xl mx-auto text-[#686868] text-base sm:text-lg leading-relaxed mb-8">
-            <strong>Optimiser sa fiscalité, c'est protéger et valoriser durablement son patrimoine.</strong><br/><br/>
-            Les dispositifs fiscaux d'investissement immobilier offrent des leviers puissants pour réduire son imposition, 
-            préparer sa retraite ou transmettre plus efficacement. Ce guide décrypte les 7 principaux régimes en vigueur, 
-            à jour des dernières réformes, pour vous aider à arbitrer en toute connaissance de cause.
+            {content.hero?.description || defaultContent.hero.description}
           </p>
           
           {/* Law Icons Grid */}
@@ -566,17 +309,23 @@ export default function LoisFiscalesPage() {
 
                 {/* CTA */}
                 <div className="bg-gradient-to-r from-[#4EBBBD] to-[#008D78] rounded-lg p-6 text-white text-center">
-                  <h3 className="text-xl font-semibold mb-2">Prêt à optimiser votre fiscalité ?</h3>
+                  <h3 className="text-xl font-semibold mb-2">{content.cta?.title || defaultContent.cta.title}</h3>
                   <p className="text-sm opacity-90 mb-4">
-                    Nos experts vous accompagnent pour identifier le dispositif le plus adapté à votre situation.
+                    {content.cta?.subtitle || defaultContent.cta.subtitle}
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                    <button className="bg-white text-[#4EBBBD] px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200">
-                      🧮 Simuler mes avantages
-                    </button>
-                    <button className="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-[#4EBBBD] transition-colors duration-200">
-                      📞 Consulter un expert
-                    </button>
+                    {(content.cta?.buttons || defaultContent.cta.buttons).map((button, index) => (
+                      <button 
+                        key={index}
+                        className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                          button.type === 'primary' 
+                            ? 'bg-white text-[#4EBBBD] hover:bg-gray-100' 
+                            : 'border-2 border-white text-white hover:bg-white hover:text-[#4EBBBD]'
+                        }`}
+                      >
+                        {button.text}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -692,23 +441,28 @@ export default function LoisFiscalesPage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 text-center">
             <h2 className="text-[#112033] text-2xl lg:text-3xl font-semibold mb-4">
-              Besoin d'un arbitrage personnalisé ?
+              {content.finalCta?.title || defaultContent.finalCta.title}
             </h2>
             <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
-              Chaque situation fiscale est unique. Chez Azalée, nous vous aidons à intégrer ces dispositifs 
-              dans une stratégie globale patrimoniale (transmission, SCI, IR/IFI, assurance vie...)
+              {content.finalCta?.description || defaultContent.finalCta.description}
             </p>
             <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
-              <h3 className="text-xl font-semibold mb-3">✉️ contact@azalee-patrimoine.fr</h3>
-              <p className="text-sm opacity-90">Prendre rendez-vous pour un arbitrage personnalisé</p>
+              <h3 className="text-xl font-semibold mb-3">✉️ {content.finalCta?.email || defaultContent.finalCta.email}</h3>
+              <p className="text-sm opacity-90">{content.finalCta?.emailSubtitle || defaultContent.finalCta.emailSubtitle}</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                🗓️ Prendre rendez-vous
-              </button>
-              <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
-                📧 Nous écrire
-              </button>
+              {(content.finalCta?.buttons || defaultContent.finalCta.buttons).map((button, index) => (
+                <button 
+                  key={index}
+                  className={`px-8 py-4 rounded-lg font-medium transition-colors duration-200 text-lg ${
+                    button.type === 'primary' 
+                      ? 'bg-[#4EBBBD] text-white hover:bg-[#3DA8AA]' 
+                      : 'border-2 border-[#4EBBBD] text-[#4EBBBD] hover:bg-[#4EBBBD] hover:text-white'
+                  }`}
+                >
+                  {button.text}
+                </button>
+              ))}
             </div>
           </div>
         </div>

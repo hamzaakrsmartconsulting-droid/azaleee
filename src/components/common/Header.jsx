@@ -270,19 +270,23 @@ const Header = () => {
         </div>
         {/* Center: Logo (mobile only) */}
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 block lg:hidden flex-shrink-0">
-          <img 
-            src="/images/img_header_logo.png" 
-            className="w-[50px] h-[48px] sm:w-[60px] sm:h-[58px] rounded-full mx-auto" 
-            alt="Azalee Wealth Logo" 
-          />
+          <Link href="/">
+            <img 
+              src="/images/img_header_logo.png" 
+              className="w-[50px] h-[48px] sm:w-[60px] sm:h-[58px] rounded-full mx-auto cursor-pointer hover:opacity-80 transition-opacity" 
+              alt="Azalee Wealth Logo" 
+            />
+          </Link>
         </div>
         {/* Left: Logo (desktop only) */}
         <div className="hidden lg:flex flex-shrink-0">
-          <img 
-            src="/images/img_header_logo.png" 
-            className="w-[70px] h-[68px] rounded-full" 
-            alt="Azalee Wealth Logo" 
-          />
+          <Link href="/">
+            <img 
+              src="/images/img_header_logo.png" 
+              className="w-[70px] h-[68px] rounded-full cursor-pointer hover:opacity-80 transition-opacity" 
+              alt="Azalee Wealth Logo" 
+            />
+          </Link>
         </div>
         {/* Right: Hamburger/Menu (mobile only) */}
         <div className="flex-1 flex justify-end items-center lg:hidden">

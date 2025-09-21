@@ -1,355 +1,349 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function DeclarationImpotsCMSPage() {
-  const [content, setContent] = useState({
-    hero: {
-      title: "Déclaration d'impôts",
-      subtitle: "Maîtrisez votre déclaration d'impôts avec nos conseils et outils pratiques. Découvrez les bonnes pratiques, les délais et les erreurs à éviter.",
-      ctaPrimary: "Consulter le calendrier",
-      ctaSecondary: "Télécharger le guide"
-    },
-    keyInfo: {
-      title: "Informations clés",
-      deadline: "31 mai 2025",
-      onlineDeadline: "8 juin 2025",
-      documents: [
-        "Justificatifs de revenus",
-        "Attestations de déductions",
-        "Relevés bancaires",
-        "Quittances de loyer"
+export default function DeclarationImpotsCMS() {
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingSection, setEditingSection] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [saving, setSaving] = useState(false);
+  const router = useRouter();
+
+  // Déclaration d'impôts sections configuration
+  const declarationSections = [
+    {
+      id: 'hero',
+      name: 'Section Hero',
+      description: 'Titre principal et description',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' }
       ]
     },
-    steps: {
-      title: "Étapes de la déclaration",
-      steps: [
-        {
-          title: "Récupération des documents",
-          description: "Collectez tous vos justificatifs de revenus et de charges"
-        },
-        {
-          title: "Vérification des informations",
-          description: "Contrôlez l'exactitude de vos données personnelles"
-        },
-        {
-          title: "Saisie des revenus",
-          description: "Renseignez tous vos revenus par catégorie"
-        },
-        {
-          title: "Déductions et crédits",
-          description: "Ajoutez vos déductions et crédits d'impôt"
-        },
-        {
-          title: "Validation et envoi",
-          description: "Vérifiez votre déclaration avant envoi"
-        }
+    {
+      id: 'tabs',
+      name: 'Onglets de Navigation',
+      description: 'Configuration des onglets',
+      fields: [
+        { key: 'tabs', label: 'Onglets (JSON)', type: 'textarea' }
       ]
     },
-    commonMistakes: {
-      title: "Erreurs fréquentes à éviter",
-      mistakes: [
-        "Oublier des revenus (travaux, locations, etc.)",
-        "Ne pas déclarer les plus-values",
-        "Oublier les déductions d'impôt",
-        "Erreur sur l'adresse ou la situation familiale",
-        "Ne pas joindre les justificatifs requis"
+    {
+      id: 'steps',
+      name: 'Étapes de Déclaration',
+      description: 'Processus étape par étape',
+      fields: [
+        { key: 'steps', label: 'Étapes (JSON)', type: 'textarea' }
       ]
     },
-    tips: {
-      title: "Conseils pour une déclaration optimale",
-      tips: [
-        "Préparez vos documents à l'avance",
-        "Utilisez la déclaration en ligne",
-        "Conservez vos justificatifs 3 ans",
-        "Vérifiez les montants avant envoi",
-        "Faites-vous accompagner si nécessaire"
+    {
+      id: 'cta',
+      name: 'Call-to-Action',
+      description: 'Section d\'appel à l\'action',
+      fields: [
+        { key: 'title', label: 'Titre', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'buttonText', label: 'Texte du Bouton', type: 'text' }
       ]
-    },
-    cta: {
-      title: "Besoin d'aide pour votre déclaration ?",
-      description: "Nos experts vous accompagnent dans la préparation et l'optimisation de votre déclaration d'impôts.",
-      buttonText: "Prendre rendez-vous"
     }
-  });
-
-  const [isEditing, setIsEditing] = useState(false);
+  ];
 
   useEffect(() => {
-    const savedContent = localStorage.getItem('declaration-impots-cms-content');
-    if (savedContent) {
-      setContent(JSON.parse(savedContent));
-    }
+    loadSections();
   }, []);
 
-  const saveContent = (newContent) => {
-    setContent(newContent);
-    localStorage.setItem('declaration-impots-cms-content', JSON.stringify(newContent));
-    window.dispatchEvent(new CustomEvent('contentUpdated', { detail: { page: 'declaration-impots', content: newContent } }));
-  };
-
-  const renderEditableField = (section, field, label, type = "text") => {
-    if (isEditing) {
-      if (type === "textarea") {
-        return (
-          <textarea
-            value={content[section][field]}
-            onChange={(e) => {
-              const newContent = { ...content };
-              newContent[section][field] = e.target.value;
-              saveContent(newContent);
-            }}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            rows={3}
-          />
-        );
+  const loadSections = async () => {
+    try {
+      // Load CMS content first
+      const cmsResponse = await fetch('/api/cms/content/declaration-impots');
+      let cmsSections = [];
+      if (cmsResponse.ok) {
+        cmsSections = await cmsResponse.json();
       }
-      return (
-        <input
-          type={type}
-          value={content[section][field]}
-          onChange={(e) => {
-            const newContent = { ...content };
-            newContent[section][field] = e.target.value;
-            saveContent(newContent);
-          }}
-          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-        />
-      );
+
+      // Always use comprehensive default content
+      const currentContent = {
+        hero: {
+          title: "Déclaration d'impôts",
+          description: "Guide complet pour déclarer vos impôts en toute sérénité. Découvrez les étapes, les documents nécessaires et nos conseils d'experts."
+        },
+        tabs: {
+          tabs: [
+            { id: "general", label: "Prélèvement à la source", icon: "💧" },
+            { id: "dates", label: "Régularisation", icon: "📅" },
+            { id: "documents", label: "Questions fréquentes", icon: "❓" },
+            { id: "erreurs", label: "Accompagnement", icon: "🤝" }
+          ]
+        },
+        steps: {
+          steps: [
+            {
+              step: "1",
+              title: "Rassemblement des documents",
+              description: "Collectez tous vos justificatifs de revenus, charges et investissements",
+              details: ["Bulletins de salaire", "Attestations de loyer", "Relevés bancaires", "Quittances de charges"]
+            },
+            {
+              step: "2",
+              title: "Choix du mode de déclaration",
+              description: "Optez pour la méthode qui vous convient le mieux",
+              details: ["Déclaration en ligne (recommandée)", "Déclaration papier", "Déclaration par téléphone"]
+            }
+          ]
+        },
+        cta: {
+          title: "Besoin d'aide pour votre déclaration ?",
+          description: "Nos experts fiscaux vous accompagnent dans toutes vos démarches de déclaration d'impôts.",
+          buttonText: "Demander une assistance"
+        }
+      };
+
+      // Merge CMS sections with current content
+      const mergedSections = declarationSections.map(section => {
+        const cmsSection = cmsSections.find(s => s.section_name === section.id);
+        const currentSectionContent = currentContent[section.id] || {};
+        
+        return {
+          ...section,
+          cmsData: cmsSection?.content_data ? JSON.parse(cmsSection.content_data) : {},
+          currentData: currentSectionContent,
+          hasCmsContent: !!cmsSection,
+          hasCurrentContent: Object.keys(currentSectionContent).length > 0
+        };
+      });
+
+      setSections(mergedSections);
+    } catch (error) {
+      console.error('Error loading declaration sections:', error);
+    } finally {
+      setLoading(false);
     }
-    return <span>{content[section][field]}</span>;
   };
 
-  const renderEditableList = (section, field, label) => {
-    if (isEditing) {
-      return (
-        <div className="space-y-2">
-          {content[section][field].map((item, index) => (
-            <input
-              key={index}
-              value={item}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          ))}
-        </div>
-      );
-    }
-    return (
-      <div className="space-y-2">
-        {content[section][field].map((item, index) => (
-          <p key={index} className="text-[#686868]">• {item}</p>
-        ))}
-      </div>
-    );
+  const handleEdit = (section) => {
+    setEditingSection(section.id);
+    const dataToEdit = section.hasCurrentContent ? section.currentData : section.cmsData;
+    setFormData(dataToEdit);
   };
 
-  const renderEditableCard = (section, field, index, titleField, descriptionField) => {
-    if (isEditing) {
-      return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input
-              value={content[section][field][index][titleField]}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index][titleField] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea
-              value={content[section][field][index][descriptionField]}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index][descriptionField] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              rows={3}
-            />
-          </div>
-        </div>
-      );
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const response = await fetch('/api/cms/content/declaration-impots', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          section: editingSection,
+          data: formData
+        }),
+      });
+
+      if (response.ok) {
+        await loadSections();
+        setEditingSection(null);
+        setFormData({});
+        
+        // Trigger content update event
+        window.dispatchEvent(new CustomEvent('contentUpdated'));
+        
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('cms_content_updated', Date.now().toString());
+        }
+        
+        alert('Contenu déclaration d\'impôts sauvegardé avec succès!');
+      } else {
+        const responseData = await response.json();
+        alert('Erreur lors de la sauvegarde: ' + (responseData.message || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error saving declaration content:', error);
+      alert('Erreur lors de la sauvegarde: ' + error.message);
+    } finally {
+      setSaving(false);
     }
+  };
+
+  const handleCancel = () => {
+    setEditingSection(null);
+    setFormData({});
+  };
+
+  const handleInputChange = (key, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
+  if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-[#112033] text-lg font-semibold mb-3">{content[section][field][index][titleField]}</h3>
-        <p className="text-[#686868]">{content[section][field][index][descriptionField]}</p>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement du CMS Déclaration d'impôts...</p>
+        </div>
       </div>
     );
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-[#112033]">CMS - Déclaration d'impôts</h1>
-            <button
-              onClick={() => setIsEditing(!isEditing)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                isEditing
-                  ? "bg-[#4EBBBD] text-white hover:bg-[#3DA8AA]"
-                  : "bg-[#B99066] text-white hover:bg-[#A67A5A]"
-              }`}
-            >
-              {isEditing ? "Sauvegarder" : "Modifier"}
-            </button>
-          </div>
-          <p className="text-[#686868]">
-            Gérez le contenu de la page Déclaration d'impôts. Modifiez les textes, titres et informations selon vos besoins.
-          </p>
-        </div>
-
-        {/* Hero Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📝</span>
-            Section Hero
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-              {renderEditableField("hero", "title", "Titre principal")}
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/cms/dashboard')}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ← Retour au Dashboard
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900">CMS Déclaration d'impôts</h1>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
-              {renderEditableField("hero", "subtitle", "Sous-titre", "textarea")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton CTA principal</label>
-              {renderEditableField("hero", "ctaPrimary", "Bouton CTA principal")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton CTA secondaire</label>
-              {renderEditableField("hero", "ctaSecondary", "Bouton CTA secondaire")}
+            <div className="flex space-x-2">
+              <button
+                onClick={loadSections}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm"
+              >
+                Recharger CMS
+              </button>
+              <button
+                onClick={() => window.open('http://localhost:4028/fiscalite/declaration-impots', '_blank')}
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm"
+              >
+                Voir la Page
+              </button>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Key Info Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">ℹ️</span>
-            Informations clés
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("keyInfo", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Date limite papier</label>
-              {renderEditableField("keyInfo", "deadline", "Date limite papier")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Date limite en ligne</label>
-              {renderEditableField("keyInfo", "onlineDeadline", "Date limite en ligne")}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Documents nécessaires</label>
-            {renderEditableList("keyInfo", "documents", "Documents nécessaires")}
-          </div>
-        </div>
-
-        {/* Steps Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📋</span>
-            Étapes de la déclaration
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("steps", "title", "Titre de section")}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {content.steps.steps.map((step, index) => (
-              <div key={index}>
-                <h3 className="text-sm font-medium text-[#686868] mb-2">Étape {index + 1}</h3>
-                {renderEditableCard("steps", "steps", index, "title", "description")}
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid gap-8">
+          {sections.map((section) => (
+            <div key={section.id} className="bg-white rounded-lg shadow-sm border p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">{section.name}</h3>
+                  <p className="text-sm text-gray-600">{section.description}</p>
+                </div>
+                <div className="flex space-x-2">
+                  {!editingSection && (
+                    <button
+                      onClick={() => handleEdit(section)}
+                      className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
+                    >
+                      Modifier
+                    </button>
+                  )}
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Common Mistakes Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">⚠️</span>
-            Erreurs fréquentes
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("commonMistakes", "title", "Titre de section")}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Liste des erreurs</label>
-            {renderEditableList("commonMistakes", "mistakes", "Liste des erreurs")}
-          </div>
-        </div>
+              {editingSection === section.id ? (
+                <div className="space-y-4">
+                  <div className="grid gap-4">
+                    {section.fields.map((field) => (
+                      <div key={field.key}>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          {field.label}
+                        </label>
+                        {field.type === 'textarea' ? (
+                          <textarea
+                            value={formData[field.key] || ''}
+                            onChange={(e) => handleInputChange(field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            rows={field.key.includes('JSON') ? 6 : 3}
+                            placeholder={`Entrez ${field.label.toLowerCase()}...`}
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            value={formData[field.key] || ''}
+                            onChange={(e) => handleInputChange(field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder={`Entrez ${field.label.toLowerCase()}...`}
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex justify-end space-x-2">
+                    <button
+                      onClick={handleCancel}
+                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 text-sm"
+                    >
+                      Annuler
+                    </button>
+                    <button
+                      onClick={handleSave}
+                      disabled={saving}
+                      className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 text-sm"
+                    >
+                      {saving ? 'Sauvegarde...' : 'Sauvegarder'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {/* Status indicators */}
+                  <div className="flex gap-2 text-xs">
+                    {section.hasCurrentContent && (
+                      <span className="px-2 py-1 bg-green-100 text-green-800 rounded">
+                        Contenu actuel affiché
+                      </span>
+                    )}
+                    {section.hasCmsContent && (
+                      <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                        Sauvegardé dans CMS
+                      </span>
+                    )}
+                    {!section.hasCurrentContent && !section.hasCmsContent && (
+                      <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded">
+                        Aucun contenu
+                      </span>
+                    )}
+                  </div>
 
-        {/* Tips Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">💡</span>
-            Conseils
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("tips", "title", "Titre de section")}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Liste des conseils</label>
-            {renderEditableList("tips", "tips", "Liste des conseils")}
-          </div>
+                  {/* Current content display */}
+                  {section.hasCurrentContent ? (
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-900 mb-3">Contenu actuellement affiché :</h4>
+                      <div className="space-y-2">
+                        {Object.entries(section.currentData).map(([key, value]) => (
+                          <div key={key} className="text-sm">
+                            <span className="font-medium text-gray-700">{key}:</span>
+                            <div className="text-gray-600 mt-1">
+                              {typeof value === 'object' ? (
+                                <pre className="whitespace-pre-wrap text-xs bg-white p-2 rounded border">
+                                  {JSON.stringify(value, null, 2)}
+                                </pre>
+                              ) : (
+                                <span>{String(value).substring(0, 200)}
+                                {String(value).length > 200 && '...'}</span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                      <p className="text-yellow-800 text-sm">
+                        ⚠️ Cette section utilise le contenu par défaut. Cliquez sur "Modifier" pour personnaliser le contenu.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
-
-        {/* CTA Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">🚀</span>
-            Section Appel à l'action
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("cta", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("cta", "description", "Description", "textarea")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Texte du bouton</label>
-              {renderEditableField("cta", "buttonText", "Texte du bouton")}
-            </div>
-          </div>
-        </div>
-
-        {/* Preview Section */}
-        {isEditing && (
-          <div className="bg-[#F0F9FF] rounded-lg p-6 border border-[#4EBBBD]">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Aperçu des modifications</h3>
-            <div className="text-sm text-[#686868] space-y-2">
-              <p><strong>Hero :</strong> {content.hero.title}</p>
-              <p><strong>Infos clés :</strong> {content.keyInfo.title}</p>
-              <p><strong>Étapes :</strong> {content.steps.title}</p>
-              <p><strong>Erreurs :</strong> {content.commonMistakes.title}</p>
-              <p><strong>Conseils :</strong> {content.tips.title}</p>
-              <p><strong>CTA :</strong> {content.cta.title}</p>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

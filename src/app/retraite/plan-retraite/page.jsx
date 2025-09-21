@@ -1,30 +1,141 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function PlanRetraitePage() {
-  const chartData = [
-    { label: "PER - Enveloppe universelle", value: "100%" },
-    { label: "Versements déductibles", value: "€10,000" },
-    { label: "Sortie en rente/capital", value: "Mixte" },
-    { label: "Sortie anticipée", value: "Possible" },
-    { label: "Transfert anciennes enveloppes", value: "✓" }
-  ];
+  const [content, setContent] = useState({});
+  const [contentSource, setContentSource] = useState('default');
+  const [loading, setLoading] = useState(true);
+
+  // Default content
+  const defaultContent = {
+    hero: {
+      title: "Plan retraite (PER, PERP, PEE, PERCO…)",
+      subtitle: "L'épargne retraite est un pilier essentiel de votre stratégie patrimoniale. Découvrez les solutions adaptées à votre statut et vos objectifs."
+    },
+    chart: {
+      data: [
+        { label: "PER - Enveloppe universelle", value: "100%" },
+        { label: "Versements déductibles", value: "€10,000" },
+        { label: "Sortie en rente/capital", value: "Mixte" },
+        { label: "Sortie anticipée", value: "Possible" },
+        { label: "Transfert anciennes enveloppes", value: "✓" }
+      ]
+    },
+    per: {
+      title: "PER (Plan Épargne Retraite – loi Pacte)",
+      description: "L'enveloppe universelle qui remplace PERP, Madelin, PERCO, Article 83.",
+      features: [
+        "Avantage fiscal immédiat (versements déductibles)",
+        "Sortie en rente, capital ou mixte",
+        "Sortie anticipée possible (résidence principale, accident de la vie)"
+      ]
+    },
+    percoPee: {
+      title: "PERCO / PEE",
+      description: "Dispositifs d'épargne entreprise alimentés par participation, intéressement, abondement.",
+      info: "Anciennes enveloppes (PERP, Madelin, Art. 83) : transférables vers le PER."
+    },
+    conseil: {
+      title: "Conseil Azalée Patrimoine",
+      items: [
+        "Analyse de votre situation (salarié, TNS, dirigeant)",
+        "Optimisation fiscale selon votre statut",
+        "Choix du meilleur véhicule d'épargne retraite",
+        "Stratégie globale de préparation à la retraite"
+      ]
+    },
+    cta: {
+      title: "Prêt à optimiser votre épargne retraite ?",
+      subtitle: "Nos conseillers vous accompagnent dans le choix des solutions les plus adaptées à votre situation.",
+      buttonText: "Demander un conseil personnalisé"
+    }
+  };
+
+  // Load content from CMS
+  const loadContentFromCMS = async () => {
+    try {
+      const response = await fetch('/api/pages/plan-retraite');
+      const data = await response.json();
+      
+      if (data.success && data.content) {
+        // Merge CMS content with default content
+        const mergedContent = { ...defaultContent };
+        Object.keys(data.content).forEach(sectionId => {
+          if (mergedContent[sectionId]) {
+            mergedContent[sectionId] = { ...mergedContent[sectionId], ...data.content[sectionId] };
+          }
+        });
+        
+        setContent(mergedContent);
+        setContentSource('database');
+        console.log('Plan-retraite content loaded from CMS:', mergedContent);
+      } else {
+        setContent(defaultContent);
+        setContentSource('default');
+        console.log('Using default plan-retraite content');
+      }
+    } catch (error) {
+      console.error('Error loading plan-retraite content from CMS:', error);
+      setContent(defaultContent);
+      setContentSource('default');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadContentFromCMS();
+    
+    // Set up polling for real-time updates
+    const interval = setInterval(loadContentFromCMS, 3000);
+    
+    // Listen for custom events from CMS
+    const handleContentUpdate = () => {
+      loadContentFromCMS();
+    };
+    
+    window.addEventListener('cmsContentUpdated', handleContentUpdate);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('cmsContentUpdated', handleContentUpdate);
+    };
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement du contenu...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
       <Header />
+      
+      {/* Content Source Indicator */}
+      {contentSource === 'database' && (
+        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full"></div>
+          Content: CMS Database
+        </div>
+      )}
       
       {/* Hero Section */}
       <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-6">
-              Plan retraite (PER, PERP, PEE, PERCO…)
+              {content.hero?.title || "Plan retraite (PER, PERP, PEE, PERCO…)"}
             </h1>
             <p className="text-[#686868] text-lg sm:text-xl lg:text-2xl font-inter leading-relaxed max-w-4xl mx-auto">
-              L'épargne retraite est un pilier essentiel de votre stratégie patrimoniale. Découvrez les solutions adaptées à votre statut et vos objectifs.
+              {content.hero?.subtitle || "L'épargne retraite est un pilier essentiel de votre stratégie patrimoniale. Découvrez les solutions adaptées à votre statut et vos objectifs."}
             </p>
           </div>
           
@@ -36,7 +147,7 @@ export default function PlanRetraitePage() {
               </div>
               <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-4">PER</h3>
               <p className="text-[#686868] text-sm">
-                L'enveloppe universelle qui remplace PERP, Madelin, PERCO, Article 83
+                {content.per?.description || "L'enveloppe universelle qui remplace PERP, Madelin, PERCO, Article 83"}
               </p>
             </div>
             
@@ -46,7 +157,7 @@ export default function PlanRetraitePage() {
               </div>
               <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-4">PERCO / PEE</h3>
               <p className="text-[#686868] text-sm">
-                Dispositifs d'épargne entreprise alimentés par participation, intéressement, abondement
+                {content.percoPee?.description || "Dispositifs d'épargne entreprise alimentés par participation, intéressement, abondement"}
               </p>
             </div>
             
@@ -54,216 +165,121 @@ export default function PlanRetraitePage() {
               <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-white text-2xl">🔄</span>
               </div>
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-4">Anciennes enveloppes</h3>
+              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-4">Transfert</h3>
               <p className="text-[#686868] text-sm">
-                PERP, Madelin, Art. 83 : transférables vers le PER
+                {content.percoPee?.info || "Anciennes enveloppes (PERP, Madelin, Art. 83) : transférables vers le PER"}
               </p>
             </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-[#A67A5A] transition-colors duration-200">
-              Analyser ma situation
-            </button>
-            <button className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-[#B99066] hover:text-white transition-colors duration-200">
-              Comparer les solutions
-            </button>
           </div>
         </div>
       </section>
 
       {/* Chart Section */}
-      <PlacementChart 
-        title="Caractéristiques des plans retraite"
-        data={chartData}
-        chartImage="/images/variation-chart-image-944f04.png"
-      />
-
-      {/* PER Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-white py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-              PER (Plan Épargne Retraite – loi Pacte)
+            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
+              Comparatif des solutions d'épargne retraite
             </h2>
-            <p className="text-[#686868] text-lg max-w-4xl mx-auto">
-              L'enveloppe universelle qui remplace PERP, Madelin, PERCO, Article 83
+            <p className="text-[#686868] text-lg max-w-3xl mx-auto">
+              Visualisez les caractéristiques principales de chaque dispositif pour faire le meilleur choix
             </p>
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Avantage fiscal */}
-            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#4EBBBD] text-2xl">💰</span>
-                </div>
-                <h3 className="text-2xl font-source-sans font-semibold mb-2">Avantage fiscal immédiat</h3>
-              </div>
-              <p className="text-sm text-center">
-                Versements déductibles du revenu imposable
-              </p>
-            </div>
-
-            {/* Sortie flexible */}
-            <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#B99066] text-2xl">🔄</span>
-                </div>
-                <h3 className="text-2xl font-source-sans font-semibold mb-2">Sortie flexible</h3>
-              </div>
-              <p className="text-sm text-center">
-                Sortie en rente, capital ou mixte
-              </p>
-            </div>
-
-            {/* Sortie anticipée */}
-            <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#59E2E4] text-2xl">🏠</span>
-                </div>
-                <h3 className="text-2xl font-source-sans font-semibold mb-2">Sortie anticipée</h3>
-              </div>
-              <p className="text-sm text-center">
-                Possible (résidence principale, accident de la vie)
-              </p>
-            </div>
+          
+          <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-2xl p-8 sm:p-12">
+            <PlacementChart data={content.chart?.data || defaultContent.chart.data} />
           </div>
         </div>
       </section>
 
-      {/* PERCO / PEE Section */}
-      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+      {/* PER Details Section */}
+      <section className="w-full bg-[#F8F9FA] py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: PERCO/PEE Info */}
-            <div>
-              <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-8">
-                PERCO / PEE
-              </h2>
-              
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Dispositifs d'épargne entreprise
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Alimentés par participation, intéressement, abondement
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Abondement employeur
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Complément de versement de l'entreprise sur vos cotisations
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#59E2E4] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
-                      Transfert vers PER
-                    </h3>
-                    <p className="text-[#686868] text-sm">
-                      Possibilité de transférer vers un PER individuel
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Anciennes enveloppes */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-6">
-                Anciennes enveloppes transférables
-              </h3>
-              
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 bg-[#F8F9FA] rounded-lg">
-                  <span className="text-[#686868] text-sm">PERP</span>
-                  <span className="text-[#4EBBBD] font-semibold">Transférable</span>
-                </div>
-                
-                <div className="flex justify-between items-center p-3 bg-[#F8F9FA] rounded-lg">
-                  <span className="text-[#686868] text-sm">Madelin</span>
-                  <span className="text-[#4EBBBD] font-semibold">Transférable</span>
-                </div>
-                
-                <div className="flex justify-between items-center p-3 bg-[#F8F9FA] rounded-lg">
-                  <span className="text-[#686868] text-sm">Article 83</span>
-                  <span className="text-[#4EBBBD] font-semibold">Transférable</span>
-                </div>
-                
-                <div className="flex justify-between items-center p-3 bg-[#F8F9FA] rounded-lg">
-                  <span className="text-[#686868] text-sm">PERCO</span>
-                  <span className="text-[#4EBBBD] font-semibold">Transférable</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Conseil Azalée Patrimoine Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg shadow-lg p-8 text-white text-center">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-              👉 Conseil Azalée Patrimoine
+          <div className="text-center mb-12">
+            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
+              {content.per?.title || "PER (Plan Épargne Retraite – loi Pacte)"}
             </h2>
-            <div className="max-w-4xl mx-auto">
-              <p className="text-lg mb-8">
-                Azalée Patrimoine analyse chaque situation pour choisir le meilleur véhicule d'épargne retraite, en tenant compte de la fiscalité, du statut (salarié, TNS, dirigeant) et des objectifs.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h3 className="font-semibold mb-2">📊 Analyse fiscale</h3>
-                  <p className="text-sm">Optimisation selon votre tranche d'imposition</p>
+            <p className="text-[#686868] text-lg max-w-3xl mx-auto">
+              {content.per?.description || "L'enveloppe universelle qui remplace PERP, Madelin, PERCO, Article 83."}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="bg-white rounded-2xl shadow-lg p-8">
+              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-6">Avantages du PER</h3>
+              <ul className="space-y-4">
+                {(content.per?.features || []).map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <span className="text-[#4EBBBD] mt-1">✓</span>
+                    <span className="text-[#686868]">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="bg-white rounded-2xl shadow-lg p-8">
+              <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-6">Points clés</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[#4EBBBD] rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm">1</span>
+                  </div>
+                  <span className="text-[#686868]">Enveloppe universelle depuis 2019</span>
                 </div>
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h3 className="font-semibold mb-2">👔 Statut professionnel</h3>
-                  <p className="text-sm">Salarié, TNS, dirigeant : solutions adaptées</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[#4EBBBD] rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm">2</span>
+                  </div>
+                  <span className="text-[#686868]">Flexibilité maximale</span>
                 </div>
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h3 className="font-semibold mb-2">🎯 Objectifs personnels</h3>
-                  <p className="text-sm">Horizon, montant, flexibilité</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[#4EBBBD] rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm">3</span>
+                  </div>
+                  <span className="text-[#686868]">Transfert des anciens contrats</span>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Conseil Section */}
+      <section className="w-full bg-white py-16 sm:py-20">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
+              {content.conseil?.title || "Conseil Azalée Patrimoine"}
+            </h2>
+            <p className="text-[#686868] text-lg max-w-3xl mx-auto">
+              Notre expertise pour optimiser votre stratégie d'épargne retraite
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {(content.conseil?.items || []).map((item, index) => (
+              <div key={index} className="bg-gradient-to-br from-[#FFEFD5] to-[#D7E8FF] rounded-2xl p-6 text-center">
+                <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl">{index === 0 ? '📊' : index === 1 ? '💰' : index === 2 ? '🎯' : '📈'}</span>
+                </div>
+                <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">{item}</h3>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-gradient-to-r from-[#59E2E4] to-[#B99066] py-12 sm:py-16 lg:py-20">
+      <section className="w-full bg-gradient-to-r from-[#4EBBBD] to-[#3A9B9D] py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
-            Prêt à optimiser votre épargne retraite ?
+          <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
+            {content.cta?.title || "Prêt à optimiser votre épargne retraite ?"}
           </h2>
-          <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
-            Nos experts Azalée Patrimoine vous accompagnent pour choisir la meilleure solution d'épargne retraite adaptée à votre situation.
+          <p className="text-white text-lg sm:text-xl mb-8 max-w-3xl mx-auto opacity-90">
+            {content.cta?.subtitle || "Nos conseillers vous accompagnent dans le choix des solutions les plus adaptées à votre situation."}
           </p>
-          <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-source-sans font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
-            Analyser ma situation
+          <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-full font-source-sans font-semibold text-lg hover:bg-gray-100 transition-colors">
+            {content.cta?.buttonText || "Demander un conseil personnalisé"}
           </button>
         </div>
       </section>

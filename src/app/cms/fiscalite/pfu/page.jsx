@@ -1,600 +1,319 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function PFUCMSPage() {
-  const [content, setContent] = useState({
-    hero: {
-      title: "PFU - Prélèvement Forfaitaire Unique",
-      subtitle: "Comprenez le PFU, le régime fiscal par défaut pour les revenus du capital. Découvrez ses taux, son fonctionnement et ses alternatives.",
-      ctaPrimary: "Calculer mon PFU",
-      ctaSecondary: "Télécharger le guide"
-    },
-    definition: {
-      title: "Qu'est-ce que le PFU ?",
-      description: "Le Prélèvement Forfaitaire Unique (PFU) est un régime fiscal simplifié qui s'applique par défaut aux revenus du capital depuis 2018.",
-      composition: {
-        impots: "12,8% d'impôt sur le revenu",
-        prelevements: "17,2% de prélèvements sociaux",
-        total: "30% au total"
-      }
-    },
-    application: {
-      title: "Revenus concernés par le PFU",
-      revenus: [
-        {
-          category: "Dividendes",
-          description: "Revenus distribués par les actions",
-          taux: "30%"
-        },
-        {
-          category: "Intérêts",
-          description: "Revenus des obligations et comptes",
-          taux: "30%"
-        },
-        {
-          category: "Plus-values mobilières",
-          description: "Gains de cession de valeurs mobilières",
-          taux: "30%"
-        },
-        {
-          category: "Revenus fonciers",
-          description: "Loyers et revenus immobiliers",
-          taux: "30%"
-        }
+export default function PFUCMS() {
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingSection, setEditingSection] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [saving, setSaving] = useState(false);
+  const router = useRouter();
+
+  // PFU sections configuration
+  const pfuSections = [
+    {
+      id: 'hero',
+      name: 'Section Hero',
+      description: 'Titre principal et description',
+      fields: [
+        { key: 'title', label: 'Titre Principal', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' }
       ]
     },
-    exclusions: {
-      title: "Revenus exclus du PFU",
-      exclusions: [
-        "Revenus du PEA (exonération totale)",
-        "Revenus du Livret A et LDDS (exonération)",
-        "Revenus de l'assurance-vie (régime spécifique)",
-        "Revenus des SCPI/OPCI (régime spécifique)"
+    {
+      id: 'content',
+      name: 'Contenu Principal',
+      description: 'Sections de contenu détaillé',
+      fields: [
+        { key: 'sections', label: 'Sections (JSON)', type: 'textarea' }
       ]
     },
-    option: {
-      title: "Option pour le barème progressif",
-      description: "Vous pouvez choisir d'être imposé au barème progressif de l'impôt sur le revenu au lieu du PFU.",
-      conditions: [
-        "Option à exercer lors de la déclaration",
-        "Irrévocable pour l'année concernée",
-        "Revenus ajoutés aux autres revenus imposables",
-        "Calcul selon les tranches d'imposition"
-      ],
-      avantages: [
-        "Taux personnalisé selon vos revenus",
-        "Possibilité de déduire les charges",
-        "Intégration dans le quotient familial"
-      ],
-      inconvenients: [
-        "Complexité administrative",
-        "Taux potentiellement plus élevé",
-        "Pas de déduction automatique"
+    {
+      id: 'cta',
+      name: 'Call-to-Action',
+      description: 'Section d\'appel à l\'action',
+      fields: [
+        { key: 'title', label: 'Titre', type: 'text' },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'buttonText', label: 'Texte du Bouton', type: 'text' }
       ]
-    },
-    calcul: {
-      title: "Calcul du PFU",
-      examples: [
-        {
-          scenario: "Dividendes de 1 000 €",
-          calcul: "1 000 € × 30% = 300 € de PFU",
-          detail: "128 € d'impôt + 172 € de prélèvements sociaux"
-        },
-        {
-          scenario: "Plus-value de 5 000 €",
-          calcul: "5 000 € × 30% = 1 500 € de PFU",
-          detail: "640 € d'impôt + 860 € de prélèvements sociaux"
-        },
-        {
-          scenario: "Intérêts de 500 €",
-          calcul: "500 € × 30% = 150 € de PFU",
-          detail: "64 € d'impôt + 86 € de prélèvements sociaux"
-        }
-      ]
-    },
-    declaration: {
-      title: "Déclaration et paiement",
-      procedure: [
-        "Déclaration automatique par les établissements financiers",
-        "Prélèvement à la source sur les revenus",
-        "Déclaration dans la case correspondante",
-        "Possibilité d'option pour le barème progressif"
-      ],
-      documents: [
-        "Attestations de revenus",
-        "Relevés bancaires",
-        "Attestations de plus-values",
-        "Justificatifs de charges (si option barème)"
-      ]
-    },
-    cta: {
-      title: "Besoin d'aide pour comprendre le PFU ?",
-      description: "Nos experts vous accompagnent dans la compréhension et l'optimisation de votre fiscalité.",
-      buttonText: "Prendre rendez-vous"
     }
-  });
-
-  const [isEditing, setIsEditing] = useState(false);
+  ];
 
   useEffect(() => {
-    const savedContent = localStorage.getItem('pfu-cms-content');
-    if (savedContent) {
-      setContent(JSON.parse(savedContent));
-    }
+    loadSections();
   }, []);
 
-  const saveContent = (newContent) => {
-    setContent(newContent);
-    localStorage.setItem('pfu-cms-content', JSON.stringify(newContent));
-    window.dispatchEvent(new CustomEvent('contentUpdated', { detail: { page: 'pfu', content: newContent } }));
-  };
-
-  const renderEditableField = (section, field, label, type = "text") => {
-    if (isEditing) {
-      if (type === "textarea") {
-        return (
-          <textarea
-            value={content[section][field]}
-            onChange={(e) => {
-              const newContent = { ...content };
-              newContent[section][field] = e.target.value;
-              saveContent(newContent);
-            }}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            rows={3}
-          />
-        );
+  const loadSections = async () => {
+    try {
+      const cmsResponse = await fetch('/api/cms/content/pfu');
+      let cmsSections = [];
+      if (cmsResponse.ok) {
+        cmsSections = await cmsResponse.json();
       }
-      return (
-        <input
-          type={type}
-          value={content[section][field]}
-          onChange={(e) => {
-            const newContent = { ...content };
-            newContent[section][field] = e.target.value;
-            saveContent(newContent);
-          }}
-          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-        />
-      );
+
+      const currentContent = {
+        hero: {
+          title: "PFU - Prélèvement Forfaitaire Unique",
+          description: "Comprendre le PFU pour optimiser la fiscalité de vos placements financiers. Découvrez les avantages et inconvénients de ce régime fiscal."
+        },
+        content: {
+          sections: [
+            {
+              title: "Qu'est-ce que le PFU ?",
+              content: "Le Prélèvement Forfaitaire Unique est un régime fiscal simplifié pour les placements financiers."
+            }
+          ]
+        },
+    cta: {
+          title: "Optimisez votre fiscalité avec le PFU",
+          description: "Nos experts vous conseillent sur l'opportunité du PFU pour votre situation.",
+          buttonText: "Demander une analyse"
+        }
+      };
+
+      const mergedSections = pfuSections.map(section => {
+        const cmsSection = cmsSections.find(s => s.section_name === section.id);
+        const currentSectionContent = currentContent[section.id] || {};
+        
+        return {
+          ...section,
+          cmsData: cmsSection?.content_data ? JSON.parse(cmsSection.content_data) : {},
+          currentData: currentSectionContent,
+          hasCmsContent: !!cmsSection,
+          hasCurrentContent: Object.keys(currentSectionContent).length > 0
+        };
+      });
+
+      setSections(mergedSections);
+    } catch (error) {
+      console.error('Error loading PFU sections:', error);
+    } finally {
+      setLoading(false);
     }
-    return <span>{content[section][field]}</span>;
   };
 
-  const renderEditableList = (section, field, label) => {
-    if (isEditing) {
-      return (
-        <div className="space-y-2">
-          {content[section][field].map((item, index) => (
-            <input
-              key={index}
-              value={item}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          ))}
-        </div>
-      );
-    }
-    return (
-      <div className="space-y-2">
-        {content[section][field].map((item, index) => (
-          <p key={index} className="text-[#686868]">• {item}</p>
-        ))}
-      </div>
-    );
+  const handleEdit = (section) => {
+    setEditingSection(section.id);
+    const dataToEdit = section.hasCurrentContent ? section.currentData : section.cmsData;
+    setFormData(dataToEdit);
   };
 
-  const renderEditableCard = (section, field, index, titleField, descriptionField) => {
-    if (isEditing) {
-      return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-            <input
-              value={content[section][field][index][titleField]}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index][titleField] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-            <textarea
-              value={content[section][field][index][descriptionField]}
-              onChange={(e) => {
-                const newContent = { ...content };
-                newContent[section][field][index][descriptionField] = e.target.value;
-                saveContent(newContent);
-              }}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              rows={3}
-            />
-          </div>
-        </div>
-      );
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const response = await fetch('/api/cms/content/pfu', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          section: editingSection,
+          data: formData
+        }),
+      });
+
+      if (response.ok) {
+        await loadSections();
+        setEditingSection(null);
+        setFormData({});
+        
+        window.dispatchEvent(new CustomEvent('contentUpdated'));
+        
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('cms_content_updated', Date.now().toString());
+        }
+        
+        alert('Contenu PFU sauvegardé avec succès!');
+      } else {
+        const responseData = await response.json();
+        alert('Erreur lors de la sauvegarde: ' + (responseData.message || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error saving PFU content:', error);
+      alert('Erreur lors de la sauvegarde: ' + error.message);
+    } finally {
+      setSaving(false);
     }
-    return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-[#112033] text-lg font-semibold mb-3">{content[section][field][index][titleField]}</h3>
-        <p className="text-[#686868]">{content[section][field][index][descriptionField]}</p>
-      </div>
-    );
   };
 
-  const renderEditableRevenu = (section, field, index, categoryField, descriptionField, tauxField) => {
-    if (isEditing) {
+  const handleCancel = () => {
+    setEditingSection(null);
+    setFormData({});
+  };
+
+  const handleInputChange = (key, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
+  if (loading) {
       return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Catégorie</label>
-              <input
-                value={content[section][field][index][categoryField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][categoryField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              <input
-                value={content[section][field][index][descriptionField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][descriptionField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Taux</label>
-              <input
-                value={content[section][field][index][tauxField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][tauxField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement du CMS PFU...</p>
           </div>
         </div>
       );
     }
-    return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-[#112033] text-lg font-semibold">{content[section][field][index][categoryField]}</h3>
-          <span className="text-2xl font-bold text-[#4EBBBD]">{content[section][field][index][tauxField]}</span>
-        </div>
-        <p className="text-[#686868]">{content[section][field][index][descriptionField]}</p>
-      </div>
-    );
-  };
-
-  const renderEditableCalcul = (section, field, index, scenarioField, calculField, detailField) => {
-    if (isEditing) {
-      return (
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-300">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Scénario</label>
-              <input
-                value={content[section][field][index][scenarioField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][scenarioField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Calcul</label>
-              <input
-                value={content[section][field][index][calculField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][calculField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Détail</label>
-              <input
-                value={content[section][field][index][detailField]}
-                onChange={(e) => {
-                  const newContent = { ...content };
-                  newContent[section][field][index][detailField] = e.target.value;
-                  saveContent(newContent);
-                }}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-              />
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-[#112033] text-lg font-semibold mb-3">{content[section][field][index][scenarioField]}</h3>
-        <p className="text-2xl font-bold text-[#4EBBBD] mb-2">{content[section][field][index][calculField]}</p>
-        <p className="text-[#686868]">{content[section][field][index][detailField]}</p>
-      </div>
-    );
-  };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-[#112033]">CMS - PFU (Prélèvement Forfaitaire Unique)</h1>
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/cms/dashboard')}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ← Retour au Dashboard
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900">CMS PFU</h1>
+            </div>
+            <div className="flex space-x-2">
+              <button
+                onClick={loadSections}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm"
+              >
+                Recharger CMS
+              </button>
             <button
-              onClick={() => setIsEditing(!isEditing)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                isEditing
-                  ? "bg-[#4EBBBD] text-white hover:bg-[#3DA8AA]"
-                  : "bg-[#B99066] text-white hover:bg-[#A67A5A]"
-              }`}
-            >
-              {isEditing ? "Sauvegarder" : "Modifier"}
+                onClick={() => window.open('http://localhost:4028/fiscalite/pfu', '_blank')}
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm"
+              >
+                Voir la Page
             </button>
           </div>
-          <p className="text-[#686868]">
-            Gérez le contenu de la page PFU. Modifiez les informations sur le Prélèvement Forfaitaire Unique selon vos besoins.
-          </p>
-        </div>
-
-        {/* Hero Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">🏦</span>
-            Section Hero
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre principal</label>
-              {renderEditableField("hero", "title", "Titre principal")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Sous-titre</label>
-              {renderEditableField("hero", "subtitle", "Sous-titre", "textarea")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton CTA principal</label>
-              {renderEditableField("hero", "ctaPrimary", "Bouton CTA principal")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Bouton CTA secondaire</label>
-              {renderEditableField("hero", "ctaSecondary", "Bouton CTA secondaire")}
             </div>
           </div>
         </div>
 
-        {/* Definition Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📖</span>
-            Définition
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid gap-8">
+          {sections.map((section) => (
+            <div key={section.id} className="bg-white rounded-lg shadow-sm border p-6">
+              <div className="flex justify-between items-start mb-4">
             <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("definition", "title", "Titre")}
+                  <h3 className="text-lg font-semibold text-gray-900">{section.name}</h3>
+                  <p className="text-sm text-gray-600">{section.description}</p>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("definition", "description", "Description", "textarea")}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Composition du taux</label>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-xs text-[#686868] mb-1">Impôt sur le revenu</label>
-                <input
-                  value={content.definition.composition.impots}
-                  onChange={(e) => {
-                    const newContent = { ...content };
-                    newContent.definition.composition.impots = e.target.value;
-                    saveContent(newContent);
-                  }}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-[#686868] mb-1">Prélèvements sociaux</label>
-                <input
-                  value={content.definition.composition.prelevements}
-                  onChange={(e) => {
-                    const newContent = { ...content };
-                    newContent.definition.composition.prelevements = e.target.value;
-                    saveContent(newContent);
-                  }}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-[#686868] mb-1">Total</label>
-                <input
-                  value={content.definition.composition.total}
-                  onChange={(e) => {
-                    const newContent = { ...content };
-                    newContent.definition.composition.total = e.target.value;
-                    saveContent(newContent);
-                  }}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
-                />
-              </div>
-            </div>
+                <div className="flex space-x-2">
+                  {!editingSection && (
+                    <button
+                      onClick={() => handleEdit(section)}
+                      className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
+                    >
+                      Modifier
+                    </button>
+                  )}
           </div>
         </div>
 
-        {/* Application Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📋</span>
-            Revenus concernés
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("application", "title", "Titre de section")}
+              {editingSection === section.id ? (
+                <div className="space-y-4">
+                  <div className="grid gap-4">
+                    {section.fields.map((field) => (
+                      <div key={field.key}>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          {field.label}
+                        </label>
+                        {field.type === 'textarea' ? (
+                          <textarea
+                            value={formData[field.key] || ''}
+                            onChange={(e) => handleInputChange(field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            rows={field.key.includes('JSON') ? 6 : 3}
+                            placeholder={`Entrez ${field.label.toLowerCase()}...`}
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            value={formData[field.key] || ''}
+                            onChange={(e) => handleInputChange(field.key, e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder={`Entrez ${field.label.toLowerCase()}...`}
+                          />
+                        )}
+              </div>
+            ))}
+        </div>
+
+                  <div className="flex justify-end space-x-2">
+                    <button
+                      onClick={handleCancel}
+                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 text-sm"
+                    >
+                      Annuler
+                    </button>
+                    <button
+                      onClick={handleSave}
+                      disabled={saving}
+                      className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 text-sm"
+                    >
+                      {saving ? 'Sauvegarde...' : 'Sauvegarder'}
+                    </button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {content.application.revenus.map((revenu, index) => (
-              <div key={index}>
-                <h3 className="text-sm font-medium text-[#686868] mb-2">Revenu {index + 1}</h3>
-                {renderEditableRevenu("application", "revenus", index, "category", "description", "taux")}
+        </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex gap-2 text-xs">
+                    {section.hasCurrentContent && (
+                      <span className="px-2 py-1 bg-green-100 text-green-800 rounded">
+                        Contenu actuel affiché
+                      </span>
+                    )}
+                    {section.hasCmsContent && (
+                      <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                        Sauvegardé dans CMS
+                      </span>
+                    )}
+                    {!section.hasCurrentContent && !section.hasCmsContent && (
+                      <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded">
+                        Aucun contenu
+                      </span>
+                    )}
+        </div>
+
+                  {section.hasCurrentContent ? (
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-900 mb-3">Contenu actuellement affiché :</h4>
+                      <div className="space-y-2">
+                        {Object.entries(section.currentData).map(([key, value]) => (
+                          <div key={key} className="text-sm">
+                            <span className="font-medium text-gray-700">{key}:</span>
+                            <div className="text-gray-600 mt-1">
+                              {typeof value === 'object' ? (
+                                <pre className="whitespace-pre-wrap text-xs bg-white p-2 rounded border">
+                                  {JSON.stringify(value, null, 2)}
+                                </pre>
+                              ) : (
+                                <span>{String(value).substring(0, 200)}
+                                {String(value).length > 200 && '...'}</span>
+                              )}
+          </div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Exclusions Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">❌</span>
-            Revenus exclus
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("exclusions", "title", "Titre de section")}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-[#686868] mb-2">Liste des exclusions</label>
-            {renderEditableList("exclusions", "exclusions", "Liste des exclusions")}
-          </div>
-        </div>
-
-        {/* Option Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">⚖️</span>
-            Option barème progressif
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("option", "title", "Titre")}
+                  ) : (
+                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                      <p className="text-yellow-800 text-sm">
+                        ⚠️ Cette section utilise le contenu par défaut. Cliquez sur "Modifier" pour personnaliser le contenu.
+                      </p>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("option", "description", "Description", "textarea")}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Conditions</label>
-            {renderEditableList("option", "conditions", "Conditions")}
-          </div>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Avantages</label>
-              {renderEditableList("option", "avantages", "Avantages")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Inconvénients</label>
-              {renderEditableList("option", "inconvenients", "Inconvénients")}
-            </div>
-          </div>
-        </div>
-
-        {/* Calcul Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">🧮</span>
-            Exemples de calcul
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-[#686868] mb-2">Titre de section</label>
-            {renderEditableField("calcul", "title", "Titre de section")}
-          </div>
-          <div className="space-y-4">
-            {content.calcul.examples.map((example, index) => (
-              <div key={index}>
-                <h3 className="text-sm font-medium text-[#686868] mb-2">Exemple {index + 1}</h3>
-                {renderEditableCalcul("calcul", "examples", index, "scenario", "calcul", "detail")}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Declaration Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">📝</span>
-            Déclaration et paiement
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("declaration", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Procédure</label>
-              {renderEditableList("declaration", "procedure", "Procédure")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Documents nécessaires</label>
-              {renderEditableList("declaration", "documents", "Documents nécessaires")}
-            </div>
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-[#112033] mb-4 flex items-center gap-2">
-            <span className="text-[#4EBBBD]">🚀</span>
-            Section Appel à l'action
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Titre</label>
-              {renderEditableField("cta", "title", "Titre")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Description</label>
-              {renderEditableField("cta", "description", "Description", "textarea")}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#686868] mb-2">Texte du bouton</label>
-              {renderEditableField("cta", "buttonText", "Texte du bouton")}
-            </div>
-          </div>
-        </div>
-
-        {/* Preview Section */}
-        {isEditing && (
-          <div className="bg-[#F0F9FF] rounded-lg p-6 border border-[#4EBBBD]">
-            <h3 className="text-lg font-semibold text-[#112033] mb-4">Aperçu des modifications</h3>
-            <div className="text-sm text-[#686868] space-y-2">
-              <p><strong>Hero :</strong> {content.hero.title}</p>
-              <p><strong>Définition :</strong> {content.definition.title}</p>
-              <p><strong>Application :</strong> {content.application.title}</p>
-              <p><strong>Exclusions :</strong> {content.exclusions.title}</p>
-              <p><strong>Option :</strong> {content.option.title}</p>
-              <p><strong>Calcul :</strong> {content.calcul.title}</p>
-              <p><strong>Déclaration :</strong> {content.declaration.title}</p>
-              <p><strong>CTA :</strong> {content.cta.title}</p>
-            </div>
+                  )}
           </div>
         )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

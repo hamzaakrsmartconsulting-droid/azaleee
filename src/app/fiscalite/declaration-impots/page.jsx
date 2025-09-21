@@ -1,17 +1,145 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
 import Footer from "../../../components/common/Footer";
 
 export default function DeclarationImpotsPage() {
   const [activeTab, setActiveTab] = useState("general");
+  const [content, setContent] = useState({});
+  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(true);
+  const [contentSource, setContentSource] = useState('default');
 
-  const tabs = [
-    { id: "general", label: "Prélèvement à la source", icon: "💧" },
-    { id: "dates", label: "Régularisation", icon: "📅" },
-    { id: "documents", label: "Questions fréquentes", icon: "❓" },
-    { id: "erreurs", label: "Accompagnement", icon: "🤝" },
-  ];
+  // Default content structure
+  const defaultContent = {
+    hero: {
+      title: "Déclaration d'impôts",
+      description: "Guide complet pour déclarer vos impôts en toute sérénité. Découvrez les étapes, les documents nécessaires et nos conseils d'experts."
+    },
+    tabs: {
+      tabs: [
+        { id: "general", label: "Prélèvement à la source", icon: "💧" },
+        { id: "dates", label: "Régularisation", icon: "📅" },
+        { id: "documents", label: "Questions fréquentes", icon: "❓" },
+        { id: "erreurs", label: "Accompagnement", icon: "🤝" }
+      ]
+    },
+    steps: {
+      steps: [
+        {
+          step: "1",
+          title: "Rassemblement des documents",
+          description: "Collectez tous vos justificatifs de revenus, charges et investissements",
+          details: ["Bulletins de salaire", "Attestations de loyer", "Relevés bancaires", "Quittances de charges"]
+        },
+        {
+          step: "2",
+          title: "Choix du mode de déclaration",
+          description: "Optez pour la méthode qui vous convient le mieux",
+          details: ["Déclaration en ligne (recommandée)", "Déclaration papier", "Déclaration par téléphone"]
+        }
+      ]
+    },
+    cta: {
+      title: "Besoin d'aide pour votre déclaration ?",
+      description: "Nos experts fiscaux vous accompagnent dans toutes vos démarches de déclaration d'impôts.",
+      buttonText: "Demander une assistance"
+    }
+  };
+
+  // Load content from CMS database
+  const loadContentFromCMS = async () => {
+    try {
+      console.log('Déclaration - Loading content from CMS database...');
+      const response = await fetch('/api/pages/declaration-impots');
+      
+      if (response.ok) {
+        const cmsContent = await response.json();
+        console.log('Déclaration - CMS content loaded:', cmsContent);
+        
+        if (Object.keys(cmsContent).length > 0) {
+          const mergedContent = {
+            ...defaultContent,
+            ...cmsContent
+          };
+          
+          setContent({});
+          setTimeout(() => {
+            setContent(mergedContent);
+            setContentSource('database');
+          }, 100);
+        } else {
+          setContent(defaultContent);
+          setContentSource('default');
+        }
+      } else {
+        setContent(defaultContent);
+        setContentSource('default');
+      }
+    } catch (error) {
+      console.error('Déclaration - Error loading CMS content:', error);
+      setContent(defaultContent);
+      setContentSource('default');
+    } finally {
+      setIsLoadingFromDatabase(false);
+    }
+  };
+
+  useEffect(() => {
+    // Always set default content first
+    setContent(defaultContent);
+    setContentSource('default');
+    
+    // Then load from database and merge
+    loadContentFromCMS();
+    
+    // Listen for content update events
+    const handleContentUpdate = async () => {
+      console.log('Déclaration - Content update event received - reloading from CMS');
+      await loadContentFromCMS();
+    };
+
+    // Use polling for real-time updates
+    let pollingInterval = null;
+    
+    const startPolling = () => {
+      pollingInterval = setInterval(async () => {
+        try {
+          if (document.visibilityState === 'visible') {
+            await loadContentFromCMS();
+          }
+        } catch (error) {
+          console.error('Déclaration - Polling error:', error);
+        }
+      }, 5000);
+    };
+    
+    setTimeout(() => {
+      if (!isLoadingFromDatabase) {
+        startPolling();
+      }
+    }, 2000);
+    
+    window.addEventListener('contentUpdated', handleContentUpdate);
+    
+    const handleStorageChange = (e) => {
+      if (e.key === 'cms_content_updated') {
+        console.log('Déclaration - localStorage change detected - reloading content');
+        loadContentFromCMS();
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
+      window.removeEventListener('contentUpdated', handleContentUpdate);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  // Use dynamic tabs from CMS or default
+  const tabs = content.tabs?.tabs || defaultContent.tabs.tabs;
 
   const declarationSteps = [
     {
@@ -79,6 +207,14 @@ export default function DeclarationImpotsPage() {
 
   return (
     <>
+      {/* Loading indicator */}
+      {isLoadingFromDatabase && (
+        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
+          Loading Déclaration from Database...
+        </div>
+      )}
+      
       <Header />
 
       {/* Hero Section with Gradient Background */}
@@ -90,11 +226,10 @@ export default function DeclarationImpotsPage() {
             </span>
           </div>
           <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
-            Déclaration de revenus
+            {content.hero?.title || defaultContent.hero.title}
           </h1>
           <p className="max-w-4xl mx-auto text-[#686868] text-base sm:text-lg leading-relaxed mb-8">
-            Par abus de langage, on parle souvent de <em>déclaration d'impôt</em>, mais il s'agit en réalité de la <strong>déclaration de revenus</strong>. 
-            C'est à partir de cette déclaration que l'administration fiscale calcule le montant exact de l'impôt dû.
+            {content.hero?.description || defaultContent.hero.description}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200">
@@ -344,19 +479,19 @@ export default function DeclarationImpotsPage() {
                 </div>
                 
                 <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
-                  <h3 className="text-xl font-semibold mb-4">Chez Azalée Patrimoine</h3>
+                  <h3 className="text-xl font-semibold mb-4">
+                    {content.cta?.title || defaultContent.cta.title}
+                  </h3>
                   <p className="text-base mb-6 opacity-90">
-                    Nous aidons nos clients à transformer cette obligation en véritable outil d'optimisation patrimoniale. 
-                    Grâce à nos simulations personnalisées, nous identifions les leviers de réduction et de déduction disponibles, 
-                    afin de vous proposer un taux de prélèvement plus juste et une stratégie fiscale adaptée à vos objectifs.
+                    {content.cta?.description || defaultContent.cta.description}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <button className="bg-white text-[#005C69] px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200">
-                      Évaluer mon impôt réel
+                      {content.cta?.buttonText || defaultContent.cta.buttonText}
                     </button>
                     <button className="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-[#005C69] transition-colors duration-200">
                       Prendre rendez-vous
-                  </button>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -1,78 +1,246 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function AutrePatrimoinePage() {
-  const chartData = [
-    { label: "Solutions alternatives", value: "3" },
-    { label: "Exonération IFI", value: "75%" },
-    { label: "Ticket minimum", value: "€5,000" },
-    { label: "Rendement moyen", value: "1-3%" },
-    { label: "Avantages fiscaux", value: "Multiples" }
-  ];
+  const [content, setContent] = useState({});
+  const [contentSource, setContentSource] = useState('default');
+  const [loading, setLoading] = useState(true);
+
+  // Default content
+  const defaultContent = {
+    hero: {
+      title: "Autres solutions patrimoniales",
+      subtitle: "En dehors des placements classiques (immobilier, assurance-vie, produits financiers), il existe des solutions patrimoniales originales permettant de :",
+      benefits: [
+        {
+          title: "Diversifier son patrimoine",
+          description: "Solutions originales et méconnues",
+          icon: "🔄"
+        },
+        {
+          title: "Bénéficier d'avantages fiscaux",
+          description: "IFI, IR, transmission",
+          icon: "💰"
+        },
+        {
+          title: "S'impliquer dans l'économie réelle",
+          description: "Agriculture, forêt, vigne",
+          icon: "🌱"
+        }
+      ],
+      highlight: "👉 Ces véhicules collectifs sont souvent méconnus, mais peuvent jouer un rôle stratégique dans une gestion patrimoniale équilibrée.",
+      buttons: [
+        { text: "Découvrir les solutions", type: "primary" },
+        { text: "Prendre rendez-vous", type: "secondary" }
+      ]
+    },
+    chart: {
+      title: "Indicateurs de solutions alternatives",
+      data: [
+        { label: "Solutions alternatives", value: "3" },
+        { label: "Exonération IFI", value: "75%" },
+        { label: "Ticket minimum", value: "€5,000" },
+        { label: "Rendement moyen", value: "1-3%" },
+        { label: "Avantages fiscaux", value: "Multiples" }
+      ],
+      chartImage: "/images/variation-chart-image-944f04.png"
+    },
+    solutions: {
+      title: "Les solutions patrimoniales originales",
+      solutions: [
+        {
+          id: "gfa",
+          title: "1. GFA",
+          subtitle: "Groupement Foncier Agricole",
+          icon: "🌾",
+          color: "from-[#4EBBBD] to-[#59E2E4]",
+          definition: "Société civile permettant de détenir collectivement des terres agricoles, louées à des exploitants.",
+          advantages: [
+            "Exonération partielle d'IFI (jusqu'à 75%)",
+            "Transmission facilitée",
+            "Soutien à l'agriculture française"
+          ],
+          disadvantages: [
+            "Rendement faible (1-2%/an)",
+            "Liquidité limitée",
+            "Dépendance à l'exploitant"
+          ],
+          ticketMinimum: "À partir de 5 000 à 15 000 € selon les groupements."
+        },
+        {
+          id: "gfi",
+          title: "2. GFI",
+          subtitle: "Groupement Forestier d'Investissement",
+          icon: "🌲",
+          color: "from-[#B99066] to-[#D4A574]",
+          definition: "Permet d'investir dans des forêts françaises (plantation, exploitation, entretien).",
+          advantages: [
+            "Exonération d'IFI (jusqu'à 75%)",
+            "Rendement potentiel (2-4%/an)",
+            "Impact environnemental positif"
+          ],
+          disadvantages: [
+            "Investissement long terme (15-20 ans)",
+            "Risque climatique",
+            "Gestion forestière complexe"
+          ],
+          ticketMinimum: "À partir de 10 000 à 25 000 € selon les projets."
+        },
+        {
+          id: "gff",
+          title: "3. GFF",
+          subtitle: "Groupement Foncier Viticole",
+          icon: "🍷",
+          color: "from-[#59E2E4] to-[#4EBBBD]",
+          definition: "Investissement dans des vignobles français (achat, exploitation, commercialisation).",
+          advantages: [
+            "Exonération d'IFI (jusqu'à 75%)",
+            "Rendement attractif (3-6%/an)",
+            "Prestige et passion"
+          ],
+          disadvantages: [
+            "Investissement élevé (50 000 € minimum)",
+            "Risque climatique et commercial",
+            "Gestion viticole spécialisée"
+          ],
+          ticketMinimum: "À partir de 50 000 € pour les grands crus."
+        }
+      ]
+    },
+    cta: {
+      title: "Prêt à découvrir ces solutions ?",
+      subtitle: "Nos experts vous accompagnent dans le choix des solutions patrimoniales les plus adaptées à votre profil et vos objectifs.",
+      buttonText: "Demander un conseil personnalisé"
+    }
+  };
+
+  // Load content from CMS
+  const loadContentFromCMS = async () => {
+    try {
+      const response = await fetch('/api/pages/patrimoine-autre');
+      const data = await response.json();
+      
+      if (data.success && data.content) {
+        // Merge CMS content with default content
+        const mergedContent = { ...defaultContent };
+        Object.keys(data.content).forEach(sectionId => {
+          if (mergedContent[sectionId]) {
+            mergedContent[sectionId] = { ...mergedContent[sectionId], ...data.content[sectionId] };
+          }
+        });
+        
+        setContent(mergedContent);
+        setContentSource('database');
+        console.log('Patrimoine-autre content loaded from CMS:', mergedContent);
+      } else {
+        setContent(defaultContent);
+        setContentSource('default');
+        console.log('Using default patrimoine-autre content');
+      }
+    } catch (error) {
+      console.error('Error loading patrimoine-autre content from CMS:', error);
+      setContent(defaultContent);
+      setContentSource('default');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadContentFromCMS();
+    
+    // Set up polling for real-time updates
+    const interval = setInterval(loadContentFromCMS, 3000);
+    
+    // Listen for custom events from CMS
+    const handleContentUpdate = () => {
+      loadContentFromCMS();
+    };
+    
+    window.addEventListener('cmsContentUpdated', handleContentUpdate);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('cmsContentUpdated', handleContentUpdate);
+    };
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4EBBBD] mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement du contenu...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
       <Header />
+      
+      {/* Content Source Indicator */}
+      {contentSource === 'database' && (
+        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+          <div className="w-2 h-2 bg-white rounded-full"></div>
+          Content: CMS Database
+        </div>
+      )}
       
       {/* Hero Section */}
       <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
-              Autres solutions patrimoniales
+              {content.hero?.title || "Autres solutions patrimoniales"}
             </h1>
             <p className="text-[#686868] text-lg font-inter leading-relaxed max-w-4xl mx-auto mb-8">
-              En dehors des placements classiques (immobilier, assurance-vie, produits financiers), il existe des <strong>solutions patrimoniales originales</strong> permettant de :
+              {content.hero?.subtitle || "En dehors des placements classiques (immobilier, assurance-vie, produits financiers), il existe des solutions patrimoniales originales permettant de :"}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-xl">🔄</span>
+              {(content.hero?.benefits || []).map((benefit, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-lg p-6">
+                  <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-xl">{benefit.icon}</span>
+                  </div>
+                  <h3 className="text-[#112033] font-semibold mb-2">{benefit.title}</h3>
+                  <p className="text-[#686868] text-sm">{benefit.description}</p>
                 </div>
-                <h3 className="text-[#112033] font-semibold mb-2">Diversifier son patrimoine</h3>
-                <p className="text-[#686868] text-sm">Solutions originales et méconnues</p>
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-xl">💰</span>
-                </div>
-                <h3 className="text-[#112033] font-semibold mb-2">Bénéficier d'avantages fiscaux</h3>
-                <p className="text-[#686868] text-sm">IFI, IR, transmission</p>
-              </div>
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <div className="w-12 h-12 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-xl">🌱</span>
-                </div>
-                <h3 className="text-[#112033] font-semibold mb-2">S'impliquer dans l'économie réelle</h3>
-                <p className="text-[#686868] text-sm">Agriculture, forêt, vigne</p>
-              </div>
+              ))}
             </div>
             <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg max-w-4xl mx-auto mb-8">
               <p className="text-[#112033] text-sm font-inter">
-                👉 Ces véhicules collectifs sont souvent méconnus, mais peuvent jouer un rôle stratégique dans une <strong>gestion patrimoniale équilibrée</strong>.
+                {content.hero?.highlight || "👉 Ces véhicules collectifs sont souvent méconnus, mais peuvent jouer un rôle stratégique dans une gestion patrimoniale équilibrée."}
               </p>
             </div>
           </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-[#A67A5A] transition-colors duration-200">
-              Découvrir les solutions
-            </button>
-            <button className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-[#B99066] hover:text-white transition-colors duration-200">
-              Prendre rendez-vous
-            </button>
+            {(content.hero?.buttons || []).map((button, index) => (
+              <button 
+                key={index}
+                className={`${
+                  button.type === 'primary' 
+                    ? 'bg-[#B99066] text-white hover:bg-[#A67A5A]' 
+                    : 'bg-transparent border-2 border-[#B99066] text-[#B99066] hover:bg-[#B99066] hover:text-white'
+                } px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg transition-colors duration-200`}
+              >
+                {button.text}
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Chart Section */}
       <PlacementChart 
-        title="Indicateurs de solutions alternatives"
-        data={chartData}
-        chartImage="/images/variation-chart-image-944f04.png"
+        title={content.chart?.title || "Indicateurs de solutions alternatives"}
+        data={content.chart?.data || defaultContent.chart.data}
+        chartImage={content.chart?.chartImage || "/images/variation-chart-image-944f04.png"}
       />
 
       {/* Les 3 solutions patrimoniales Section */}
@@ -80,397 +248,74 @@ export default function AutrePatrimoinePage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
-              Les solutions patrimoniales originales
+              {content.solutions?.title || "Les solutions patrimoniales originales"}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Solution 1: GFA */}
-            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#4EBBBD] text-2xl">🌾</span>
-                </div>
-                <h3 className="text-2xl font-semibold mb-2">1. GFA</h3>
-                <p className="text-sm font-medium">Groupement Foncier Agricole</p>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">📋 Définition</h4>
-                  <p className="text-xs">
-                    Société civile permettant de détenir collectivement des terres agricoles, louées à des exploitants.
-                  </p>
-                </div>
-                
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">✅ Avantages</h4>
-                  <ul className="text-xs space-y-1">
-                    <li>• Exonération partielle d'<strong>IFI</strong> (jusqu'à 75%)</li>
-                    <li>• Transmission facilitée</li>
-                    <li>• Soutien à l'agriculture française</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">⚠️ Inconvénients</h4>
-                  <ul className="text-xs space-y-1">
-                    <li>• Rendement faible (1-2%/an)</li>
-                    <li>• Liquidité limitée</li>
-                    <li>• Dépendance à l'exploitant</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">💰 Ticket minimum</h4>
-                  <p className="text-xs">
-                    À partir de <strong>5 000 à 15 000 €</strong> selon les groupements.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Solution 2: GFI */}
-            <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#B99066] text-2xl">🌲</span>
-                </div>
-                <h3 className="text-2xl font-semibold mb-2">2. GFI</h3>
-                <p className="text-sm font-medium">Groupement Forestier d'Investissement</p>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">📋 Définition</h4>
-                  <p className="text-xs">
-                    Permet d'investir dans des forêts françaises (plantation, exploitation, entretien).
-                  </p>
-                </div>
-                
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">✅ Avantages</h4>
-                  <ul className="text-xs space-y-1">
-                    <li>• Réduction d'impôt sur le revenu (<strong>18%</strong>)</li>
-                    <li>• Exonération partielle d'<strong>IFI</strong> (75%)</li>
-                    <li>• Transmission avantageuse (abattement 75%)</li>
-                    <li>• Valorisation long terme</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">⚠️ Inconvénients</h4>
-                  <ul className="text-xs space-y-1">
-                    <li>• Rendement modeste (1-3%/an)</li>
-                    <li>• Placement long terme (10-15 ans)</li>
-                    <li>• Dépendance aux aléas climatiques</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">💰 Ticket minimum</h4>
-                  <p className="text-xs">
-                    À partir de <strong>5 000 €</strong>.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Solution 3: GFV */}
-            <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#59E2E4] text-2xl">🍷</span>
-                </div>
-                <h3 className="text-2xl font-semibold mb-2">3. GFV</h3>
-                <p className="text-sm font-medium">Groupement Foncier Viticole</p>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">📋 Définition</h4>
-                  <p className="text-xs">
-                    Permet d'acquérir collectivement des vignes, confiées à un exploitant (domaine viticole).
-                  </p>
-                </div>
-                
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">✅ Avantages</h4>
-                  <ul className="text-xs space-y-1">
-                    <li>• Revenus réguliers en loyers... parfois en <strong>bouteilles de vin</strong> 🍷</li>
-                    <li>• Exonération partielle d'<strong>IFI</strong> (75%)</li>
-                    <li>• Transmission facilitée</li>
-                    <li>• Valeur patrimoniale et affective</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">⚠️ Inconvénients</h4>
-                  <ul className="text-xs space-y-1">
-                    <li>• Rendement faible (1-3%/an)</li>
-                    <li>• Marché de revente limité</li>
-                    <li>• Dépendance à l'exploitant et climat</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">💰 Ticket minimum</h4>
-                  <p className="text-xs">
-                    De <strong>30 000 € à 100 000 €</strong> selon le domaine.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Exemple chiffré GFV Section */}
-      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
-              Exemple chiffré : investissement de 100 000 € dans un GFV
-            </h2>
-            <p className="text-[#686868] text-lg max-w-4xl mx-auto">
-              Investissement dans un GFV prestigieux (ex. Bourgogne) :
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            {/* Détails de l'investissement */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-[#112033] text-xl font-semibold mb-6 text-center">
-                📊 Détails de l'investissement
-              </h3>
-              
-              <div className="space-y-6">
-                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="text-green-600 text-xl">💰</span>
-                    <div>
-                      <p className="text-green-800 font-medium text-sm">Investissement initial</p>
-                      <p className="text-green-700 text-xs">Montant investi</p>
-                    </div>
+            {(content.solutions?.solutions || []).map((solution, index) => (
+              <div key={index} className={`bg-gradient-to-br ${solution.color} rounded-lg shadow-lg p-8 text-white`}>
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className={`text-2xl ${solution.color.includes('#4EBBBD') ? 'text-[#4EBBBD]' : solution.color.includes('#B99066') ? 'text-[#B99066]' : 'text-[#59E2E4]'}`}>{solution.icon}</span>
                   </div>
-                  <p className="text-green-800 font-bold text-lg">100 000 €</p>
+                  <h3 className="text-2xl font-semibold mb-2">{solution.title}</h3>
+                  <p className="text-sm font-medium">{solution.subtitle}</p>
                 </div>
                 
-                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="text-blue-600 text-xl">🏛️</span>
-                    <div>
-                      <p className="text-blue-800 font-medium text-sm">Exonération IFI</p>
-                      <p className="text-blue-700 text-xs">75% de la valeur</p>
-                    </div>
+                <div className="space-y-4">
+                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                    <h4 className="font-semibold mb-2">📋 Définition</h4>
+                    <p className="text-xs">
+                      {solution.definition}
+                    </p>
                   </div>
-                  <p className="text-blue-800 font-bold text-lg">75 000 €</p>
-                </div>
-                
-                <div className="flex items-center justify-between p-4 bg-purple-50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="text-purple-600 text-xl">📈</span>
-                    <div>
-                      <p className="text-purple-800 font-medium text-sm">Revenus annuels</p>
-                      <p className="text-purple-700 text-xs">2% par an</p>
-                    </div>
+                  
+                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                    <h4 className="font-semibold mb-2">✅ Avantages</h4>
+                    <ul className="text-xs space-y-1">
+                      {(solution.advantages || []).map((advantage, advIndex) => (
+                        <li key={advIndex}>• {advantage}</li>
+                      ))}
+                    </ul>
                   </div>
-                  <p className="text-purple-800 font-bold text-lg">2 000 €/an</p>
-                </div>
-                
-                <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="text-orange-600 text-xl">🔄</span>
-                    <div>
-                      <p className="text-orange-800 font-medium text-sm">Base taxable transmission</p>
-                      <p className="text-orange-700 text-xs">Après abattement 75%</p>
-                    </div>
+                  
+                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                    <h4 className="font-semibold mb-2">⚠️ Inconvénients</h4>
+                    <ul className="text-xs space-y-1">
+                      {(solution.disadvantages || []).map((disadvantage, disIndex) => (
+                        <li key={disIndex}>• {disadvantage}</li>
+                      ))}
+                    </ul>
                   </div>
-                  <p className="text-orange-800 font-bold text-lg">25 000 €</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Avantages fiscaux */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-[#112033] text-xl font-semibold mb-6 text-center">
-                ✅ Avantages fiscaux
-              </h3>
-              
-              <div className="space-y-6">
-                <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-6 text-white">
-                  <h4 className="font-semibold mb-3">🏛️ Impôt sur la Fortune Immobilière (IFI)</h4>
-                  <div className="space-y-2 text-sm">
-                    <p>• Valeur totale : <strong>100 000 €</strong></p>
-                    <p>• Exonération : <strong>75%</strong> → 75 000 €</p>
-                    <p>• Base taxable : <strong>25 000 €</strong> seulement</p>
-                  </div>
-                </div>
-                
-                <div className="bg-gradient-to-r from-[#B99066] to-[#D4A574] rounded-lg p-6 text-white">
-                  <h4 className="font-semibold mb-3">🔄 Transmission</h4>
-                  <div className="space-y-2 text-sm">
-                    <p>• Si transmission de son vivant</p>
-                    <p>• Abattement : <strong>75%</strong> de la valeur</p>
-                    <p>• Base taxable : <strong>25 000 €</strong> seulement</p>
-                  </div>
-                </div>
-                
-                <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-6 text-white">
-                  <h4 className="font-semibold mb-3">💰 Revenus</h4>
-                  <div className="space-y-2 text-sm">
-                    <p>• Rendement : <strong>2%/an</strong></p>
-                    <p>• Revenus : <strong>2 000 €/an</strong></p>
-                    <p>• Soit en loyers, soit en bouteilles de vin</p>
+                  
+                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                    <h4 className="font-semibold mb-2">💰 Ticket minimum</h4>
+                    <p className="text-xs">
+                      {solution.ticketMinimum}
+                    </p>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white text-center">
-            <h3 className="text-xl font-semibold mb-6">
-              👉 Double avantage : <strong>diversification + optimisation fiscale</strong>
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                <p className="text-sm">
-                  <strong>Diversification</strong><br />
-                  Investissement dans l'économie réelle
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                <p className="text-sm">
-                  <strong>Optimisation fiscale</strong><br />
-                  IFI et transmission réduits
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                <p className="text-sm">
-                  <strong>Rendement</strong><br />
-                  2 000 €/an + valorisation
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* La vision Azalée Patrimoine Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6 flex items-center justify-center gap-3">
-              <span className="text-[#4EBBBD] text-3xl">🚀</span>
-              La vision Azalée Patrimoine
-            </h2>
-            <p className="text-[#686868] text-lg max-w-4xl mx-auto">
-              Chez <strong>Azalée Patrimoine</strong>, nous intégrons ces solutions "niches" dans une <strong>stratégie patrimoniale globale</strong> :
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🔍</span>
-              </div>
-              <h3 className="text-[#112033] text-xl font-semibold mb-3">
-                Analyse de l'intérêt réel
-              </h3>
-              <p className="text-[#686868] text-sm">
-                Selon vos objectifs (fiscalité, transmission, diversification).
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🎯</span>
-              </div>
-              <h3 className="text-[#112033] text-xl font-semibold mb-3">
-                Sélection des meilleurs véhicules
-              </h3>
-              <p className="text-[#686868] text-sm">
-                GFA, GFI, GFV avec notaires et experts-comptables.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">📊</span>
-              </div>
-              <h3 className="text-[#112033] text-xl font-semibold mb-3">
-                Simulation chiffrée
-              </h3>
-              <p className="text-[#686868] text-sm">
-                De l'impact (IFI, droits de succession, revenus).
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white text-center">
-            <h3 className="text-xl font-semibold mb-6">
-              👉 Notre rôle : transformer ces placements atypiques en <strong>leviers patrimoniaux puissants</strong>, au service de votre stratégie familiale.
-            </h3>
-            
-            <div className="mt-8 bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-6 rounded-r-lg">
-              <p className="text-[#112033] text-center font-semibold">
-                📅 <strong>Contactez Azalée Patrimoine</strong> pour explorer ces solutions et découvrir si elles correspondent à votre profil et vos objectifs.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-gradient-to-r from-[#59E2E4] to-[#B99066] py-12 sm:py-16 lg:py-20">
+      <section className="w-full bg-gradient-to-r from-[#4EBBBD] to-[#3A9B9D] py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
-            Prêt à découvrir ces solutions patrimoniales originales ?
+            {content.cta?.title || "Prêt à découvrir ces solutions ?"}
           </h2>
-          <p className="text-white text-lg mb-8 max-w-3xl mx-auto">
-            Nos experts vous accompagnent pour intégrer ces <strong>solutions "niches"</strong> dans votre stratégie patrimoniale globale et transformer ces placements atypiques en <strong>leviers patrimoniaux puissants</strong>.
+          <p className="text-white text-lg sm:text-xl mb-8 max-w-3xl mx-auto opacity-90">
+            {content.cta?.subtitle || "Nos experts vous accompagnent dans le choix des solutions patrimoniales les plus adaptées à votre profil et vos objectifs."}
           </p>
-          
-          <div className="bg-white bg-opacity-20 rounded-lg p-6 mb-8 max-w-4xl mx-auto">
-            <h3 className="text-white text-xl font-semibold mb-4">
-              👉 Chez <strong>Azalée Patrimoine</strong>, nous vous apportons :
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-              <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                <p className="text-white">
-                  Une <strong>analyse de l'intérêt réel</strong> selon vos objectifs
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                <p className="text-white">
-                  La <strong>sélection des meilleurs véhicules</strong> (GFA, GFI, GFV)
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                <p className="text-white">
-                  Une <strong>simulation chiffrée</strong> de l'impact fiscal
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
-              Découvrir les solutions
-            </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#4EBBBD] transition-colors duration-200">
-              Prendre rendez-vous
-            </button>
-          </div>
-
-          <div className="mt-8 bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg max-w-4xl mx-auto">
-            <p className="text-[#112033] text-center font-semibold">
-              📅 <strong>Contactez Azalée Patrimoine</strong> pour explorer ces solutions et découvrir si elles correspondent à votre profil et vos objectifs.
-            </p>
-          </div>
+          <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-full font-source-sans font-semibold text-lg hover:bg-gray-100 transition-colors">
+            {content.cta?.buttonText || "Demander un conseil personnalisé"}
+          </button>
         </div>
       </section>
     </>
   );
-} 
+}
