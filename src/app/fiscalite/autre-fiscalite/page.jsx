@@ -134,7 +134,7 @@ export default function AutreFiscalitePage() {
                 {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
               <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                {content.hero?.button || defaultContent.hero.button}
+                lien manquant
               </button>
             </div>
             <div className="relative">
@@ -210,10 +210,10 @@ export default function AutreFiscalitePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                {content.cta?.primaryButton || defaultContent.cta.primaryButton}
+                lien manquant
               </button>
               <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
-                {content.cta?.secondaryButton || defaultContent.cta.secondaryButton}
+                lien manquant
               </button>
             </div>
           </div>

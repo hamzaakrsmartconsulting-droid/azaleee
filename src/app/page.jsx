@@ -249,23 +249,14 @@ const PartnersCarousel = ({ content }) => {
         {/* Partner Categories */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
-            <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-3">
-              <span className="text-white text-lg">🏢</span>
-            </div>
             <h3 className="font-cairo font-semibold text-[#112033] mb-2">Assurance</h3>
             <p className="text-sm text-[#4A5568] font-inter">Solutions d'assurance-vie et de capitalisation</p>
           </div>
           <div className="text-center">
-            <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-3">
-              <span className="text-white text-lg">💼</span>
-            </div>
             <h3 className="font-cairo font-semibold text-[#112033] mb-2">Gestion d'actifs</h3>
             <p className="text-sm text-[#4A5568] font-inter">Expertise en gestion patrimoniale</p>
           </div>
           <div className="text-center">
-            <div className="w-12 h-12 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-3">
-              <span className="text-white text-lg">🏦</span>
-            </div>
             <h3 className="font-cairo font-semibold text-[#112033] mb-2">Services financiers</h3>
             <p className="text-sm text-[#4A5568] font-inter">Conseil et accompagnement personnalisé</p>
           </div>
@@ -276,47 +267,48 @@ const PartnersCarousel = ({ content }) => {
 };
 
 const defaultContent = {
-  heroTitle: "Votre partenaire de confiance en matière de gestion de patrimoine, de fiscalité et de conseil en investissement.",
-  heroSubtitle: "Explorez des conseils personnalisés en matière de fiscalité, d'immobilier, d'investissements, de retraite et de gestion de patrimoine.",
-  heroButton1: "Obtenez votre consultation personnalisée",
+  heroTitle: "Préserver. Optimiser. Transmettre.",
+  heroSubtitle: "Depuis plus de 20 ans, Azalée Patrimoine accompagne les dirigeants, cadres supérieurs, professions libérales et familles fortunées dans la gestion et la transmission de leur patrimoine.",
+  heroButton1: "Prenez rendez-vous en toute confidentialité",
   heroButton2: "Commencez à explorer les sujets",
   heroBackgrounds: [
     "/images/home.webp",
     "/images/image2.webp",
     "/images/image3.webp"
   ],
-  introTitle: "Gestion de patrimoine — Optimisation fiscale immobilière — Conseil financier",
-  introParagraph: "Depuis 30 ans, nous façonnons l'avenir financier de clients exigeants. Notre mission : libérer le potentiel caché de votre patrimoine grâce à une approche humaine, experte et transparente. Nous construisons des relations de confiance basées sur la proximité, l'écoute active et l'engagement total de nos conseillers - à vos côtés à chaque étape de votre projet.",
+  introTitle: "Gérer un patrimoine conséquent exige plus qu'une expertise financière : cela nécessite une vision, une stratégie, et un partenaire de confiance.",
+  introParagraph: "Notre mission : protéger vos intérêts, valoriser votre patrimoine et organiser sa transmission pour les générations futures. Chez Azalée Patrimoine, nous privilégions la discrétion, l'indépendance et un accompagnement sur-mesure qui s'adapte à chaque étape de votre vie.",
   introButton: "Rencontrez-nous",
   teamTitle: "Qui sommes-nous",
   teamSubtitle: "Une équipe passionnée à votre service",
   teamDescription: "Chez Azalée Patrimoine, nous croyons que la réussite de votre stratégie patrimoniale repose sur la qualité humaine de l'accompagnement. Notre équipe pluridisciplinaire combine expertise technique et approche personnalisée pour vous offrir des solutions sur-mesure.",
   teamValues: [
-    { title: "Expertise", desc: "30 ans d'expérience dans le conseil patrimonial", icon: "🎯" },
-    { title: "Proximité", desc: "Un accompagnement humain et personnalisé", icon: "🤝" },
-    { title: "Transparence", desc: "Des conseils clairs et indépendants", icon: "💎" },
-    { title: "Excellence", desc: "La recherche constante de la meilleure solution", icon: "⭐" }
+    { title: "Discrétion", desc: "Confidentialité absolue et respect de votre vie privée", icon: "" },
+    { title: "Indépendance", desc: "Conseils objectifs tournés vers vos intérêts", icon: "" },
+    { title: "Sur-mesure", desc: "Accompagnement adapté à chaque étape de votre vie", icon: "" },
+    { title: "Transparence", desc: "Honoraires fixes et rémunération claire", icon: "" }
   ],
-  expertsTitle: "Nos experts à votre service",
-  expertsDescription: "Nous rassemblons un réseau d'experts reconnus, de professionnels certifiés dédiés à la protection et à la croissance de votre patrimoine. Ils vous aident dans l'optimisation fiscale, la création de richesse et la transmission à long terme.",
+  expertsTitle: "Nos expertises",
+  expertsDescription: "Nous vous accompagnons dans tous les aspects de la gestion patrimoniale avec une approche globale et personnalisée.",
   experts: [
-    { title: "Conseiller en gestion de patrimoine", desc: "Votre partenaire stratégique pour toutes vos décisions en matière de planification patrimoniale.", button: "Renseignez-vous davantage" },
-    { title: "Avocat fiscal", desc: "Votre expert juridique en matière fiscale, garantissant la conformité et proposant des solutions avancées de planification fiscale.", button: "Renseignez-vous davantage sur l'avocat fiscaliste" },
-    { title: "Courtier hypothécaire", desc: "Votre expert en financement sécurisant les meilleures conditions du marché pour vos projets immobiliers.", button: "En savoir plus sur notre courtier hypothécaire" },
-    { title: "Notaire", desc: "Votre conseiller juridique pour les transactions immobilières et les questions de succession, garantissant la sécurité juridique.", button: "Renseignez-vous davantage sur le notaire" },
-    { title: "Expert-comptable", desc: "Votre partenaire de confiance en comptabilité, fiscalité et affaires sociales - vous guidant pour prendre des décisions éclairées.", button: "Renseignez-vous davantage sur le comptable agréé" },
-    { title: "Avocat d'affaires", desc: "Votre expert en droit des sociétés, vous aidant dans la création, le développement et les transactions de votre entreprise.", button: "Renseignez-vous davantage sur l'avocat d'affaires" },
+    { title: "Optimiser votre fiscalité", desc: "Réduisez votre impôt sur le revenu, votre IFI ou la fiscalité de vos revenus immobiliers grâce à des stratégies adaptées à votre situation.", button: "Découvrir nos solutions fiscales" },
+    { title: "Préparer votre retraite", desc: "Construisez dès aujourd'hui le capital nécessaire pour sécuriser vos revenus futurs, grâce à des solutions comme le PER, l'assurance-vie ou des investissements financiers diversifiés.", button: "Planifier ma retraite" },
+    { title: "Transmettre et protéger vos proches", desc: "Organisez la transmission de votre patrimoine dans les meilleures conditions fiscales : donations, successions, protection du conjoint, mise en place de holdings familiales.", button: "Organiser ma transmission" },
+    { title: "Investir dans l'immobilier et le financier", desc: "Diversifiez vos actifs : SCPI, private equity, produits structurés, ou immobilier direct. Nous sélectionnons les opportunités qui correspondent à vos objectifs et à votre tolérance au risque.", button: "Diversifier mes investissements" },
+    { title: "Sécuriser l'avenir de votre entreprise", desc: "Accompagner la cession d'entreprise, organiser votre trésorerie professionnelle, protéger vos actifs personnels et bâtir une stratégie patrimoniale durable.", button: "Sécuriser mon entreprise" },
+    { title: "Accompagnement sur-mesure", desc: "Plus de 30 ans d'expérience en conseil patrimonial avec une approche indépendante et tournée vers vos intérêts.", button: "Rencontrer nos experts" },
   ],
   testimonialsTitle: "Témoignages",
   testimonialText: "Azalee Patrimoine nous a apporté une vraie tranquillité d'esprit. Notre conseiller nous a aidés à structurer notre patrimoine et nous a accompagnés dans l'achat d'un nouveau bien immobilier. Nous avons ensuite rencontré un consultant en investissement immobilier et un expert-comptable — des professionnels réactifs et compétents. Leurs conseils nous ont permis de revoir notre stratégie financière en toute confiance. Nous les recommandons vivement.",
   testimonialAuthor: "néon.",
   processSteps: [
-    { label: 'STEP 1', desc: 'CONSTRUIRE VOTRE PATRIMOINE', contentTitle: 'Développer votre patrimoine', contentText: 'Investing in real estate remains a valuable choice today, appreciated for its security and return on investment. Whether it is to generate additional income, protect your financial future, or pass on an inheritance, building a solid heritage meets essential objectives, for you and your loved ones.', button: 'Découvrez Comment Nos Courtiers Travaillent Pour Vous', image: '/images/img_image_1221.png' },
-    { label: 'STEP 3', desc: 'OPTIMISEZ LA PERFORMANCE DE VOS INVESTISSEMENTS' },
-    { label: 'STEP 4', desc: 'SELECT THE SOLUTION THAT SUITS YOU BEST' },
-    { label: 'STEP 5', desc: 'FINANCER VOTRE PROJET DANS LES MEILLEURES CONDITIONS' },
-    { label: 'STEP 6', desc: 'DIVERSIFIEZ VOS INVESTISSEMENTS' },
-    { label: 'STEP 7', desc: 'TO ACCOMPANY YOU IN THE LONG TERM' },
+    { label: 'ÉTAPE 1', desc: 'CONSTRUIRE VOTRE PATRIMOINE', contentTitle: 'Développer votre patrimoine', contentText: 'Investir dans l\'immobilier reste un choix précieux aujourd\'hui, apprécié pour sa sécurité et son rendement. Que ce soit pour générer des revenus complémentaires, protéger votre avenir financier ou transmettre un héritage, construire un patrimoine solide répond à des objectifs essentiels, pour vous et vos proches.', button: 'Découvrez Comment Nos Courtiers Travaillent Pour Vous', image: '/images/img_image_1221.png' },
+    { label: 'ÉTAPE 2', desc: 'OPTIMISER VOTRE FISCALITÉ' },
+    { label: 'ÉTAPE 3', desc: 'OPTIMISEZ LA PERFORMANCE DE VOS INVESTISSEMENTS' },
+    { label: 'ÉTAPE 4', desc: 'SÉLECTIONNEZ LA SOLUTION QUI VOUS CONVIENT LE MIEUX' },
+    { label: 'ÉTAPE 5', desc: 'FINANCER VOTRE PROJET DANS LES MEILLEURES CONDITIONS' },
+    { label: 'ÉTAPE 6', desc: 'DIVERSIFIEZ VOS INVESTISSEMENTS' },
+    { label: 'ÉTAPE 7', desc: 'VOUS ACCOMPAGNER SUR LE LONG TERME' },
   ],
   stats: [
     { value: '2006', label: 'Date de création' },
@@ -327,11 +319,11 @@ const defaultContent = {
     { value: '150', label: 'Collaborateurs partout en France' },
   ],
   investmentTitle: 'Valorisez votre avenir en construisant votre patrimoine',
-  investmentText: "Investing, ce n'est pas seulement faire fructifier son argent, c'est poser les bases d'une sécurité financière durable. Que vous souhaitiez générer des revenus complémentaires, financer des projets futurs ou protéger votre famille, la constitution d'un patrimoine devient un choix stratégique. Immobilier, placements financiers ou solutions mixtes : chaque investissement doit être réfléchi et aligné avec vos objectifs. Chez Selexium, nos spécialistes sont là pour définir avec vous une stratégie sur mesure, pensée pour vous apporter performance et sérénité.",
+  investmentText: "Investir, ce n'est pas seulement faire fructifier son argent, c'est poser les bases d'une sécurité financière durable. Que vous souhaitiez générer des revenus complémentaires, financer des projets futurs ou protéger votre famille, la constitution d'un patrimoine devient un choix stratégique. Immobilier, placements financiers ou solutions mixtes : chaque investissement doit être réfléchi et aligné avec vos objectifs. Chez Azalée Patrimoine, nos spécialistes sont là pour définir avec vous une stratégie sur mesure, pensée pour vous apporter performance et sérénité.",
   investmentButton: 'Explorez nos solutions pour faire croître votre patrimoine',
   investmentImage1: '/images/img_image_1222.png',
   investmentImage2: '/images/img_image_1220.png',
-  taxTitle: 'Why choose real estate tax exemption?',
+  taxTitle: 'Pourquoi choisir la défiscalisation immobilière ?',
   taxText: "L'immobilier reste un investissement de référence pour les investisseurs français, surtout lorsqu'il est accompagné d'avantages fiscaux attractifs. En choisissant des biens éligibles à des dispositifs légaux de défiscalisation, vous pouvez réduire significativement votre imposition tout en développant votre patrimoine. Le gouvernement encourage ainsi l’investissement dans certains secteurs ou types de logements — anciens ou neufs, location longue durée ou saisonnière — grâce à des lois fiscales spécifiques. Ces mesures permettent non seulement de dynamiser l’offre immobilière mais aussi de soutenir les investisseurs en leur offrant des avantages concrets. Que vous souhaitiez constituer un patrimoine, optimiser vos revenus locatifs ou préparer votre avenir, nos solutions de défiscalisation s’adaptent à votre situation et à vos objectifs.",
   taxButton: 'Discover our tailor-made strategies for effective tax optimization.',
   taxCards: [
@@ -347,8 +339,8 @@ const defaultContent = {
     '/images/intencial-1.png',
     '/images/img_header_logo.png'
   ],
-  finalCtaTitle: 'Faites croître votre patrimoine avec le soutien de nos experts',
-  finalCtaText: "Choisir Azalée, c'est faire le choix d'un accompagnement sur-mesure par des spécialistes de la gestion patrimoniale, capables de vous guider à chaque étape de votre stratégie. Que vous souhaitiez investir, faire fructifier votre patrimoine, préparer votre retraite, anticiper votre transmission ou encore protéger votre famille, nos conseillers patrimoniaux élaborent des solutions adaptées à vos besoins et à vos ambitions. Si vous envisagez d'investir dans l'immobilier, nous vous assistons de la recherche d'opportunités à la finalisation de votre acquisition. Nous vous aidons à sélectionner le dispositif fiscal le plus avantageux, vous proposons des programmes immobiliers exclusifs, et vous accompagnons dans toutes vos démarches administratives, y compris fiscales. Nos experts sont également à vos côtés pour obtenir les meilleures conditions de financement et sécuriser votre prêt immobilier. Enfin, ils vous orientent vers des placements financiers pertinents, sélectionnés en fonction de votre profil d'investisseur et de vos objectifs. Avec Azalée, vous bénéficiez d'un partenaire de confiance, engagé à vos côtés pour valoriser, sécuriser et transmettre votre patrimoine.",
+  finalCtaTitle: 'Et si nous parlions de votre patrimoine autour d\'un premier échange ?',
+  finalCtaText: "Un rendez-vous en visio ou dans nos bureaux, en toute confidentialité. Prenez rendez-vous avec un conseiller Azalée Patrimoine pour découvrir comment nous pouvons vous accompagner dans la gestion et la transmission de votre patrimoine.",
   finalCtaImage: '/images/img_image_1227.png',
   footerExpertise: ['Imposition fiscale', 'Investissement immobilier', 'Investissements financiers', 'Planification de la retraite', 'Conseil en gestion de patrimoine'],
   footerOutils: ['Blog', 'Simulateurs financiers', "Calculatrices d'impôts", 'Ressources', 'FAQs'],
@@ -385,126 +377,19 @@ const defaultSectionOrder = [
 export default function HomePage() {
   const [content, setContent] = useState(defaultContent);
   const [sectionOrder, setSectionOrder] = useState(defaultSectionOrder);
-  const [isConnectedToUpdates, setIsConnectedToUpdates] = useState(false);
-  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(true);
   const [contentSource, setContentSource] = useState('default');
 
-  // Load content from CMS database
-  const loadContentFromCMS = async () => {
-    try {
-      console.log('Homepage - Loading content from CMS database...');
-      const response = await fetch('/api/pages/homepage');
-      
-      if (response.ok) {
-        const cmsContent = await response.json();
-        console.log('Homepage - CMS content loaded:', cmsContent);
-        console.log('Homepage - Number of CMS sections:', Object.keys(cmsContent).length);
-        
-        if (Object.keys(cmsContent).length > 0) {
-          // Database has content - use it as primary source
-          console.log('Homepage - Database sections found:', Object.keys(cmsContent));
-          console.log('Homepage - Database content details:', cmsContent);
-          
-          const mergedContent = {
-            ...defaultContent,
-            ...cmsContent
-          };
-          
-          console.log('Homepage - Using database content as primary source');
-          console.log('Homepage - Merged content keys:', Object.keys(mergedContent));
-          console.log('Homepage - Sample merged content:', {
-            hero: mergedContent.hero,
-            partners: mergedContent.partners,
-            testimonials: mergedContent.testimonials
-          });
-          
-          // Force a re-render by updating state
-          setContent({});
-          setTimeout(() => {
-            setContent(mergedContent);
-            setSectionOrder(defaultSectionOrder);
-            setContentSource('database');
-          }, 100);
-        } else {
-          // No database content - use default
-          console.log('Homepage - No database content found, using default content');
-          setContent(defaultContent);
-          setSectionOrder(defaultSectionOrder);
-          setContentSource('default');
-        }
-      } else {
-        console.log('Homepage - CMS API error, using default content');
-        setContent(defaultContent);
-        setSectionOrder(defaultSectionOrder);
-        setContentSource('default');
-      }
-    } catch (error) {
-      console.error('Homepage - Error loading CMS content:', error);
-      console.log('Homepage - Falling back to default content');
-      setContent(defaultContent);
-      setSectionOrder(defaultSectionOrder);
-      setContentSource('default');
-    } finally {
-      setIsLoadingFromDatabase(false);
-    }
-  };
+  // Database loading disabled - using static content only
 
   useEffect(() => {
-    // Load from database first, then fallback to default content
-    loadContentFromCMS();
+    // Use default content only - no database loading
+    console.log('Homepage - Using default content only');
+    setContent(defaultContent);
+    setSectionOrder(defaultSectionOrder);
+    setContentSource('default');
     
-    // Listen for content update events
-    const handleContentUpdate = async () => {
-      console.log('Homepage - Content update event received - reloading from CMS');
-      await loadContentFromCMS();
-    };
-
-    // Use polling instead of SSE for real-time updates
-    let pollingInterval = null;
-    
-    const startPolling = () => {
-      console.log('Homepage - Starting polling for content updates');
-      setIsConnectedToUpdates(true);
-      
-      pollingInterval = setInterval(async () => {
-        try {
-          // Check if page is visible before polling
-          if (document.visibilityState === 'visible') {
-            console.log('Homepage - Polling for updates...');
-            await loadContentFromCMS();
-          }
-        } catch (error) {
-          console.error('Homepage - Polling error:', error);
-        }
-      }, 5000); // Poll every 5 seconds (less frequent to avoid conflicts)
-    };
-    
-    // Start polling after initial load is complete
-    setTimeout(() => {
-      if (!isLoadingFromDatabase) {
-        startPolling();
-      }
-    }, 2000);
-    
-    // Also keep the old event listeners as backup
-    window.addEventListener('contentUpdated', handleContentUpdate);
-    
-    // Listen for localStorage changes (cross-tab communication)
-    const handleStorageChange = (e) => {
-      if (e.key === 'cms_content_updated') {
-        console.log('Homepage - localStorage change detected - reloading content');
-        loadContentFromCMS();
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    
-    return () => {
-      if (pollingInterval) {
-        clearInterval(pollingInterval);
-      }
-      window.removeEventListener('contentUpdated', handleContentUpdate);
-      window.removeEventListener('storage', handleStorageChange);
-    };
+    // No polling or database loading
+    console.log('Homepage - Database loading disabled - using static content');
   }, []);
 
   // Mapping des sections à afficher dynamiquement
@@ -849,13 +734,6 @@ export default function HomePage() {
                     </div>
                   </div>
                   
-                  {/* Decorative elements */}
-                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-[#4EBBBD] rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                  <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center">
-                    <span className="text-white text-lg">💼</span>
-                  </div>
                 </div>
 
                 {/* Marie-Claire - Professional Woman */}
@@ -883,13 +761,6 @@ export default function HomePage() {
                     </div>
                   </div>
                   
-                  {/* Decorative elements */}
-                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm">⭐</span>
-                  </div>
-                  <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center">
-                    <span className="text-white text-lg">🏆</span>
-                  </div>
                 </div>
               </div>
               
@@ -1205,21 +1076,7 @@ export default function HomePage() {
     <div className="w-full bg-global-8">
       <Header />
       
-      {/* Loading indicator */}
-      {isLoadingFromDatabase && (
-        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
-          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
-          Loading from Database...
-        </div>
-      )}
       
-      {/* Real-time connection indicator */}
-      {!isLoadingFromDatabase && isConnectedToUpdates && (
-        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
-          <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-          Auto-Refresh
-        </div>
-      )}
       
       
       

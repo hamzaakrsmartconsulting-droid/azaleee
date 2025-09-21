@@ -230,22 +230,22 @@ export default function Page() {
           <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-8 text-center">Dispositifs de défiscalisation</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="text-4xl mb-4">🏠</div>
+              <div className="text-4xl mb-4"></div>
               <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">PER</h3>
               <p className="text-[#374151] text-sm font-inter">Plan d'Épargne Retraite pour optimiser la fiscalité</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="text-4xl mb-4">🏢</div>
+              <div className="text-4xl mb-4"></div>
               <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">Loi Pinel</h3>
               <p className="text-[#374151] text-sm font-inter">Investissement locatif avec réduction d'impôt</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="text-4xl mb-4">🌴</div>
+              <div className="text-4xl mb-4"></div>
               <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">Girardin</h3>
               <p className="text-[#374151] text-sm font-inter">Investissement outre-mer avec avantages fiscaux</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="text-4xl mb-4">📊</div>
+              <div className="text-4xl mb-4"></div>
               <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">Déficit foncier</h3>
               <p className="text-[#374151] text-sm font-inter">Réduction d'impôt via travaux immobiliers</p>
             </div>

@@ -155,6 +155,12 @@ export default function TranchesBaremesPlafondsPage() {
           }}
           className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
         >
+          Debug
+        </button>
+        <div className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+          Source: {contentSource}
+        </div>
+      </div>
 
       <Header />
 
@@ -177,7 +183,7 @@ export default function TranchesBaremesPlafondsPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="bg-[#4EBBBD] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors">
-                  {content.hero?.button || defaultContent.hero.button}
+                  lien manquant
                 </button>
               </div>
             </div>
@@ -298,7 +304,7 @@ export default function TranchesBaremesPlafondsPage() {
             {content.cta?.description || defaultContent.cta.description}
           </p>
           <button className="bg-white text-[#4EBBBD] px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-            {content.cta?.buttonText || defaultContent.cta.buttonText}
+            lien manquant
           </button>
         </div>
       </section>

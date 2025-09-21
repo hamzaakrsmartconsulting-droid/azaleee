@@ -237,9 +237,9 @@ export default function RetraitePage() {
                   <div className="space-y-3">
                     {(content.intro?.accompanimentList || []).slice(0, 2).map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
-                        <span className="text-[#59E2E4] mt-1">•</span>
+                      <span className="text-[#59E2E4] mt-1">•</span>
                         <span className="text-[#374151] text-sm font-inter">{item}</span>
-                      </div>
+                    </div>
                     ))}
                   </div>
                   <div className="space-y-3">
@@ -247,7 +247,7 @@ export default function RetraitePage() {
                       <div key={index + 2} className="flex items-start gap-3">
                         <span className={`${index === 0 ? 'text-[#B99066]' : index === 1 ? 'text-[#B99066]' : 'text-[#4EBBBD]'} mt-1`}>•</span>
                         <span className="text-[#374151] text-sm font-inter">{item}</span>
-                      </div>
+                    </div>
                     ))}
                   </div>
                 </div>
@@ -267,9 +267,6 @@ export default function RetraitePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             {/* PER */}
             <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
-              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">📊</span>
-              </div>
               <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">
                 {content.planRetraite?.perTitle || "PER (Plan Épargne Retraite – loi Pacte)"}
               </h3>
@@ -285,18 +282,15 @@ export default function RetraitePage() {
             
             {/* PERCO / PEE */}
             <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
-              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🏢</span>
-              </div>
               <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">
                 {content.planRetraite?.percoTitle || "PERCO / PEE"}
               </h3>
               <p className="text-[#374151] text-sm font-inter mb-4">
                 {content.planRetraite?.percoDescription || "Dispositifs d'épargne entreprise alimentés par participation, intéressement, abondement."}
               </p>
-              <p className="text-[#374151] text-sm font-inter">
+                <p className="text-[#374151] text-sm font-inter">
                 {content.planRetraite?.oldEnvelopes || "Anciennes enveloppes (PERP, Madelin, Art. 83) : transférables vers le PER."}
-              </p>
+                </p>
             </div>
           </div>
           
@@ -318,18 +312,15 @@ export default function RetraitePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {(content.rachatTrimestres?.benefits || []).map((benefit, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg p-6 text-center">
-                <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl">{index === 0 ? '📅' : index === 1 ? '💰' : '📊'}</span>
-                </div>
                 <h3 className="text-[#005C69] font-cairo font-semibold text-lg">{benefit}</h3>
               </div>
             ))}
-          </div>
-          
+              </div>
+              
           <div className="bg-gradient-to-r from-[#B99066] to-[#A67C52] rounded-lg p-6 text-white text-center">
-            <p className="text-sm">
+              <p className="text-sm">
               {content.rachatTrimestres?.example || "👉 Exemple : un cadre de 50 ans qui rachète 4 trimestres peut gagner jusqu'à 200 € de pension mensuelle supplémentaire."}
-            </p>
+              </p>
           </div>
         </div>
       </section>
@@ -344,18 +335,15 @@ export default function RetraitePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {(content.simulation?.steps || []).map((step, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg p-6 text-center">
-                <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">{index + 1}</span>
-                </div>
                 <h3 className="text-[#005C69] font-cairo font-semibold text-lg">{step}</h3>
               </div>
             ))}
-          </div>
-          
+              </div>
+              
           <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-6 text-white text-center">
-            <p className="text-sm">
+              <p className="text-sm">
               {content.simulation?.conclusion || "👉 Chez Azalée Patrimoine, nous réalisons des simulations personnalisées permettant de visualiser vos revenus futurs et d'identifier les solutions à mettre en place dès aujourd'hui."}
-            </p>
+              </p>
           </div>
         </div>
       </section>
@@ -370,24 +358,21 @@ export default function RetraitePage() {
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 mb-8">
             <p className="text-[#374151] text-sm font-inter mb-6 text-center">
               {content.prevoyance?.introText || "La retraite ne se limite pas à l'épargne : il faut aussi protéger sa famille."}
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {(content.prevoyance?.protectionTypes || []).map((type, index) => (
                 <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">{index === 0 ? '🛡️' : index === 1 ? '🏠' : '🏥'}</span>
-                  </div>
                   <h3 className="text-[#005C69] font-cairo font-semibold text-lg">{type}</h3>
                 </div>
               ))}
-            </div>
-          </div>
-          
+                </div>
+              </div>
+              
           <div className="bg-gradient-to-r from-[#B99066] to-[#A67C52] rounded-lg p-6 text-white text-center">
-            <p className="text-sm">
+                <p className="text-sm">
               {content.prevoyance?.conclusion || "👉 Azalée Patrimoine propose une approche intégrée : anticiper les risques de la vie pour sécuriser la transmission et la stabilité financière de la famille."}
-            </p>
+                </p>
           </div>
         </div>
       </section>
@@ -407,15 +392,12 @@ export default function RetraitePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {(content.autresSolutions?.solutions || []).map((solution, index) => (
                 <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">{index === 0 ? '🏘️' : index === 1 ? '📈' : index === 2 ? '💼' : '📊'}</span>
-                  </div>
                   <h3 className="text-[#005C69] font-cairo font-semibold text-lg">{solution}</h3>
                 </div>
               ))}
             </div>
           </div>
-          
+
           <div className="bg-gradient-to-r from-[#4EBBBD] to-[#3A9B9D] rounded-lg p-6 text-white text-center">
             <p className="text-sm">
               {content.autresSolutions?.objective || "👉 Objectif : créer une retraite sur-mesure, adaptée à vos besoins et à votre horizon."}
@@ -425,4 +407,4 @@ export default function RetraitePage() {
       </section>
     </>
   );
-}
+} 

@@ -18,7 +18,7 @@ export default function PFUPage() {
       image: "/images/pfu.webp"
     },
     definition: {
-      title: "🔄 Qu'est-ce que le PFU ?",
+      title: "Qu'est-ce que le PFU ?",
       description: "Il s'agit d'un prélèvement unique de 30% qui s'applique aux revenus du capital mobilier :",
       details: [
         "12,8% d'impôt sur le revenu",
@@ -27,7 +27,7 @@ export default function PFUPage() {
       ]
     },
     creation: {
-      title: "🌐 Pourquoi a-t-il été créé ?",
+      title: "Pourquoi a-t-il été créé ?",
       description: "Mis en place par la loi de finances 2018, le PFU avait deux objectifs :",
       objectifs: [
         "Simplifier la fiscalité du capital pour les contribuables",
@@ -35,7 +35,7 @@ export default function PFUPage() {
       ]
     },
     application: {
-      title: "📋 À quoi s'applique le PFU ?",
+      title: "À quoi s'applique le PFU ?",
       description: "Le PFU s'applique aux revenus du capital mobilier :",
       revenus: [
         "Dividendes d'actions",
@@ -46,7 +46,7 @@ export default function PFUPage() {
       ]
     },
     avantages: {
-      title: "✅ Avantages du PFU",
+      title: "Avantages du PFU",
       description: "Pourquoi choisir le PFU ?",
       points: [
         "Simplicité : un seul taux de 30%",
@@ -56,7 +56,7 @@ export default function PFUPage() {
       ]
     },
     inconvenients: {
-      title: "❌ Inconvénients du PFU",
+      title: "Inconvénients du PFU",
       description: "Les limites à connaître :",
       points: [
         "Pas de déduction des frais",
@@ -66,7 +66,7 @@ export default function PFUPage() {
       ]
     },
     simulation: {
-      title: "🧮 Simulation PFU vs Barème progressif",
+      title: "Simulation PFU vs Barème progressif",
       description: "Comparaison pour un revenu de 10 000€",
       scenarios: [
         {
@@ -162,6 +162,9 @@ export default function PFUPage() {
           }}
           className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
         >
+          Debug
+        </button>
+      </div>
 
       <Header />
 
@@ -181,7 +184,7 @@ export default function PFUPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="bg-[#4EBBBD] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors">
-                  {content.hero?.button || defaultContent.hero.button}
+                  lien manquant
                 </button>
               </div>
             </div>
@@ -283,7 +286,7 @@ export default function PFUPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {(content.avantages?.points || defaultContent.avantages.points).map((point, index) => (
               <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-center">
-                <div className="text-4xl mb-4">✅</div>
+                <div className="text-4xl mb-4"></div>
                 <div className="text-lg font-semibold text-gray-900">{point}</div>
               </div>
             ))}
@@ -306,7 +309,7 @@ export default function PFUPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {(content.inconvenients?.points || defaultContent.inconvenients.points).map((point, index) => (
               <div key={index} className="bg-gray-50 p-6 rounded-xl text-center">
-                <div className="text-4xl mb-4">❌</div>
+                <div className="text-4xl mb-4"></div>
                 <div className="text-lg font-semibold text-gray-900">{point}</div>
               </div>
             ))}
@@ -361,7 +364,7 @@ export default function PFUPage() {
             {content.cta?.description || defaultContent.cta.description}
           </p>
           <button className="bg-white text-[#4EBBBD] px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-            {content.cta?.buttonText || defaultContent.cta.buttonText}
+            lien manquant
           </button>
         </div>
       </section>

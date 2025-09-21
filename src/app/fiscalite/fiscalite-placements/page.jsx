@@ -41,7 +41,7 @@ const defaultContent = {
         ],
         avantages: "Fiscalement neutre mais stratégiquement utile",
         inconvenients: "Arbitrages à court terme, titres non-éligibles au PEA, logique de transmission",
-        icon: "📊"
+        icon: ""
       },
       {
         name: "PEA - Plan d'Épargne en Actions",
@@ -55,7 +55,7 @@ const defaultContent = {
           ],
           avantages: "Exonération d'IR sur les plus-values après 5 ans",
           inconvenients: "Limitation géographique, plafond de versement",
-          icon: "🇪🇺"
+          icon: ""
         },
         {
           name: "PER - Plan d'Épargne Retraite",
@@ -69,7 +69,7 @@ const defaultContent = {
           ],
           avantages: "Réduction d'impôt immédiate",
           inconvenients: "Blocage des capitaux jusqu'à la retraite",
-        icon: "👴"
+        icon: ""
       }
     ]
   },
@@ -80,22 +80,22 @@ const defaultContent = {
       {
         title: "Durée de placement visée",
         description: "Fiscalité à court ou long terme ?",
-        icon: "⏰"
+        icon: ""
       },
       {
         title: "Objectif patrimonial",
         description: "Transmission, rente, capital ?",
-        icon: "🎯"
+        icon: ""
       },
       {
         title: "Tranche marginale d'imposition (TMI)",
         description: "L'enveloppe optimale varie selon le profil fiscal",
-        icon: "📊"
+        icon: ""
       },
       {
         title: "Liquidité / disponibilité",
         description: "Certains supports bloquent les capitaux (PER)",
-        icon: "💧"
+        icon: ""
       }
     ]
   },
@@ -215,6 +215,9 @@ const defaultContent = {
           }}
           className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
         >
+          Debug
+        </button>
+      </div>
 
       <Header />
 
@@ -234,7 +237,7 @@ const defaultContent = {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="bg-[#4EBBBD] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors">
-                  {content.hero?.button || defaultContent.hero.button}
+                  lien manquant
               </button>
               </div>
             </div>
@@ -395,8 +398,8 @@ const defaultContent = {
             {content.cta?.description || defaultContent.cta.description}
           </p>
           <button className="bg-white text-[#4EBBBD] px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-            {content.cta?.buttonText || defaultContent.cta.buttonText}
-              </button>
+            lien manquant
+          </button>
         </div>
       </section>
 
