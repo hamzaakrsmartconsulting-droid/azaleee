@@ -138,27 +138,14 @@ export default function DefiscalisationCasSpecifiquesPage() {
       {/* Hero Section */}
       <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-4xl mx-auto">
             <div>
-              <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-                Cas spéciaux
-              </span>
               <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
                 {content.hero?.title || defaultContent.hero.title}
               </h1>
               <p className="text-[#686868] text-lg leading-relaxed mb-8">
                 {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
-                {content.hero?.button || defaultContent.hero.button}
-              </button>
-            </div>
-            <div className="relative">
-              <img 
-                src={content.hero?.image || defaultContent.hero.image} 
-                alt="Défiscalisation cas spéciaux" 
-                className="w-full h-[400px] object-cover rounded-xl shadow-2xl"
-              />
             </div>
           </div>
         </div>

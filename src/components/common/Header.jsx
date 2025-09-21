@@ -224,25 +224,19 @@ const Header = () => {
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 w-full lg:w-auto">
           <div className="flex items-center gap-2">
             <img src="/images/img_component_1.svg" className="w-4 h-4" alt="phone" />
-            <span className="text-sm font-segoe text-header-1">Lorem ipsum dolor</span>
+            <span className="text-sm font-segoe text-header-1">01 53 45 85 00</span>
           </div>
           <div className="flex items-center gap-2">
             <img src="/images/img_component_1_light_green_400.svg" className="w-4 h-4" alt="email" />
-            <span className="text-sm font-inter text-header-1">lorem@ipsum.com</span>
+            <span className="text-sm font-inter text-header-1">contact@azalee-patrimoine.fr</span>
           </div>
         </div>
 
         {/* Right Section */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full lg:w-auto">
-          {/* Navigation Links */}
-          <div className="flex items-center gap-3 text-xs font-source-sans">
-            <span className="text-global-1">Nos agences</span>
-            <div className="w-px h-2.5 bg-header-1"></div>
-            <span className="text-global-1">Actualités</span>
-            {/* Language Switcher */}
-            <div className="ml-2">
-              <LanguageSwitcher />
-            </div>
+          {/* Language Switcher */}
+          <div className="ml-2">
+            <LanguageSwitcher />
           </div>
         </div>
       </div>
@@ -633,12 +627,6 @@ const Header = () => {
                   ))}
                 </div>
               </div>
-            </div>
-
-            {/* Contact Button */}
-            <div className="flex items-center gap-2 border border-global-1 rounded-2xl px-3 py-2 hover:bg-gray-50 transition-colors">
-              <img src="/images/img_symbol.svg" className="w-1 h-1" alt="contact" />
-              <span className="text-xs font-prompt font-medium text-global-1">Contact Us</span>
             </div>
           </div>
         </nav>

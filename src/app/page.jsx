@@ -71,7 +71,10 @@ const HeroCarousel = ({ content }) => {
           <p className="text-white text-[10px] sm:text-base md:text-lg lg:text-xl mb-8 font-inter">
             {content.heroSubtitle}
           </p>
-          <button className="bg-[#B99066] text-white px-8 py-3 rounded-full text-xs sm:text-sm font-semibold uppercase shadow-lg mb-8 hover:bg-[#A67A5A] transition-colors duration-200">
+          <button 
+            className="bg-[#B99066] text-white px-8 py-3 rounded-full text-xs sm:text-sm font-semibold uppercase shadow-lg mb-8 hover:bg-[#A67A5A] transition-colors duration-200"
+            onClick={() => window.location.href = '/contact'}
+          >
             {content.heroButton1}
           </button>
           
@@ -283,10 +286,10 @@ const defaultContent = {
   teamSubtitle: "Une équipe passionnée à votre service",
   teamDescription: "Chez Azalée Patrimoine, nous croyons que la réussite de votre stratégie patrimoniale repose sur la qualité humaine de l'accompagnement. Notre équipe pluridisciplinaire combine expertise technique et approche personnalisée pour vous offrir des solutions sur-mesure.",
   teamValues: [
-    { title: "Discrétion", desc: "Confidentialité absolue et respect de votre vie privée", icon: "" },
-    { title: "Indépendance", desc: "Conseils objectifs tournés vers vos intérêts", icon: "" },
-    { title: "Sur-mesure", desc: "Accompagnement adapté à chaque étape de votre vie", icon: "" },
-    { title: "Transparence", desc: "Honoraires fixes et rémunération claire", icon: "" }
+    { title: "Confidentialité", desc: "Nous protégeons vos informations et garantissons une totale discrétion dans la gestion de votre patrimoine.", icon: "" },
+    { title: "Impartialité", desc: "Nos conseils sont 100% indépendants, toujours orientés vers vos seuls intérêts.", icon: "" },
+    { title: "Suivi personnalisé", desc: "À chaque étape de votre vie, nous adaptons notre accompagnement à vos besoins spécifiques.", icon: "" },
+    { title: "Clarté", desc: "Des honoraires fixes et une rémunération transparente, sans mauvaise surprise", icon: "" }
   ],
   expertsTitle: "Nos expertises",
   expertsDescription: "Nous vous accompagnons dans tous les aspects de la gestion patrimoniale avec une approche globale et personnalisée.",
@@ -299,37 +302,36 @@ const defaultContent = {
     { title: "Accompagnement sur-mesure", desc: "Plus de 30 ans d'expérience en conseil patrimonial avec une approche indépendante et tournée vers vos intérêts.", button: "Rencontrer nos experts" },
   ],
   testimonialsTitle: "Témoignages",
-  testimonialText: "Azalee Patrimoine nous a apporté une vraie tranquillité d'esprit. Notre conseiller nous a aidés à structurer notre patrimoine et nous a accompagnés dans l'achat d'un nouveau bien immobilier. Nous avons ensuite rencontré un consultant en investissement immobilier et un expert-comptable — des professionnels réactifs et compétents. Leurs conseils nous ont permis de revoir notre stratégie financière en toute confiance. Nous les recommandons vivement.",
+  testimonialText: "Grâce à Azalée Patrimoine, nous avons retrouvé sérénité et visibilité sur notre avenir.\n\nNotre conseiller a structuré notre patrimoine et nous a accompagnés dans l'acquisition d'un nouveau bien immobilier. L'intervention coordonnée de spécialistes en investissement immobilier et en expertise comptable nous a permis de repenser notre stratégie financière avec confiance. Une équipe à recommander sans hésiter.",
   testimonialAuthor: "néon.",
   processSteps: [
-    { label: 'ÉTAPE 1', desc: 'CONSTRUIRE VOTRE PATRIMOINE', contentTitle: 'Développer votre patrimoine', contentText: 'Investir dans l\'immobilier reste un choix précieux aujourd\'hui, apprécié pour sa sécurité et son rendement. Que ce soit pour générer des revenus complémentaires, protéger votre avenir financier ou transmettre un héritage, construire un patrimoine solide répond à des objectifs essentiels, pour vous et vos proches.', button: 'Découvrez Comment Nos Courtiers Travaillent Pour Vous', image: '/images/img_image_1221.png' },
-    { label: 'ÉTAPE 2', desc: 'OPTIMISER VOTRE FISCALITÉ' },
-    { label: 'ÉTAPE 3', desc: 'OPTIMISEZ LA PERFORMANCE DE VOS INVESTISSEMENTS' },
-    { label: 'ÉTAPE 4', desc: 'SÉLECTIONNEZ LA SOLUTION QUI VOUS CONVIENT LE MIEUX' },
-    { label: 'ÉTAPE 5', desc: 'FINANCER VOTRE PROJET DANS LES MEILLEURES CONDITIONS' },
-    { label: 'ÉTAPE 6', desc: 'DIVERSIFIEZ VOS INVESTISSEMENTS' },
-    { label: 'ÉTAPE 7', desc: 'VOUS ACCOMPAGNER SUR LE LONG TERME' },
+    { label: 'ÉTAPE 1', desc: 'Comprendre vos besoins', contentTitle: 'Comprendre vos besoins', contentText: 'Nous prenons le temps d\'écouter vos attentes et vos priorités.', button: 'Découvrez Comment Nos Courtiers Travaillent Pour Vous', image: '/images/img_image_1221.png' },
+    { label: 'ÉTAPE 2', desc: 'Analyser votre situation' },
+    { label: 'ÉTAPE 3', desc: 'Définir vos objectifs' },
+    { label: 'ÉTAPE 4', desc: 'Affecter les moyens nécessaires' },
+    { label: 'ÉTAPE 5', desc: 'Déployer la stratégie patrimoniale' },
+    { label: 'ÉTAPE 6', desc: 'Assurer un suivi continu' }
   ],
   stats: [
-    { value: '2006', label: 'Date de création' },
-    { value: '7000', label: 'Clients' },
-    { value: '92%', label: '93% de nos clients nous recommandent pour un investissement immobilier' },
-    { value: '16 millions', label: "Le chiffre d'affaires" },
-    { value: '+18 %', label: 'De croissance en 2019' },
-    { value: '150', label: 'Collaborateurs partout en France' },
+    { value: '1996', label: 'Création d\'AGORA PATRIMOINE' },
+    { value: '2018', label: 'Rachat par Proactive Finance' },
+    { value: '2025', label: 'Rachat et fusion du groupe sous la marque AZALEE PATRIMOINE' },
+    { value: '486', label: 'Clients' },
+    { value: '50%', label: '50% de nos clients détiennent de l\'immobilier grâce à notre action de conseil' },
+    { value: '35', label: 'Partenaires' },
+    { value: '5', label: 'Implementations en France (Paris / Nantes / La Rochelle / Salon de Provence / Nice)' },
   ],
-  investmentTitle: 'Valorisez votre avenir en construisant votre patrimoine',
-  investmentText: "Investir, ce n'est pas seulement faire fructifier son argent, c'est poser les bases d'une sécurité financière durable. Que vous souhaitiez générer des revenus complémentaires, financer des projets futurs ou protéger votre famille, la constitution d'un patrimoine devient un choix stratégique. Immobilier, placements financiers ou solutions mixtes : chaque investissement doit être réfléchi et aligné avec vos objectifs. Chez Azalée Patrimoine, nos spécialistes sont là pour définir avec vous une stratégie sur mesure, pensée pour vous apporter performance et sérénité.",
-  investmentButton: 'Explorez nos solutions pour faire croître votre patrimoine',
+  investmentTitle: 'Sécurisez votre avenir avec une stratégie patrimoniale sur mesure',
+  investmentText: "Gérer son patrimoine, ce n'est pas seulement investir : c'est anticiper, organiser et transmettre dans les meilleures conditions fiscales et familiales.\n\n👉 Chez Azalée Patrimoine, nous agissons comme un véritable chef d'orchestre, en coordination avec notaires et experts-comptables.\n\nSelon la phase de vie patrimoniale dans laquelle vous vous trouvez (constitution, consolidation, jouissance ou transmission), nous définissons un plan clair et optimisé. Notre objectif : vous permettre de profiter de vos capitaux tout en préservant durablement votre patrimoine.\n\nGrâce à un suivi régulier et personnalisé, nous adaptons la stratégie à vos objectifs personnels. Avec une approche pédagogique, nous vous donnons les clés pour prendre des décisions éclairées et avancer en toute confiance vers une gestion patrimoniale fluide, optimisée et fiscalement avantageuse.",
+  investmentButton: 'Vous avez des questions, nous avons des réponses',
   investmentImage1: '/images/img_image_1222.png',
   investmentImage2: '/images/img_image_1220.png',
   taxTitle: 'Pourquoi choisir la défiscalisation immobilière ?',
-  taxText: "L'immobilier reste un investissement de référence pour les investisseurs français, surtout lorsqu'il est accompagné d'avantages fiscaux attractifs. En choisissant des biens éligibles à des dispositifs légaux de défiscalisation, vous pouvez réduire significativement votre imposition tout en développant votre patrimoine. Le gouvernement encourage ainsi l’investissement dans certains secteurs ou types de logements — anciens ou neufs, location longue durée ou saisonnière — grâce à des lois fiscales spécifiques. Ces mesures permettent non seulement de dynamiser l’offre immobilière mais aussi de soutenir les investisseurs en leur offrant des avantages concrets. Que vous souhaitiez constituer un patrimoine, optimiser vos revenus locatifs ou préparer votre avenir, nos solutions de défiscalisation s’adaptent à votre situation et à vos objectifs.",
-  taxButton: 'Discover our tailor-made strategies for effective tax optimization.',
+  taxText: "L'immobilier reste un investissement de référence pour les investisseurs français, surtout lorsqu'il est accompagné d'avantages fiscaux attractifs. En choisissant des biens éligibles à des dispositifs légaux de défiscalisation, vous pouvez réduire significativement votre imposition tout en développant votre patrimoine. Le gouvernement encourage ainsi l'investissement dans certains secteurs ou types de logements — anciens ou neufs, location longue durée ou saisonnière — grâce à des lois fiscales spécifiques. Ces mesures permettent non seulement de dynamiser l'offre immobilière mais aussi de soutenir les investisseurs en leur offrant des avantages concrets. Que vous souhaitiez constituer un patrimoine, optimiser vos revenus locatifs ou préparer votre avenir, nos solutions de défiscalisation s'adaptent à votre situation et à vos objectifs.",
   taxCards: [
-    { title: 'Le statut LMNP', image: '/images/img_image_1223.png', text: 'Louez-vous un bien meublé en tant que particulier ? Le statut LMNP vous permet de déclarer vos revenus locatifs sous le régime BIC, souvent plus avantageux que les revenus fonciers. Ce statut est accessible si vos revenus locatifs restent sous un certain seuil annuel, et il permet d’amortir le bien et le mobilier, réduisant ainsi l’imposition sur les loyers perçus.', link: 'En savoir plus sur le régime LMNP →' },
-    { title: 'Le statut LMP', image: '/images/img_image_1224.png', text: 'Lorsque vos revenus issus de la location meublée dépassent la moitié des revenus globaux de votre foyer fiscal, vous pouvez accéder au statut de Loueur en Meublé Professionnel (LMP). Ce statut ouvre droit à des avantages fiscaux majeurs, tels que l’exonération d’impôt sur les plus-values après un certain délai de détention, ou encore la possibilité d’imputer les déficits sur votre revenu global.', link: 'En savoir plus sur le régime LMP →' },
-    { title: 'La loi Pinel', image: '/images/img_image_1225.png', text: 'Souhaitez-vous investir dans l’immobilier neuf ou réhabilité tout en réduisant vos impôts ? Le dispositif Pinel vous offre une réduction d’impôt proportionnelle à votre durée d’engagement locatif (6, 9 ou 12 ans). Pour en bénéficier, vous devez respecter des plafonds de loyers et de ressources des locataires, fixés selon la localisation du bien.', link: 'En savoir plus sur la loi Pinel →' },
+    { title: 'Le statut LMNP', image: '/images/img_image_1223.png', text: 'Vous possédez un logement meublé en location ? Le statut de loueur en Meublé Non Professionnel (LMNP) vous permet de décaler vos loyers dans la catégorie des Bénéfices Industriels et Commerciaux (BIC), un régime fiscal souvent plus avantageux que celui des revenus fonciers.\n\nAccessible tant que vos loyers annuels restent sous un certain seuil, il offre la possibilité d\'amortir la valeur du bien et du mobilier, ce qui réduit sensiblement l\'imposition sur vos revenus.', link: 'En savoir plus sur le régime LMNP →' },
+    { title: 'Le statut LMP', image: '/images/img_image_1224.png', text: 'Si vos revenus locatifs issus de la location meublée dépassent la moitié des revenus de votre foyer fiscal, vous relevez du statut de Loueur en Meublé Professionnel (LMP). Ce régime offre des avantages fiscaux significatifs : exonération des plus-values après une certaine durée de détention, et possibilité d\'imputer vos déficits sur le revenu global du foyer.\n\nUn levier puissant pour optimiser la fiscalité de vos investissements immobiliers.', link: '' },
+    { title: 'La loi Pinel', image: '/images/img_image_1225.png', text: 'Vous souhaitez investir dans l\'immobilier neuf ou rénové tout en allégeant votre fiscalité ? Le dispositif Pinel vous permet de bénéficier d\'une réduction d\'impôt calculée en fonction de votre durée d\'engagement locatif (6, 9 ou 12 ans). Pour en profiter, certaines conditions doivent être respectées : des loyers plafonnés et des locataires répondant à des critères de ressources, selon la zone géographique du logement.', link: 'En savoir plus sur la loi Pinel →' },
   ],
   partners: [
     '/images/selencia.svg',
@@ -342,18 +344,13 @@ const defaultContent = {
   finalCtaTitle: 'Et si nous parlions de votre patrimoine autour d\'un premier échange ?',
   finalCtaText: "Un rendez-vous en visio ou dans nos bureaux, en toute confidentialité. Prenez rendez-vous avec un conseiller Azalée Patrimoine pour découvrir comment nous pouvons vous accompagner dans la gestion et la transmission de votre patrimoine.",
   finalCtaImage: '/images/img_image_1227.png',
-  footerExpertise: ['Imposition fiscale', 'Investissement immobilier', 'Investissements financiers', 'Planification de la retraite', 'Conseil en gestion de patrimoine'],
-  footerOutils: ['Blog', 'Simulateurs financiers', "Calculatrices d'impôts", 'Ressources', 'FAQs'],
   footerContact: {
-    address: '123 Rue Financière',
-    city: 'New York, NY 10001',
-    country: 'États-Unis',
-    phone: '+1 (555) 123-4567',
-    email: 'info@wealthadvisors.com',
+    address: '106 Rue de Richelieu',
+    city: '75002 Paris',
+    country: 'France',
+    phone: '01 53 45 85 00',
+    email: 'contact@azalee-patrimoine.fr',
   },
-  footerEntreprise: ['À propos de nous', 'Nos services', 'Notre équipe', 'Carrières', 'Contact'],
-  footerCopyright: '© 2025 WealthAdvisors. Tous droits réservés.',
-  footerLinks: ['Légal', 'Politique de confidentialité', "Conditions d'utilisation"],
   contactPhone: '+1 (555) 123-4567',
   contactEmail: 'contact@azaleewealth.com',
   categories: ['Fiscalité','Investissement immobilier','Placements','Retraite','Patrimoine','Outils financiers'],
@@ -492,9 +489,6 @@ export default function HomePage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {(content.teamValues || []).map((value, index) => (
                   <div key={index} className="bg-white/95 backdrop-blur-md rounded-2xl p-8 text-center shadow-xl border border-white/20 hover:transform hover:scale-105 transition-all duration-300">
-                    <div className="w-16 h-16 bg-gradient-to-r from-[#B99066] to-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-6">
-                      <span className="text-white text-2xl">{value.icon}</span>
-                    </div>
                     <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-3">{value.title}</h3>
                     <p className="text-[#4A5568] font-inter text-sm leading-relaxed">{value.desc}</p>
                   </div>
@@ -503,7 +497,10 @@ export default function HomePage() {
               
               {/* CTA Button */}
               <div className="text-center mt-12">
-                <button className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-10 py-4 rounded-lg font-inter font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                <button 
+                  className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-10 py-4 rounded-lg font-inter font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                  onClick={() => window.location.href = '/notre-approche'}
+                >
                   Découvrir notre approche
                 </button>
               </div>
@@ -563,9 +560,6 @@ export default function HomePage() {
                     {/* Floating badge */}
                     <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-full flex items-center justify-center">
-                          <span className="text-white text-lg">✓</span>
-                        </div>
                         <div>
                           <p className="text-[#112033] font-semibold text-sm">30+ ans</p>
                           <p className="text-[#4A5568] text-xs">d'expertise</p>
@@ -625,9 +619,6 @@ export default function HomePage() {
             {/* Fallback content if image doesn't load */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#F8FAFB] via-[#E2E8F0] to-[#F8FAFB] flex items-center justify-center hidden" id="separator-fallback">
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-[#B99066] to-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-3xl">🌸</span>
-                </div>
                 <h3 className="text-[#112033] font-cairo font-semibold text-xl">Azalée Patrimoine</h3>
                 <p className="text-[#4A5568] font-inter text-sm">Excellence & Confiance</p>
               </div>
@@ -662,8 +653,8 @@ export default function HomePage() {
                 <div className="bg-slider-1 p-8 rounded-2xl shadow-lg w-full flex flex-col items-center">
                   <img src="/images/img_svg.svg" className="w-8 h-6 mb-6" alt="quote" />
                   <h2 className="text-2xl sm:text-3xl font-cairo font-semibold uppercase text-global-2 text-center leading-tight mb-4 tracking-wide">
-                      {content.testimonialsTitle}
-                    </h2>
+                    {content.testimonialsTitle}
+                  </h2>
                   <p className="text-base sm:text-lg font-source-sans text-global-4 text-center leading-7 mb-6 max-w-xl">
                       {content.testimonialText}
                         </p>
@@ -684,16 +675,16 @@ export default function HomePage() {
               <div className="w-full lg:w-1/2 flex flex-col items-center justify-center">
                 <div className="bg-global-4 p-12 lg:p-20 rounded-2xl shadow-lg flex flex-col items-center w-full">
                   <div className="flex flex-col items-center mb-6">
-                    <div className="bg-global-8 rounded-full p-2 w-[140px] h-[140px] border-2 border-global-2 flex items-center justify-center">
-                      <span className="text-4xl sm:text-5xl font-source-sans text-global-2 text-center font-bold">90%*</span>
-                    </div>
+                    <span className="text-4xl sm:text-5xl font-source-sans text-global-2 text-center font-bold">
+                    90%*
+                    </span>
                   </div>
                   <p className="text-base sm:text-lg font-source-sans text-global-7 text-center leading-7 mb-2 max-w-xs">
-                      95% de nos clients nous recommandent à leurs proches pour un investissement patrimonial.
-                    </p>
+                    90% de nos clients nous confient la gestion de patrimoine de leurs enfants
+                  </p>
                   <span className="text-xs font-source-sans text-global-6 leading-3 mt-1 text-center">
-                      Enquête de satisfaction — 2019
-                    </span>
+                    Enquête de satisfaction — 2019
+                  </span>
                 </div>
               </div>
             </div>
@@ -766,7 +757,10 @@ export default function HomePage() {
               
               {/* Bottom CTA */}
               <div className="text-center mt-12">
-                <button className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                <button 
+                  className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                  onClick={() => window.location.href = '/contact'}
+                >
                   Rejoignez nos clients satisfaits
                 </button>
               </div>
@@ -808,15 +802,16 @@ export default function HomePage() {
                 <p className="text-base text-[#757575] mb-8 max-w-xl">
                     {content.processSteps?.[0]?.contentText || 'Texte par défaut'}
                       </p>
-                <button className="bg-[#B99066] text-white px-8 py-3 rounded shadow font-semibold text-base">
+                <button 
+                  className="bg-[#B99066] text-white px-8 py-3 rounded shadow font-semibold text-base hover:bg-[#A67A5A] transition-colors duration-200"
+                  onClick={() => window.location.href = '/nos-courtiers'}
+                >
                     {content.processSteps?.[0]?.button || 'Bouton par défaut'}
                 </button>
                     </div>
-              {/* Right: Circular Image */}
+              {/* Right: Image */}
               <div className="flex-shrink-0 flex items-center justify-center">
-                <div className="w-[320px] h-[320px] bg-[#E3F1F6] rounded-full flex items-center justify-center shadow">
-                    <img src={content.processSteps?.[0]?.image || '/images/placeholder.webp'} alt="Step illustration" className="w-[220px] h-[220px] object-contain" />
-                  </div>
+                <img src={content.processSteps?.[0]?.image || '/images/placeholder.webp'} alt="Step illustration" className="w-[320px] h-[320px] object-contain" />
               </div>
             </div>
           </div>
@@ -834,13 +829,26 @@ export default function HomePage() {
                 </h2>
             </div>
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
-                {(content.stats || []).map((stat, index) => (
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Vertical dates - First 3 stats */}
+              <div className="flex flex-col gap-8 text-center max-w-md mx-auto lg:mx-0">
+                {(content.stats || []).slice(0, 3).map((stat, index) => (
                   <div key={index}>
                     <div className="text-[40px] font-source-sans font-normal text-[#B99066] leading-[58px]">{stat.value}</div>
                     <div className="text-[11.7px] font-source-sans font-semibold text-[#000] leading-[18px] mt-2">{stat.label}</div>
                   </div>
                 ))}
+              </div>
+              
+              {/* Horizontal stats - Remaining stats */}
+              <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 text-center">
+                {(content.stats || []).slice(3).map((stat, index) => (
+                  <div key={index + 3}>
+                    <div className="text-[40px] font-source-sans font-normal text-[#B99066] leading-[58px]">{stat.value}</div>
+                    <div className="text-[11.7px] font-source-sans font-semibold text-[#000] leading-[18px] mt-2">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -876,9 +884,9 @@ export default function HomePage() {
                   {/* Expandable Accordion */}
                   <div className="space-y-4">
                     {/* Expanded Item */}
-                    <div className="bg-white/10 rounded-lg p-4">
+                    <div className="bg-white/10 rounded-lg p-4 cursor-pointer hover:bg-white/20 transition-colors duration-200" onClick={() => window.location.href = '/fiscalite'}>
                       <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-white font-cairo font-semibold text-lg">Investir efficacement</h3>
+                        <h3 className="text-white font-cairo font-semibold text-lg">Comprendre la fiscalité avant de défiscaliser</h3>
                         <svg className="w-5 h-5 text-white transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
@@ -890,37 +898,24 @@ export default function HomePage() {
                     
                     {/* Collapsed Items */}
                     {[
-                      "Organiser la transmission de vos biens",
-                      "Alléger votre fiscalité", 
-                      "Prévoir sa retraite",
-                      "Construire votre patrimoine",
-                      "Protéger vos proches"
+                      { title: "Qui a-t-il dans un bilan patrimonial", url: "/patrimoine" },
+                      { title: "Alléger votre fiscalité", url: "/retraite" }, 
+                      { title: "Comment optimiser son pouvoir d'achat à la retraite", url: "/retraite" },
+                      { title: "Gagner de l'argent grâce à des placements financiers", url: "/placements" },
+                      { title: "Pourquoi l'immobilier est une base pour votre patrimoine ?", url: "/Investissement-immobilier" }
                     ].map((item, index) => (
-                      <div key={index} className="bg-white/5 rounded-lg p-4 hover:bg-white/10 transition-colors duration-200">
+                      <div 
+                        key={index} 
+                        className="bg-white/5 rounded-lg p-4 hover:bg-white/10 transition-colors duration-200 cursor-pointer"
+                        onClick={() => item.url && (window.location.href = item.url)}
+                      >
                         <div className="flex items-center justify-between">
-                          <h3 className="text-white font-cairo font-medium text-base">{item}</h3>
+                          <h3 className="text-white font-cairo font-medium text-base">{item.title}</h3>
                           <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Benefits Section */}
-                <div className="mt-8 pt-6 border-t border-white/20">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 bg-[#4EBBBD] rounded-lg flex items-center justify-center">
-                      <span className="text-white text-lg">🏠</span>
-                    </div>
-                    <h3 className="text-white font-cairo font-bold text-lg uppercase">BENEFITS</h3>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {["#protection", "#confidence", "#life", "#help", "#safety"].map((tag, index) => (
-                      <span key={index} className="text-white/80 text-sm font-inter bg-white/10 px-3 py-1 rounded-full">
-                        {tag}
-                      </span>
                     ))}
                   </div>
                 </div>
@@ -950,14 +945,11 @@ export default function HomePage() {
                 <div className="w-[40.28px] h-[1.34px] bg-[#4EBBBD] mb-4 rounded-full"></div>
                 <h2 className="text-[22.15px] font-cairo font-normal uppercase text-white mb-6 leading-[1.2] tracking-wide text-left">
                     {content.taxTitle}
-                    </h2>
+                </h2>
                 <p className="text-[12.08px] font-source-sans text-white mb-8 text-left">
                     {content.taxText}
                 </p>
               </div>
-              <button className="bg-[#B99066] text-white px-8 py-3 rounded shadow font-inter font-medium text-[12px] w-full mt-2">
-                  {content.taxButton}
-              </button>
                         </div>
             {/* Right: Tax Solution Cards (unchanged) */}
             <div className="flex-1 flex flex-col justify-between">
@@ -968,7 +960,20 @@ export default function HomePage() {
                   <div className="p-6 flex flex-col flex-1">
                         <h3 className="text-lg font-cairo font-semibold uppercase text-[#253F60] mb-2">{card.title}</h3>
                         <p className="text-sm text-[#1A2530] mb-4 flex-1">{card.text}</p>
-                        <a href="#" className="text-[#4EBBBD] text-sm font-semibold hover:underline mt-auto">{card.link}</a>
+                        {card.link && (
+                          <a 
+                            href="#" 
+                            className="text-[#4EBBBD] text-sm font-semibold hover:underline mt-auto"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (index === 0) {
+                                window.location.href = '/immobilier/lmnp';
+                              }
+                            }}
+                          >
+                            {card.link}
+                          </a>
+                        )}
                           </div>
                         </div>
                   ))}
@@ -1016,28 +1021,10 @@ export default function HomePage() {
           <footer key="footer" className="w-full relative pt-16 pb-6 text-white" style={{background: 'linear-gradient(90deg, #253F60 0%, #B99066 100%)'}}>
         {/* Overlay for contrast */}
         <div className="absolute inset-0 bg-black opacity-50 pointer-events-none"></div>
-        <div className="relative max-w-[1368px] mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-8">
-          {/* Expertise */}
-          <div>
-            <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Expertise</h3>
-            <ul className="space-y-2 text-[#D1D5DB] text-base">
-                  {(content.footerExpertise || []).map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-            </ul>
-          </div>
-          {/* Outils */}
-          <div>
-            <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Outils</h3>
-            <ul className="space-y-2 text-[#D1D5DB] text-base">
-                  {(content.footerOutils || []).map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-            </ul>
-          </div>
+        <div className="relative max-w-[1368px] mx-auto px-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-12 mb-8">
           {/* Contactez */}
           <div>
-            <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Contactez</h3>
+            <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Contactez-nous</h3>
             <ul className="space-y-2 text-[#D1D5DB] text-base">
                   <li>{content.footerContact?.address || 'Adresse par défaut'}</li>
                   <li>{content.footerContact?.city || 'Ville par défaut'}</li>
@@ -1045,24 +1032,6 @@ export default function HomePage() {
                   <li>Téléphone : {content.footerContact?.phone || 'Téléphone par défaut'}</li>
                   <li>Courriel : <span className="underline">{content.footerContact?.email || 'email@exemple.com'}</span></li>
             </ul>
-          </div>
-          {/* Entreprise */}
-          <div>
-            <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Entreprise</h3>
-            <ul className="space-y-2 text-[#D1D5DB] text-base">
-                  {(content.footerEntreprise || []).map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-            </ul>
-          </div>
-        </div>
-        {/* Bottom Bar */}
-        <div className="relative max-w-[1368px] mx-auto px-4 flex flex-col md:flex-row justify-between items-center border-t border-[#1F2937] pt-6 text-[#D1D5DB] text-sm gap-2">
-              <span>{content.footerCopyright}</span>
-          <div className="flex gap-6">
-                {(content.footerLinks || []).map((link, index) => (
-                  <a key={index} href="#" className="hover:underline text-[#0C2C5D]">{link}</a>
-                ))}
           </div>
         </div>
       </footer>

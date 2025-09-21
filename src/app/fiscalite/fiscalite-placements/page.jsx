@@ -224,31 +224,14 @@ const defaultContent = {
       {/* Hero Section */}
       <section className="relative w-full bg-gradient-to-br from-[#E8F5E8] via-[#D7E8FF] to-[#FFEFD5] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-4xl mx-auto">
             <div>
-              <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-                Fiscalité des placements
-              </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
                 {content.hero?.title || defaultContent.hero.title}
               </h1>
               <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                 {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-[#4EBBBD] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors">
-                  lien manquant
-              </button>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                  src={content.hero?.image || defaultContent.hero.image} 
-                alt="Fiscalité des placements" 
-                  className="w-full h-full object-cover"
-              />
-              </div>
             </div>
           </div>
         </div>

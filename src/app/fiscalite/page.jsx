@@ -8,16 +8,15 @@ const STORAGE_KEY = "fiscalitePageContent";
 // Mapping function to match sommaire titles with existing pages
 const getPageUrl = (title) => {
   const pageMapping = {
-    "Impôt sur le revenu": "/fiscalite/impot-sur-le-revenu",
-    "Déclaration d'impôts": "/fiscalite/declaration-impots", 
-    "Tranches, barèmes, plafonds": "/fiscalite/tranches-baremes-plafonds",
-    "Lois fiscales": "/fiscalite/lois-fiscales",
-    "Réductions d'impôt/déficit foncier": "/fiscalite/reductions-impot-deficit-foncier",
-    "Fiscalité des placements financiers : ce qu'il faut absolument comprendre": "/fiscalite/fiscalite-placements",
-    "PFU ou Prélèvement Forfaitaire Unique : tout ce qu'un investisseur doit savoir": "/fiscalite/pfu",
-    "Tranche Marginale d'Imposition (TMI) + Prélèvements sociaux : ce que tout investisseur doit comprendre": "/fiscalite/tmi-prelevements-sociaux",
-    "Fiscalité de l'épargne salariale et retraite": null, // No existing page
-    "Fiscalité des donations et successions": null // No existing page
+    "Comment réduire l'impôt sur le revenu ?": "/fiscalite/impot-sur-le-revenu",
+    "Comprendre les Tranches, barèmes, plafonds": "/fiscalite/tranches-baremes-plafonds",
+    "Declaration de revenus": "/fiscalite/declaration-impots",
+    "Tranche marginale d'imposition": "/fiscalite/tmi-prelevements-sociaux",
+    "Réductions d'impôt/déficit foncier : un levier fiscal puissant pour investisseurs avertis": "/fiscalite/reductions-impot-deficit-foncier",
+    "Qu'est-ce que le PFU ?": "/fiscalite/pfu",
+    "Guide des 7 régimes de faveur en immobilier (Lois fiscales)": "/fiscalite/lois-fiscales",
+    "Sécuriser son patrimoine sur plusieurs générations": null, // No existing page
+    "Epargne salariale : un atout fiscalement négligé": null // No existing page
   };
   return pageMapping[title] || null;
 };
@@ -25,32 +24,102 @@ const getPageUrl = (title) => {
 const defaultContent = {
   hero: {
     title: "Maîtrisez votre fiscalité avec expertise",
-    paragraph: "Optimisez votre situation fiscale grâce à notre expertise de plus de 30 ans. Nous vous accompagnons dans la compréhension et l'application des stratégies fiscales les plus avantageuses pour votre patrimoine. Découvrez comment réduire légalement vos impôts tout en sécurisant votre avenir financier.",
+    paragraph: "La fiscalité est au cœur des préoccupations des contribuables et des investisseurs. Bien la comprendre, c'est disposer de leviers concrets pour alléger sa charge fiscale, optimiser ses revenus et sécuriser sa stratégie patrimoniale.\n\nChez Azalée Patrimoine, nous accompagnons nos clients dans la compréhension et la maîtrise des principaux mécanismes fiscaux.",
   },
   sommaire: {
     leftItems: [
-      "Impôt sur le revenu",
-      "Déclaration d'impôts", 
-      "Tranches, barèmes, plafonds",
-      "Lois fiscales",
-      "Réductions d'impôt/déficit foncier",
-      "Fiscalité des placements financiers : ce qu'il faut absolument comprendre",
-      "PFU ou Prélèvement Forfaitaire Unique : tout ce qu'un investisseur doit savoir",
-      "Tranche Marginale d'Imposition (TMI) + Prélèvements sociaux : ce que tout investisseur doit comprendre",
-      "Fiscalité de l'épargne salariale et retraite",
-      "Fiscalité des donations et successions"
+      {
+        title: "1. Les bases de la fiscalité en France",
+        url: "/fiscalite/bases-fiscalite",
+        subtitles: [
+          { 
+            title: "Impôt sur le revenu", 
+            url: "/fiscalite/impot-sur-le-revenu",
+            description: "Découvrez le fonctionnement de l'impôt sur le revenu, ses catégories et ses règles de calcul."
+          },
+          { 
+            title: "Déclaration d'impôts", 
+            url: "/fiscalite/declaration-impots",
+            description: "Tout ce qu'il faut savoir pour remplir correctement sa déclaration et éviter les erreurs coûteuses."
+          },
+          { 
+            title: "Tranches, barèmes et plafonds", 
+            url: "/fiscalite/tranches-baremes-plafonds",
+            description: "Comprendre la progressivité de l'impôt, les seuils applicables et leur impact sur votre fiscalité."
+          }
+        ]
+      },
+      {
+        title: "2. Optimiser sa fiscalité grâce aux dispositifs légaux",
+        url: "/fiscalite/dispositifs-legaux",
+        subtitles: [
+          { 
+            title: "Lois fiscales (Pinel, Malraux, Girardin…)", 
+            url: "/fiscalite/lois-fiscales",
+            description: "Explorez les dispositifs de défiscalisation immobilière et leurs conditions d'application."
+          },
+          { 
+            title: "Réductions d'impôt et déficit foncier", 
+            url: "/fiscalite/reductions-impot-deficit-foncier",
+            description: "Découvrez comment la rénovation immobilière ou certains investissements ciblés peuvent alléger votre imposition."
+          }
+        ]
+      },
+      {
+        title: "3. Fiscalité des placements et revenus financiers",
+        url: "/fiscalite/placements-financiers",
+        subtitles: [
+          { 
+            title: "Fiscalité des placements financiers", 
+            url: "/fiscalite/fiscalite-placements",
+            description: "Comprendre l'imposition applicable aux livrets, contrats d'assurance vie, actions, obligations et autres supports."
+          },
+          { 
+            title: "PFU ou Prélèvement Forfaitaire Unique", 
+            url: "/fiscalite/pfu",
+            description: "Analyse du régime unique de 30 %, ses avantages et ses limites pour les investisseurs."
+          },
+          { 
+            title: "Tranche Marginale d'Imposition (TMI) et prélèvements sociaux", 
+            url: "/fiscalite/tmi-prelevements-sociaux",
+            description: "Comment calculer sa TMI et mesurer l'impact réel des prélèvements sociaux sur vos revenus financiers."
+          }
+        ]
+      },
+      {
+        title: "4. Fiscalité de l'épargne salariale et de la retraite",
+        url: "/fiscalite/epargne-salariale-retraite",
+        subtitles: [
+          { 
+            title: "Fiscalité de l'épargne salariale et retraite", 
+            url: "/fiscalite/epargne-salariale-retraite",
+            description: "Comprendre la fiscalité des PER, PEE et autres dispositifs pour préparer sa retraite tout en optimisant son imposition."
+          }
+        ]
+      },
+      {
+        title: "5. Transmission et fiscalité du patrimoine",
+        url: "/fiscalite/transmission-patrimoine",
+        subtitles: [
+          { 
+            title: "Fiscalité des donations et successions", 
+            url: "/fiscalite/donations-successions",
+            description: "Découvrez les règles en vigueur et les leviers disponibles pour transmettre votre patrimoine dans les meilleures conditions fiscales et familiales."
+          }
+        ]
+      }
     ],
     boxes: [
-      "Optimisation fiscale personnalisée",
-      "Conseil en stratégie patrimoniale", 
+      "Analyse fiscale approfondie",
+      "Conseil en optimisation de la rémunération", 
       "Accompagnement dans vos démarches"
     ],
   },
   lli: {
-    title: "Investissement Patrimonial & Fiscalité Optimisée : Le Dispositif LLI",
+    title: "Faire de la fiscalité un levier patrimonial",
     html:
-      "Le Logement Locatif Intermédiaire (LLI) est une solution d’investissement immobilier conçue pour les particuliers souhaitant optimiser leur fiscalité tout en développant leur patrimoine. Il s’adresse aux investisseurs recherchant une combinaison efficace entre performance financière, sécurité patrimoniale et avantages fiscaux.\n\n<b>Avec le dispositif LLI, vous bénéficiez :</b>\nD’un investissement dans un bien immobilier neuf, conforme aux dernières réglementations techniques et environnementales\nD’une TVA réduite à 10 % sur le prix d’acquisition, permettant d’alléger votre coût d’investissement\nD’un crédit d’impôt sur la taxe foncière, valable jusqu’à 20 ans, venant renforcer la rentabilité de votre opération patrimoniale",
-    button: "Je réalise ma simulation",
+      "Anticiper et structurer sa fiscalité est une étape incontournable pour protéger et valoriser son patrimoine.\n\nAvec Azalée Patrimoine, vous bénéficiez d'un accompagnement sur mesure, associant pédagogie et expertise, pour prendre des décisions éclairées et optimiser chaque étape de votre stratégie patrimoniale.",
+    button: "Contactez-nous",
     image: "/images/fisc2.webp",
   },
   benefits: {
@@ -121,141 +190,18 @@ const convertCMSContentToPageFormat = (cmsContent) => {
 
 export default function FiscalitePage() {
   const [content, setContent] = useState(defaultContent);
-  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(true);
-  const [contentSource, setContentSource] = useState('default');
 
-  // Load content from CMS database
-  const loadContentFromCMS = async () => {
-    try {
-      console.log('Fiscalité - Loading content from CMS database...');
-      const response = await fetch('/api/pages/fiscalite');
-      
-      if (response.ok) {
-        const cmsContent = await response.json();
-        console.log('Fiscalité - CMS content loaded:', cmsContent);
-        console.log('Fiscalité - Number of CMS sections:', Object.keys(cmsContent).length);
-        
-        if (Object.keys(cmsContent).length > 0) {
-          // Database has content - merge it with default content
-          console.log('Fiscalité - Database sections found:', Object.keys(cmsContent));
-          console.log('Fiscalité - Database content details:', cmsContent);
-          
-          const mergedContent = { ...defaultContent };
-          
-          // Merge each CMS section with default content
-          Object.keys(cmsContent).forEach(sectionKey => {
-            if (mergedContent[sectionKey]) {
-              mergedContent[sectionKey] = {
-                ...mergedContent[sectionKey],
-                ...cmsContent[sectionKey]
-              };
-            } else {
-              mergedContent[sectionKey] = cmsContent[sectionKey];
-            }
-          });
-          
-          console.log('Fiscalité - Using database content merged with default');
-          console.log('Fiscalité - Merged content keys:', Object.keys(mergedContent));
-          
-          setContent(mergedContent);
-          setContentSource('database');
-        } else {
-          // No database content - use default
-          console.log('Fiscalité - No database content found, using default content');
-          setContent(defaultContent);
-          setContentSource('default');
-        }
-      } else {
-        console.log('Fiscalité - CMS API error, using default content');
-        setContent(defaultContent);
-        setContentSource('default');
-      }
-    } catch (error) {
-      console.error('Fiscalité - Error loading CMS content:', error);
-      console.log('Fiscalité - Falling back to default content');
-      setContent(defaultContent);
-      setContentSource('default');
-    } finally {
-      setIsLoadingFromDatabase(false);
-    }
-  };
 
   useEffect(() => {
-    // Load from database first, then fallback to default content
-    loadContentFromCMS();
-    
-    // Listen for content update events
-    const handleContentUpdate = async () => {
-      console.log('Fiscalité - Content update event received - reloading from CMS');
-      await loadContentFromCMS();
-    };
-
-    // Use polling for real-time updates
-    let pollingInterval = null;
-    
-    const startPolling = () => {
-      console.log('Fiscalité - Starting polling for content updates');
-      
-      pollingInterval = setInterval(async () => {
-        try {
-          // Check if page is visible before polling
-          if (document.visibilityState === 'visible') {
-            console.log('Fiscalité - Polling for updates...');
-            await loadContentFromCMS();
-          }
-        } catch (error) {
-          console.error('Fiscalité - Polling error:', error);
-        }
-      }, 3000); // Poll every 3 seconds for faster updates
-    };
-    
-    // Start polling after initial load is complete
-    setTimeout(() => {
-      if (!isLoadingFromDatabase) {
-        startPolling();
-      }
-    }, 2000);
-    
-    // Also keep the old event listeners as backup
-    window.addEventListener('contentUpdated', handleContentUpdate);
-    
-    // Listen for localStorage changes (cross-tab communication)
-    const handleStorageChange = (e) => {
-      if (e.key === 'cms_content_updated') {
-        console.log('Fiscalité - localStorage change detected - reloading content');
-        loadContentFromCMS();
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    
-    return () => {
-      if (pollingInterval) {
-        clearInterval(pollingInterval);
-      }
-      window.removeEventListener('contentUpdated', handleContentUpdate);
-      window.removeEventListener('storage', handleStorageChange);
-    };
+    // Use default content only - no database loading
+    console.log('Fiscalité - Using default content only');
+    setContent(defaultContent);
   }, []);
 
   const sections = useMemo(() => content.sectionOrder || defaultContent.sectionOrder, [content.sectionOrder]);
 
   return (
     <>
-      {/* Loading indicator */}
-      {isLoadingFromDatabase && (
-        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
-          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
-          Loading Fiscalité from Database...
-        </div>
-      )}
-      
-      {/* Content source indicator */}
-      {!isLoadingFromDatabase && (
-        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
-          <div className="w-2 h-2 bg-white rounded-full"></div>
-          Content: {contentSource === 'database' ? 'CMS Database' : 'Default'}
-        </div>
-      )}
 
       <Header />
 
@@ -289,8 +235,11 @@ export default function FiscalitePage() {
               </p>
               
               {/* CTA Button */}
-              <button className="bg-[#B99066] text-white px-8 py-3 rounded-full text-xs sm:text-sm font-semibold uppercase shadow-lg hover:bg-[#A67A5A] transition-colors duration-200">
-                Optimiser ma fiscalité maintenant
+              <button 
+                className="bg-[#B99066] text-white px-8 py-3 rounded-full text-xs sm:text-sm font-semibold uppercase shadow-lg hover:bg-[#A67A5A] transition-colors duration-200"
+                onClick={() => window.location.href = '/fiscalite/reductions-impot-deficit-foncier'}
+              >
+                Je prends ma fiscalité en main maintenant
               </button>
             </div>
           </div>
@@ -304,7 +253,7 @@ export default function FiscalitePage() {
             <div className="text-center mb-12">
               <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 rounded-full mx-auto"></div>
               <h2 className="text-2xl lg:text-3xl font-cairo font-semibold text-[#112033] mb-2">Sommaire</h2>
-              <p className="text-[#4A5568] font-inter">Découvrez tous nos domaines d'expertise fiscale</p>
+                <p className="text-[#4A5568] font-inter">Transformer la fiscalité en levier de performance et de transmission</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
@@ -314,22 +263,49 @@ export default function FiscalitePage() {
                   <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-6">Nos domaines d'expertise</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {(content.sommaire?.leftItems || defaultContent.sommaire.leftItems).map((item, index) => {
-                      const pageUrl = getPageUrl(item);
+                      // Handle both string items and object items with subtitles
+                      if (typeof item === 'object' && item.subtitles) {
+                        return (
+                          <div key={index} className="md:col-span-2">
+                            <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                              <Link href={item.url} className="text-[#374151] font-inter font-semibold text-sm leading-relaxed hover:text-[#4EBBBD] hover:underline transition-colors duration-200 cursor-pointer">
+                                {item.title}
+                              </Link>
+                            </div>
+                            <div className="ml-6 space-y-3">
+                              {item.subtitles.map((subtitle, subIndex) => (
+                                <div key={subIndex} className="border-l-2 border-[#4EBBBD] pl-4">
+                                  <Link href={subtitle.url} className="text-[#374151] font-inter font-semibold text-sm hover:text-[#4EBBBD] hover:underline transition-colors duration-200 cursor-pointer block mb-1">
+                                    {subtitle.title}
+                                  </Link>
+                                  <p className="text-[#6B7280] font-inter text-xs leading-relaxed">
+                                    {subtitle.description}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      } else {
+                        // Handle string items
+                        const itemText = typeof item === 'string' ? item : item.title || item;
+                        const pageUrl = getPageUrl(itemText);
                       const isClickable = pageUrl !== null;
                       
                       return (
                         <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
                           {isClickable ? (
                             <Link href={pageUrl} className="text-[#374151] font-inter text-sm leading-relaxed hover:text-[#4EBBBD] hover:underline transition-colors duration-200 cursor-pointer">
-                              {item}
+                                {itemText}
                             </Link>
                           ) : (
                             <span className="text-[#374151] font-inter text-sm leading-relaxed opacity-75">
-                              {item}
+                                {itemText}
                             </span>
                           )}
                         </div>
                       );
+                      }
                     })}
                   </div>
                 </div>
@@ -339,14 +315,13 @@ export default function FiscalitePage() {
               <div className="lg:col-span-5">
                 <div className="grid grid-cols-1 gap-6">
                   {(content.sommaire?.boxes || defaultContent.sommaire.boxes).map((service, index) => (
-                    <div key={index} className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-white">
+                     <div key={index} className="bg-[#253F60] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-white">
                       <div className="flex items-center gap-4">
                         <div>
-                          <h3 className="font-cairo font-semibold text-lg mb-1">{service}</h3>
                           <p className="text-white/90 text-sm font-inter">
-                            {index === 0 ? 'Solutions sur-mesure adaptées à votre situation' :
-                             index === 1 ? 'Stratégies patrimoniales personnalisées' :
-                             'Accompagnement complet dans vos démarches'}
+                             {index === 0 ? 'Hélène a récupéré 12 000€ en déclarant ses frais professionnels au réel grâce à AZALEE PATRIMOINE.' :
+                              index === 1 ? 'Les revenus fonciers sont les plus fiscalisés. Vous pouvez payé jusqu\'à 62.2% d\'impôt sur vos loyers s\'ils ne sont pas optimisés. Grâce à un changement de dispositif fiscal, vos revenus bruts peuvent devenir des revenus nets.' :
+                              'Laissez sa prime d\'intéressement dans le PEE de l\'entreprise vous fait économiser beaucoup d\'impôt sur le revenu mais en cas de décès, au moins 20% sera ponctionné par l\'Etat'}
                           </p>
                         </div>
                       </div>
@@ -356,7 +331,10 @@ export default function FiscalitePage() {
                 
                 {/* CTA Section */}
                 <div className="mt-8 text-center">
-                  <button className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-8 py-4 rounded-lg font-inter font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                  <button 
+                    className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-8 py-4 rounded-lg font-inter font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                    onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
+                  >
                     Consulter nos experts
                   </button>
                 </div>
@@ -372,9 +350,16 @@ export default function FiscalitePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
               <div className="order-2 lg:order-1">
                 <div className="w-12 h-[1.6px] bg-[#4EBBBD] mb-6" />
-                <h3 className="uppercase text-[#112033] text-xl font-normal leading-snug mb-4">{content.lli?.title || defaultContent.lli.title}</h3>
+                <h3 className="uppercase text-[#112033] text-xl font-normal leading-snug mb-4">
+                  {content.lli?.title || defaultContent.lli.title}
+                </h3>
                 <p className="text-[#686868] text-[14.4px] leading-7 mb-6 whitespace-pre-line" dangerouslySetInnerHTML={{ __html: (content.lli?.html || defaultContent.lli.html).replace(/\n/g, '<br />') }} />
-                <button className="rounded-lg px-6 py-3 bg-[#B99066] text-white font-semibold shadow">{content.lli?.button || defaultContent.lli.button}</button>
+                <button 
+                  className="rounded-lg px-6 py-3 bg-[#B99066] text-white font-semibold shadow"
+                  onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
+                >
+                  {content.lli?.button || defaultContent.lli.button}
+                </button>
               </div>
               <div className="order-1 lg:order-2">
                 <img src={content.lli?.image || defaultContent.lli.image} alt="Investissement LLI" className="w-full h-[360px] sm:h-[440px] lg:h-[620px] object-cover rounded-xl" />
@@ -383,8 +368,6 @@ export default function FiscalitePage() {
           </div>
         </section>
       )}
-
-
 
 
     </>
