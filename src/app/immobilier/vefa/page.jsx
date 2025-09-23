@@ -170,24 +170,24 @@ export default function Page() {
       <Header />
       
       {/* Hero */}
-      <section className="relative w-full bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2 bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-4">
                 {content.heroTitle}
               </h1>
-              <p className="text-[#374151] text-base sm:text-lg font-inter leading-relaxed mb-6">
+              <p className="text-[#686868] text-base sm:text-lg font-inter leading-relaxed mb-6">
                 {content.heroSubtitle}
               </p>
               <div className="flex flex-wrap gap-3">
-                <a href="#lessentiel" className="inline-flex items-center justify-center bg-[#4EBBBD] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#3DA8AA] transition-colors">{content.heroButton1}</a>
-                <a href="#sommaire" className="inline-flex items-center justify-center bg-transparent border-2 border-[#4EBBBD] text-[#4EBBBD] px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors">{content.heroButton2}</a>
+                <a href="#lessentiel" className="inline-flex items-center justify-center bg-[#B99066] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors">{content.heroButton1}</a>
+                <a href="#sommaire" className="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors">{content.heroButton2}</a>
               </div>
             </div>
             
             {/* Right card */}
-            <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 text-white">
+            <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-6 sm:p-8 text-white">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-2">{content.rightCardTitle}</h2>
               <p className="text-sm opacity-90 mb-4">{content.rightCardSubtitle}</p>
               <ul className="space-y-2 text-sm font-source-sans font-semibold">
@@ -196,8 +196,13 @@ export default function Page() {
                 ))}
               </ul>
               <div className="mt-6 flex gap-3">
-                <a href="#contact" className="bg-white text-[#005C69] px-5 py-3 rounded-lg font-inter font-medium hover:bg-gray-100 transition-colors">{content.rightCardButton1}</a>
-                <a href="#fiscalite" className="border-2 border-white text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#005C69] transition-colors">{content.rightCardButton2}</a>
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-[#B99066] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors"
+                >
+                  Prendre rendez-vous
+                </button>
+                <a href="#fiscalite" className="border-2 border-white text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors">{content.rightCardButton2}</a>
               </div>
             </div>
           </div>
@@ -211,7 +216,7 @@ export default function Page() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {content.essentielItems.map((item, i) => (
               <div key={i} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-5">
-                <p className="text-[#374151] text-sm font-inter">
+                <p className="text-[#686868] text-sm font-inter">
                   {item}
                 </p>
               </div>
@@ -227,7 +232,7 @@ export default function Page() {
             <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-4">{content.sommaireTitle}</h3>
             <ol className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[#686868] font-inter">
               {content.sommaireItems.map((item, index) => (
-                <li key={index}><a href={`#${item.toLowerCase().replace(/[^a-z0-9]/g, '')}`} className="hover:text-[#4EBBBD]">{item}</a></li>
+                <li key={index}><a href={`#${item.toLowerCase().replace(/[^a-z0-9]/g, '')}`} className="hover:text-[#253F60]">{item}</a></li>
               ))}
             </ol>
           </div>
@@ -238,17 +243,17 @@ export default function Page() {
       <section id="definition" className="w-full bg-white py-10 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
-            <h3 className="text-[#005C69] text-2xl font-cairo font-semibold mb-4">{content.definitionTitle}</h3>
-            <p className="text-[#374151] font-inter mb-4">{content.definitionText1}</p>
-            <p className="text-[#374151] font-inter">{content.definitionText2}</p>
+            <h3 className="text-[#112033] text-2xl font-cairo font-semibold mb-4">{content.definitionTitle}</h3>
+            <p className="text-[#686868] font-inter mb-4">{content.definitionText1}</p>
+            <p className="text-[#686868] font-inter">{content.definitionText2}</p>
           </div>
           
           <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8">
             <h4 className="text-[#112033] text-lg font-source-sans font-semibold mb-4">{content.definitionSavoirTitle}</h4>
-            <ul className="space-y-2 text-[#374151] font-inter">
+            <ul className="space-y-2 text-[#686868] font-inter">
               {content.definitionSavoirItems.map((item, index) => (
                 <li key={index} className="flex items-start gap-2">
-                  <span className="text-[#4EBBBD] font-bold">•</span>
+                  <span className="text-[#253F60] font-bold">•</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -264,9 +269,11 @@ export default function Page() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {content.avantagesItems.map((item, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg p-6 text-center">
-                <div className="text-4xl mb-4">{item.icon}</div>
+                <div className="w-12 h-12 bg-[#253F60] text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                  {index + 1}
+                </div>
                 <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">{item.title}</h3>
-                <p className="text-[#374151] text-sm font-inter">{item.description}</p>
+                <p className="text-[#686868] text-sm font-inter">{item.description}</p>
               </div>
             ))}
           </div>
@@ -280,9 +287,11 @@ export default function Page() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {content.inconvenientsItems.map((item, index) => (
               <div key={index} className="bg-gradient-to-r from-[#FFF5F5] to-[#FED7D7] rounded-lg shadow-lg p-6 text-center border-l-4 border-[#E53E3E]">
-                <div className="text-4xl mb-4">{item.icon}</div>
+                <div className="w-12 h-12 bg-[#B99066] text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                  {index + 1}
+                </div>
                 <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">{item.title}</h3>
-                <p className="text-[#374151] text-sm font-inter">{item.description}</p>
+                <p className="text-[#686868] text-sm font-inter">{item.description}</p>
               </div>
             ))}
           </div>
@@ -294,8 +303,8 @@ export default function Page() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
             <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">{content.exempleTitle}</h2>
-            <div className="bg-gradient-to-r from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-6 border-l-4 border-[#4EBBBD]">
-              <p className="text-[#374151] text-base font-inter leading-relaxed">{content.exempleContent}</p>
+            <div className="bg-[#B99066] rounded-lg p-6 text-white">
+              <p className="text-white text-base font-inter leading-relaxed">{content.exempleContent}</p>
             </div>
           </div>
         </div>
@@ -308,11 +317,11 @@ export default function Page() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {content.financementSteps.map((step, index) => (
               <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 text-center">
-                <div className="w-12 h-12 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                <div className="w-12 h-12 bg-[#253F60] text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   {step.step}
                 </div>
                 <h3 className="text-[#112033] text-lg font-source-sans font-semibold mb-3">{step.title}</h3>
-                <p className="text-[#374151] text-sm font-inter">{step.description}</p>
+                <p className="text-[#686868] text-sm font-inter">{step.description}</p>
               </div>
             ))}
           </div>
@@ -324,18 +333,18 @@ export default function Page() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
             <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">{content.fiscaliteTitle}</h2>
-            <p className="text-[#374151] text-base font-inter leading-relaxed">{content.fiscaliteContent}</p>
+            <p className="text-[#686868] text-base font-inter leading-relaxed">{content.fiscaliteContent}</p>
           </div>
         </div>
       </section>
 
       {/* Conseil Azalée Patrimoine */}
-      <section id="conseil" className="w-full bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] py-10 sm:py-12 lg:py-16">
+      <section id="conseil" className="w-full bg-[#253F60] py-10 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
             <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6 text-center">{content.conseilTitle}</h2>
-            <div className="bg-gradient-to-r from-[#F0F9FF] to-[#E0F2FE] rounded-lg p-6 border-l-4 border-[#4EBBBD]">
-              <p className="text-[#374151] text-base font-inter leading-relaxed">{content.conseilContent}</p>
+            <div className="bg-[#B99066] rounded-lg p-6 text-white">
+              <p className="text-white text-base font-inter leading-relaxed">{content.conseilContent}</p>
             </div>
           </div>
         </div>
@@ -348,7 +357,7 @@ export default function Page() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {content.risquesItems.map((item, index) => (
               <div key={index} className="bg-gradient-to-r from-[#FFF5F5] to-[#FED7D7] rounded-lg p-5 border-l-4 border-[#E53E3E]">
-                <p className="text-[#374151] text-sm font-inter font-medium">{item}</p>
+                <p className="text-[#686868] text-sm font-inter font-medium">{item}</p>
               </div>
             ))}
           </div>
@@ -363,7 +372,7 @@ export default function Page() {
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="bg-[#4EBBBD] text-white">
+                  <tr className="bg-[#253F60] text-white">
                     <th className="border border-gray-300 p-3 text-left font-source-sans font-semibold">Critère</th>
                     <th className="border border-gray-300 p-3 text-center font-source-sans font-semibold">VEFA</th>
                     <th className="border border-gray-300 p-3 text-center font-source-sans font-semibold">Existant</th>
@@ -373,7 +382,7 @@ export default function Page() {
                   {content.comparaisonData.map((row, index) => (
                     <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                       <td className="border border-gray-300 p-3 font-inter font-medium text-[#112033]">{row.critere}</td>
-                      <td className="border border-gray-300 p-3 text-center font-inter text-[#4EBBBD] font-semibold">{row.vefa}</td>
+                      <td className="border border-gray-300 p-3 text-center font-inter text-[#253F60] font-semibold">{row.vefa}</td>
                       <td className="border border-gray-300 p-3 text-center font-inter text-[#686868]">{row.existant}</td>
                     </tr>
                   ))}
@@ -385,7 +394,7 @@ export default function Page() {
       </section>
 
       {/* Contact CTA */}
-      <section id="contact" className="w-full bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] py-16 sm:py-20">
+      <section id="contact" className="w-full bg-[#253F60] py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
             Prêt à investir en VEFA ?
@@ -394,11 +403,17 @@ export default function Page() {
             Nos experts vous accompagnent dans votre projet d'investissement immobilier neuf avec une approche personnalisée.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-white text-[#005C69] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors">
+            <button 
+              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+              className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-[#A67A5A] transition-colors"
+            >
               Prendre rendez-vous
             </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#005C69] transition-colors">
-              Télécharger le guide
+            <button 
+              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+              className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#253F60] transition-colors"
+            >
+              Consulter un expert
             </button>
           </div>
         </div>

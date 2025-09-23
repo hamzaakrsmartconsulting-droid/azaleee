@@ -296,19 +296,19 @@ export default function CalculsFinanciersPage() {
       <Header />
 
       {/* Distinct dark hero */}
-      <section className="relative w-full bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-4">
+          <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-4">
             {safeContent.hero.title}
           </h1>
-          <p className="max-w-3xl mx-auto text-[#686868] text-base sm:text-lg font-inter leading-relaxed mb-6">
+          <p className="max-w-3xl mx-auto text-white text-base sm:text-lg font-inter leading-relaxed mb-6">
             {safeContent.hero.description}
           </p>
           <div className="flex items-center justify-center gap-3">
-            <a href="#calcul" className="inline-flex items-center justify-center bg-[#4EBBBD] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#3DA8AA] transition-colors duration-200">
+            <a href="#calcul" className="inline-flex items-center justify-center bg-[#B99066] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
               {safeContent.hero.ctaPrimary}
             </a>
-            <a href="#details" className="inline-flex items-center justify-center bg-transparent border-2 border-[#4EBBBD] text-[#4EBBBD] px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200">
+            <a href="#details" className="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors duration-200">
               {safeContent.hero.ctaSecondary}
             </a>
           </div>
@@ -380,7 +380,7 @@ export default function CalculsFinanciersPage() {
                           value={principal}
                           onChange={(e) => setPrincipal(Number(e.target.value))}
                           placeholder="€10,000"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#253F60] focus:border-transparent"
                         />
                       </div>
 
@@ -399,7 +399,7 @@ export default function CalculsFinanciersPage() {
                             value={annualRatePct}
                             onChange={(e) => setAnnualRatePct(Number(e.target.value))}
                             placeholder="3.00"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#253F60] focus:border-transparent"
                           />
                         </div>
                         <div>
@@ -415,7 +415,7 @@ export default function CalculsFinanciersPage() {
                             value={years}
                             onChange={(e) => setYears(Number(e.target.value))}
                             placeholder="5"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#253F60] focus:border-transparent"
                           />
                         </div>
                       </div>
@@ -431,7 +431,7 @@ export default function CalculsFinanciersPage() {
                           <select
                             value={periodsPerYear}
                             onChange={(e) => setPeriodsPerYear(Number(e.target.value))}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#253F60] focus:border-transparent"
                           >
                             <option value={1}>Annuelle</option>
                             <option value={4}>Trimestrielle</option>
@@ -451,7 +451,7 @@ export default function CalculsFinanciersPage() {
                             value={contributionPerPeriod}
                             onChange={(e) => setContributionPerPeriod(Number(e.target.value))}
                             placeholder="€200"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4EBBBD] focus:border-transparent"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#253F60] focus:border-transparent"
                           />
                         </div>
                       </div>
@@ -463,12 +463,12 @@ export default function CalculsFinanciersPage() {
                         >
                           {safeContent.actions.reset}
                         </button>
-                        <a
-                          href="#"
-                          className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#4EBBBD] text-white text-sm font-medium hover:bg-[#3DA8AA]"
+                        <button
+                          onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                          className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#253F60] text-white text-sm font-medium hover:bg-[#1E2F4A]"
                         >
-                          {safeContent.actions.export}
-                        </a>
+                          Prendre rendez-vous
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -531,7 +531,7 @@ export default function CalculsFinanciersPage() {
                   {safeContent.calculator.tabs.find(t => t.id === 'amortissement')?.description}
                 </p>
                 <div className="mt-6 inline-flex items-center gap-3">
-                  <a href="#" className="px-4 py-2 rounded-lg bg-[#4EBBBD] text-white text-sm font-medium hover:bg-[#3DA8AA]">
+                  <a href="#" className="px-4 py-2 rounded-lg bg-[#B99066] text-white text-sm font-medium hover:bg-[#A67A5A]">
                     {safeContent.actions.start}
                   </a>
                   <a href="#" className="px-4 py-2 rounded-lg bg-[#F3F4F6] text-[#111827] text-sm font-medium hover:bg-[#E5E7EB]">
@@ -550,7 +550,7 @@ export default function CalculsFinanciersPage() {
                   {safeContent.calculator.tabs.find(t => t.id === 'roi')?.description}
                 </p>
                 <div className="mt-6 inline-flex items-center gap-3">
-                  <a href="#" className="px-4 py-2 rounded-lg bg-[#4EBBBD] text-white text-sm font-medium hover:bg-[#3DA8AA]">
+                  <a href="#" className="px-4 py-2 rounded-lg bg-[#B99066] text-white text-sm font-medium hover:bg-[#A67A5A]">
                     {safeContent.actions.start}
                   </a>
                   <a href="#" className="px-4 py-2 rounded-lg bg-[#F3F4F6] text-[#111827] text-sm font-medium hover:bg-[#E5E7EB]">

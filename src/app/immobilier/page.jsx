@@ -130,14 +130,12 @@ export default function ImmobilierPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section 
-        className="relative h-96 bg-cover bg-center flex items-center justify-center text-white"
-        style={{ backgroundImage: `url(${content.hero?.backgroundImage || '/images/immobilier-hero.webp'})` }}
+        className="relative h-96 bg-gradient-to-r from-[#253F60] to-[#B99066] flex items-center justify-center text-white"
       >
-        <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 text-center">
           <h1 className="text-5xl font-bold mb-4">{content.hero?.title || "Investissement Immobilier"}</h1>
           <p className="text-xl mb-6">{content.hero?.subtitle || "Construisez votre patrimoine avec l'immobilier"}</p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+          <button className="bg-[#B99066] hover:bg-[#A67A5A] text-white font-bold py-3 px-8 rounded-full transition duration-300">
             {content.hero?.ctaButton || "Découvrir nos solutions"}
           </button>
         </div>
@@ -165,15 +163,17 @@ export default function ImmobilierPage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-[#F2F2F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">{content.services?.servicesTitle || "Nos Services Immobilier"}</h2>
+          <h2 className="text-3xl font-bold text-[#112033] mb-8">{content.services?.servicesTitle || "Nos Services Immobilier"}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {(content.services?.servicesList || []).map((service, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
-                <div className="text-4xl mb-4">{service.icon || "🏠"}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.name}</h3>
-                <p className="text-gray-600">{service.description}</p>
+                <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white text-2xl font-bold">{index + 1}</span>
+                </div>
+                <h3 className="text-xl font-semibold text-[#112033] mb-2">{service.name}</h3>
+                <p className="text-[#686868]">{service.description}</p>
               </div>
             ))}
           </div>
@@ -183,12 +183,12 @@ export default function ImmobilierPage() {
       {/* Advantages Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">{content.advantages?.advantagesTitle || "Les Avantages de l'Immobilier"}</h2>
+          <h2 className="text-3xl font-bold text-[#112033] mb-8">{content.advantages?.advantagesTitle || "Les Avantages de l'Immobilier"}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {(content.advantages?.advantagesList || []).map((advantage, index) => (
-              <div key={index} className="bg-blue-50 p-6 rounded-lg shadow-md border border-blue-200">
-                <h3 className="text-xl font-semibold text-blue-800 mb-2">{advantage.title}</h3>
-                <p className="text-blue-700">{advantage.description}</p>
+              <div key={index} className="bg-gradient-to-br from-[#253F60] to-[#3A5A7A] p-6 rounded-lg shadow-md text-white">
+                <h3 className="text-xl font-semibold mb-2">{advantage.title}</h3>
+                <p className="text-white">{advantage.description}</p>
               </div>
             ))}
           </div>
@@ -196,17 +196,17 @@ export default function ImmobilierPage() {
       </section>
 
       {/* Process Section */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-[#F2F2F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">{content.process?.processTitle || "Notre Processus d'Accompagnement"}</h2>
+          <h2 className="text-3xl font-bold text-[#112033] mb-8">{content.process?.processTitle || "Notre Processus d'Accompagnement"}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {(content.process?.processSteps || []).map((step, index) => (
               <div key={index} className="bg-white p-8 rounded-lg shadow-md flex flex-col items-center">
-                <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+                <div className="w-12 h-12 bg-[#B99066] text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">
                   {step.step}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+                <h3 className="text-xl font-semibold text-[#112033] mb-2">{step.title}</h3>
+                <p className="text-[#686868]">{step.description}</p>
               </div>
             ))}
           </div>
@@ -216,15 +216,15 @@ export default function ImmobilierPage() {
       {/* Testimonials Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">{content.testimonials?.testimonialsTitle || "Nos Clients Témoignent"}</h2>
+          <h2 className="text-3xl font-bold text-[#112033] mb-8">{content.testimonials?.testimonialsTitle || "Nos Clients Témoignent"}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {(content.testimonials?.testimonialsList || []).map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200">
-                <p className="text-gray-700 italic mb-4">"{testimonial.text}"</p>
-                <p className="font-semibold text-gray-900">- {testimonial.name}</p>
+              <div key={index} className="bg-[#F2F2F2] p-6 rounded-lg shadow-md border border-[#E0E0E0]">
+                <p className="text-[#686868] italic mb-4">"{testimonial.text}"</p>
+                <p className="font-semibold text-[#112033]">- {testimonial.name}</p>
                 <div className="flex justify-center mt-2">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <svg key={i} className="w-5 h-5 text-[#B99066]" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.602-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
                     </svg>
                   ))}
@@ -236,11 +236,14 @@ export default function ImmobilierPage() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-700 text-white text-center">
+      <section className="py-16 bg-gradient-to-r from-[#253F60] to-[#B99066] text-white text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold mb-4">{content.cta?.ctaTitle || "Prêt à Investir dans l'Immobilier ?"}</h2>
           <p className="text-xl mb-8">{content.cta?.ctaText || "Contactez nos experts pour une consultation personnalisée et découvrez comment optimiser votre patrimoine immobilier."}</p>
-          <button className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-full transition duration-300 shadow-lg">
+          <button 
+            onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+            className="bg-[#B99066] text-white hover:bg-[#A67A5A] font-bold py-3 px-8 rounded-full transition duration-300 shadow-lg"
+          >
             {content.cta?.ctaButton || "Demander une consultation"}
           </button>
         </div>

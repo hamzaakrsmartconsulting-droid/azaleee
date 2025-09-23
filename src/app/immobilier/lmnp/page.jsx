@@ -166,99 +166,34 @@ const defaultContent = {
 };
 
 export default function LMNPPage() {
-  const [content, setContent] = useState(defaultContent);
+  const [content] = useState(defaultContent);
 
-  // Fonction pour charger le contenu depuis la base de données
-  const loadContentFromDatabase = async () => {
-    try {
-      const response = await fetch('/api/pages/content?path=/cms/immobilier/lmnp&type=cms');
-      if (response.ok) {
-        const result = await response.json();
-        if (result.success && result.content) {
-          setContent({ ...defaultContent, ...result.content.content });
-          return;
-        }
-      }
-    } catch (error) {
-      console.log('Base de données non disponible, utilisation du localStorage');
-    }
-
-    // Fallback vers localStorage
-    try {
-      const saved = localStorage.getItem("lmnpPageContent");
-      if (saved) setContent({ ...defaultContent, ...JSON.parse(saved) });
-    } catch {}
-  };
-
-  useEffect(() => {
-    loadContentFromDatabase();
-
-    const handleContentUpdate = () => {
-      // Recharger depuis la base de données quand le contenu est mis à jour
-      loadContentFromDatabase();
-    };
-    window.addEventListener("contentUpdated", handleContentUpdate);
-    return () => window.removeEventListener("contentUpdated", handleContentUpdate);
-  }, []);
-
-  // Merge with legacy flat keys if present (backward compatibility)
-  const hero = {
-    ...defaultContent.hero,
-    ...(content.hero || {}),
-    ...(content.heroTitle || content.heroSubtitle || content.heroButton
-      ? {
-          title: content.heroTitle || (content.hero || {}).title,
-          subtitle: content.heroSubtitle || (content.hero || {}).subtitle,
-          button: content.heroButton || (content.hero || {}).button,
-        }
-      : {}),
-  };
-
-  const rightCard = {
-    ...defaultContent.rightCard,
-    ...(content.rightCard || {}),
-    ...(content.rightCardTitle || content.rightCardBenefits || content.floatingCardText || content.rightCardIcon
-      ? {
-          title: content.rightCardTitle || (content.rightCard || {}).title,
-          benefits: content.rightCardBenefits || (content.rightCard || {}).benefits || [],
-          floatingText: content.floatingCardText || (content.rightCard || {}).floatingText,
-          icon: content.rightCardIcon || (content.rightCard || {}).icon,
-        }
-      : {}),
-  };
-
-  const imageBlock = {
-    ...defaultContent.imageBlock,
-    ...(content.imageBlock || {}),
-    ...(content.imageBlockImage
-      ? { image: content.imageBlockImage }
-      : {}),
-  };
-
-  const sections = (content.sectionOrder && content.sectionOrder.length
-    ? content.sectionOrder
-    : defaultContent.sectionOrder);
+  // Use static content directly
+  const hero = defaultContent.hero;
+  const rightCard = defaultContent.rightCard;
+  const imageBlock = defaultContent.imageBlock;
+  const sections = defaultContent.sectionOrder;
 
   const renderSection = (key) => {
     switch (key) {
       case "hero":
         return (
-          <section key="hero" className="relative w-full min-h-[543px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+          <section key="hero" className="relative w-full min-h-[543px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
                 <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
                   <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
                     {hero.title}
                   </h1>
-                  <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
+                  <p className="text-[#686868] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
                     {hero.subtitle}
                   </p>
-                  <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-6 sm:mb-8 text-center lg:text-left">
+                  <p className="text-[#686868] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-6 sm:mb-8 text-center lg:text-left">
                     {hero.description}
                   </p>
-                  <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
+                  <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
                     <p className="text-white text-xs sm:text-sm font-inter">
-                      👉 {hero.example}
+                      {hero.example}
                     </p>
                   </div>
                   <div className="flex justify-center lg:justify-start">
@@ -267,14 +202,14 @@ export default function LMNPPage() {
                     </button>
                   </div>
                 </div>
-                <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
+                <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
                   <div className="flex items-center gap-4 mb-4 sm:mb-6">
                     <img src={rightCard.icon} alt="Expert Icon" className="w-8 h-8 sm:w-9 sm:h-9" />
                     <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight">
                       {rightCard.title}
                     </h2>
                   </div>
-                  <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
+                  <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#B99066] to-[#253F60] rounded-full shadow-lg flex items-center justify-center">
                     <div className="text-center text-white font-source-sans font-semibold text-xs sm:text-base lg:text-xl leading-tight px-1 sm:px-0">
                       <span className="hidden sm:block">{(rightCard.floatingText || "").split("\n")[0]}<br /></span>
                       <span className="sm:hidden">0€</span>
@@ -301,11 +236,11 @@ export default function LMNPPage() {
           <section key="sommaire" className="w-full bg-white py-8 sm:py-12 lg:py-16">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">Sommaire</h2>
-                <ol className="space-y-2 text-[#374151] font-inter">
-                  {(content.sommaire?.items || []).map((item, idx) => (
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">Sommaire</h2>
+                <ol className="space-y-2 text-[#686868] font-inter">
+                  {(defaultContent.sommaire?.items || []).map((item, idx) => (
                     <li className="flex items-start gap-2" key={idx}>
-                      <span className="text-[#59E2E4] font-semibold">{idx + 1}.</span>
+                      <span className="text-[#B99066] font-semibold">{idx + 1}.</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -322,11 +257,11 @@ export default function LMNPPage() {
                 <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 overflow-hidden">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                     <div>
-                      <h3 className="text-[#005C69] text-lg sm:text-xl font-cairo font-semibold mb-4">
+                      <h3 className="text-[#112033] text-lg sm:text-xl font-cairo font-semibold mb-4">
                         {imageBlock.title}
                       </h3>
-                      <p className="text-[#374151] font-inter mb-4">{imageBlock.intro}</p>
-                      <ul className="text-[#374151] font-inter space-y-2">
+                      <p className="text-[#686868] font-inter mb-4">{imageBlock.intro}</p>
+                      <ul className="text-[#686868] font-inter space-y-2">
                         {(imageBlock.bullets || []).map((b, i) => (
                           <li key={i} className="flex items-start gap-2">
                             <span className="text-[#59E2E4] mt-1">•</span>
@@ -354,13 +289,13 @@ export default function LMNPPage() {
           <section key="exemple" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
-                  {content.exemple?.title}
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                  {defaultContent.exemple?.title}
                 </h2>
-                <div className="bg-gradient-to-r from-[#59E2E4] to-[#4EBBBD] rounded-lg p-6 sm:p-8 text-white">
-                  <p className="text-lg mb-6">{content.exemple?.description}</p>
-                  <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                    <p className="text-sm">{content.exemple?.conclusion}</p>
+                <div className="bg-[#253F60] rounded-lg p-6 sm:p-8 text-white">
+                  <p className="text-lg mb-6">{defaultContent.exemple?.description}</p>
+                  <div className="bg-[#B99066] rounded-lg p-4">
+                    <p className="text-sm text-white">{defaultContent.exemple?.conclusion}</p>
                   </div>
                 </div>
               </div>
@@ -371,17 +306,17 @@ export default function LMNPPage() {
         return (
           <section key="plusValue" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
-                  {content.plusValue?.title}
+              <div className="bg-white rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                  {defaultContent.plusValue?.title}
                 </h2>
-                <div className="space-y-6 text-[#374151] font-inter">
-                  {(content.plusValue?.paragraphs || []).map((p, i) => (
+                <div className="space-y-6 text-[#686868] font-inter">
+                  {(defaultContent.plusValue?.paragraphs || []).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
-                  {(content.plusValue?.bullets || []).length > 0 && (
+                  {(defaultContent.plusValue?.bullets || []).length > 0 && (
                     <ul className="list-disc pl-6 space-y-2">
-                      {content.plusValue.bullets.map((b, i) => (
+                      {defaultContent.plusValue.bullets.map((b, i) => (
                         <li key={i}>{b}</li>
                       ))}
                     </ul>
@@ -395,15 +330,15 @@ export default function LMNPPage() {
         return (
           <section key="avantages" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
-                  {content.avantages?.title}
+              <div className="bg-white rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                  {defaultContent.avantages?.title}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {(content.avantages?.cards || []).map((card, i) => (
+                  {(defaultContent.avantages?.cards || []).map((card, i) => (
                     <div key={i} className="bg-white rounded-lg p-6 shadow-md">
-                      <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">{card.title}</h3>
-                      <ul className="text-[#374151] text-sm font-inter space-y-2">
+                      <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-3">{card.title}</h3>
+                      <ul className="text-[#686868] text-sm font-inter space-y-2">
                         {(card.bullets || []).map((b, j) => (
                           <li key={j}>• {b}</li>
                         ))}
@@ -420,13 +355,13 @@ export default function LMNPPage() {
           <section key="conditions" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
                   {content.conditions?.title}
                 </h2>
-                <div className="space-y-6 text-[#374151] font-inter">
+                <div className="space-y-6 text-[#686868] font-inter">
                   {(content.conditions?.cards || []).map((card, i) => (
                     <div key={i} className="bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] p-6 rounded-lg">
-                      <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4">{card.title}</h3>
+                      <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-4">{card.title}</h3>
                       <ul className="space-y-2">
                         {(card.bullets || []).map((b, j) => (
                           <li key={j} className="flex items-start gap-2">
@@ -447,14 +382,14 @@ export default function LMNPPage() {
           <section key="declaration" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
                   {content.declaration?.title}
                 </h2>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {(content.declaration?.cards || []).map((card, i) => (
                     <div key={i} className="bg-white rounded-lg p-6 shadow-md">
-                      <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-4">{card.title}</h3>
-                      <ul className="space-y-3 text-[#374151] font-inter">
+                      <h3 className="text-[#112033] font-cairo font-semibold text-xl mb-4">{card.title}</h3>
+                      <ul className="space-y-3 text-[#686868] font-inter">
                         {(card.bullets || []).map((b, j) => (
                           <li key={j} className="flex items-start gap-2">
                             <span className={i === 0 ? "text-[#59E2E4] mt-1" : "text-[#B99066] mt-1"}>•</span>
@@ -473,15 +408,15 @@ export default function LMNPPage() {
         return (
           <section key="comparaison" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
-                  {content.comparaison?.title}
+              <div className="bg-white rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                  {defaultContent.comparaison?.title}
                 </h2>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {(content.comparaison?.options || []).map((option, i) => (
+                  {(defaultContent.comparaison?.options || []).map((option, i) => (
                     <div key={i} className="bg-white rounded-lg p-6 shadow-md">
-                      <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-4">{option.title}</h3>
-                      <ul className="space-y-3 text-[#374151] font-inter">
+                      <h3 className="text-[#112033] font-cairo font-semibold text-xl mb-4">{option.title}</h3>
+                      <ul className="space-y-3 text-[#686868] font-inter">
                         {(option.bullets || []).map((b, j) => (
                           <li key={j} className="flex items-start gap-2">
                             <span className={i === 0 ? "text-[#59E2E4] mt-1" : "text-[#B99066] mt-1"}>•</span>
@@ -501,14 +436,14 @@ export default function LMNPPage() {
           <section key="residences" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
                   {content.residences?.title}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                   {(content.residences?.items || []).map((item, i) => (
                     <div key={i} className="bg-white rounded-lg p-6 shadow-md text-center">
-                      <h3 className="text-[#005C69] font-cairo font-semibold mb-2">{item.title}</h3>
-                      <p className="text-[#374151] text-sm font-inter">{item.text}</p>
+                      <h3 className="text-[#112033] font-cairo font-semibold mb-2">{item.title}</h3>
+                      <p className="text-[#686868] text-sm font-inter">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -520,24 +455,28 @@ export default function LMNPPage() {
         return (
           <section key="conseil" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12 text-white">
-                <h2 className="text-white text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
-                  {content.conseil?.title}
+              <div className="bg-white rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                  {defaultContent.conseil?.title}
                 </h2>
                 <div className="space-y-6">
-                  {(content.conseil?.paragraphs || []).map((p, i) => (
-                    <p key={i} className="text-lg">{p}</p>
+                  {(defaultContent.conseil?.paragraphs || []).map((p, i) => (
+                    <div key={i} className="bg-[#B99066] rounded-lg p-4">
+                      <p className="text-white text-lg">{p}</p>
+                    </div>
                   ))}
-                  {(content.conseil?.bullets || []).length > 0 && (
-                    <ul className="list-disc pl-6 space-y-2">
-                      {content.conseil.bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
-                      ))}
-                    </ul>
+                  {(defaultContent.conseil?.bullets || []).length > 0 && (
+                    <div className="bg-[#B99066] rounded-lg p-4">
+                      <ul className="list-disc pl-6 space-y-2 text-white">
+                        {defaultContent.conseil.bullets.map((b, i) => (
+                          <li key={i}>{b}</li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
-                  {content.conseil?.conclusion && (
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                      <p className="text-sm">{content.conseil.conclusion}</p>
+                  {defaultContent.conseil?.conclusion && (
+                    <div className="bg-[#B99066] rounded-lg p-4">
+                      <p className="text-sm text-white">{defaultContent.conseil.conclusion}</p>
                     </div>
                   )}
                 </div>
@@ -549,15 +488,15 @@ export default function LMNPPage() {
         return (
           <section key="inconvenients" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
-                  {content.inconvenients?.title}
+              <div className="bg-white rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                  {defaultContent.inconvenients?.title}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {(content.inconvenients?.cards || []).map((card, i) => (
+                  {(defaultContent.inconvenients?.cards || []).map((card, i) => (
                     <div key={i} className="bg-white rounded-lg p-6 shadow-md">
-                      <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">{card.title}</h3>
-                      <ul className="text-[#374151] text-sm font-inter space-y-2">
+                      <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-3">{card.title}</h3>
+                      <ul className="text-[#686868] text-sm font-inter space-y-2">
                         {(card.bullets || []).map((b, j) => (
                           <li key={j}>• {b}</li>
                         ))}
@@ -574,14 +513,14 @@ export default function LMNPPage() {
           <section key="faq" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-                <h2 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
+                <h2 className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold mb-6">
                   {content.faq?.title}
                 </h2>
                 <div className="space-y-6">
                   {(content.faq?.items || []).map((f, i) => (
                     <div key={i} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6">
-                      <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-3">{f.q}</h3>
-                      <p className="text-[#374151] font-inter">{f.a}</p>
+                      <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-3">{f.q}</h3>
+                      <p className="text-[#686868] font-inter">{f.a}</p>
                     </div>
                   ))}
                 </div>
@@ -593,19 +532,22 @@ export default function LMNPPage() {
         return (
           <section key="finalCta" className="w-full bg-white py-0">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-8 sm:p-10 lg:p-12 text-center">
+              <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-8 sm:p-10 lg:p-12 text-center">
                 <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-4 sm:mb-6">
-                  {content.finalCta?.title}
+                  {defaultContent.finalCta?.title}
                 </h2>
                 <p className="text-white text-base sm:text-lg font-inter mb-6 sm:mb-8 max-w-2xl mx-auto">
-                  {content.finalCta?.subtitle}
+                  {defaultContent.finalCta?.subtitle}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="bg-white text-[#005C69] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors duration-200">
-                    {content.finalCta?.primaryButton}
+                  <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-[#A67C52] transition-colors duration-200">
+                    {defaultContent.finalCta?.primaryButton}
                   </button>
-                  <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#005C69] transition-colors duration-200">
-                    {content.finalCta?.secondaryButton}
+                  <button 
+                    onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                    className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-[#A67C52] transition-colors duration-200"
+                  >
+                    {defaultContent.finalCta?.secondaryButton}
                   </button>
                 </div>
               </div>

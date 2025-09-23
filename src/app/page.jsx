@@ -35,7 +35,7 @@ const HeroCarousel = ({ content }) => {
   };
   
   return (
-    <section className="relative w-full min-h-[600px] py-12 sm:py-20">
+    <section className="relative w-full min-h-[500px] sm:min-h-[600px] py-8 sm:py-12 lg:py-20">
       {/* Dynamic Background Images */}
       <div className="absolute inset-0 overflow-hidden">
         {(content.heroBackgrounds || []).map((bg, index) => (
@@ -63,16 +63,16 @@ const HeroCarousel = ({ content }) => {
       <div className="absolute inset-0 bg-gradient-to-r from-[#253F60]/80 via-[#253F60]/60 to-transparent"></div>
       
       {/* Content */}
-      <div className="relative z-10 max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-12 flex flex-col items-center lg:items-start justify-center text-center lg:text-left min-h-[600px]">
+      <div className="relative z-10 max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-12 flex flex-col items-center lg:items-start justify-center text-center lg:text-left min-h-[500px] sm:min-h-[600px]">
         <div className="max-w-2xl">
-          <h1 className="text-white text-[12px] sm:text-lg md:text-xl lg:text-4xl font-cairo font-semibold uppercase mb-4 leading-snug">
+          <h1 className="text-white text-lg sm:text-xl md:text-2xl lg:text-4xl font-cairo font-semibold uppercase mb-4 leading-snug">
             {content.heroTitle}
           </h1>
-          <p className="text-white text-[10px] sm:text-base md:text-lg lg:text-xl mb-8 font-inter">
+          <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl mb-8 font-inter leading-relaxed">
             {content.heroSubtitle}
           </p>
           <button 
-            className="bg-[#B99066] text-white px-8 py-3 rounded-full text-xs sm:text-sm font-semibold uppercase shadow-lg mb-8 hover:bg-[#A67A5A] transition-colors duration-200"
+            className="bg-[#B99066] text-white px-6 py-3 sm:px-8 sm:py-4 rounded-full text-sm sm:text-base font-semibold uppercase shadow-lg mb-8 hover:bg-[#A67A5A] transition-colors duration-200 w-full sm:w-auto"
             onClick={() => window.location.href = '/contact'}
           >
             {content.heroButton1}
@@ -396,50 +396,50 @@ export default function HomePage() {
         return <HeroCarousel key="hero" content={content} />;
       case 'intro':
         return (
-          <section key="intro" className="w-full px-4 sm:px-6 lg:px-[100px] py-16 lg:py-28">
+          <section key="intro" className="w-full px-4 sm:px-6 lg:px-[100px] py-12 sm:py-16 lg:py-28">
             <div className="max-w-[1368px] mx-auto">
-              <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
+              <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-10">
                 <div className="w-full lg:w-[58%]">
-                  <div className="flex flex-col gap-6">
-                    <div className="flex flex-col gap-3.5">
+                  <div className="flex flex-col gap-4 sm:gap-6">
+                    <div className="flex flex-col gap-3 sm:gap-3.5">
                       <div className="w-[60px] h-0.5 bg-global-5"></div>
-                      <h2 className="text-xl sm:text-2xl lg:text-2xl font-cairo font-medium uppercase text-global-2 leading-10">{content.introTitle}</h2>
+                      <h2 className="text-lg sm:text-xl lg:text-2xl font-cairo font-medium uppercase text-global-2 leading-tight sm:leading-10">{content.introTitle}</h2>
                     </div>
-                    <p className="text-lg sm:text-xl font-source-sans text-global-1 leading-7">{content.introParagraph}</p>
+                    <p className="text-base sm:text-lg lg:text-xl font-source-sans text-global-1 leading-relaxed sm:leading-7">{content.introParagraph}</p>
                   </div>
                 </div>
               </div>
               {/* Responsive 2x2 grid for mobile/tablet, hidden on desktop */}
               <div className="block lg:hidden">
-                <div className="grid grid-cols-2 gap-4 mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 sm:mt-8">
                   {/* Card 1 */}
-                  <div className="bg-[#253F60] p-4 rounded-lg shadow text-white flex flex-col justify-between">
-                    <h3 className="text-base font-bold mb-2">Optimisation fiscale de l'immobilier</h3>
-                    <p className="text-xs mb-4">Construisez votre richesse tout en réduisant vos impôts avec des solutions d'investissement légales et personnalisées.</p>
-                    <button className="bg-white text-[#253F60] px-2 py-1 rounded font-semibold text-xs w-fit">Découvrez Comment Réduire Vos Impôts</button>
+                  <div className="bg-[#253F60] p-4 sm:p-5 rounded-lg shadow text-white flex flex-col justify-between min-h-[180px]">
+                    <h3 className="text-sm sm:text-base font-bold mb-2">Optimisation fiscale de l'immobilier</h3>
+                    <p className="text-xs sm:text-sm mb-4 leading-relaxed">Construisez votre richesse tout en réduisant vos impôts avec des solutions d'investissement légales et personnalisées.</p>
+                    <button className="bg-white text-[#253F60] px-3 py-2 rounded font-semibold text-xs w-fit">Découvrez Comment Réduire Vos Impôts</button>
                   </div>
                   {/* Card 2 */}
-                  <div className="bg-[#F2F2F2] p-4 rounded-lg shadow flex flex-col justify-between">
-                    <h3 className="text-base font-bold mb-2 text-black">Gestion de patrimoine</h3>
-                    <p className="text-xs mb-4 text-black">Optimisez votre richesse avec des stratégies personnalisées et des solutions conçues pour vos objectifs financiers.</p>
-                    <button className="bg-[#B99066] text-white px-2 py-1 rounded font-semibold text-xs w-fit">Toutes Les Clés Pour Faire Croître Votre Richesse</button>
+                  <div className="bg-[#F2F2F2] p-4 sm:p-5 rounded-lg shadow flex flex-col justify-between min-h-[180px]">
+                    <h3 className="text-sm sm:text-base font-bold mb-2 text-black">Gestion de patrimoine</h3>
+                    <p className="text-xs sm:text-sm mb-4 text-black leading-relaxed">Optimisez votre richesse avec des stratégies personnalisées et des solutions conçues pour vos objectifs financiers.</p>
+                    <button className="bg-[#B99066] text-white px-3 py-2 rounded font-semibold text-xs w-fit">Toutes Les Clés Pour Faire Croître Votre Richesse</button>
                   </div>
                   {/* Card 3 */}
-                  <div className="bg-[#F2F2F2] p-4 rounded-lg shadow flex flex-col justify-between">
-                    <h3 className="text-base font-bold mb-2 text-black">Financement immobilier</h3>
-                    <p className="text-xs mb-4 text-black">Accédez aux meilleures offres de prêts hypothécaires pour vos projets, négociées par nos courtiers experts.</p>
-                    <button className="bg-[#B99066] text-white px-2 py-1 rounded font-semibold text-xs w-fit">Trouvez Les Meilleurs Taux Hypothécaires</button>
+                  <div className="bg-[#F2F2F2] p-4 sm:p-5 rounded-lg shadow flex flex-col justify-between min-h-[180px]">
+                    <h3 className="text-sm sm:text-base font-bold mb-2 text-black">Financement immobilier</h3>
+                    <p className="text-xs sm:text-sm mb-4 text-black leading-relaxed">Accédez aux meilleures offres de prêts hypothécaires pour vos projets, négociées par nos courtiers experts.</p>
+                    <button className="bg-[#B99066] text-white px-3 py-2 rounded font-semibold text-xs w-fit">Trouvez Les Meilleurs Taux Hypothécaires</button>
                   </div>
                   {/* Card 4 */}
-                  <div className="bg-[#F2F2F2] p-4 rounded-lg shadow flex flex-col justify-between">
-                    <h3 className="text-base font-bold mb-2 text-black">Investissements financiers</h3>
-                    <p className="text-xs mb-4 text-black">Sélectionnez les bonnes options d'investissement en fonction de votre profil et de vos objectifs.</p>
-                    <button className="bg-[#B99066] text-white px-2 py-1 rounded font-semibold text-xs w-fit">Nos Meilleures Solutions D’Investissement</button>
+                  <div className="bg-[#F2F2F2] p-4 sm:p-5 rounded-lg shadow flex flex-col justify-between min-h-[180px]">
+                    <h3 className="text-sm sm:text-base font-bold mb-2 text-black">Investissements financiers</h3>
+                    <p className="text-xs sm:text-sm mb-4 text-black leading-relaxed">Sélectionnez les bonnes options d'investissement en fonction de votre profil et de vos objectifs.</p>
+                    <button className="bg-[#B99066] text-white px-3 py-2 rounded font-semibold text-xs w-fit">Nos Meilleures Solutions D'Investissement</button>
                   </div>
                 </div>
                 {/* Centered button below grid */}
                 <div className="flex justify-center mt-6">
-                  <button className="bg-[#B99066] text-white px-6 py-2 rounded font-semibold text-xs">{content.introButton}</button>
+                  <button className="bg-[#B99066] text-white px-6 py-3 rounded font-semibold text-sm w-full sm:w-auto">{content.introButton}</button>
                 </div>
               </div>
             </div>
@@ -447,7 +447,7 @@ export default function HomePage() {
         );
       case 'team':
         return (
-          <section key="team" className="relative w-full py-20 lg:py-28 overflow-hidden">
+          <section key="team" className="relative w-full py-12 sm:py-16 lg:py-28 overflow-hidden">
             {/* Background Image */}
             <div className="absolute inset-0">
               <img
@@ -472,33 +472,33 @@ export default function HomePage() {
             
             {/* Content */}
             <div className="relative z-10 max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-12">
-              <div className="text-center mb-16">
-                <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-6 rounded-full mx-auto"></div>
-                <h2 className="text-white text-[32px] lg:text-[42px] font-cairo font-semibold mb-6 tracking-wide leading-[1.2]">
+              <div className="text-center mb-12 sm:mb-16">
+                <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 sm:mb-6 rounded-full mx-auto"></div>
+                <h2 className="text-white text-2xl sm:text-3xl lg:text-[42px] font-cairo font-semibold mb-4 sm:mb-6 tracking-wide leading-tight sm:leading-[1.2]">
                   {content.teamTitle}
                 </h2>
-                <p className="text-white/90 text-[20px] lg:text-[24px] font-inter font-medium mb-8 max-w-2xl mx-auto">
+                <p className="text-white/90 text-lg sm:text-xl lg:text-[24px] font-inter font-medium mb-6 sm:mb-8 max-w-2xl mx-auto">
                   {content.teamSubtitle}
                 </p>
-                <p className="text-white/80 text-[16px] lg:text-[18px] font-inter leading-[1.6] max-w-4xl mx-auto">
+                <p className="text-white/80 text-sm sm:text-base lg:text-[18px] font-inter leading-relaxed sm:leading-[1.6] max-w-4xl mx-auto">
                   {content.teamDescription}
                 </p>
               </div>
               
               {/* Team Values */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                 {(content.teamValues || []).map((value, index) => (
-                  <div key={index} className="bg-white/95 backdrop-blur-md rounded-2xl p-8 text-center shadow-xl border border-white/20 hover:transform hover:scale-105 transition-all duration-300">
-                    <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-3">{value.title}</h3>
-                    <p className="text-[#4A5568] font-inter text-sm leading-relaxed">{value.desc}</p>
+                  <div key={index} className="bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-6 lg:p-8 text-center shadow-xl border border-white/20 hover:transform hover:scale-105 transition-all duration-300">
+                    <h3 className="text-[#112033] font-cairo font-semibold text-base sm:text-lg mb-2 sm:mb-3">{value.title}</h3>
+                    <p className="text-[#4A5568] font-inter text-xs sm:text-sm leading-relaxed">{value.desc}</p>
                   </div>
                 ))}
               </div>
               
               {/* CTA Button */}
-              <div className="text-center mt-12">
+              <div className="text-center mt-8 sm:mt-12">
                 <button 
-                  className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-10 py-4 rounded-lg font-inter font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                  className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-6 py-3 sm:px-10 sm:py-4 rounded-lg font-inter font-semibold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                   onClick={() => window.location.href = '/notre-approche'}
                 >
                   Découvrir notre approche
@@ -509,36 +509,36 @@ export default function HomePage() {
         );
       case 'experts':
         return (
-          <section key="experts" className="w-full bg-gradient-to-br from-[#F8FAFB] to-[#F1F5F9] px-4 sm:px-6 lg:px-12 py-20 lg:py-28">
+          <section key="experts" className="w-full bg-gradient-to-br from-[#F8FAFB] to-[#F1F5F9] px-4 sm:px-6 lg:px-12 py-12 sm:py-16 lg:py-28">
             <div className="max-w-[1368px] mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center mb-12 sm:mb-16">
                 {/* Left: Content */}
                 <div className="order-2 lg:order-1">
-                  <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-6 rounded-full"></div>
-                  <h2 className="text-[28px] lg:text-[36px] font-cairo font-semibold text-[#112033] mb-6 tracking-wide leading-[1.2]">{content.expertsTitle}</h2>
-                  <p className="text-[18px] lg:text-[20px] font-inter text-[#4A5568] leading-[1.6] mb-8">{content.expertsDescription}</p>
+                  <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 sm:mb-6 rounded-full"></div>
+                  <h2 className="text-xl sm:text-2xl lg:text-[36px] font-cairo font-semibold text-[#112033] mb-4 sm:mb-6 tracking-wide leading-tight sm:leading-[1.2]">{content.expertsTitle}</h2>
+                  <p className="text-base sm:text-lg lg:text-[20px] font-inter text-[#4A5568] leading-relaxed sm:leading-[1.6] mb-6 sm:mb-8">{content.expertsDescription}</p>
                   
                   {/* Key Benefits */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 bg-[#4EBBBD] rounded-full"></div>
-                      <span className="text-[#112033] font-medium text-sm">Expertise reconnue</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 bg-[#4EBBBD] rounded-full"></div>
+                      <span className="text-[#112033] font-medium text-xs sm:text-sm">Expertise reconnue</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 bg-[#B99066] rounded-full"></div>
-                      <span className="text-[#112033] font-medium text-sm">Accompagnement personnalisé</span>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 bg-[#B99066] rounded-full"></div>
+                      <span className="text-[#112033] font-medium text-xs sm:text-sm">Accompagnement personnalisé</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 bg-[#59E2E4] rounded-full"></div>
-                      <span className="text-[#112033] font-medium text-sm">Réseau de professionnels</span>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 bg-[#59E2E4] rounded-full"></div>
+                      <span className="text-[#112033] font-medium text-xs sm:text-sm">Réseau de professionnels</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 bg-[#4EBBBD] rounded-full"></div>
-                      <span className="text-[#112033] font-medium text-sm">Solutions sur-mesure</span>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 bg-[#4EBBBD] rounded-full"></div>
+                      <span className="text-[#112033] font-medium text-xs sm:text-sm">Solutions sur-mesure</span>
                     </div>
                   </div>
                   
-                  <button className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-8 py-4 rounded-lg font-inter font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                  <button className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-inter font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto">
                     Rencontrer nos experts
                   </button>
                 </div>
@@ -571,11 +571,11 @@ export default function HomePage() {
               </div>
               {/* Mobile/tablet: vertical stack, desktop: original grid */}
               <div className="block lg:hidden">
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 sm:gap-6">
                   {(content.experts || []).map((expert, index) => (
-                    <div key={index} className="bg-global-8 rounded-[24px] shadow-[0_0_8px_0_rgba(0,0,0,0.25)] p-6 flex flex-col justify-between min-h-[220px] h-full">
-                      <h3 className="text-lg font-cairo text-global-4 mb-2 leading-tight">{expert.title}</h3>
-                      <p className="text-sm font-inter text-global-1 mb-4 leading-snug">{expert.desc}</p>
+                    <div key={index} className="bg-global-8 rounded-[24px] shadow-[0_0_8px_0_rgba(0,0,0,0.25)] p-4 sm:p-6 flex flex-col justify-between min-h-[200px] sm:min-h-[220px] h-full">
+                      <h3 className="text-base sm:text-lg font-cairo text-global-4 mb-2 leading-tight">{expert.title}</h3>
+                      <p className="text-xs sm:text-sm font-inter text-global-1 mb-4 leading-snug">{expert.desc}</p>
                       <Button variant="primary" size="sm" className="w-fit self-start text-xs font-inter font-bold min-h-0 py-2 px-4">{expert.button}</Button>
                     </div>
                   ))}
@@ -770,17 +770,17 @@ export default function HomePage() {
         );
       case 'processSteps':
         return (
-          <section key="processSteps" className="w-full bg-[#F5F5F5] py-12">
-          <div className="max-w-[1400px] mx-auto">
+          <section key="processSteps" className="w-full bg-[#F5F5F5] py-8 sm:py-12">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
             {/* Section Title & Divider */}
-            <div className="flex flex-col items-center mb-8">
+            <div className="flex flex-col items-center mb-6 sm:mb-8">
               <div className="w-16 h-1 bg-[#4EBBBD] mb-2 rounded-full"></div>
-              <h2 className="text-3xl font-cairo font-normal uppercase text-[#1A2530] text-center tracking-wide">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-cairo font-normal uppercase text-[#1A2530] text-center tracking-wide">
                   Azalee Patrimoine vous accompagne à chaque étape
                 </h2>
               </div>
-            {/* Stepper Tabs */}
-            <div className="flex flex-row justify-center items-end gap-0 mb-8">
+            {/* Stepper Tabs - Hidden on mobile, visible on desktop */}
+            <div className="hidden lg:flex flex-row justify-center items-end gap-0 mb-8">
                 {(content.processSteps || []).map((step, idx) => (
                 <div
                   key={idx}
@@ -792,18 +792,38 @@ export default function HomePage() {
                 </div>
               ))}
               </div>
+            
+            {/* Mobile Stepper - Simple list */}
+            <div className="block lg:hidden mb-6">
+              <div className="space-y-3">
+                {(content.processSteps || []).map((step, idx) => (
+                  <div key={idx} className="bg-white rounded-lg p-4 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${idx === 0 ? 'bg-[#253F60] text-white' : 'bg-[#253F60] text-white'}`}>
+                        {idx + 1}
+                      </div>
+                      <div>
+                        <span className="text-sm font-bold text-[#1A2530]">{step.label}</span>
+                        <p className="text-xs text-[#757575]">{step.desc}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Content Area */}
-            <div className="flex flex-row justify-between items-center bg-white rounded shadow p-12 mt-2">
+            <div className="flex flex-col lg:flex-row justify-between items-center bg-white rounded shadow p-6 sm:p-8 lg:p-12 mt-2">
               {/* Left: Text */}
-              <div className="flex-1 pr-12">
-                  <h3 className="text-2xl font-normal text-[#1A2530] mb-6">
+              <div className="flex-1 lg:pr-12 mb-6 lg:mb-0">
+                  <h3 className="text-lg sm:text-xl lg:text-2xl font-normal text-[#1A2530] mb-4 sm:mb-6">
                     {content.processSteps?.[0]?.contentTitle || 'Titre par défaut'}
                   </h3>
-                <p className="text-base text-[#757575] mb-8 max-w-xl">
+                <p className="text-sm sm:text-base text-[#757575] mb-6 sm:mb-8 max-w-xl">
                     {content.processSteps?.[0]?.contentText || 'Texte par défaut'}
                       </p>
                 <button 
-                  className="bg-[#B99066] text-white px-8 py-3 rounded shadow font-semibold text-base hover:bg-[#A67A5A] transition-colors duration-200"
+                  className="bg-[#B99066] text-white px-6 py-3 sm:px-8 sm:py-3 rounded shadow font-semibold text-sm sm:text-base hover:bg-[#A67A5A] transition-colors duration-200 w-full sm:w-auto"
                   onClick={() => window.location.href = '/nos-courtiers'}
                 >
                     {content.processSteps?.[0]?.button || 'Bouton par défaut'}
@@ -811,7 +831,7 @@ export default function HomePage() {
                     </div>
               {/* Right: Image */}
               <div className="flex-shrink-0 flex items-center justify-center">
-                <img src={content.processSteps?.[0]?.image || '/images/placeholder.webp'} alt="Step illustration" className="w-[320px] h-[320px] object-contain" />
+                <img src={content.processSteps?.[0]?.image || '/images/placeholder.webp'} alt="Step illustration" className="w-[200px] h-[200px] sm:w-[280px] sm:h-[280px] lg:w-[320px] lg:h-[320px] object-contain" />
               </div>
             </div>
           </div>
@@ -1051,7 +1071,7 @@ export default function HomePage() {
       
       {sectionOrder.map(renderSection)}
       {/* Add real Figma hero photo below hero section, responsive only on mobile */}
-      <div className="w-full flex justify-center items-center my-6 block lg:hidden">
+      <div className="w-full flex justify-center items-center my-4 sm:my-6 block lg:hidden px-4">
         <img
           src="/images/real-hero-photo-7881b2.png"
           alt="Hero section real photo"

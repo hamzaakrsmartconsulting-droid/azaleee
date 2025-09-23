@@ -153,12 +153,12 @@ export default function FaireConstruirePage() {
       
       {/* Hero Section */}
       <section className="relative w-full py-16 sm:py-20 lg:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#253F60] to-[#112033]"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#253F60] to-[#B99066]"></div>
         
         <div className="relative max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <span className="inline-block bg-[#B99066] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
                 Construction immobilière
               </span>
               <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
@@ -167,7 +167,10 @@ export default function FaireConstruirePage() {
               <p className="text-gray-200 text-lg leading-relaxed mb-8">
                 {content.hero.description}
               </p>
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
+              <button 
+                onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67A5A] transition-colors duration-200 text-lg"
+              >
                 {content.hero.button}
               </button>
             </div>
@@ -189,7 +192,7 @@ export default function FaireConstruirePage() {
       <section className="w-full py-16 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 rounded-full mx-auto"></div>
+            <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#253F60] mb-4 rounded-full mx-auto"></div>
             <h2 className="text-3xl lg:text-4xl font-cairo font-semibold text-[#112033] mb-4">
               Nos services de construction
             </h2>
@@ -201,8 +204,8 @@ export default function FaireConstruirePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {content.services.map((service, index) => (
               <div key={index} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <div className="w-16 h-16 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-white text-2xl">{service.icon}</span>
+                <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-white font-bold text-xl">{index + 1}</span>
                 </div>
                 <h3 className="text-[#112033] font-cairo font-semibold text-xl mb-4 text-center">
                   {service.title}
@@ -213,7 +216,7 @@ export default function FaireConstruirePage() {
                 <ul className="space-y-2">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center text-sm text-[#4A5568]">
-                      <div className="w-2 h-2 bg-[#4EBBBD] rounded-full mr-3"></div>
+                      <div className="w-2 h-2 bg-[#B99066] rounded-full mr-3"></div>
                       {feature}
                     </li>
                   ))}
@@ -228,7 +231,7 @@ export default function FaireConstruirePage() {
       <section className="w-full py-16 lg:py-24 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 rounded-full mx-auto"></div>
+            <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#253F60] mb-4 rounded-full mx-auto"></div>
             <h2 className="text-3xl lg:text-4xl font-cairo font-semibold text-[#112033] mb-4">
               Notre processus de construction
             </h2>
@@ -240,7 +243,7 @@ export default function FaireConstruirePage() {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             {content.process.map((step, index) => (
               <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-[#B99066] to-[#A67A5A] rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-6">
                   <span className="text-white font-bold text-xl">{step.step}</span>
                 </div>
                 <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-3">
@@ -256,10 +259,10 @@ export default function FaireConstruirePage() {
       </section>
 
       {/* Advantages Section */}
-      <section className="w-full py-16 lg:py-24 bg-gradient-to-br from-[#F8FAFB] to-[#F1F5F9]">
+      <section className="w-full py-16 lg:py-24 bg-gradient-to-br from-[#F2F2F2] to-[#E8E8E8]">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 rounded-full mx-auto"></div>
+            <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#253F60] mb-4 rounded-full mx-auto"></div>
             <h2 className="text-3xl lg:text-4xl font-cairo font-semibold text-[#112033] mb-4">
               Les avantages de faire construire
             </h2>
@@ -284,7 +287,7 @@ export default function FaireConstruirePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full py-16 lg:py-24 bg-gradient-to-r from-[#253F60] to-[#112033]">
+      <section className="w-full py-16 lg:py-24 bg-gradient-to-r from-[#253F60] to-[#B99066]">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-3xl lg:text-4xl font-cairo font-semibold mb-6">
             {content.cta.title}
@@ -292,7 +295,10 @@ export default function FaireConstruirePage() {
           <p className="text-gray-200 text-lg mb-8 max-w-2xl mx-auto">
             {content.cta.subtitle}
           </p>
-          <button className="bg-[#4EBBBD] text-white px-10 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg shadow-xl">
+          <button 
+            onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+            className="bg-[#B99066] text-white px-10 py-4 rounded-lg font-medium hover:bg-[#A67A5A] transition-colors duration-200 text-lg shadow-xl"
+          >
             {content.cta.button}
           </button>
         </div>

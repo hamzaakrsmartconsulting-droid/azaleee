@@ -8,13 +8,13 @@ export default function ImmobilierNeufPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
             {/* Left Content */}
-            <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
+            <div className="w-full lg:w-[733px] bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               {/* Main Title */}
-              <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
+              <h1 className="text-[#112033] text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
                 Immobilier neuf: investir dans la modernité et la fiscalité
               </h1>
               
@@ -25,8 +25,11 @@ export default function ImmobilierNeufPage() {
               
               {/* CTA Button */}
               <div className="flex justify-center lg:justify-start">
-                <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                  Découvrir nos solutions
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200"
+                >
+                  Prendre rendez-vous
                 </button>
               </div>
             </div>
@@ -35,7 +38,7 @@ export default function ImmobilierNeufPage() {
             <div className="w-full lg:w-[467px] flex justify-center lg:justify-end">
               <div className="relative">
                 {/* Decorative background */}
-                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#4EBBBD]/20 rounded-2xl"></div>
+                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#253F60]/20 rounded-2xl"></div>
                 
                 {/* Main image */}
                 <img
@@ -52,8 +55,8 @@ export default function ImmobilierNeufPage() {
                 {/* Floating badge */}
                 <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-full flex items-center justify-center">
-                      <span className="text-white text-lg">✓</span>
+                    <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center">
+                      <span className="text-white text-lg font-bold">1</span>
                     </div>
                     <div>
                       <p className="text-[#112033] font-semibold text-sm">0 €</p>
@@ -73,23 +76,23 @@ export default function ImmobilierNeufPage() {
           {/* Breadcrumb Navigation */}
           <div className="mb-4 sm:mb-6 lg:mb-8">
             <nav className="flex items-center text-xs sm:text-sm lg:text-base">
-              <a href="/" className="text-[#005C69] font-source-sans font-semibold hover:underline">
+              <a href="/" className="text-[#253F60] font-source-sans font-semibold hover:underline">
                 Accueil
               </a>
               <span className="text-[#686868] mx-2">{'>'}</span>
-              <a href="/immobilier" className="text-[#005C69] font-source-sans font-semibold hover:underline">
+              <a href="/immobilier" className="text-[#253F60] font-source-sans font-semibold hover:underline">
                 Immobilier
               </a>
               <span className="text-[#686868] mx-2">{'>'}</span>
-              <span className="text-[#4EBBBD] font-source-sans font-semibold">
+              <span className="text-[#B99066] font-source-sans font-semibold">
                 Immobilier Neuf
               </span>
             </nav>
           </div>
 
           {/* Section VEFA */}
-          <div className="bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+          <div className="bg-white rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12 border border-gray-200">
+            <h2 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
               VEFA (Vente en l'État Futur d'Achèvement)
             </h2>
             <div className="text-center mb-8">
@@ -108,16 +111,16 @@ export default function ImmobilierNeufPage() {
 
           {/* Dispositifs Fiscaux */}
           <div className="mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+            <h2 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
               Les dispositifs fiscaux : Pinel, Scellier, Robien
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="h-48 bg-gradient-to-br from-[#59E2E4] to-[#B99066] flex items-center justify-center">
+                <div className="h-48 bg-[#253F60] flex items-center justify-center">
                   <span className="text-white text-2xl font-bold">Pinel</span>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-3">Loi Pinel</h3>
+                  <h3 className="text-[#253F60] font-cairo font-semibold text-xl mb-3">Loi Pinel</h3>
                   <p className="text-[#374151] font-inter mb-4">Réduction d'impôt jusqu'à 12% du prix d'acquisition sur 12 ans maximum</p>
                   <ul className="text-[#374151] text-sm font-inter space-y-2">
                     <li>• Investissement locatif neuf</li>
@@ -128,11 +131,11 @@ export default function ImmobilierNeufPage() {
                 </div>
               </div>
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="h-48 bg-gradient-to-br from-[#B99066] to-[#59E2E4] flex items-center justify-center">
+                <div className="h-48 bg-[#B99066] flex items-center justify-center">
                   <span className="text-white text-2xl font-bold">Scellier</span>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-3">Loi Scellier</h3>
+                  <h3 className="text-[#253F60] font-cairo font-semibold text-xl mb-3">Loi Scellier</h3>
                   <p className="text-[#374151] font-inter mb-4">Dispositif fiscal pour l'investissement locatif dans le neuf (discontinué)</p>
                   <ul className="text-[#374151] text-sm font-inter space-y-2">
                     <li>• Réduction d'impôt sur le revenu</li>
@@ -143,11 +146,11 @@ export default function ImmobilierNeufPage() {
                 </div>
               </div>
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="h-48 bg-gradient-to-br from-[#59E2E4] to-[#B99066] flex items-center justify-center">
+                <div className="h-48 bg-[#253F60] flex items-center justify-center">
                   <span className="text-white text-2xl font-bold">Robien</span>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-[#005C69] font-cairo font-semibold text-xl mb-3">Loi Robien</h3>
+                  <h3 className="text-[#253F60] font-cairo font-semibold text-xl mb-3">Loi Robien</h3>
                   <p className="text-[#374151] font-inter mb-4">Ancien dispositif fiscal pour l'investissement locatif dans le neuf</p>
                   <ul className="text-[#374151] text-sm font-inter space-y-2">
                     <li>• Réduction d'impôt sur le revenu</li>
@@ -167,7 +170,7 @@ export default function ImmobilierNeufPage() {
               </a>
               <a 
                 href="/immobilier/robien" 
-                className="inline-block bg-[#59E2E4] text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-[#4EBBBD] transition-colors duration-200"
+                className="inline-block bg-[#253F60] text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-[#1E2F4A] transition-colors duration-200"
               >
                 Découvrir Robien
               </a>
@@ -176,7 +179,7 @@ export default function ImmobilierNeufPage() {
 
           {/* Faire Construire */}
           <div className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12">
-            <h2 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
+            <h2 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6 sm:mb-8 text-center">
               Faire construire : terrain + maison
             </h2>
             <div className="text-center mb-8">
@@ -194,7 +197,7 @@ export default function ImmobilierNeufPage() {
           </div>
 
           {/* Conclusion */}
-          <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-8 sm:p-10 lg:p-12 text-center">
+          <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-8 sm:p-10 lg:p-12 text-center">
             <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-4 sm:mb-6">
               Conclusion
             </h2>
@@ -218,14 +221,20 @@ export default function ImmobilierNeufPage() {
             </div>
             
             <p className="text-white text-base sm:text-lg font-inter mb-6 sm:mb-8 max-w-4xl mx-auto">
-              👉 Chez <strong>Azalée Patrimoine</strong>, nous analysons votre profil fiscal, patrimonial et vos objectifs pour bâtir une stratégie sur mesure.
+              Chez <strong>Azalée Patrimoine</strong>, nous analysons votre profil fiscal, patrimonial et vos objectifs pour bâtir une stratégie sur mesure.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-[#005C69] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors duration-200">
+              <button 
+                onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                className="bg-white text-[#253F60] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors duration-200"
+              >
                 Demander un bilan gratuit
               </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#005C69] transition-colors duration-200">
+              <button 
+                onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#253F60] transition-colors duration-200"
+              >
                 Prendre rendez-vous
               </button>
             </div>

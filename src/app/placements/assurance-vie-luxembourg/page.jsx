@@ -168,7 +168,7 @@ export default function AssuranceVieLuxembourgPage() {
             </div>
             
             {/* Right Card */}
-            <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
+            <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
               {/* Icon */}
               <div className="flex items-center gap-4 mb-4 sm:mb-6">
                 <img
@@ -182,7 +182,7 @@ export default function AssuranceVieLuxembourgPage() {
               </div>
               
               {/* Floating Price Card */}
-              <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
+              <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#B99066] to-[#253F60] rounded-full shadow-lg flex items-center justify-center">
                 <div className="text-center text-white font-source-sans font-semibold text-xs sm:text-base lg:text-xl leading-tight px-1 sm:px-0">
                   <span className="hidden sm:block">250k€ →<br /></span>
                   <span className="sm:hidden">250k€</span>
@@ -279,7 +279,7 @@ export default function AssuranceVieLuxembourgPage() {
         <div className="space-y-12">
           <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+              <h2 className="text-[#253F60] text-2xl font-semibold text-center mb-8">
                 {content.fonctionnement.title}
             </h2>
               <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
@@ -308,7 +308,7 @@ export default function AssuranceVieLuxembourgPage() {
           {/* Inconvénients Section */}
           <section className="py-12 bg-white">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+              <h2 className="text-[#253F60] text-2xl font-semibold text-center mb-8">
                 {content.inconvenients.title}
             </h2>
               
@@ -334,7 +334,7 @@ export default function AssuranceVieLuxembourgPage() {
         <div className="space-y-12">
           <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+              <h2 className="text-[#253F60] text-2xl font-semibold text-center mb-8">
                 {content.neutralite.title}
               </h2>
               <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
@@ -355,7 +355,7 @@ export default function AssuranceVieLuxembourgPage() {
                 </div>
               
               <div className="bg-white rounded-xl shadow-lg p-8">
-                <h3 className="text-[#005C69] text-lg font-semibold mb-4">{content.neutralite.exemple.titre}</h3>
+                <h3 className="text-[#253F60] text-lg font-semibold mb-4">{content.neutralite.exemple.titre}</h3>
                 <p className="text-[#374151] text-sm mb-4">{content.neutralite.exemple.description}</p>
                 <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-4 text-white">
                   <p className="text-sm font-medium">👉 {content.neutralite.exemple.conclusion}</p>
@@ -367,7 +367,7 @@ export default function AssuranceVieLuxembourgPage() {
           {/* Transmission Section */}
           <section className="py-12 bg-white">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+              <h2 className="text-[#253F60] text-2xl font-semibold text-center mb-8">
                 {content.transmission.title}
             </h2>
               <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
@@ -400,7 +400,7 @@ export default function AssuranceVieLuxembourgPage() {
         <div className="space-y-12">
           <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+              <h2 className="text-[#253F60] text-2xl font-semibold text-center mb-8">
                 {content.souplesse.title}
             </h2>
               <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
@@ -429,7 +429,7 @@ export default function AssuranceVieLuxembourgPage() {
           {/* Exemple Section */}
           <section className="py-12 bg-white">
             <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+              <h2 className="text-[#253F60] text-2xl font-semibold text-center mb-8">
                 {content.exemple.title}
             </h2>
               <p className="text-[#374151] text-lg text-center mb-8 max-w-3xl mx-auto">
@@ -457,7 +457,7 @@ export default function AssuranceVieLuxembourgPage() {
       {activeTab === "avantages" && (
         <section className="py-12 bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
           <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-[#005C69] text-2xl font-semibold text-center mb-8">
+            <h2 className="text-[#253F60] text-2xl font-semibold text-center mb-8">
               {content.avantages.title}
             </h2>
             

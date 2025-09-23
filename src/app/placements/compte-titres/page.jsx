@@ -385,14 +385,17 @@ export default function CompteTitresPage() {
               
               {/* CTA Button */}
               <div className="flex justify-center lg:justify-start">
-                <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200"
+                >
                   {content.hero.button}
                 </button>
               </div>
             </div>
             
             {/* Right Card */}
-            <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
+            <div className="w-full lg:w-[467px] bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-6 sm:p-8 relative">
               {/* Icon */}
               <div className="flex items-center gap-4 mb-4 sm:mb-6">
                 <img
@@ -406,7 +409,7 @@ export default function CompteTitresPage() {
               </div>
               
               {/* Floating Price Card */}
-              <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#FFB263] to-[#79C3BD] rounded-full shadow-lg flex items-center justify-center">
+              <div className="absolute -top-16 -right-8 w-[51.3px] h-[51.3px] sm:w-[202px] sm:h-[202px] bg-gradient-to-r from-[#B99066] to-[#253F60] rounded-full shadow-lg flex items-center justify-center">
                 <div className="text-center text-white font-source-sans font-semibold text-xs sm:text-base lg:text-xl leading-tight px-1 sm:px-0">
                   <span className="hidden sm:block">100% →<br /></span>
                   <span className="sm:hidden">100%</span>
@@ -953,10 +956,16 @@ export default function CompteTitresPage() {
               <p className="text-sm opacity-90">Optimisation de votre stratégie d'investissement</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200 text-lg">
+              <button 
+                onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67A5A] transition-colors duration-200 text-lg"
+              >
                 🗓️ {content.cta.primaryButton}
               </button>
-              <button className="border-2 border-[#253F60] text-[#253F60] px-8 py-4 rounded-lg font-medium hover:bg-[#253F60] hover:text-white transition-colors duration-200 text-lg">
+              <button 
+                onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                className="border-2 border-[#253F60] text-[#253F60] px-8 py-4 rounded-lg font-medium hover:bg-[#253F60] hover:text-white transition-colors duration-200 text-lg"
+              >
                 📧 {content.cta.secondaryButton}
           </button>
             </div>

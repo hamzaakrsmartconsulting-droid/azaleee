@@ -9,17 +9,17 @@ export default function Page() {
       <Header />
       
       {/* Hero */}
-      <section className="relative w-full bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
             <div className="lg:col-span-2 bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-4">
                 SCI : un outil de gestion et de transmission patrimoniale
               </h1>
-              <p className="text-[#374151] text-base sm:text-lg font-inter leading-relaxed mb-6">
+              <p className="text-[#686868] text-base sm:text-lg font-inter leading-relaxed mb-6">
                 La <strong>Société Civile Immobilière (SCI)</strong> est une structure juridique très utilisée par les familles et les investisseurs pour acheter, gérer et transmettre un bien immobilier à plusieurs. Elle permet de sortir du régime complexe de l'indivision et d'organiser de manière plus claire la répartition des droits et des décisions.
               </p>
-              <p className="text-[#374151] text-base sm:text-lg font-inter leading-relaxed mb-6">
+              <p className="text-[#686868] text-base sm:text-lg font-inter leading-relaxed mb-6">
                 La SCI est ainsi devenue un <strong>véritable outil de stratégie patrimoniale</strong>, que ce soit pour acquérir un bien avec des proches, préparer sa succession ou optimiser la fiscalité de ses revenus immobiliers.
               </p>
               <div className="flex flex-wrap gap-3">
@@ -29,7 +29,7 @@ export default function Page() {
             </div>
             
             {/* Right card */}
-            <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 text-white">
+            <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-6 sm:p-8 text-white">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-2">SCI : gérez et transmettez</h2>
               <p className="text-sm opacity-90 mb-4">Outil puissant de gestion et de transmission patrimoniale</p>
               <ul className="space-y-2 text-sm font-source-sans font-semibold">
@@ -38,8 +38,8 @@ export default function Page() {
                 <li className="flex items-start gap-2"><span>✓</span><span>Optimisation fiscale IR/IS</span></li>
               </ul>
               <div className="mt-6 flex gap-3">
-                <a href="#conseil" className="bg-white text-[#005C69] px-5 py-3 rounded-lg font-inter font-medium hover:bg-gray-100 transition-colors">Conseil expert</a>
-                <a href="#fiscalite" className="border-2 border-white text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#005C69] transition-colors">Fiscalité</a>
+                <a href="#conseil" className="bg-white text-[#112033] px-5 py-3 rounded-lg font-inter font-medium hover:bg-gray-100 transition-colors">Conseil expert</a>
+                <a href="#fiscalite" className="border-2 border-white text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#112033] transition-colors">Fiscalité</a>
               </div>
             </div>
           </div>
@@ -55,8 +55,8 @@ export default function Page() {
               <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">👨‍👩‍👧‍👦</span>
               </div>
-              <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">Souplesse familiale</h3>
-              <p className="text-[#374151] text-sm font-inter">
+              <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-4 text-center">Souplesse familiale</h3>
+              <p className="text-[#686868] text-sm font-inter">
                 La SCI facilite la transmission d'un patrimoine. Les associés peuvent donner progressivement des parts sociales à leurs enfants, tout en bénéficiant de l'abattement de <strong>100 000 € par parent et par enfant</strong>, renouvelable tous les 15 ans. Cela permet d'anticiper une succession tout en conservant une maîtrise sur le patrimoine.
               </p>
             </div>
@@ -65,8 +65,8 @@ export default function Page() {
               <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">⚖️</span>
               </div>
-              <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">Gestion simplifiée</h3>
-              <p className="text-[#374151] text-sm font-inter">
+              <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-4 text-center">Gestion simplifiée</h3>
+              <p className="text-[#686868] text-sm font-inter">
                 Contrairement à l'indivision, source fréquente de blocages entre héritiers, la SCI offre une <strong>gouvernance claire</strong> : un gérant est désigné, et les règles de prise de décision sont fixées dans les statuts.
               </p>
             </div>
@@ -75,11 +75,11 @@ export default function Page() {
               <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">💰</span>
               </div>
-              <h3 className="text-[#005C69] font-cairo font-semibold text-lg mb-4 text-center">Optimisation fiscale</h3>
-              <p className="text-[#374151] text-sm font-inter">
+              <h3 className="text-[#112033] font-cairo font-semibold text-lg mb-4 text-center">Optimisation fiscale</h3>
+              <p className="text-[#686868] text-sm font-inter">
                 La SCI offre la possibilité de choisir entre deux régimes fiscaux :
               </p>
-              <ul className="text-[#374151] text-sm font-inter mt-2 space-y-1">
+              <ul className="text-[#686868] text-sm font-inter mt-2 space-y-1">
                 <li>• <strong>SCI à l'IR</strong> : revenus imposés directement chez les associés</li>
                 <li>• <strong>SCI à l'IS</strong> : amortissement possible du bien</li>
               </ul>
@@ -98,7 +98,7 @@ export default function Page() {
                 <span className="text-white text-2xl">📋</span>
               </div>
               <h3 className="text-[#B99066] font-cairo font-semibold text-lg mb-4 text-center">Formalités de création et de gestion</h3>
-              <p className="text-[#374151] text-sm font-inter">
+              <p className="text-[#686868] text-sm font-inter">
                 Une SCI nécessite des statuts, une assemblée générale annuelle et une comptabilité plus stricte qu'une détention en direct.
               </p>
             </div>
@@ -108,7 +108,7 @@ export default function Page() {
                 <span className="text-white text-2xl">⚠️</span>
               </div>
               <h3 className="text-[#B99066] font-cairo font-semibold text-lg mb-4 text-center">Responsabilité des associés</h3>
-              <p className="text-[#374151] text-sm font-inter">
+              <p className="text-[#686868] text-sm font-inter">
                 Chacun est <strong>indéfiniment responsable</strong> des dettes sociales, à hauteur de sa participation.
               </p>
             </div>
@@ -118,7 +118,7 @@ export default function Page() {
                 <span className="text-white text-2xl">🎯</span>
               </div>
               <h3 className="text-[#B99066] font-cairo font-semibold text-lg mb-4 text-center">Choix fiscal piégeux</h3>
-              <p className="text-[#374151] text-sm font-inter">
+              <p className="text-[#686868] text-sm font-inter">
                 Le passage à l'IS peut sembler attractif (grâce à l'amortissement), mais il entraîne une <strong>fiscalité lourde sur la plus-value</strong> à la revente, car celle-ci est calculée sur la valeur nette comptable (après amortissements) et non sur le prix d'achat.
               </p>
             </div>
@@ -182,7 +182,7 @@ export default function Page() {
                     <th className="text-left text-[#112033] font-source-sans font-semibold px-4 py-3">SCI à l'IS</th>
                   </tr>
                 </thead>
-                <tbody className="text-[#374151] font-inter">
+                <tbody className="text-[#686868] font-inter">
                   <tr className="border-t">
                     <td className="px-4 py-3 font-medium">Imposition des revenus</td>
                     <td className="px-4 py-3">Directement chez les associés (revenus fonciers)</td>
@@ -258,7 +258,7 @@ export default function Page() {
       {/* Conseil Azalée Patrimoine */}
       <section id="conseil" className="w-full bg-white py-10 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-6 sm:p-8 lg:p-10 text-white">
+          <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-6 sm:p-8 lg:p-10 text-white">
             <h2 className="text-white text-2xl sm:text-3xl font-cairo font-semibold mb-6 text-center">
               🎯 Conseil Azalée Patrimoine
             </h2>
@@ -310,7 +310,7 @@ export default function Page() {
       {/* CTA Final */}
       <section className="w-full bg-[#F2F2F2] py-10 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-8 sm:p-10 lg:p-12 text-center">
+          <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-8 sm:p-10 lg:p-12 text-center">
             <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-4 sm:mb-6">
               Prêt à créer votre SCI ?
             </h2>
@@ -318,10 +318,10 @@ export default function Page() {
               Nos experts Azalée Patrimoine vous accompagnent pour savoir si la SCI est adaptée à votre situation et définir la fiscalité la plus avantageuse (IR ou IS).
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-[#005C69] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors duration-200">
+              <button className="bg-white text-[#112033] px-8 py-4 rounded-lg font-inter font-semibold hover:bg-gray-100 transition-colors duration-200">
                 Prendre rendez-vous
               </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#005C69] transition-colors duration-200">
+              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold hover:bg-white hover:text-[#112033] transition-colors duration-200">
                 Nous écrire
               </button>
             </div>

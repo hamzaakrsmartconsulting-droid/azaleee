@@ -202,13 +202,13 @@ export default function AutresPage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-[#112033] via-[#19515e] to-[#4EBBBD] text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#4EBBBD] rounded-full opacity-10 transform translate-x-48 -translate-y-48"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#B99066] rounded-full opacity-10 transform translate-x-48 -translate-y-48"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#b99066] rounded-full opacity-10 transform -translate-x-32 translate-y-32"></div>
         
         <div className="relative max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="inline-flex items-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
-              <span className="w-2 h-2 bg-[#4EBBBD] rounded-full mr-2"></span>
+              <span className="w-2 h-2 bg-[#B99066] rounded-full mr-2"></span>
               Outils spécialisés
             </div>
             <h1 className="text-5xl font-bold mb-6 leading-tight">
@@ -275,7 +275,7 @@ export default function AutresPage() {
                 onClick={() => setSelectedCategory(key)}
                 className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
                   selectedCategory === key
-                    ? 'bg-[#4EBBBD] text-white shadow-lg'
+                    ? 'bg-[#B99066] text-white shadow-lg'
                     : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
                 }`}
               >
@@ -295,7 +295,7 @@ export default function AutresPage() {
                 <div className="p-8">
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-3xl">{tool.icon}</div>
-                    <span className="px-3 py-1 bg-[#4EBBBD] bg-opacity-10 text-[#4EBBBD] rounded-full text-sm font-medium">
+                    <span className="px-3 py-1 bg-[#B99066] bg-opacity-10 text-[#4EBBBD] rounded-full text-sm font-medium">
                       {content.categories[tool.category]}
                     </span>
                   </div>
@@ -368,7 +368,7 @@ export default function AutresPage() {
               placeholder={content.newsletter.placeholder}
               className="flex-1 px-6 py-3 rounded-xl border-0 focus:ring-4 focus:ring-[#4EBBBD] focus:ring-opacity-20"
             />
-            <button className="px-8 py-3 bg-[#4EBBBD] text-white font-bold rounded-xl hover:bg-[#3DA8AA] transition-colors">
+            <button className="px-8 py-3 bg-[#B99066] text-white font-bold rounded-xl hover:bg-[#A67A5A] transition-colors">
               S'abonner
             </button>
           </div>
@@ -389,40 +389,40 @@ export default function AutresPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Chat en direct</h3>
               <p className="text-gray-600 mb-6">Obtenez une réponse immédiate à vos questions</p>
-              <button className="px-6 py-3 bg-[#4EBBBD] text-white font-semibold rounded-xl hover:bg-[#3DA8AA] transition-colors">
+              <button className="px-6 py-3 bg-[#B99066] text-white font-semibold rounded-xl hover:bg-[#A67A5A] transition-colors">
                 Démarrer le chat
               </button>
             </div>
             
             <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Appel téléphonique</h3>
               <p className="text-gray-600 mb-6">Parlez directement avec un conseiller</p>
-              <button className="px-6 py-3 bg-[#4EBBBD] text-white font-semibold rounded-xl hover:bg-[#3DA8AA] transition-colors">
+              <button className="px-6 py-3 bg-[#B99066] text-white font-semibold rounded-xl hover:bg-[#A67A5A] transition-colors">
                 Appeler maintenant
               </button>
             </div>
             
             <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Rendez-vous</h3>
               <p className="text-gray-600 mb-6">Planifiez un entretien personnalisé</p>
-              <button className="px-6 py-3 bg-[#4EBBBD] text-white font-semibold rounded-xl hover:bg-[#3DA8AA] transition-colors">
+              <button className="px-6 py-3 bg-[#B99066] text-white font-semibold rounded-xl hover:bg-[#A67A5A] transition-colors">
                 Prendre RDV
               </button>
             </div>
@@ -432,6 +432,8 @@ export default function AutresPage() {
     </div>
   );
 }
+
+
 
 
 
