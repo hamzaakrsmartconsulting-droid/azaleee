@@ -228,24 +228,27 @@ export default function PatrimoinePage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
             {/* Left Content */}
             <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               {/* Main Title */}
-              <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
-                {content.hero?.title || defaultContent.hero.title}
+              <h1 className="text-[#253F60] text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
+                {(content.hero?.title || defaultContent.hero.title).replace(/\s+\d+$/, '')}
               </h1>
               
               {/* Description */}
-              <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
+              <p className="text-[#686868] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
                 {content.hero?.description || defaultContent.hero.description}
               </p>
               
               {/* CTA Button */}
               <div className="flex justify-center lg:justify-start">
-                <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200"
+                >
                   {content.hero?.ctaText || defaultContent.hero.ctaText}
                 </button>
               </div>
@@ -255,7 +258,7 @@ export default function PatrimoinePage() {
             <div className="w-full lg:w-[467px] flex justify-center lg:justify-end">
               <div className="relative">
                 {/* Decorative background */}
-                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#4EBBBD]/20 rounded-2xl"></div>
+                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#253F60]/20 rounded-2xl"></div>
                 
                 {/* Main image */}
                 <img
@@ -272,7 +275,7 @@ export default function PatrimoinePage() {
                 {/* Floating badge */}
                 <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center">
                       <span className="text-white text-lg">✓</span>
                     </div>
                     <div>
@@ -291,13 +294,13 @@ export default function PatrimoinePage() {
       {content.services && (
         <section className="w-full bg-gray-50 py-8 sm:py-12 lg:py-16">
           <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-8 sm:mb-12 text-center">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-8 sm:mb-12 text-center">
               {content.services.title || defaultContent.services.title}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {(content.services.services || defaultContent.services.services).map((service, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-                  <h4 className="text-[#005C69] text-lg font-semibold mb-3">{service.name}</h4>
+                  <h4 className="text-[#253F60] text-lg font-semibold mb-3">{service.name}</h4>
                   <p className="text-gray-600 text-sm">{service.description}</p>
                 </div>
               ))}
@@ -310,16 +313,16 @@ export default function PatrimoinePage() {
       {content.advantages && (
         <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
           <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-8 sm:mb-12 text-center">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-8 sm:mb-12 text-center">
               {content.advantages.title || defaultContent.advantages.title}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {(content.advantages.advantages || defaultContent.advantages.advantages).map((advantage, index) => (
                 <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white text-xl font-bold">{index + 1}</span>
                   </div>
-                  <h4 className="text-[#005C69] text-lg font-semibold mb-2">{advantage.title}</h4>
+                  <h4 className="text-[#253F60] text-lg font-semibold mb-2">{advantage.title}</h4>
                   <p className="text-gray-600 text-sm">{advantage.description}</p>
                 </div>
               ))}
@@ -330,7 +333,7 @@ export default function PatrimoinePage() {
 
       {/* CTA Section */}
       {content.cta && (
-        <section className="w-full bg-[#005C69] py-8 sm:py-12 lg:py-16">
+        <section className="w-full bg-[#253F60] py-8 sm:py-12 lg:py-16">
           <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h3 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-4">
               {content.cta.title || defaultContent.cta.title}
@@ -338,7 +341,10 @@ export default function PatrimoinePage() {
             <p className="text-gray-200 text-base sm:text-lg mb-8 max-w-3xl mx-auto">
               {content.cta.description || defaultContent.cta.description}
             </p>
-            <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-semibold text-lg hover:bg-[#A67A5A] transition-colors duration-200">
+            <button 
+              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+              className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-semibold text-lg hover:bg-[#A67A5A] transition-colors duration-200"
+            >
               {content.cta.buttonText || defaultContent.cta.buttonText}
             </button>
           </div>
@@ -351,11 +357,11 @@ export default function PatrimoinePage() {
           {/* Breadcrumb Navigation */}
           <div className="mb-4 sm:mb-6 lg:mb-8">
             <nav className="flex items-center text-xs sm:text-sm lg:text-base">
-              <a href="#" className="text-[#005C69] font-source-sans font-semibold hover:underline">
+              <a href="#" className="text-[#253F60] font-source-sans font-semibold hover:underline">
                 {content.breadcrumb?.homeText || defaultContent.breadcrumb.homeText}
               </a>
               <span className="text-[#686868] mx-2">{'>'}</span>
-              <span className="text-[#4EBBBD] font-source-sans font-semibold">
+              <span className="text-[#B99066] font-source-sans font-semibold">
                 {content.breadcrumb?.currentPage || defaultContent.breadcrumb.currentPage}
               </span>
             </nav>
@@ -373,7 +379,7 @@ export default function PatrimoinePage() {
                 <div className="space-y-4 sm:space-y-6">
                   {(content.essentielDetail?.cards || defaultContent.essentielDetail.cards).map((card, index) => (
                     <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-lg p-4 sm:p-6">
-                      <h3 className="text-[#005C69] text-base sm:text-lg font-source-sans font-semibold mb-2 sm:mb-3">
+                      <h3 className="text-[#253F60] text-base sm:text-lg font-source-sans font-semibold mb-2 sm:mb-3">
                         {card.title}
                       </h3>
                       <p className="text-[#374151] text-sm sm:text-base font-inter leading-relaxed">
@@ -386,7 +392,7 @@ export default function PatrimoinePage() {
               
               {/* Right Content */}
               <div className="w-full lg:w-1/3">
-                <div className="bg-gradient-to-br from-[#59E2E4] to-[#B99066] rounded-lg p-4 sm:p-6 text-white">
+                <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-lg p-4 sm:p-6 text-white">
                   <h3 className="text-xl sm:text-2xl font-source-sans font-semibold mb-4 sm:mb-6">
                     {content.whyChoose?.title || defaultContent.whyChoose.title}
                   </h3>
@@ -400,7 +406,10 @@ export default function PatrimoinePage() {
                     ))}
                   </ul>
                   
-                  <button className="w-full bg-white text-[#005C69] mt-6 sm:mt-8 py-3 sm:py-4 rounded-lg font-source-sans font-semibold text-sm sm:text-base hover:bg-gray-100 transition-colors duration-200">
+                  <button 
+                    onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                    className="w-full bg-white text-[#253F60] mt-6 sm:mt-8 py-3 sm:py-4 rounded-lg font-source-sans font-semibold text-sm sm:text-base hover:bg-gray-100 transition-colors duration-200"
+                  >
                     {content.whyChoose?.buttonText || defaultContent.whyChoose.buttonText}
                   </button>
                 </div>
@@ -412,13 +421,16 @@ export default function PatrimoinePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {(content.servicesGrid?.services || defaultContent.servicesGrid.services).map((service, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg p-4 sm:p-6 border border-gray-100">
-                <h3 className="text-[#005C69] text-lg sm:text-xl font-source-sans font-semibold mb-3 sm:mb-4">
+                <h3 className="text-[#253F60] text-lg sm:text-xl font-source-sans font-semibold mb-3 sm:mb-4">
                   {service.title}
                 </h3>
                 <p className="text-[#374151] text-sm sm:text-base font-inter leading-relaxed mb-4 sm:mb-6">
                   {service.description}
                 </p>
-                <button className="text-[#4EBBBD] font-source-sans font-semibold text-sm sm:text-base hover:underline">
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="text-[#B99066] font-source-sans font-semibold text-sm sm:text-base hover:underline"
+                >
                   {service.buttonText}
                 </button>
               </div>
