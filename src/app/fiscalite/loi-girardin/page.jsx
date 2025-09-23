@@ -150,17 +150,17 @@ export default function LoiGirardinPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-[#253F60] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-[#253F60] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+              <h1 className="text-2xl sm:text-3xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
                 {content.hero?.title || defaultContent.hero.title}
               </h1>
-              <p className="text-lg text-white mb-4 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-white mb-3 sm:mb-4 leading-relaxed">
                 {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
-              <p className="text-white mb-8">
+              <p className="text-sm sm:text-base text-white mb-6 sm:mb-8">
                 {content.hero?.description || defaultContent.hero.description}
               </p>
             </div>

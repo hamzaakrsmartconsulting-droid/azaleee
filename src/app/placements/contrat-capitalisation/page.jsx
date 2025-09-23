@@ -17,15 +17,15 @@ export default function ContratCapitalisationPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#B99066] to-[#253F60] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="w-full lg:w-1/2">
-              <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
+              <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
                 Le contrat de capitalisation : un outil patrimonial puissant et complémentaire à l'assurance-vie
             </h1>
-              <p className="text-[#686868] text-lg font-inter leading-relaxed mb-8">
+              <p className="text-white text-lg font-inter leading-relaxed mb-8">
                 Souvent éclipsé par la notoriété de l'assurance-vie, le <strong>contrat de capitalisation</strong> est pourtant un instrument patrimonial incontournable pour diversifier son épargne et optimiser sa fiscalité.
               </p>
               <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg mb-8">
@@ -47,7 +47,7 @@ export default function ContratCapitalisationPage() {
             <div className="w-full lg:w-1/2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white text-2xl">⚖️</span>
               </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Complémentaire</h3>
@@ -67,7 +67,7 @@ export default function ContratCapitalisationPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">📊</span>
               </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Supports identiques</h3>
@@ -77,7 +77,7 @@ export default function ContratCapitalisationPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white text-2xl">🔄</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Antériorité fiscale</h3>
@@ -113,7 +113,7 @@ export default function ContratCapitalisationPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Supports d'investissement */}
-            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-gradient-to-br from-[#253F60] to-[#3A5A7A] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-[#4EBBBD] text-2xl">📊</span>
@@ -180,7 +180,7 @@ export default function ContratCapitalisationPage() {
             {/* Succession */}
             <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#4EBBBD]">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-[#4EBBBD] rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#253F60] rounded-lg flex items-center justify-center">
                   <span className="text-white text-xl">🔄</span>
                 </div>
                 <div>
@@ -232,7 +232,7 @@ export default function ContratCapitalisationPage() {
             {/* Souscription par personnes morales */}
             <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#59E2E4]">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-[#59E2E4] rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#253F60] rounded-lg flex items-center justify-center">
                   <span className="text-white text-xl">🏢</span>
                 </div>
                 <div>
@@ -256,7 +256,7 @@ export default function ContratCapitalisationPage() {
             </div>
           </div>
 
-          <div className="mt-8 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+          <div className="mt-8 bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg shadow-lg p-8 text-white">
             <h3 className="text-xl font-semibold mb-6 text-center">
               👉 En résumé :
             </h3>
@@ -289,7 +289,7 @@ export default function ContratCapitalisationPage() {
             </p>
           </div>
 
-          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white mb-8">
+          <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg shadow-lg p-8 text-white mb-8">
             <h3 className="text-xl font-semibold mb-6 text-center">
               Avantages pour une SCI à l'IS
             </h3>
@@ -503,7 +503,7 @@ export default function ContratCapitalisationPage() {
             </h2>
           </div>
 
-          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white mb-8">
+          <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg shadow-lg p-8 text-white mb-8">
             <h3 className="text-xl font-semibold mb-6 text-center">
               Monsieur A, 68 ans, détient 400 000 € répartis entre assurance-vie et liquidités
               </h3>
@@ -619,7 +619,7 @@ export default function ContratCapitalisationPage() {
             </div>
             </div>
 
-          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+          <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg shadow-lg p-8 text-white">
             <h3 className="text-xl font-semibold mb-6 text-center">
               👉 L'assurance-vie et le contrat de capitalisation ne s'opposent pas : ils se complètent.
               </h3>
@@ -654,14 +654,14 @@ export default function ContratCapitalisationPage() {
           <div className="bg-white rounded-lg shadow-lg p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="text-center">
-                <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white text-2xl">📞</span>
                 </div>
                 <h3 className="text-[#112033] text-xl font-semibold mb-3">Appelez-nous</h3>
                 <p className="text-[#686868] text-sm mb-4">
                   Un conseiller vous accompagne dans votre stratégie patrimoniale.
                 </p>
-                <button className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#3A9B9D] transition-colors duration-200">
+                <button className="bg-[#253F60] text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#1A2A4A] transition-colors duration-200">
                   Prendre rendez-vous
                 </button>
               </div>
@@ -690,7 +690,7 @@ export default function ContratCapitalisationPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-gradient-to-r from-[#59E2E4] to-[#B99066] py-12 sm:py-16 lg:py-20">
+      <section className="w-full bg-gradient-to-r from-[#B99066] to-[#253F60] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
             Prêt à intégrer un contrat de capitalisation dans votre stratégie ?
@@ -700,10 +700,10 @@ export default function ContratCapitalisationPage() {
             ou pour optimiser la trésorerie de votre société.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
+            <button className="bg-white text-[#253F60] px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
               Analyser mon patrimoine
             </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#4EBBBD] transition-colors duration-200">
+            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#253F60] transition-colors duration-200">
               Prendre rendez-vous
           </button>
           </div>

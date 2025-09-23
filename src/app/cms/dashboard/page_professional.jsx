@@ -79,8 +79,8 @@ export default function ProfessionalCMSDashboard() {
             <div className="flex items-center">
               {/* Logo Azalee Professionnel */}
               <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center mr-6 shadow-lg">
-                  <div className="text-white font-bold text-xl">A</div>
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center mr-6 shadow-lg">
+                  <div className="text-white font-bold text-2xl">A</div>
                 </div>
                 <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                   <CheckCircleIcon className="w-4 h-4 text-white" />

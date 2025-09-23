@@ -12,7 +12,7 @@ export default function DeclarationImpotsPage() {
   // Default content structure
   const defaultContent = {
     hero: {
-      title: "Déclaration d'impôts",
+      title: "Déclaration de revenus",
       description: "Guide complet pour déclarer vos impôts en toute sérénité. Découvrez les étapes, les documents nécessaires et nos conseils d'experts."
     },
     tabs: {
@@ -218,22 +218,22 @@ export default function DeclarationImpotsPage() {
       <Header />
 
       {/* Hero Section with Gradient Background */}
-      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-6">
-            <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="mb-4 sm:mb-6">
+            <span className="inline-block bg-[#B99066] text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
               Guide complet
             </span>
           </div>
-          <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
+          <h1 className="text-white text-2xl sm:text-3xl lg:text-5xl font-semibold leading-tight mb-4 sm:mb-6">
             {content.hero?.title || defaultContent.hero.title}
           </h1>
-          <p className="max-w-4xl mx-auto text-[#686868] text-base sm:text-lg leading-relaxed mb-8">
+          <p className="max-w-4xl mx-auto text-white text-base sm:text-lg leading-relaxed mb-8">
             {content.hero?.description || defaultContent.hero.description}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button 
-              className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200"
+              className="bg-[#253F60] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#1A2A4A] transition-colors duration-200"
               onClick={() => window.location.href = '/outils/calculatrice-impots'}
             >
               Simuler ma déclaration
@@ -247,7 +247,7 @@ export default function DeclarationImpotsPage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 text-center">
-              <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-3">
+              <div className="w-12 h-12 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-3">
               </div>
               <p className="text-[#686868] text-sm uppercase tracking-wide mb-1">Régularisation</p>
               <p className="text-[#112033] text-2xl font-semibold">Septembre</p>
@@ -261,7 +261,7 @@ export default function DeclarationImpotsPage() {
               <p className="text-[#686868] text-xs mt-1">Depuis 2019</p>
             </div>
             <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 text-center">
-              <div className="w-12 h-12 bg-[#008D78] rounded-full flex items-center justify-center mx-auto mb-3">
+              <div className="w-12 h-12 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-3">
               </div>
               <p className="text-[#686868] text-sm uppercase tracking-wide mb-1">Obligatoire</p>
               <p className="text-[#112033] text-2xl font-semibold">Déclaration</p>
@@ -272,16 +272,16 @@ export default function DeclarationImpotsPage() {
       </div>
 
       {/* Tab Navigation */}
-      <section className="py-12 bg-white">
+      <section className="py-8 sm:py-12 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                className={`flex items-center gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-medium text-xs sm:text-sm transition-all duration-200 ${
                   activeTab === tab.id
-                    ? "bg-[#4EBBBD] text-white shadow-lg"
+                    ? "bg-[#253F60] text-white shadow-lg"
                     : "bg-gray-100 text-[#686868] hover:bg-gray-200"
                 }`}
               >
@@ -294,14 +294,14 @@ export default function DeclarationImpotsPage() {
           <div className="min-h-[400px]">
             {activeTab === "general" && (
               <div className="space-y-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-[#112033] text-2xl font-semibold mb-4">Prélèvement à la source depuis 2019</h2>
-                  <p className="text-[#686868] text-lg">Les contribuables sont imposés au fil de l'eau, mais la déclaration reste obligatoire</p>
+                <div className="text-center mb-6 sm:mb-8">
+                  <h2 className="text-[#112033] text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Prélèvement à la source depuis 2019</h2>
+                  <p className="text-[#686868] text-sm sm:text-base lg:text-lg">Les contribuables sont imposés au fil de l'eau, mais la déclaration reste obligatoire</p>
                 </div>
                 
-                <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-                  <h3 className="text-[#112033] text-xl font-semibold mb-4">Pourquoi la déclaration reste-t-elle obligatoire ?</h3>
-                  <p className="text-[#374151] text-base leading-relaxed mb-4">
+                <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+                  <h3 className="text-[#112033] text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Pourquoi la déclaration reste-t-elle obligatoire ?</h3>
+                  <p className="text-[#374151] text-sm sm:text-base leading-relaxed mb-3 sm:mb-4">
                     Depuis la mise en place du prélèvement à la source, les contribuables sont imposés au fil de l'eau. 
                     Pourtant, la déclaration reste obligatoire car elle permet de régulariser la situation.
                   </p>
@@ -447,7 +447,7 @@ export default function DeclarationImpotsPage() {
                   
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="bg-gradient-to-br from-[#E8F5E8] to-[#D4EDDA] rounded-xl p-6 text-center">
-                      <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-3">
+                      <div className="w-12 h-12 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-3">
                       </div>
                       <h4 className="text-[#112033] font-semibold mb-2">Taux optimisé</h4>
                       <p className="text-[#686868] text-sm">Plus proche de votre charge fiscale effective</p>
@@ -461,7 +461,7 @@ export default function DeclarationImpotsPage() {
                     </div>
                     
                     <div className="bg-gradient-to-br from-[#E3F2FD] to-[#BBDEFB] rounded-xl p-6 text-center">
-                      <div className="w-12 h-12 bg-[#008D78] rounded-full flex items-center justify-center mx-auto mb-3">
+                      <div className="w-12 h-12 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-3">
                       </div>
                       <h4 className="text-[#112033] font-semibold mb-2">Stratégie patrimoniale</h4>
                       <p className="text-[#686868] text-sm">Anticiper et optimiser sur plusieurs années</p>
@@ -469,7 +469,7 @@ export default function DeclarationImpotsPage() {
                       </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+                <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
                   <h3 className="text-xl font-semibold mb-4">
                     {content.cta?.title || defaultContent.cta.title}
                   </h3>
@@ -477,11 +477,11 @@ export default function DeclarationImpotsPage() {
                     {content.cta?.description || defaultContent.cta.description}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button className="bg-white text-[#005C69] px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200">
+                    <button className="bg-[#B99066] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200">
                       {content.cta?.buttonText || defaultContent.cta.buttonText}
                     </button>
                     <button 
-                      className="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-[#005C69] transition-colors duration-200"
+                      className="bg-[#B99066] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200"
                       onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
                     >
                       Prendre rendez-vous
@@ -495,7 +495,7 @@ export default function DeclarationImpotsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-[#F2F2F2] to-[#E5E5E5]">
+      <section className="py-16 bg-gradient-to-r from-[#253F60] to-[#B99066]">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 text-center">
             <h2 className="text-[#112033] text-2xl lg:text-3xl font-semibold mb-4">
@@ -506,7 +506,7 @@ export default function DeclarationImpotsPage() {
               comprendre et optimiser sa fiscalité. Bien réalisée, elle peut permettre de récupérer des sommes importantes et d'anticiper 
               la charge fiscale de l'année suivante.
             </p>
-            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-6 text-white mb-8">
               <h3 className="text-xl font-semibold mb-3">Évaluez dès maintenant votre impôt réel avec un conseiller Azalée Patrimoine</h3>
               <p className="text-sm opacity-90">
                 Transformez votre déclaration en véritable outil d'optimisation patrimoniale
@@ -514,7 +514,7 @@ export default function DeclarationImpotsPage() {
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button 
-                className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg"
+                className="border-2 border-[#B99066] text-[#B99066] px-8 py-4 rounded-lg font-medium hover:bg-[#B99066] hover:text-white transition-colors duration-200 text-lg"
                 onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
               >
                 Prendre rendez-vous

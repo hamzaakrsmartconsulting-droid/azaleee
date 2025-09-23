@@ -142,23 +142,23 @@ export default function AssuranceViePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div>
-              <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <span className="inline-block bg-[#B99066] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
                 1 900 milliards d'encours
               </span>
-              <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
+              <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
                 {content.hero.title}
               </h1>
-              <p className="text-[#686868] text-lg leading-relaxed mb-4">
+              <p className="text-white text-lg leading-relaxed mb-4">
                 {content.hero.subtitle}
               </p>
-              <p className="text-[#686868] text-lg leading-relaxed mb-8">
+              <p className="text-white text-lg leading-relaxed mb-8">
                 {content.hero.description}
               </p>
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
+              <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200 text-lg">
                 {content.hero.button}
               </button>
             </div>
@@ -174,51 +174,51 @@ export default function AssuranceViePage() {
               onClick={() => setActiveTab("enveloppe")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "enveloppe"
-                  ? "bg-[#4EBBBD] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              📌 Enveloppe fiscale
+              Enveloppe fiscale
             </button>
             <button
               onClick={() => setActiveTab("fiscalite")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "fiscalite"
-                  ? "bg-[#4EBBBD] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              📊 Fiscalité
+              Fiscalité
             </button>
             <button
               onClick={() => setActiveTab("transmission")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "transmission"
-                  ? "bg-[#4EBBBD] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              👵 Transmission
+              Transmission
             </button>
             <button
               onClick={() => setActiveTab("jurisprudence")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "jurisprudence"
-                  ? "bg-[#4EBBBD] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              ⚖️ Jurisprudence
+              Jurisprudence
             </button>
             <button
               onClick={() => setActiveTab("conseil")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "conseil"
-                  ? "bg-[#4EBBBD] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              🎯 Conseil
+              Conseil
             </button>
           </div>
         </div>
@@ -240,7 +240,7 @@ export default function AssuranceViePage() {
                 {content.enveloppe.contenus.map((contenu, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#112033] text-sm font-medium">{contenu}</p>
@@ -249,7 +249,7 @@ export default function AssuranceViePage() {
                 ))}
               </div>
               
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">{content.enveloppe.particularite}</p>
               </div>
             </div>
@@ -269,7 +269,7 @@ export default function AssuranceViePage() {
                 {content.clause.avantages.map((avantage, index) => (
                   <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#112033] text-sm font-medium">{avantage}</p>
@@ -278,7 +278,7 @@ export default function AssuranceViePage() {
                 ))}
               </div>
               
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white">
                 <h3 className="text-lg font-semibold mb-4">Exemple concret</h3>
                 <p className="text-sm">{content.clause.exemple}</p>
               </div>
@@ -302,7 +302,7 @@ export default function AssuranceViePage() {
               {content.fiscalite.criteres.map((critere, index) => (
                 <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                       {index + 1}
                     </div>
                     <p className="text-[#112033] text-sm font-medium">{critere}</p>
@@ -337,7 +337,7 @@ export default function AssuranceViePage() {
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
               <p className="text-lg font-medium">👉 {content.fiscalite.abattement}</p>
             </div>
           </div>
@@ -367,7 +367,7 @@ export default function AssuranceViePage() {
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
               <p className="text-lg font-medium">👉 {content.transmission.attention}</p>
             </div>
           </div>
@@ -390,7 +390,7 @@ export default function AssuranceViePage() {
                 {content.jurisprudence.points.map((point, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#112033] text-sm font-medium">{point}</p>
@@ -399,7 +399,7 @@ export default function AssuranceViePage() {
                 ))}
               </div>
               
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">👉 {content.jurisprudence.resultat}</p>
               </div>
             </div>
@@ -419,7 +419,7 @@ export default function AssuranceViePage() {
                 {content.exemple.points.map((point, index) => (
                   <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#112033] text-sm font-medium">{point}</p>
@@ -451,7 +451,7 @@ export default function AssuranceViePage() {
                 {content.conseil.services.map((service, index) => (
                   <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#112033] text-sm font-medium">{service}</p>
@@ -461,7 +461,7 @@ export default function AssuranceViePage() {
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
               <p className="text-lg font-medium">👉 {content.conseil.conclusion}</p>
             </div>
           </div>
@@ -478,15 +478,15 @@ export default function AssuranceViePage() {
             <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
               {content.cta.subtitle}
             </p>
-            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-6 text-white mb-8">
               <h3 className="text-xl font-semibold mb-3">📧 {content.cta.email}</h3>
               <p className="text-sm opacity-90">Audit gratuit de vos contrats d'assurance-vie</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
+              <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200 text-lg">
                 🗓️ {content.cta.primaryButton}
               </button>
-              <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
+              <button className="border-2 border-[#253F60] text-[#253F60] px-8 py-4 rounded-lg font-medium hover:bg-[#253F60] hover:text-white transition-colors duration-200 text-lg">
                 📧 {content.cta.secondaryButton}
               </button>
             </div>

@@ -1,0 +1,5 @@
+[33m7489751[m[33m ([m[1;36mHEAD -> [m[1;32mprod[m[33m, [m[1;31makrsmart/main[m[33m)[m Update project files and configurations
+[33m17418bc[m[33m ([m[1;31morigin/prod[m[33m)[m Make all fiscalite pages responsive and remove 'Nos domaines d'expertise' title
+[33mcf3457f[m Major updates: Updated fiscalite page content, removed LLI sections, updated service cards, changed hero button text, and cleaned up various fiscal pages
+[33m10cb973[m feat: Update homepage content and remove all pictograms
+[33m989b713[m feat: Complete CMS system implementation with patrimoine pages and bug fixes
