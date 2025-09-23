@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 
-// SCRIPT CONVERSATIONNEL SARA - AZALÉE PATRIMOINE
+// SCRIPT CONVERSATIONNEL SARAH - AZALÉE PATRIMOINE
 // Objectif final : prise de rendez-vous qualifié à fort taux de conversion
 
-const SARA_SCRIPT = {
+const SARAH_SCRIPT = {
   // ACCUEIL — Créer un climat de confiance et d'ouverture
   welcome: {
     message: "Bonjour et bienvenue sur azalee-patrimoine.fr ! Je suis votre conseiller patrimonial virtuel. Vous souhaitez optimiser vos finances, investir, ou anticiper l'avenir ? Je peux vous aider à y voir clair.",
@@ -157,8 +157,8 @@ export default function SaraChatbot() {
       // Initialiser avec le message d'accueil
       addMessage({
         type: 'bot',
-        content: SARA_SCRIPT.welcome.message,
-        options: SARA_SCRIPT.welcome.options
+        content: SARAH_SCRIPT.welcome.message,
+        options: SARAH_SCRIPT.welcome.options
       });
     } catch (error) {
       console.error('Error initializing session:', error);
@@ -240,8 +240,8 @@ export default function SaraChatbot() {
           setTimeout(() => {
             addMessage({
               type: 'bot',
-              content: SARA_SCRIPT.intention.message,
-              options: SARA_SCRIPT.intention.options
+            content: SARAH_SCRIPT.intention.message,
+            options: SARAH_SCRIPT.intention.options
             });
             setIsTyping(false);
           }, 1000);
@@ -260,8 +260,8 @@ export default function SaraChatbot() {
           setTimeout(() => {
             addMessage({
               type: 'bot',
-              content: SARA_SCRIPT.rdv.message,
-              options: SARA_SCRIPT.rdv.options
+            content: SARAH_SCRIPT.rdv.message,
+            options: SARAH_SCRIPT.rdv.options
             });
             setIsTyping(false);
           }, 1000);
@@ -295,7 +295,7 @@ export default function SaraChatbot() {
         break;
 
       case 'profile':
-        const questions = SARA_SCRIPT.profile.questions;
+        const questions = SARAH_SCRIPT.profile.questions;
         const currentQuestion = questions[currentQuestionIndex];
         
         // Sauvegarder la réponse
@@ -328,8 +328,8 @@ export default function SaraChatbot() {
           setTimeout(() => {
             addMessage({
               type: 'bot',
-              content: SARA_SCRIPT.engagement.message,
-              options: SARA_SCRIPT.engagement.options
+            content: SARAH_SCRIPT.engagement.message,
+            options: SARAH_SCRIPT.engagement.options
             });
             setIsTyping(false);
           }, 1000);
@@ -352,8 +352,8 @@ export default function SaraChatbot() {
           setTimeout(() => {
             addMessage({
               type: 'bot',
-              content: SARA_SCRIPT.rdv.message,
-              options: SARA_SCRIPT.rdv.options
+            content: SARAH_SCRIPT.rdv.message,
+            options: SARAH_SCRIPT.rdv.options
             });
             setIsTyping(false);
           }, 1000);
@@ -410,12 +410,12 @@ export default function SaraChatbot() {
         setTimeout(() => {
           addMessage({
             type: 'bot',
-            content: SARA_SCRIPT.profile.message
+            content: SARAH_SCRIPT.profile.message
           });
         }, 1000);
         
         setTimeout(() => {
-          const firstQuestion = SARA_SCRIPT.profile.questions[0];
+          const firstQuestion = SARAH_SCRIPT.profile.questions[0];
           const firstOptions = firstQuestion.type === 'select' && firstQuestion.options 
             ? firstQuestion.options.map(opt => ({ text: opt, value: opt }))
             : [];
@@ -432,7 +432,7 @@ export default function SaraChatbot() {
         break;
 
       case 'profile':
-        const questions = SARA_SCRIPT.profile.questions;
+        const questions = SARAH_SCRIPT.profile.questions;
         const currentQuestion = questions[currentQuestionIndex];
         
         // Sauvegarder la réponse
@@ -466,8 +466,8 @@ export default function SaraChatbot() {
           setTimeout(() => {
             addMessage({
               type: 'bot',
-              content: SARA_SCRIPT.engagement.message,
-              options: SARA_SCRIPT.engagement.options
+            content: SARAH_SCRIPT.engagement.message,
+            options: SARAH_SCRIPT.engagement.options
             });
             setIsTyping(false);
           }, 1000);
@@ -544,24 +544,30 @@ export default function SaraChatbot() {
       {/* Bouton flottant */}
       <button
         onClick={toggleChatbot}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
+        className="fixed bottom-6 right-6 bg-[#B99066] text-white p-4 rounded-full shadow-lg hover:bg-[#A67C52] transition-colors z-50"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
+        <img 
+          src="/images/azalee-patrimoine.png" 
+          alt="AZALEE Logo" 
+          className="w-6 h-6 object-contain"
+        />
       </button>
 
       {/* Chatbot */}
       {isOpen && (
         <div className="fixed bottom-24 right-6 w-96 h-[600px] bg-white border border-gray-200 rounded-lg shadow-xl z-50 flex flex-col">
           {/* Header */}
-          <div className="bg-blue-600 text-white p-4 rounded-t-lg flex items-center justify-between">
+          <div className="bg-[#B99066] text-white p-4 rounded-t-lg flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <span className="text-blue-600 font-bold text-lg">S</span>
+                <img 
+                  src="/images/azalee-patrimoine.png" 
+                  alt="AZALEE Logo" 
+                  className="w-8 h-8 object-contain"
+                />
               </div>
               <div>
-                <h3 className="font-semibold">SARA - Conseiller Patrimonial</h3>
+                <h3 className="font-semibold">SARAH - Conseiller Patrimonial</h3>
                 <p className="text-sm opacity-90">Azalée Patrimoine</p>
               </div>
             </div>

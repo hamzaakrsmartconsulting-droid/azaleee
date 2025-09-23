@@ -144,7 +144,7 @@ export default function AssuranceVieLuxembourgPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
             {/* Left Content */}
@@ -224,51 +224,51 @@ export default function AssuranceVieLuxembourgPage() {
               onClick={() => setActiveTab("fonctionnement")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "fonctionnement"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              📌 Fonctionnement
+              Fonctionnement
             </button>
             <button
               onClick={() => setActiveTab("neutralite")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "neutralite"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              🌍 Neutralité fiscale
+              Neutralité fiscale
             </button>
             <button
               onClick={() => setActiveTab("souplesse")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "souplesse"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              💶 Souplesse
+              Souplesse
             </button>
             <button
               onClick={() => setActiveTab("avantages")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "avantages"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              ✅ Avantages
+              Avantages
             </button>
             <button
               onClick={() => setActiveTab("conseil")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "conseil"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              🎯 Conseil
+              Conseil
             </button>
           </div>
           </div>
@@ -290,7 +290,7 @@ export default function AssuranceVieLuxembourgPage() {
                 {content.fonctionnement.points.map((point, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
               </div>
                       <p className="text-[#374151] text-sm font-medium">{point}</p>
@@ -299,7 +299,7 @@ export default function AssuranceVieLuxembourgPage() {
                 ))}
           </div>
 
-              <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">👉 {content.fonctionnement.difference}</p>
               </div>
             </div>
@@ -345,7 +345,7 @@ export default function AssuranceVieLuxembourgPage() {
                 {content.neutralite.points.map((point, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
               </div>
                       <p className="text-[#374151] text-sm font-medium">{point}</p>
@@ -357,7 +357,7 @@ export default function AssuranceVieLuxembourgPage() {
               <div className="bg-white rounded-xl shadow-lg p-8">
                 <h3 className="text-[#005C69] text-lg font-semibold mb-4">{content.neutralite.exemple.titre}</h3>
                 <p className="text-[#374151] text-sm mb-4">{content.neutralite.exemple.description}</p>
-                <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-lg p-4 text-white">
+                <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-4 text-white">
                   <p className="text-sm font-medium">👉 {content.neutralite.exemple.conclusion}</p>
               </div>
             </div>
@@ -378,7 +378,7 @@ export default function AssuranceVieLuxembourgPage() {
                 {content.transmission.points.map((point, index) => (
                   <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
               </div>
                       <p className="text-[#374151] text-sm font-medium">{point}</p>
@@ -387,7 +387,7 @@ export default function AssuranceVieLuxembourgPage() {
                 ))}
           </div>
 
-              <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">👉 {content.transmission.exemple}</p>
               </div>
             </div>
@@ -411,7 +411,7 @@ export default function AssuranceVieLuxembourgPage() {
                 {content.souplesse.avantages.map((avantage, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
               </div>
                       <p className="text-[#374151] text-sm font-medium">{avantage}</p>
@@ -420,7 +420,7 @@ export default function AssuranceVieLuxembourgPage() {
                 ))}
           </div>
 
-              <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">👉 {content.souplesse.exemple}</p>
               </div>
             </div>
@@ -440,7 +440,7 @@ export default function AssuranceVieLuxembourgPage() {
                 {content.exemple.points.map((point, index) => (
                   <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                 </div>
                       <p className="text-[#374151] text-sm font-medium">{point}</p>
@@ -496,7 +496,7 @@ export default function AssuranceVieLuxembourgPage() {
                 {content.conseil.cibles.map((cible, index) => (
                   <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF] rounded-xl p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#374151] text-sm font-medium">{cible}</p>
@@ -524,7 +524,7 @@ export default function AssuranceVieLuxembourgPage() {
             </div>
           </div>
 
-            <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-8 text-white text-center">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
               <p className="text-lg font-medium">👉 {content.conseil.conclusion}</p>
             </div>
           </div>
@@ -541,7 +541,7 @@ export default function AssuranceVieLuxembourgPage() {
             <p className="text-[#374151] text-lg mb-8 max-w-3xl mx-auto">
               {content.cta.subtitle}
             </p>
-            <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-6 text-white mb-8">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-6 text-white mb-8">
               <h3 className="text-xl font-semibold mb-3">📧 {content.cta.email}</h3>
               <p className="text-sm opacity-90">Stratégie patrimoniale internationale</p>
             </div>

@@ -17,8 +17,8 @@ export default function ProfessionalHeader() {
           {/* Logo Azalee Professionnel avec lien vers l'accueil */}
           <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
             <div className="relative group">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center mr-6 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                <div className="text-white font-bold text-xl">A</div>
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center mr-6 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <div className="text-white font-bold text-2xl">A</div>
               </div>
               <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">

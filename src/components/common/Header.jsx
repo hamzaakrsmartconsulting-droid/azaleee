@@ -8,6 +8,7 @@ import Link from "next/link";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [fiscaliteDropdownOpen, setFiscaliteDropdownOpen] = useState(false);
+  const [fiscaliteTimeoutId, setFiscaliteTimeoutId] = useState(null);
   const [immobilierDropdownOpen, setImmobilierDropdownOpen] = useState(false);
   const [placementsDropdownOpen, setPlacementsDropdownOpen] = useState(false);
   const [retraiteDropdownOpen, setRetraiteDropdownOpen] = useState(false);
@@ -108,6 +109,7 @@ const Header = () => {
   ];
 
   const outilsMenuItems = [
+    { title: "Guide de défiscalisation", path: "/outils-financiers/guide-defiscalisation" },
     { title: "Calculatrice d'impôts", path: "/outils/calculatrice-impots" },
     { title: "Calculs financiers divers", path: "/outils/calculs-financiers" },
     { 
@@ -171,6 +173,21 @@ const Header = () => {
     setPlacementsTimeoutId(id);
   };
 
+  const handleFiscaliteMouseEnter = () => {
+    if (fiscaliteTimeoutId) {
+      clearTimeout(fiscaliteTimeoutId);
+      setFiscaliteTimeoutId(null);
+    }
+    setFiscaliteDropdownOpen(true);
+  };
+
+  const handleFiscaliteMouseLeave = () => {
+    const id = setTimeout(() => {
+      setFiscaliteDropdownOpen(false);
+    }, 100);
+    setFiscaliteTimeoutId(id);
+  };
+
   const handleRetraiteMouseEnter = () => {
     if (retraiteTimeoutId) {
       clearTimeout(retraiteTimeoutId);
@@ -217,36 +234,50 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full bg-global-8 px-4 sm:px-6 lg:px-[100px] py-2 lg:py-0">
+    <header className="w-full bg-[#253F60] lg:bg-gradient-to-r lg:from-[#253F60] lg:to-[#B99066] px-4 sm:px-6 lg:px-[100px] py-2 lg:py-0">
       {/* Top Header Bar */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-2 lg:gap-8 py-2">
         {/* Contact Info */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 w-full lg:w-auto">
+        <div className="hidden lg:flex flex-col sm:flex-row gap-4 sm:gap-8 w-full lg:w-auto">
           <div className="flex items-center gap-2">
+            <div className="bg-white p-1 rounded">
             <img src="/images/img_component_1.svg" className="w-4 h-4" alt="phone" />
-            <span className="text-sm font-segoe text-header-1">01 53 45 85 00</span>
+            </div>
+            <a href="tel:+33153458500" className="text-sm font-segoe text-white hover:text-gray-300 transition-colors duration-200">
+              01 53 45 85 00
+            </a>
           </div>
           <div className="flex items-center gap-2">
+            <div className="bg-white p-1 rounded">
             <img src="/images/img_component_1_light_green_400.svg" className="w-4 h-4" alt="email" />
-            <span className="text-sm font-inter text-header-1">contact@azalee-patrimoine.fr</span>
+            </div>
+            <a href="mailto:contact@azalee-patrimoine.fr" className="text-sm font-inter text-white hover:text-gray-300 transition-colors duration-200">
+              contact@azalee-patrimoine.fr
+            </a>
           </div>
         </div>
 
         {/* Right Section */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full lg:w-auto">
-          {/* Language Switcher */}
+          {/* Espace Client */}
           <div className="ml-2">
+            <Link href="/espace-client" className="bg-[#B99066] lg:bg-[#253F60] text-white px-3 py-1 rounded text-sm font-medium hover:bg-[#A67C52] lg:hover:bg-[#1A2A4A] transition-colors duration-200">
+              Espace client
+            </Link>
+          </div>
+          {/* Language Switcher */}
+          <div className="ml-auto sm:ml-2">
             <LanguageSwitcher />
           </div>
         </div>
       </div>
 
       {/* Main Header */}
-      <div className="relative flex items-center justify-between py-4 lg:py-6 border-t border-gray-100 lg:border-t-0">
+      <div className="relative flex items-center justify-between py-4 lg:py-6 lg:border-t-0">
         {/* Left: Search Icon (mobile only) */}
         <div className="flex-1 flex items-center lg:hidden">
           <button className="p-2">
-            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
@@ -256,8 +287,8 @@ const Header = () => {
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 block lg:hidden flex-shrink-0">
           <Link href="/">
             <img 
-              src="/images/img_header_logo.png" 
-              className="w-[50px] h-[48px] sm:w-[60px] sm:h-[58px] rounded-full mx-auto cursor-pointer hover:opacity-80 transition-opacity" 
+                src="/images/azalee-patrimoine3.png" 
+                className="w-[120px] h-[118px] sm:w-[130px] sm:h-[128px] mx-auto cursor-pointer hover:opacity-80 transition-opacity relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000" 
               alt="Azalee Wealth Logo" 
             />
           </Link>
@@ -266,8 +297,8 @@ const Header = () => {
         <div className="hidden lg:flex flex-shrink-0">
           <Link href="/">
             <img 
-              src="/images/img_header_logo.png" 
-              className="w-[70px] h-[68px] rounded-full cursor-pointer hover:opacity-80 transition-opacity" 
+                src="/images/azalee-patrimoine3.png" 
+                className="w-[140px] h-[138px] cursor-pointer hover:opacity-80 transition-opacity relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000" 
               alt="Azalee Wealth Logo" 
             />
           </Link>
@@ -279,35 +310,35 @@ const Header = () => {
             aria-label="Open menu"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            <div className="w-6 h-0.5 bg-global-1 mb-1"></div>
-            <div className="w-6 h-0.5 bg-global-1 mb-1"></div>
-            <div className="w-6 h-0.5 bg-global-1"></div>
+            <div className="w-6 h-0.5 bg-white mb-1"></div>
+            <div className="w-6 h-0.5 bg-white mb-1"></div>
+            <div className="w-6 h-0.5 bg-white"></div>
           </button>
         </div>
         {/* Navigation Menu */}
-        <nav className={`${menuOpen ? 'block' : 'hidden'} lg:block absolute lg:relative top-full left-0 w-full lg:w-auto bg-global-8 lg:bg-transparent shadow-lg lg:shadow-none z-50`}>
+        <nav className={`${menuOpen ? 'block' : 'hidden'} lg:block absolute lg:relative top-full left-0 w-full lg:w-auto bg-transparent lg:bg-transparent shadow-lg lg:shadow-none z-50`}>
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-6 p-4 lg:p-0">
-            {/* Fiscalité Dropdown */}
+            {/* Patrimoine Dropdown */}
             <div 
               className="relative"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={handlePatrimoineMouseEnter}
+              onMouseLeave={handlePatrimoineMouseLeave}
             >
-              <Link href="/fiscalite" className="text-base font-inter text-global-1 hover:text-global-5 transition-colors flex items-center gap-1">
-                Fiscalité
-                <svg className={`w-4 h-4 transition-transform ${fiscaliteDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <Link href="/patrimoine" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
+                Gestion de patrimoine
+                <svg className={`w-4 h-4 transition-transform ${patrimoineDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </Link>
               
               {/* Desktop Dropdown */}
-              <div className={`${fiscaliteDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 z-50`}>
+              <div className={`${patrimoineDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>
                 <div className="p-4">
-                  {fiscaliteMenuItems.map((item, index) => (
+                  {patrimoineMenuItems.map((item, index) => (
                     <div key={index} className="mb-4 last:mb-0">
                       <Link 
                         href={item.path}
-                        className="block text-sm font-medium text-gray-900 hover:text-global-5 transition-colors mb-2"
+                        className="block text-sm font-medium text-[#253F60] hover:text-[#B99066] transition-colors mb-2"
                       >
                         {item.title}
                       </Link>
@@ -317,7 +348,7 @@ const Header = () => {
                             <div key={subIndex}>
                               <Link 
                                 href={subItem.path}
-                                className="block text-xs text-gray-600 hover:text-global-5 transition-colors py-1"
+                                className="block text-xs text-[#374151] hover:text-[#253F60] transition-colors py-1"
                               >
                                 {subItem.title}
                               </Link>
@@ -327,64 +358,7 @@ const Header = () => {
                                     <Link 
                                       key={subSubIndex}
                                       href={subSubItem.path}
-                                      className="block text-xs text-gray-500 hover:text-global-5 transition-colors py-0.5"
-                                    >
-                                      {subSubItem.title}
-                                    </Link>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Investissement Immobilier Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={handleImmobilierMouseEnter}
-              onMouseLeave={handleImmobilierMouseLeave}
-            >
-              <Link href="/Investissement-immobilier" className="text-base font-inter text-global-1 hover:text-global-5 transition-colors flex items-center gap-1">
-                Investissement immobilier
-                <svg className={`w-4 h-4 transition-transform ${immobilierDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </Link>
-              
-              {/* Desktop Dropdown */}
-              <div className={`${immobilierDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 z-50`}>
-                <div className="p-4">
-                  {immobilierMenuItems.map((item, index) => (
-                    <div key={index} className="mb-4 last:mb-0">
-                      <Link 
-                        href={item.path}
-                        className="block text-sm font-medium text-gray-900 hover:text-global-5 transition-colors mb-2"
-                      >
-                        {item.title}
-                      </Link>
-                      {item.subItems && (
-                        <div className="ml-4 space-y-1">
-                          {item.subItems.map((subItem, subIndex) => (
-                            <div key={subIndex}>
-                              <Link 
-                                href={subItem.path}
-                                className="block text-xs text-gray-600 hover:text-global-5 transition-colors py-1"
-                              >
-                                {subItem.title}
-                              </Link>
-                              {subItem.subItems && (
-                                <div className="ml-4 space-y-1">
-                                  {subItem.subItems.map((subSubItem, subSubIndex) => (
-                                    <Link 
-                                      key={subSubIndex}
-                                      href={subSubItem.path}
-                                      className="block text-xs text-gray-500 hover:text-global-5 transition-colors py-0.5"
+                                      className="block text-xs text-[#686868] hover:text-[#253F60] transition-colors py-0.5"
                                     >
                                       {subSubItem.title}
                                     </Link>
@@ -407,21 +381,21 @@ const Header = () => {
               onMouseEnter={handlePlacementsMouseEnter}
               onMouseLeave={handlePlacementsMouseLeave}
             >
-              <Link href="/placements" className="text-base font-inter text-global-1 hover:text-global-5 transition-colors flex items-center gap-1">
+              <button className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
                 Placements
                 <svg className={`w-4 h-4 transition-transform ${placementsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-              </Link>
+              </button>
               
               {/* Desktop Dropdown */}
-              <div className={`${placementsDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 z-50`}>
+              <div className={`${placementsDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>
                 <div className="p-4">
                   {placementsMenuItems.map((item, index) => (
                     <div key={index} className="mb-4 last:mb-0">
                       <Link 
                         href={item.path}
-                        className="block text-sm font-medium text-gray-900 hover:text-global-5 transition-colors mb-2"
+                        className="block text-sm font-medium text-[#253F60] hover:text-[#B99066] transition-colors mb-2"
                       >
                         {item.title}
                       </Link>
@@ -431,7 +405,7 @@ const Header = () => {
                             <div key={subIndex}>
                               <Link 
                                 href={subItem.path}
-                                className="block text-xs text-gray-600 hover:text-global-5 transition-colors py-1"
+                                className="block text-xs text-[#374151] hover:text-[#253F60] transition-colors py-1"
                               >
                                 {subItem.title}
                               </Link>
@@ -441,7 +415,121 @@ const Header = () => {
                                     <Link 
                                       key={subSubIndex}
                                       href={subSubItem.path}
-                                      className="block text-xs text-gray-500 hover:text-global-5 transition-colors py-0.5"
+                                      className="block text-xs text-[#686868] hover:text-[#253F60] transition-colors py-0.5"
+                                    >
+                                      {subSubItem.title}
+                                    </Link>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Investissement Immobilier Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={handleImmobilierMouseEnter}
+              onMouseLeave={handleImmobilierMouseLeave}
+            >
+              <Link href="/Investissement-immobilier" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
+                Investissement immobilier
+                <svg className={`w-4 h-4 transition-transform ${immobilierDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </Link>
+              
+              {/* Desktop Dropdown */}
+              <div className={`${immobilierDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>
+                <div className="p-4">
+                  {immobilierMenuItems.map((item, index) => (
+                    <div key={index} className="mb-4 last:mb-0">
+                      <Link 
+                        href={item.path}
+                        className="block text-sm font-medium text-[#253F60] hover:text-[#B99066] transition-colors mb-2"
+                      >
+                        {item.title}
+                      </Link>
+                      {item.subItems && (
+                        <div className="ml-4 space-y-1">
+                          {item.subItems.map((subItem, subIndex) => (
+                            <div key={subIndex}>
+                              <Link 
+                                href={subItem.path}
+                                className="block text-xs text-[#374151] hover:text-[#253F60] transition-colors py-1"
+                              >
+                                {subItem.title}
+                              </Link>
+                              {subItem.subItems && (
+                                <div className="ml-4 space-y-1">
+                                  {subItem.subItems.map((subSubItem, subSubIndex) => (
+                                    <Link 
+                                      key={subSubIndex}
+                                      href={subSubItem.path}
+                                      className="block text-xs text-[#686868] hover:text-[#253F60] transition-colors py-0.5"
+                                    >
+                                      {subSubItem.title}
+                                    </Link>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Fiscalité Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={handleFiscaliteMouseEnter}
+              onMouseLeave={handleFiscaliteMouseLeave}
+            >
+              <Link href="/placements" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
+                Fiscalité
+                <svg className={`w-4 h-4 transition-transform ${fiscaliteDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </Link>
+              
+              {/* Desktop Dropdown */}
+              <div className={`${fiscaliteDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>
+                <div className="p-4">
+                  {fiscaliteMenuItems.map((item, index) => (
+                    <div key={index} className="mb-4 last:mb-0">
+                      <Link 
+                        href={item.path}
+                        className="block text-sm font-medium text-[#253F60] hover:text-[#B99066] transition-colors mb-2"
+                      >
+                        {item.title}
+                      </Link>
+                      {item.subItems && (
+                        <div className="ml-4 space-y-1">
+                          {item.subItems.map((subItem, subIndex) => (
+                            <div key={subIndex}>
+                              <Link 
+                                href={subItem.path}
+                                className="block text-xs text-[#374151] hover:text-[#253F60] transition-colors py-1"
+                              >
+                                {subItem.title}
+                              </Link>
+                              {subItem.subItems && (
+                                <div className="ml-4 space-y-1">
+                                  {subItem.subItems.map((subSubItem, subSubIndex) => (
+                                    <Link 
+                                      key={subSubIndex}
+                                      href={subSubItem.path}
+                                      className="block text-xs text-[#686868] hover:text-[#253F60] transition-colors py-0.5"
                                     >
                                       {subSubItem.title}
                                     </Link>
@@ -464,7 +552,7 @@ const Header = () => {
               onMouseEnter={handleRetraiteMouseEnter}
               onMouseLeave={handleRetraiteMouseLeave}
             >
-              <Link href="/retraite" className="text-base font-inter text-global-1 hover:text-global-5 transition-colors flex items-center gap-1">
+              <Link href="/retraite" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
                 Retraite
                 <svg className={`w-4 h-4 transition-transform ${retraiteDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -472,13 +560,13 @@ const Header = () => {
               </Link>
               
               {/* Desktop Dropdown */}
-              <div className={`${retraiteDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 z-50`}>
+              <div className={`${retraiteDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>
                 <div className="p-4">
                   {retraiteMenuItems.map((item, index) => (
                     <div key={index} className="mb-4 last:mb-0">
                       <Link 
                         href={item.path}
-                        className="block text-sm font-medium text-gray-900 hover:text-global-5 transition-colors mb-2"
+                        className="block text-sm font-medium text-[#253F60] hover:text-[#B99066] transition-colors mb-2"
                       >
                         {item.title}
                       </Link>
@@ -488,7 +576,7 @@ const Header = () => {
                             <div key={subIndex}>
                               <Link 
                                 href={subItem.path}
-                                className="block text-xs text-gray-600 hover:text-global-5 transition-colors py-1"
+                                className="block text-xs text-[#374151] hover:text-[#253F60] transition-colors py-1"
                               >
                                 {subItem.title}
                               </Link>
@@ -498,64 +586,7 @@ const Header = () => {
                                     <Link 
                                       key={subSubIndex}
                                       href={subSubItem.path}
-                                      className="block text-xs text-gray-500 hover:text-global-5 transition-colors py-0.5"
-                                    >
-                                      {subSubItem.title}
-                                    </Link>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Patrimoine Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={handlePatrimoineMouseEnter}
-              onMouseLeave={handlePatrimoineMouseLeave}
-            >
-              <Link href="/patrimoine" className="text-base font-inter text-global-1 hover:text-global-5 transition-colors flex items-center gap-1">
-                Patrimoine
-                <svg className={`w-4 h-4 transition-transform ${patrimoineDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </Link>
-              
-              {/* Desktop Dropdown */}
-              <div className={`${patrimoineDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 z-50`}>
-                <div className="p-4">
-                  {patrimoineMenuItems.map((item, index) => (
-                    <div key={index} className="mb-4 last:mb-0">
-                      <Link 
-                        href={item.path}
-                        className="block text-sm font-medium text-gray-900 hover:text-global-5 transition-colors mb-2"
-                      >
-                        {item.title}
-                      </Link>
-                      {item.subItems && (
-                        <div className="ml-4 space-y-1">
-                          {item.subItems.map((subItem, subIndex) => (
-                            <div key={subIndex}>
-                              <Link 
-                                href={subItem.path}
-                                className="block text-xs text-gray-600 hover:text-global-5 transition-colors py-1"
-                              >
-                                {subItem.title}
-                              </Link>
-                              {subItem.subItems && (
-                                <div className="ml-4 space-y-1">
-                                  {subItem.subItems.map((subSubItem, subSubIndex) => (
-                                    <Link 
-                                      key={subSubIndex}
-                                      href={subSubItem.path}
-                                      className="block text-xs text-gray-500 hover:text-global-5 transition-colors py-0.5"
+                                      className="block text-xs text-[#686868] hover:text-[#253F60] transition-colors py-0.5"
                                     >
                                       {subSubItem.title}
                                     </Link>
@@ -578,7 +609,7 @@ const Header = () => {
               onMouseEnter={handleOutilsMouseEnter}
               onMouseLeave={handleOutilsMouseLeave}
             >
-              <Link href="/outils-financiers" className="text-base font-inter text-global-1 hover:text-global-5 transition-colors flex items-center gap-1">
+              <Link href="/outils-financiers" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
                 Outils financiers
                 <svg className={`w-4 h-4 transition-transform ${outilsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -586,13 +617,13 @@ const Header = () => {
               </Link>
               
               {/* Desktop Dropdown */}
-              <div className={`${outilsDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 z-50`}>
+              <div className={`${outilsDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>
                 <div className="p-4">
                   {outilsMenuItems.map((item, index) => (
                     <div key={index} className="mb-4 last:mb-0">
                       <Link 
                         href={item.path}
-                        className="block text-sm font-medium text-gray-900 hover:text-global-5 transition-colors mb-2"
+                        className="block text-sm font-medium text-[#253F60] hover:text-[#B99066] transition-colors mb-2"
                       >
                         {item.title}
                       </Link>
@@ -602,7 +633,7 @@ const Header = () => {
                             <div key={subIndex}>
                               <Link 
                                 href={subItem.path}
-                                className="block text-xs text-gray-600 hover:text-global-5 transition-colors py-1"
+                                className="block text-xs text-[#374151] hover:text-[#253F60] transition-colors py-1"
                               >
                                 {subItem.title}
                               </Link>
@@ -612,7 +643,7 @@ const Header = () => {
                                     <Link 
                                       key={subSubIndex}
                                       href={subSubItem.path}
-                                      className="block text-xs text-gray-500 hover:text-global-5 transition-colors py-0.5"
+                                      className="block text-xs text-[#686868] hover:text-[#253F60] transition-colors py-0.5"
                                     >
                                       {subSubItem.title}
                                     </Link>

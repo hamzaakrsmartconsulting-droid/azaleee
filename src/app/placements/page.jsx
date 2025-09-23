@@ -189,7 +189,7 @@ export default function PlacementsPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
             {/* Left Content */}
@@ -267,7 +267,7 @@ export default function PlacementsPage() {
           {/* L'essentiel Block */}
           <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 lg:p-10 mb-8 sm:mb-12 relative">
             {/* Left Vertical Bar - Mobile/Tablet */}
-            <div className="absolute left-2 sm:left-4 lg:hidden top-0 bottom-0 w-1 bg-[#EB5E4F]"></div>
+            <div className="absolute left-2 sm:left-4 lg:hidden top-0 bottom-0 w-1 bg-[#B99066]"></div>
             
             <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 lg:gap-8">
               {/* Left: Image */}
@@ -282,7 +282,7 @@ export default function PlacementsPage() {
               {/* Right: Content */}
               <div className="flex-1">
                 {/* Title */}
-                <h2 className="text-[#EB5E4F] text-xs sm:text-sm lg:text-4xl font-source-sans font-semibold leading-tight mb-2 sm:mb-3 lg:mb-8">
+                <h2 className="text-[#B99066] text-xs sm:text-sm lg:text-4xl font-source-sans font-semibold leading-tight mb-2 sm:mb-3 lg:mb-8">
                   {content.essentiel?.title || defaultContent.essentiel.title}
                 </h2>
                 
@@ -468,7 +468,7 @@ export default function PlacementsPage() {
           {/* CTA Button */}
           <div className="flex justify-center">
             <button className="bg-gradient-to-r from-[#B99066] to-[#B99066] text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg shadow-lg font-source-sans font-semibold text-base sm:text-lg lg:text-xl hover:bg-[#A67A5A] transition-colors duration-200">
-              lien manquant
+              Prendre rendez-vous
             </button>
           </div>
         </div>
@@ -477,7 +477,7 @@ export default function PlacementsPage() {
       {/* Wealth Building Section */}
       <section className="w-full bg-white py-8 sm:py-12 lg:py-16 relative">
         {/* Left Vertical Bar */}
-        <div className="absolute left-0 top-0 w-1 h-full bg-[#EB5E4F] opacity-50"></div>
+        <div className="absolute left-0 top-0 w-1 h-full bg-[#B99066] opacity-50"></div>
         
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-black text-lg sm:text-xl lg:text-2xl font-source-sans leading-relaxed">
@@ -583,7 +583,7 @@ export default function PlacementsPage() {
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
               {/* Left: Quote Icon */}
               <div className="w-full lg:w-[48px] flex-shrink-0">
-                <div className="w-12 h-12 bg-[#EB5E4F] rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#B99066] rounded-lg flex items-center justify-center">
                   <span className="text-white text-2xl font-bold">"</span>
                 </div>
               </div>
@@ -603,7 +603,7 @@ export default function PlacementsPage() {
             </div>
             
             {/* Left Vertical Bar */}
-            <div className="absolute left-0 top-0 w-1 h-full bg-[#EB5E4F] opacity-50"></div>
+            <div className="absolute left-0 top-0 w-1 h-full bg-[#B99066] opacity-50"></div>
           </div>
         </div>
       </section>

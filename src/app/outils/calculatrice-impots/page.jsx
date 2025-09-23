@@ -10,14 +10,6 @@ export default function CalculatriceImpotsPage() {
       {/* Advanced Financial Calculations Section */}
       <section className="py-16 bg-gradient-to-br from-[#F8FAFB] to-[#E2E8F0]">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#112033] mb-6">
-              Calculs financiers avancés
-            </h2>
-            <p className="text-lg text-[#4A5568] max-w-4xl mx-auto leading-relaxed">
-              Découvrez nos outils professionnels pour optimiser vos investissements et maximiser vos rendements nets.
-            </p>
-          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             {/* Image Section */}

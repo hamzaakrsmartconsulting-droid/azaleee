@@ -368,7 +368,7 @@ export default function CompteTitresPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
             {/* Left Content */}
@@ -448,51 +448,51 @@ export default function CompteTitresPage() {
               onClick={() => setActiveTab("definition")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "definition"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#374151] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              📋 Définition
+              Définition
             </button>
             <button
               onClick={() => setActiveTab("fiscalite")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "fiscalite"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#374151] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              📊 Fiscalité
+              Fiscalité
             </button>
             <button
               onClick={() => setActiveTab("avantages")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "avantages"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#374151] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              ✅ Avantages
+              Avantages
             </button>
             <button
               onClick={() => setActiveTab("speculation")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "speculation"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#374151] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              🚀 Spéculation
+              Spéculation
             </button>
             <button
               onClick={() => setActiveTab("faq")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "faq"
-                  ? "bg-[#B99066] text-white"
-                  : "bg-gray-100 text-[#374151] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
-              ❓ FAQ
+              FAQ
             </button>
           </div>
               </div>
@@ -514,7 +514,7 @@ export default function CompteTitresPage() {
                 {content.definition.contenus.map((contenu, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#374151] text-sm font-medium">{contenu}</p>
@@ -523,7 +523,7 @@ export default function CompteTitresPage() {
                 ))}
             </div>
 
-              <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">👉 {content.definition.conclusion}</p>
               </div>
             </div>
@@ -574,7 +574,7 @@ export default function CompteTitresPage() {
                 {content.utilisation.cas.map((cas, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#005C69] text-sm font-medium">{cas}</p>
@@ -611,7 +611,7 @@ export default function CompteTitresPage() {
               ))}
             </div>
             
-            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
               <p className="text-lg font-medium">👉 {content.fiscalite.conclusion}</p>
             </div>
           </div>
@@ -631,7 +631,7 @@ export default function CompteTitresPage() {
                 {content.avantages.points.map((point, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#005C69] text-sm font-medium">{point}</p>
@@ -673,7 +673,7 @@ export default function CompteTitresPage() {
               <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] text-white">
+                    <thead className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] text-white">
                       <tr>
                         <th className="px-6 py-4 text-left font-semibold">Critère</th>
                         <th className="px-6 py-4 text-left font-semibold">CTO</th>
@@ -693,7 +693,7 @@ export default function CompteTitresPage() {
                 </div>
             </div>
 
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center mt-8">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center mt-8">
                 <p className="text-lg font-medium">👉 {content.comparaison.conclusion}</p>
               </div>
             </div>
@@ -717,7 +717,7 @@ export default function CompteTitresPage() {
                 {content.speculation.produits.map((produit, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#59E2E4] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#253F60] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#005C69] text-sm font-medium">{produit}</p>
@@ -742,7 +742,7 @@ export default function CompteTitresPage() {
                 </ul>
             </div>
 
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">👉 {content.speculation.conclusion}</p>
               </div>
             </div>
@@ -764,7 +764,7 @@ export default function CompteTitresPage() {
               </p>
             </div>
 
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">👉 {content.conseil.conclusion}</p>
               </div>
             </div>
@@ -786,7 +786,7 @@ export default function CompteTitresPage() {
                   <p className="text-[#374151] text-sm mb-4">{faq.answer}</p>
                   
                   {faq.precision && (
-                    <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-4 text-white mb-4">
+                    <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-4 text-white mb-4">
                       <p className="text-sm font-medium">👉 {faq.precision}</p>
                     </div>
                   )}
@@ -870,13 +870,13 @@ export default function CompteTitresPage() {
                   )}
                   
                   {faq.avantage && (
-                    <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-4 text-white">
+                    <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-4 text-white">
                       <p className="text-sm font-medium">👉 {faq.avantage}</p>
                     </div>
                   )}
                   
                   {faq.conclusion && (
-                    <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-4 text-white">
+                    <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-4 text-white">
                       <p className="text-sm font-medium">👉 {faq.conclusion}</p>
                     </div>
                   )}
@@ -948,15 +948,15 @@ export default function CompteTitresPage() {
             <p className="text-[#374151] text-lg mb-8 max-w-3xl mx-auto">
               {content.cta.subtitle}
             </p>
-            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-6 text-white mb-8">
               <h3 className="text-xl font-semibold mb-3">📧 {content.cta.email}</h3>
               <p className="text-sm opacity-90">Optimisation de votre stratégie d'investissement</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="bg-[#59E2E4] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#B99066] transition-colors duration-200 text-lg">
+              <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200 text-lg">
                 🗓️ {content.cta.primaryButton}
               </button>
-              <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#59E2E4] hover:text-white transition-colors duration-200 text-lg">
+              <button className="border-2 border-[#253F60] text-[#253F60] px-8 py-4 rounded-lg font-medium hover:bg-[#253F60] hover:text-white transition-colors duration-200 text-lg">
                 📧 {content.cta.secondaryButton}
           </button>
             </div>
@@ -994,7 +994,7 @@ export default function CompteTitresPage() {
                   )}
                   
                   {section.highlight && (
-                    <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-lg p-4 text-white">
+                    <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-4 text-white">
                       <p className="text-sm font-medium">👉 {section.highlight}</p>
                     </div>
                   )}
@@ -1028,7 +1028,7 @@ export default function CompteTitresPage() {
                           )}
                           
                           {subsection.highlight && (
-                            <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-lg p-3 mb-3 text-white">
+                            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-3 mb-3 text-white">
                               <p className="text-sm font-medium">👉 {subsection.highlight}</p>
                             </div>
                           )}
@@ -1070,7 +1070,7 @@ export default function CompteTitresPage() {
                           )}
                           
                           {subsection.note && (
-                            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-3 text-white">
+                            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-3 text-white">
                               <p className="text-sm font-medium">👉 {subsection.note}</p>
                             </div>
                           )}
@@ -1104,7 +1104,7 @@ export default function CompteTitresPage() {
                     <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                       <div className="overflow-x-auto">
                         <table className="w-full">
-                          <thead className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] text-white">
+                          <thead className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] text-white">
                             <tr>
                               <th className="px-4 py-3 text-left font-semibold">Critère</th>
                               <th className="px-4 py-3 text-left font-semibold">CTO low-cost</th>
@@ -1151,7 +1151,7 @@ export default function CompteTitresPage() {
                   {section.conclusions && (
                     <div className="space-y-2">
                       {section.conclusions.map((conclusion, conclIndex) => (
-                        <div key={conclIndex} className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-lg p-3 text-white">
+                        <div key={conclIndex} className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-3 text-white">
                           <p className="text-sm font-medium">👉 {conclusion}</p>
                         </div>
                       ))}
@@ -1187,7 +1187,7 @@ export default function CompteTitresPage() {
                   )}
                   
                   {section.finalNote && (
-                    <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-4 text-white">
+                    <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-4 text-white">
                       <p className="text-sm font-medium">👉 {section.finalNote}</p>
                     </div>
                   )}
@@ -1243,7 +1243,7 @@ export default function CompteTitresPage() {
               ))}
               
               {/* Call to action */}
-              <div className="bg-gradient-to-r from-[#59E2E4] to-[#B99066] rounded-xl p-6 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-6 text-white text-center">
                 <h3 className="text-lg font-semibold mb-2">
                   Besoin d'un conseil personnalisé ?
                 </h3>

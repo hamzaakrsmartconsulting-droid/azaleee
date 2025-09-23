@@ -33,19 +33,24 @@ const defaultContent = {
         url: "/fiscalite/bases-fiscalite",
         subtitles: [
           { 
-            title: "Impôt sur le revenu", 
+            title: "Réduire l'impôt sur le revenu", 
             url: "/fiscalite/impot-sur-le-revenu",
             description: "Découvrez le fonctionnement de l'impôt sur le revenu, ses catégories et ses règles de calcul."
           },
           { 
-            title: "Déclaration d'impôts", 
+            title: "Baisser les impôts sur les revenus fonciers", 
             url: "/fiscalite/declaration-impots",
             description: "Tout ce qu'il faut savoir pour remplir correctement sa déclaration et éviter les erreurs coûteuses."
           },
           { 
-            title: "Tranches, barèmes et plafonds", 
+            title: "Optimiser la fiscalité des revenus financiers", 
             url: "/fiscalite/tranches-baremes-plafonds",
             description: "Comprendre la progressivité de l'impôt, les seuils applicables et leur impact sur votre fiscalité."
+          },
+          { 
+            title: "Maîtriser la fiscalité du patrimoine", 
+            url: "/fiscalite/patrimoine",
+            description: "Apprenez à optimiser la fiscalité de votre patrimoine et à réduire vos impôts."
           }
         ]
       },
@@ -252,8 +257,7 @@ export default function FiscalitePage() {
             {/* Section Header */}
             <div className="text-center mb-8 sm:mb-12">
               <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 rounded-full mx-auto"></div>
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold text-[#112033] mb-2">Sommaire</h2>
-              <p className="text-[#4A5568] font-inter text-sm sm:text-base">Transformer la fiscalité en levier de performance et de transmission</p>
+              <p className="text-[#4A5568] font-inter text-lg sm:text-xl lg:text-2xl font-semibold">Transformer la fiscalité en levier de performance et de transmission</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12">
@@ -268,16 +272,16 @@ export default function FiscalitePage() {
                         return (
                           <div key={index} className="border-b border-gray-100 pb-4 last:border-b-0">
                             <div className="flex items-start gap-3 p-2 sm:p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
-                              <Link href={item.url} className="text-[#374151] font-inter font-semibold text-sm sm:text-base leading-relaxed hover:text-[#4EBBBD] hover:underline transition-colors duration-200 cursor-pointer">
+                              <h1 className="text-[#374151] font-inter font-semibold text-lg sm:text-xl lg:text-2xl leading-relaxed">
                                 {item.title}
-                              </Link>
+                              </h1>
                             </div>
                             <div className="ml-4 sm:ml-6 space-y-3 mt-2">
                               {item.subtitles.map((subtitle, subIndex) => (
                                 <div key={subIndex} className="border-l-2 border-[#4EBBBD] pl-3 sm:pl-4">
-                                  <Link href={subtitle.url} className="text-[#374151] font-inter font-semibold text-xs sm:text-sm hover:text-[#4EBBBD] hover:underline transition-colors duration-200 cursor-pointer block mb-1">
+                                  <h2 className="text-[#374151] font-inter font-semibold text-sm sm:text-base lg:text-lg block mb-1">
                                     {subtitle.title}
-                                  </Link>
+                                  </h2>
                                   <p className="text-[#6B7280] font-inter text-xs sm:text-sm leading-relaxed">
                                     {subtitle.description}
                                   </p>
@@ -312,7 +316,7 @@ export default function FiscalitePage() {
               </div>
 
               {/* Right: Service Cards */}
-              <div className="lg:col-span-5 order-1 lg:order-2">
+              <div className="lg:col-span-5 order-1 lg:order-2 mt-32 lg:mt-40">
                 <div className="grid grid-cols-1 gap-4 sm:gap-6">
                   {(content.sommaire?.boxes || defaultContent.sommaire.boxes).map((service, index) => (
                      <div key={index} className="bg-[#253F60] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-white">

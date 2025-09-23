@@ -141,17 +141,17 @@ export default function LoisFiscalesPage() {
       </div>
 
       {/* Hero Section with Law Icons */}
-      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-12 sm:py-16 lg:py-20">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-4 sm:mb-6">
-            <span className="inline-block bg-[#4EBBBD] text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
+            <span className="inline-block bg-[#B99066] text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
               {content.hero?.subtitle || defaultContent.hero.subtitle}
             </span>
           </div>
-          <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-5xl font-semibold leading-tight mb-4 sm:mb-6">
+          <h1 className="text-white text-2xl sm:text-3xl lg:text-5xl font-semibold leading-tight mb-4 sm:mb-6">
             {content.hero?.title || defaultContent.hero.title}
           </h1>
-          <p className="max-w-4xl mx-auto text-[#686868] text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8">
+          <p className="max-w-4xl mx-auto text-white text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8">
             {content.hero?.description || defaultContent.hero.description}
           </p>
           
@@ -165,14 +165,27 @@ export default function LoisFiscalesPage() {
               { id: 5, shortName: "Girardin" },
               { id: 6, shortName: "Monument" },
               { id: 7, shortName: "LLI" }
-            ].map((law, index) => (
+            ].map((law, index) => {
+              // Définir les couleurs pour chaque cercle
+              const circleColors = [
+                "bg-[#B99066]", // Pinel - Or AZALEE
+                "bg-[#B99066]", // Malraux - Or AZALEE
+                "bg-[#B99066]", // Cosse - Or AZALEE
+                "bg-[#B99066]", // Denormandie - Or AZALEE
+                "bg-[#B99066]", // Girardin - Or AZALEE
+                "bg-[#B99066]", // Monument - Or AZALEE
+                "bg-[#B99066]" // LLI - Or AZALEE
+              ];
+              
+              return (
               <div key={law.id} className="bg-white rounded-xl shadow-lg p-4 text-center hover:shadow-xl transition-shadow cursor-pointer">
-                <div className="w-12 h-12 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-2">
+                <div className={`w-12 h-12 ${circleColors[index]} text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-2`}>
                   {law.shortName.charAt(0)}
                 </div>
                 <p className="text-[#112033] text-xs font-medium">{law.shortName}</p>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -192,7 +205,7 @@ export default function LoisFiscalesPage() {
                 onClick={() => setSelectedCategory(category.id)}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
                   selectedCategory === category.id
-                    ? "bg-[#4EBBBD] text-white shadow-lg"
+                    ? "bg-[#253F60] text-white shadow-lg"
                     : "bg-gray-100 text-[#686868] hover:bg-gray-200"
                 }`}
               >
@@ -226,7 +239,7 @@ export default function LoisFiscalesPage() {
                     onClick={() => setSelectedLaw(law.id)}
                     className={`w-full text-left p-4 rounded-lg transition-all duration-200 ${
                       selectedLaw === law.id
-                        ? "bg-[#4EBBBD] text-white shadow-lg"
+                        ? "bg-[#253F60] text-white shadow-lg"
                         : "bg-white text-[#112033] hover:bg-gray-50 shadow-md"
                     }`}
                   >
@@ -243,7 +256,7 @@ export default function LoisFiscalesPage() {
             <div className="lg:col-span-2">
               <div className="bg-white rounded-xl shadow-lg p-6 lg:p-8">
                 <div className="mb-6">
-                  <span className="inline-block bg-[#4EBBBD] text-white px-3 py-1 rounded-full text-sm font-medium mb-3">
+                  <span className="inline-block bg-[#253F60] text-white px-3 py-1 rounded-full text-sm font-medium mb-3">
                     {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}
                   </span>
                   <h2 className="text-[#112033] text-2xl font-semibold mb-2">{selectedLawData.name}</h2>
@@ -291,9 +304,9 @@ export default function LoisFiscalesPage() {
                     <h3 className="text-[#112033] text-lg font-semibold mb-4">Taux de réduction</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {selectedLawData.taux.map((taux, index) => (
-                        <div key={index} className="bg-[#FAFFEF] rounded-lg p-4 text-center">
-                          <div className="text-2xl font-bold text-[#4EBBBD] mb-1">{taux.reduction}</div>
-                          <div className="text-[#112033] text-sm font-medium">{taux.annees}</div>
+                        <div key={index} className="bg-[#B99066] rounded-lg p-4 text-center shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000">
+                          <div className="text-2xl font-bold text-white mb-1">{taux.reduction}</div>
+                          <div className="text-white text-sm font-medium">{taux.annees}</div>
                         </div>
                       ))}
                     </div>
@@ -352,18 +365,26 @@ export default function LoisFiscalesPage() {
                     <h3 className="text-[#112033] text-lg font-semibold mb-4 flex items-center gap-2">
                       Recommandation Azalée
                     </h3>
-                    <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-6 text-white">
+                    <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-6 text-white shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000">
                       <p className="text-sm leading-relaxed opacity-90">{selectedLawData.recommandation}</p>
                     </div>
                   </div>
                 )}
 
                 {/* CTA */}
-                <div className="bg-gradient-to-r from-[#4EBBBD] to-[#008D78] rounded-lg p-6 text-white text-center">
+                <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg p-6 text-white text-center">
                   <h3 className="text-xl font-semibold mb-2">{content.cta?.title || defaultContent.cta.title}</h3>
-                  <p className="text-sm opacity-90 mb-4">
+                  <p className="text-sm opacity-90 mb-6">
                     {content.cta?.subtitle || defaultContent.cta.subtitle}
                   </p>
+                  <div className="flex justify-center">
+                    <button 
+                      className="bg-[#B99066] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#A67C52] transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000"
+                      onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
+                    >
+                      Prendre rendez-vous
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -427,13 +448,13 @@ export default function LoisFiscalesPage() {
             <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
               {content.finalCta?.description || defaultContent.finalCta.description}
             </p>
-            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-6 text-white mb-8">
               <h3 className="text-xl font-semibold mb-3">{content.finalCta?.email || defaultContent.finalCta.email}</h3>
               <p className="text-sm opacity-90">{content.finalCta?.emailSubtitle || defaultContent.finalCta.emailSubtitle}</p>
             </div>
             <div className="flex justify-center">
               <button 
-                className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg shadow-lg"
+                className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200 text-lg shadow-lg"
                 onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
               >
                 Prendre un rendez-vous

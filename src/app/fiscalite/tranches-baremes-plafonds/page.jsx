@@ -165,17 +165,17 @@ export default function TranchesBaremesPlafondsPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-[#E8F5E8] via-[#D7E8FF] to-[#FFEFD5] py-12 sm:py-16 lg:py-20">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
             <div>
-              <h1 className="text-2xl sm:text-3xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
+              <h1 className="text-2xl sm:text-3xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
                 {content.hero?.title || defaultContent.hero.title}
               </h1>
-              <p className="text-sm sm:text-base lg:text-lg text-gray-700 mb-3 sm:mb-4 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-white mb-3 sm:mb-4 leading-relaxed">
                 {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
-              <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
+              <p className="text-sm sm:text-base text-white mb-6 sm:mb-8">
                 {content.hero?.description || defaultContent.hero.description}
               </p>
             </div>
@@ -243,7 +243,7 @@ export default function TranchesBaremesPlafondsPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {(content.plafonds?.items || defaultContent.plafonds.items).map((item, index) => (
               <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-center">
-                <div className="text-3xl font-bold text-[#4EBBBD] mb-3">{item.plafond}</div>
+                <div className="text-3xl font-bold text-[#253F60] mb-3 font-serif">{item.plafond}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.name}</h3>
                 <p className="text-gray-600">{item.description}</p>
               </div>
@@ -254,7 +254,7 @@ export default function TranchesBaremesPlafondsPage() {
 
 
       {/* CTA Section */}
-      <section className="py-16 bg-[#4EBBBD]">
+      <section className="py-16 bg-[#253F60]">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             {content.cta?.title || defaultContent.cta.title}
@@ -262,6 +262,14 @@ export default function TranchesBaremesPlafondsPage() {
           <p className="text-lg text-white/90 mb-8 max-w-3xl mx-auto">
             {content.cta?.description || defaultContent.cta.description}
           </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button 
+              className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#A67C52] transition-colors duration-200"
+              onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
+            >
+              Prenez rendez-vous
+            </button>
+          </div>
         </div>
       </section>
 
