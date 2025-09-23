@@ -135,41 +135,9 @@ export default function Page() {
       
       <Header />
 
-      {/* Hero with light gradient and centered heading */}
-      <section className="relative w-full bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-12 sm:py-16 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-5xl font-cairo font-semibold leading-tight mb-4 sm:mb-6">
-            {content.hero?.title || defaultContent.hero.title}
-          </h1>
-          <p className="max-w-3xl mx-auto text-[#686868] text-sm sm:text-base lg:text-lg font-inter leading-relaxed mb-6 sm:mb-8">
-            {content.hero?.description || defaultContent.hero.description}
-          </p>
-          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href={content.hero?.button1Link || defaultContent.hero.button1Link} className="inline-flex items-center justify-center bg-[#4EBBBD] text-white px-4 sm:px-5 py-2 sm:py-3 rounded-lg font-inter font-medium hover:bg-[#3DA8AA] transition-colors duration-200 w-full sm:w-auto text-sm sm:text-base">
-              {content.hero?.button1Text || defaultContent.hero.button1Text}
-            </a>
-            <a href={content.hero?.button2Link || defaultContent.hero.button2Link} className="inline-flex items-center justify-center bg-transparent border-2 border-[#4EBBBD] text-[#4EBBBD] px-4 sm:px-5 py-2 sm:py-3 rounded-lg font-inter font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 w-full sm:w-auto text-sm sm:text-base">
-              {content.hero?.button2Text || defaultContent.hero.button2Text}
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Floating quick stats */}
-      <div className="relative -mt-8 sm:-mt-10 lg:-mt-14">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-          {(content.stats?.stats || defaultContent.stats.stats).map((stat, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg p-4 sm:p-6 border border-gray-100">
-              <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">{stat.subtitle}</p>
-              <p className="text-[#112033] text-lg sm:text-xl lg:text-2xl font-cairo font-semibold">{stat.title}</p>
-              <p className="text-[#686868] text-xs sm:text-sm mt-1">{stat.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
 
        {/* Hero Section */}
-       <section className="w-full bg-gradient-to-r from-[#B99066] to-[#253F60] py-16 sm:py-20 lg:py-24">
+       <section className="w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
            {/* Main content */}
            <div className="text-center mb-12">

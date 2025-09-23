@@ -19,27 +19,27 @@ export default function TauxInteretsPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="w-full lg:w-1/2">
-              <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
+              <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
                 Taux & Intérêts : comprendre leur impact sur votre patrimoine
             </h1>
-              <p className="text-[#686868] text-lg font-inter leading-relaxed mb-8">
+              <p className="text-white text-lg font-inter leading-relaxed mb-8">
                 Les <strong>taux d'intérêt</strong> influencent directement la vie des épargnants et des investisseurs : ils déterminent le <strong>coût d'un crédit</strong>, le <strong>rendement d'un placement sécurisé</strong>, ou encore la <strong>valorisation de l'immobilier et des marchés financiers</strong>.
               </p>
-              <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg mb-8">
-                <p className="text-[#112033] text-sm font-inter">
-                  👉 Comprendre les taux, c'est anticiper l'évolution de son patrimoine.
+              <div className="bg-white/20 border-l-4 border-white p-4 rounded-r-lg mb-8">
+                <p className="text-white text-sm font-inter">
+                  Comprendre les taux, c'est anticiper l'évolution de son patrimoine.
             </p>
           </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="bg-[#B99066] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
                   Analyser mes placements
                 </button>
-                <button className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#B99066] hover:text-white transition-colors duration-200">
+                <button className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors duration-200">
                   En savoir plus
                 </button>
               </div>
@@ -48,9 +48,10 @@ export default function TauxInteretsPage() {
             {/* Right: Current Rates Cards */}
             <div className="w-full lg:w-1/2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">🏦</span>
+                <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#1A2F4A] transition-colors duration-300">
+                    <span className="text-white text-2xl font-bold">BCE</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">BCE</h3>
                   <p className="text-[#686868] text-sm mb-2">Taux directeur</p>
@@ -58,27 +59,30 @@ export default function TauxInteretsPage() {
                   <p className="text-[#686868] text-xs">Influence toute l'économie</p>
                 </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">💰</span>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#A67A5A] transition-colors duration-300">
+                    <span className="text-white text-2xl font-bold">€</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Livret A</h3>
                   <p className="text-[#686868] text-sm mb-2">Taux réglementé</p>
                   <p className="text-[#B99066] text-xl font-bold">3.00%</p>
                   <p className="text-[#686868] text-xs">Rémunération épargne</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">🏠</span>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:from-[#1A2F4A] hover:to-[#A67A5A] transition-colors duration-300">
+                    <span className="text-white text-2xl font-bold">H</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Crédit immobilier</h3>
                   <p className="text-[#686868] text-sm mb-2">Taux moyen</p>
                   <p className="text-[#B99066] text-xl font-bold">4.20%</p>
                   <p className="text-[#686868] text-xs">Coût du crédit</p>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">📈</span>
+                </div>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#1A2F4A] transition-colors duration-300">
+                    <span className="text-white text-2xl font-bold">%</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Inflation</h3>
                   <p className="text-[#686868] text-sm mb-2">Taux actuel</p>
@@ -208,7 +212,7 @@ export default function TauxInteretsPage() {
                 </div>
                 <div className="mt-6 text-center">
                   <p className="text-sm font-semibold">
-                    👉 Comprendre les taux, c'est anticiper l'évolution de son patrimoine.
+ Comprendre les taux, c'est anticiper l'évolution de son patrimoine.
                   </p>
                 </div>
               </div>
@@ -235,7 +239,7 @@ export default function TauxInteretsPage() {
                   <div className="space-y-4">
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">🏠</span>
+                        <span className="text-white font-bold">H</span>
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Crédit immobilier</h4>
@@ -253,7 +257,7 @@ export default function TauxInteretsPage() {
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-[#59E2E4] rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">🏢</span>
+                        <span className="text-white font-bold">1</span>
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Crédit entreprise</h4>
@@ -271,7 +275,7 @@ export default function TauxInteretsPage() {
                   <div className="space-y-4">
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">💰</span>
+                        <span className="text-white font-bold">2</span>
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Livrets réglementés</h4>
@@ -280,7 +284,7 @@ export default function TauxInteretsPage() {
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">🛡️</span>
+                        <span className="text-white font-bold">3</span>
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Fonds euros</h4>
@@ -289,7 +293,7 @@ export default function TauxInteretsPage() {
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-[#59E2E4] rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">📊</span>
+                        <span className="text-white font-bold">4</span>
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Obligations</h4>
@@ -305,14 +309,14 @@ export default function TauxInteretsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div className="text-center">
                     <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-3">
-                      <span className="text-white text-xl">🏦</span>
+                      <span className="text-white text-xl">1</span>
                     </div>
                     <h4 className="font-semibold mb-2">Taux directeurs</h4>
                     <p className="text-sm text-[#686868]">Fixés par la BCE ou la Fed</p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-3">
-                      <span className="text-white text-xl">💰</span>
+                      <span className="text-white text-xl">2</span>
                     </div>
                     <h4 className="font-semibold mb-2">Taux créditeurs</h4>
                     <p className="text-sm text-[#686868]">Rémunération des dépôts</p>
@@ -399,7 +403,7 @@ export default function TauxInteretsPage() {
             <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-[#4EBBBD] font-bold text-xl">💰</span>
+                      <span className="text-[#253F60] font-bold text-xl">1</span>
                 </div>
                     <h3 className="text-2xl font-semibold mb-2">Épargne de précaution</h3>
               </div>
@@ -416,7 +420,7 @@ export default function TauxInteretsPage() {
             <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-[#B99066] font-bold text-xl">🏠</span>
+                      <span className="text-[#B99066] font-bold text-xl">H</span>
                 </div>
                     <h3 className="text-2xl font-semibold mb-2">Immobilier</h3>
               </div>
@@ -433,7 +437,7 @@ export default function TauxInteretsPage() {
             <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-[#59E2E4] font-bold text-xl">📊</span>
+                      <span className="text-[#B99066] font-bold text-xl">2</span>
                     </div>
                     <h3 className="text-2xl font-semibold mb-2">Marchés financiers</h3>
                   </div>
@@ -542,11 +546,11 @@ export default function TauxInteretsPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-[#112033] text-xl font-semibold mb-6">⚠️ Limites et risques</h3>
+                  <h3 className="text-[#112033] text-xl font-semibold mb-6">Limites et risques</h3>
                   <div className="space-y-4">
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">⚠</span>
+                        <span className="text-white font-bold">!</span>
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Taux volatils</h4>
@@ -555,7 +559,7 @@ export default function TauxInteretsPage() {
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">⚠</span>
+                        <span className="text-white font-bold">!</span>
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Mauvais timing</h4>
@@ -564,7 +568,7 @@ export default function TauxInteretsPage() {
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">⚠</span>
+                        <span className="text-white font-bold">!</span>
                       </div>
             <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Vision globale nécessaire</h4>
@@ -599,7 +603,7 @@ export default function TauxInteretsPage() {
                   </p>
                   <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-3 rounded-r-lg mt-3">
                     <p className="text-sm text-[#112033]">
-                      👉 Exemple : à 1 %, un ménage peut emprunter 250 000 € pour une mensualité donnée. À 4 %, ce même ménage ne peut plus emprunter que 180 000 €.
+ Exemple : à 1 %, un ménage peut emprunter 250 000 € pour une mensualité donnée. À 4 %, ce même ménage ne peut plus emprunter que 180 000 €.
                     </p>
                   </div>
                 </div>
@@ -614,7 +618,7 @@ export default function TauxInteretsPage() {
                   </p>
                   <div className="bg-[#FFF8E1] border-l-4 border-[#B99066] p-3 rounded-r-lg mt-3">
                     <p className="text-sm text-[#112033]">
-                      👉 En France, le taux fixe domine (90 % des crédits), car il protège contre la volatilité des marchés.
+ En France, le taux fixe domine (90 % des crédits), car il protège contre la volatilité des marchés.
                     </p>
                   </div>
                 </div>
@@ -635,7 +639,7 @@ export default function TauxInteretsPage() {
                   </p>
                   <div className="bg-[#E8F4F8] border-l-4 border-[#59E2E4] p-3 rounded-r-lg mt-3">
                     <p className="text-sm text-[#112033]">
-                      👉 Une hausse des taux redistribue les cartes, elle ne doit pas paralyser l'investisseur.
+ Une hausse des taux redistribue les cartes, elle ne doit pas paralyser l'investisseur.
                     </p>
                   </div>
                 </div>
@@ -653,7 +657,7 @@ export default function TauxInteretsPage() {
                   </p>
                   <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-3 rounded-r-lg mt-3">
                     <p className="text-sm text-[#112033]">
-                      👉 Inversement, elles baissent les taux pour soutenir la croissance en période de crise.
+ Inversement, elles baissent les taux pour soutenir la croissance en période de crise.
                     </p>
                   </div>
                 </div>
@@ -671,7 +675,7 @@ export default function TauxInteretsPage() {
                   </p>
                   <div className="bg-[#FFF8E1] border-l-4 border-[#B99066] p-3 rounded-r-lg mt-3">
                     <p className="text-sm text-[#112033]">
-                      👉 En période de taux hauts, les placements sécurisés redeviennent compétitifs, mais attention à l'inflation.
+ En période de taux hauts, les placements sécurisés redeviennent compétitifs, mais attention à l'inflation.
                     </p>
                   </div>
                 </div>
@@ -692,7 +696,7 @@ export default function TauxInteretsPage() {
                   </p>
                   <div className="bg-[#E8F4F8] border-l-4 border-[#59E2E4] p-3 rounded-r-lg mt-3">
                     <p className="text-sm text-[#112033]">
-                      👉 Ces taux influencent directement le crédit, l'épargne et l'économie européenne.
+ Ces taux influencent directement le crédit, l'épargne et l'économie européenne.
                     </p>
                   </div>
                 </div>
@@ -700,7 +704,7 @@ export default function TauxInteretsPage() {
 
               <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white text-center">
                 <p className="text-lg font-semibold">
-                  👉 Chez <strong>Azalée Patrimoine</strong>, nous surveillons l'évolution des taux pour adapter nos recommandations : <strong>immobilier, Bourse, produits financiers, épargne retraite</strong>.
+ Chez <strong>Azalée Patrimoine</strong>, nous surveillons l'évolution des taux pour adapter nos recommandations : <strong>immobilier, Bourse, produits financiers, épargne retraite</strong>.
                 </p>
               </div>
             </div>
@@ -751,7 +755,7 @@ export default function TauxInteretsPage() {
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-3">
-                      <span className="text-white text-xl">⚖️</span>
+                      <span className="text-white text-xl">3</span>
                     </div>
                     <h4 className="font-semibold mb-2">Optimiser vos choix</h4>
                     <p className="text-sm text-[#686868]">D'investissement et de financement</p>
@@ -759,7 +763,7 @@ export default function TauxInteretsPage() {
                 </div>
                 <div className="mt-6 text-center">
                   <p className="text-lg font-semibold text-[#112033]">
-                    👉 Pour préserver la valeur réelle de votre patrimoine.
+ Pour préserver la valeur réelle de votre patrimoine.
                   </p>
                 </div>
               </div>
@@ -815,7 +819,7 @@ export default function TauxInteretsPage() {
 
             <div className="mt-8 bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-6 rounded-r-lg">
               <p className="text-[#112033] text-lg font-semibold mb-2">
-                👉 Impact dramatique des taux sur le pouvoir d'achat immobilier
+ Impact dramatique des taux sur le pouvoir d'achat immobilier
               </p>
               <p className="text-[#686868] text-sm">
                 Avec une mensualité fixe de <strong>1 000 € sur 20 ans</strong>, un emprunteur peut financer environ <strong>210 000 € à 1 %</strong>, mais seulement <strong>167 000 € à 3 %</strong>, et à peine <strong>135 000 € à 5 %</strong>.
@@ -845,21 +849,21 @@ export default function TauxInteretsPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                 <div className="bg-white rounded-lg shadow-lg p-6">
                   <div className="w-12 h-12 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-white text-xl">🏠</span>
+                    <span className="text-white text-xl">H</span>
                   </div>
                   <h4 className="font-semibold mb-2">Crédit optimisé</h4>
                   <p className="text-sm text-[#686868]">Renégociation et opportunités de financement</p>
                 </div>
                 <div className="bg-white rounded-lg shadow-lg p-6">
                   <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-white text-xl">⚖️</span>
+                    <span className="text-white text-xl">5</span>
                   </div>
                   <h4 className="font-semibold mb-2">Arbitrages financiers</h4>
                   <p className="text-sm text-[#686868]">Adaptation selon les cycles de taux</p>
                 </div>
                 <div className="bg-white rounded-lg shadow-lg p-6">
                   <div className="w-12 h-12 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-white text-xl">🛡️</span>
+                    <span className="text-white text-xl">4</span>
                   </div>
                   <h4 className="font-semibold mb-2">Sécurisation des revenus</h4>
                   <p className="text-sm text-[#686868]">Préservation de la valeur réelle du patrimoine</p>

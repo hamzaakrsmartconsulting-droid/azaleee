@@ -153,19 +153,19 @@ export default function SimulationsGeneralesPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-4">
+          <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-4">
             {safeContent.hero.title}
           </h1>
-          <p className="max-w-3xl mx-auto text-[#686868] text-base sm:text-lg font-inter leading-relaxed mb-6">
+          <p className="max-w-3xl mx-auto text-white text-base sm:text-lg font-inter leading-relaxed mb-6">
             {safeContent.hero.description}
           </p>
           <div className="flex items-center justify-center gap-3">
-            <a href="#outils" className="inline-flex items-center justify-center bg-[#4EBBBD] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#3DA8AA] transition-colors duration-200">
+            <a href="#outils" className="inline-flex items-center justify-center bg-[#B99066] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
               {safeContent.hero.ctaPrimary}
             </a>
-            <a href="#methodologie" className="inline-flex items-center justify-center bg-transparent border-2 border-[#4EBBBD] text-[#4EBBBD] px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200">
+            <a href="#methodologie" className="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors duration-200">
               {safeContent.hero.ctaSecondary}
             </a>
           </div>
@@ -204,7 +204,7 @@ export default function SimulationsGeneralesPage() {
                 <div className="space-y-2 mb-6">
                   {tool.features && tool.features.map((feature, featureIndex) => (
                     <div key={featureIndex} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#4EBBBD] rounded-full"></div>
+                      <div className="w-1.5 h-1.5 bg-[#B99066] rounded-full"></div>
                       <span className="text-[#686868] text-sm">{feature}</span>
                     </div>
                   ))}
@@ -264,7 +264,7 @@ export default function SimulationsGeneralesPage() {
             Utilisez nos outils professionnels pour prendre les meilleures décisions financières et patrimoniales.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-[#4EBBBD] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#3DA8AA] transition-colors">
+            <button className="bg-[#B99066] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#A67A5A] transition-colors">
               Découvrir tous nos outils
             </button>
             <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#112033] transition-colors">

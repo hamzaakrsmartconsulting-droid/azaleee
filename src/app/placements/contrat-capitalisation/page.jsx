@@ -17,7 +17,7 @@ export default function ContratCapitalisationPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#B99066] to-[#253F60] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
             {/* Left Content */}
@@ -28,16 +28,22 @@ export default function ContratCapitalisationPage() {
               <p className="text-white text-lg font-inter leading-relaxed mb-8">
                 Souvent éclipsé par la notoriété de l'assurance-vie, le <strong>contrat de capitalisation</strong> est pourtant un instrument patrimonial incontournable pour diversifier son épargne et optimiser sa fiscalité.
               </p>
-              <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg mb-8">
+              <div className="bg-[#E8F4F8] border-l-4 border-[#B99066] p-4 rounded-r-lg mb-8">
                 <p className="text-[#112033] text-sm font-inter">
                   👉 Bien maîtrisé, le contrat de capitalisation est un <strong>levier discret mais redoutablement efficace</strong> pour les investisseurs avertis.
             </p>
           </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-[#B99066] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-[#B99066] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200"
+                >
                   Analyser mon patrimoine
                 </button>
-                <button className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#B99066] hover:text-white transition-colors duration-200">
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#B99066] hover:text-white transition-colors duration-200"
+                >
                   En savoir plus
                 </button>
               </div>
@@ -48,7 +54,7 @@ export default function ContratCapitalisationPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
               <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">⚖️</span>
+                    <span className="text-white font-bold text-xl">1</span>
               </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Complémentaire</h3>
                   <p className="text-[#686868] text-sm mb-2">À l'assurance-vie</p>
@@ -58,7 +64,7 @@ export default function ContratCapitalisationPage() {
           
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
               <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">🏢</span>
+                    <span className="text-white font-bold text-xl">2</span>
               </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Personnes morales</h3>
                   <p className="text-[#686868] text-sm mb-2">SCI, holdings</p>
@@ -68,7 +74,7 @@ export default function ContratCapitalisationPage() {
 
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
               <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">📊</span>
+                <span className="text-white font-bold text-xl">3</span>
               </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Supports identiques</h3>
                   <p className="text-[#686868] text-sm mb-2">Fonds euros, UC</p>
@@ -77,8 +83,8 @@ export default function ContratCapitalisationPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">🔄</span>
+                  <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white font-bold text-xl">4</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Antériorité fiscale</h3>
                   <p className="text-[#686868] text-sm mb-2">Conservée</p>
@@ -102,8 +108,7 @@ export default function ContratCapitalisationPage() {
       <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6 flex items-center justify-center gap-3">
-              <span className="text-[#4EBBBD] text-3xl">📌</span>
+            <h2 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-semibold mb-6 text-center">
               Points communs avec l'assurance-vie
             </h2>
             <p className="text-[#686868] text-lg max-w-4xl mx-auto">
@@ -116,7 +121,7 @@ export default function ContratCapitalisationPage() {
             <div className="bg-gradient-to-br from-[#253F60] to-[#3A5A7A] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#4EBBBD] text-2xl">📊</span>
+                  <span className="text-[#253F60] font-bold text-xl">1</span>
                 </div>
                 <h3 className="text-2xl font-semibold mb-2">1. Supports d'investissement identiques</h3>
               </div>
@@ -131,7 +136,7 @@ export default function ContratCapitalisationPage() {
             <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#B99066] text-2xl">💰</span>
+                  <span className="text-[#B99066] font-bold text-xl">2</span>
                 </div>
                 <h3 className="text-2xl font-semibold mb-2">2. Fiscalité des rachats</h3>
               </div>
@@ -146,7 +151,7 @@ export default function ContratCapitalisationPage() {
             <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#59E2E4] text-2xl">🔄</span>
+                  <span className="text-[#253F60] font-bold text-xl">3</span>
                 </div>
                 <h3 className="text-2xl font-semibold mb-2">3. Souplesse</h3>
               </div>
@@ -158,7 +163,7 @@ export default function ContratCapitalisationPage() {
             </div>
           </div>
 
-          <div className="mt-8 bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-6 rounded-r-lg">
+          <div className="mt-8 bg-[#E8F4F8] border-l-4 border-[#B99066] p-6 rounded-r-lg">
             <p className="text-[#112033] text-lg font-semibold text-center">
               👉 Sur le plan fiscal et financier, un contrat de capitalisation <strong>fonctionne comme une assurance-vie</strong>.
             </p>
@@ -170,18 +175,17 @@ export default function ContratCapitalisationPage() {
       <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6 flex items-center justify-center gap-3">
-              <span className="text-[#4EBBBD] text-3xl">⚖️</span>
+            <h2 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-semibold mb-6 text-center">
               Les différences fondamentales avec l'assurance-vie
             </h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Succession */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#4EBBBD]">
+            <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#B99066]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 bg-[#253F60] rounded-lg flex items-center justify-center">
-                  <span className="text-white text-xl">🔄</span>
+                  <span className="text-white font-bold text-lg">1</span>
                 </div>
                 <div>
                   <h3 className="text-[#112033] text-xl font-semibold">1. Succession</h3>
@@ -207,7 +211,7 @@ export default function ContratCapitalisationPage() {
             <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#B99066]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 bg-[#B99066] rounded-lg flex items-center justify-center">
-                  <span className="text-white text-xl">👥</span>
+                  <span className="text-white font-bold text-lg">2</span>
                 </div>
                 <div>
                   <h3 className="text-[#112033] text-xl font-semibold">2. Clause bénéficiaire</h3>
@@ -233,7 +237,7 @@ export default function ContratCapitalisationPage() {
             <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#59E2E4]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 bg-[#253F60] rounded-lg flex items-center justify-center">
-                  <span className="text-white text-xl">🏢</span>
+                  <span className="text-white font-bold text-lg">3</span>
                 </div>
                 <div>
                   <h3 className="text-[#112033] text-xl font-semibold">3. Souscription par personnes morales</h3>
@@ -661,7 +665,10 @@ export default function ContratCapitalisationPage() {
                 <p className="text-[#686868] text-sm mb-4">
                   Un conseiller vous accompagne dans votre stratégie patrimoniale.
                 </p>
-                <button className="bg-[#253F60] text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#1A2A4A] transition-colors duration-200">
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-[#253F60] text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#1A2A4A] transition-colors duration-200"
+                >
                   Prendre rendez-vous
                 </button>
               </div>
@@ -674,7 +681,10 @@ export default function ContratCapitalisationPage() {
                 <p className="text-[#686868] text-sm mb-4">
                   Obtenez une analyse personnalisée de votre patrimoine.
                 </p>
-                <button className="bg-[#B99066] text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-[#B99066] text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200"
+                >
                   Analyser mon patrimoine
                 </button>
               </div>
@@ -700,10 +710,16 @@ export default function ContratCapitalisationPage() {
             ou pour optimiser la trésorerie de votre société.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-[#253F60] px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
+            <button 
+              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+              className="bg-white text-[#253F60] px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-gray-100 transition-colors duration-200"
+            >
               Analyser mon patrimoine
             </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#253F60] transition-colors duration-200">
+            <button 
+              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+              className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#253F60] transition-colors duration-200"
+            >
               Prendre rendez-vous
           </button>
           </div>

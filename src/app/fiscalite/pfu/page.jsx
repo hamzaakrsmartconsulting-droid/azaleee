@@ -169,14 +169,14 @@ export default function PFUPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-[#E8F5E8] via-[#D7E8FF] to-[#FFEFD5] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
                 {content.hero?.title || defaultContent.hero.title}
               </h1>
-              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              <p className="text-lg text-white mb-8 leading-relaxed">
                 {content.hero?.subtitle || defaultContent.hero.subtitle}
               </p>
             </div>
@@ -194,25 +194,25 @@ export default function PFUPage() {
       </section>
 
       {/* Definition Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#253F60] mb-3 sm:mb-4">
               {content.definition?.title || defaultContent.definition.title}
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-sm sm:text-base lg:text-lg text-[#686868] max-w-3xl mx-auto mb-6 sm:mb-8">
               {content.definition?.description || defaultContent.definition.description}
             </p>
-            <div className="bg-[#4EBBBD] text-white px-6 py-4 rounded-xl inline-block">
-              <div className="text-2xl font-bold">30%</div>
-              <div className="text-sm">Taux unique</div>
+            <div className="bg-[#B99066] text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl inline-block">
+              <div className="text-xl sm:text-2xl font-bold">30%</div>
+              <div className="text-xs sm:text-sm">Taux unique</div>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {(content.definition?.details || defaultContent.definition.details).map((detail, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-xl text-center">
-                <div className="text-lg font-semibold text-gray-900">{detail}</div>
+              <div key={index} className="bg-white p-4 sm:p-6 rounded-xl text-center border border-[#253F60]">
+                <div className="text-sm sm:text-base lg:text-lg font-semibold text-[#253F60]">{detail}</div>
               </div>
             ))}
           </div>
@@ -220,21 +220,21 @@ export default function PFUPage() {
       </section>
 
       {/* Creation Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#253F60] mb-3 sm:mb-4">
               {content.creation?.title || defaultContent.creation.title}
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-sm sm:text-base lg:text-lg text-[#686868] max-w-3xl mx-auto mb-6 sm:mb-8">
               {content.creation?.description || defaultContent.creation.description}
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {(content.creation?.objectifs || defaultContent.creation.objectifs).map((objectif, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-lg">
-                <div className="text-lg font-semibold text-gray-900 mb-2">{objectif}</div>
+              <div key={index} className="bg-[#253F60] p-4 sm:p-6 rounded-xl shadow-lg">
+                <div className="text-sm sm:text-base lg:text-lg font-semibold text-white mb-2">{objectif}</div>
               </div>
             ))}
           </div>
@@ -242,21 +242,21 @@ export default function PFUPage() {
       </section>
 
       {/* Application Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#253F60] mb-3 sm:mb-4">
               {content.application?.title || defaultContent.application.title}
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-sm sm:text-base lg:text-lg text-[#686868] max-w-3xl mx-auto mb-6 sm:mb-8">
               {content.application?.description || defaultContent.application.description}
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {(content.application?.revenus || defaultContent.application.revenus).map((revenu, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-xl text-center">
-                <div className="text-lg font-semibold text-gray-900">{revenu}</div>
+              <div key={index} className="bg-white p-4 sm:p-6 rounded-xl text-center border border-[#B99066]">
+                <div className="text-sm sm:text-base lg:text-lg font-semibold text-[#253F60]">{revenu}</div>
               </div>
             ))}
           </div>
@@ -264,22 +264,24 @@ export default function PFUPage() {
       </section>
 
       {/* Avantages Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#253F60] mb-3 sm:mb-4">
               {content.avantages?.title || defaultContent.avantages.title}
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-sm sm:text-base lg:text-lg text-[#686868] max-w-3xl mx-auto mb-6 sm:mb-8">
               {content.avantages?.description || defaultContent.avantages.description}
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {(content.avantages?.points || defaultContent.avantages.points).map((point, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-center">
-                <div className="text-4xl mb-4"></div>
-                <div className="text-lg font-semibold text-gray-900">{point}</div>
+              <div key={index} className="bg-white p-4 sm:p-6 rounded-xl shadow-lg text-center border border-[#B99066]">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                  <span className="text-white text-sm sm:text-lg font-bold">{index + 1}</span>
+                </div>
+                <div className="text-sm sm:text-base lg:text-lg font-semibold text-[#253F60]">{point}</div>
               </div>
             ))}
           </div>
@@ -287,22 +289,24 @@ export default function PFUPage() {
       </section>
 
       {/* Inconvénients Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#253F60] mb-3 sm:mb-4">
               {content.inconvenients?.title || defaultContent.inconvenients.title}
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-sm sm:text-base lg:text-lg text-[#686868] max-w-3xl mx-auto mb-6 sm:mb-8">
               {content.inconvenients?.description || defaultContent.inconvenients.description}
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {(content.inconvenients?.points || defaultContent.inconvenients.points).map((point, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-xl text-center">
-                <div className="text-4xl mb-4"></div>
-                <div className="text-lg font-semibold text-gray-900">{point}</div>
+              <div key={index} className="bg-white p-4 sm:p-6 rounded-xl text-center border border-[#253F60]">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                  <span className="text-white text-sm sm:text-lg font-bold">{index + 1}</span>
+                </div>
+                <div className="text-sm sm:text-base lg:text-lg font-semibold text-[#253F60]">{point}</div>
               </div>
             ))}
           </div>
@@ -310,35 +314,35 @@ export default function PFUPage() {
       </section>
 
       {/* Simulation Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#253F60] mb-3 sm:mb-4">
               {content.simulation?.title || defaultContent.simulation.title}
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-sm sm:text-base lg:text-lg text-[#686868] max-w-3xl mx-auto mb-6 sm:mb-8">
               {content.simulation?.description || defaultContent.simulation.description}
             </p>
           </div>
           
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 lg:p-8">
             {(content.simulation?.scenarios || defaultContent.simulation.scenarios).map((scenario, index) => (
-              <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-                <div className="bg-[#4EBBBD] text-white p-4 rounded-lg">
-                  <div className="text-sm font-medium mb-1">Revenu</div>
-                  <div className="text-xl font-bold">{scenario.revenu}</div>
+              <div key={index} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-center">
+                <div className="bg-[#B99066] text-white p-3 sm:p-4 rounded-lg">
+                  <div className="text-xs sm:text-sm font-medium mb-1">Revenu</div>
+                  <div className="text-lg sm:text-xl font-bold">{scenario.revenu}</div>
                 </div>
-                <div className="bg-gray-100 p-4 rounded-lg">
-                  <div className="text-sm font-medium mb-1">PFU</div>
-                  <div className="text-xl font-bold text-gray-900">{scenario.pfu}</div>
+                <div className="bg-white border border-[#253F60] p-3 sm:p-4 rounded-lg">
+                  <div className="text-xs sm:text-sm font-medium mb-1">PFU</div>
+                  <div className="text-lg sm:text-xl font-bold text-[#253F60]">{scenario.pfu}</div>
                 </div>
-                <div className="bg-gray-100 p-4 rounded-lg">
-                  <div className="text-sm font-medium mb-1">Barème</div>
-                  <div className="text-xl font-bold text-gray-900">{scenario.barème}</div>
+                <div className="bg-white border border-[#253F60] p-3 sm:p-4 rounded-lg">
+                  <div className="text-xs sm:text-sm font-medium mb-1">Barème</div>
+                  <div className="text-lg sm:text-xl font-bold text-[#253F60]">{scenario.barème}</div>
                 </div>
-                <div className="bg-green-100 p-4 rounded-lg">
-                  <div className="text-sm font-medium mb-1">Conseil</div>
-                  <div className="text-sm text-gray-700">{scenario.conseil}</div>
+                <div className="bg-white border border-[#B99066] p-3 sm:p-4 rounded-lg">
+                  <div className="text-xs sm:text-sm font-medium mb-1">Conseil</div>
+                  <div className="text-xs sm:text-sm text-[#686868]">{scenario.conseil}</div>
                 </div>
               </div>
             ))}
@@ -347,16 +351,19 @@ export default function PFUPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-[#4EBBBD]">
+      <section className="py-12 sm:py-16 bg-gradient-to-r from-[#253F60] to-[#B99066]">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">
             {content.cta?.title || defaultContent.cta.title}
           </h2>
-          <p className="text-lg text-white/90 mb-8 max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto">
             {content.cta?.description || defaultContent.cta.description}
           </p>
-          <button className="bg-white text-[#4EBBBD] px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-            lien manquant
+          <button 
+            onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+            className="bg-[#B99066] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-medium hover:bg-[#A67A5A] transition-colors text-sm sm:text-base"
+          >
+            Prendre rendez-vous
           </button>
         </div>
       </section>

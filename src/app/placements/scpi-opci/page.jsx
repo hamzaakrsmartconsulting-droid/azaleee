@@ -19,30 +19,30 @@ export default function ScpiOpciPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="w-full lg:w-1/2">
-              <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
+              <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
                 SCPI / OPCI
               </h1>
-              <p className="text-[#686868] text-lg font-inter leading-relaxed mb-8">
+              <p className="text-white text-lg font-inter leading-relaxed mb-8">
                 Les <strong>SCPI (Sociétés Civiles de Placement Immobilier)</strong> et les <strong>OPCI (Organismes de Placement Collectif Immobilier)</strong> permettent d'investir dans l'immobilier <strong>sans acheter directement un bien</strong>.
               </p>
-              <p className="text-[#686868] text-base font-inter leading-relaxed mb-8">
+              <p className="text-white text-base font-inter leading-relaxed mb-8">
                 L'épargnant acquiert des <strong>parts gérées par une société de gestion</strong>, qui se charge de sélectionner les immeubles, de percevoir les loyers et de les redistribuer sous forme de revenus.
               </p>
-              <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg mb-8">
-                <p className="text-[#112033] text-sm font-inter">
-                  👉 Ce sont des solutions d'<strong>immobilier collectif</strong> qui offrent une diversification inaccessible à l'investisseur particulier en direct.
+              <div className="bg-white/20 border-l-4 border-white p-4 rounded-r-lg mb-8">
+                <p className="text-white text-sm font-inter">
+                  Ce sont des solutions d'<strong>immobilier collectif</strong> qui offrent une diversification inaccessible à l'investisseur particulier en direct.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="bg-[#B99066] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
                   Découvrir nos solutions
                 </button>
-                <button className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#B99066] hover:text-white transition-colors duration-200">
+                <button className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors duration-200">
                   Marché secondaire
                 </button>
               </div>
@@ -52,9 +52,10 @@ export default function ScpiOpciPage() {
             <div className="w-full lg:w-1/2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* SCPI */}
-                <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">🏢</span>
+                <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-[#253F60] rounded-lg flex items-center justify-center mx-auto mb-4 hover:bg-[#1A2F4A] transition-colors duration-300">
+                    <span className="text-white text-2xl font-bold">SCPI</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">SCPI</h3>
                   <p className="text-[#686868] text-sm mb-2">Société Civile de Placement Immobilier</p>
@@ -63,9 +64,10 @@ export default function ScpiOpciPage() {
                 </div>
 
                 {/* OPCI */}
-                <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#B99066] rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">🏗️</span>
+                <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-[#B99066] rounded-lg flex items-center justify-center mx-auto mb-4 hover:bg-[#A67A5A] transition-colors duration-300">
+                    <span className="text-white text-2xl font-bold">OPCI</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">OPCI</h3>
                   <p className="text-[#686868] text-sm mb-2">Organisme de Placement Collectif Immobilier</p>
@@ -93,7 +95,7 @@ export default function ScpiOpciPage() {
               onClick={() => setActiveTab("introduction")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "introduction" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -103,7 +105,7 @@ export default function ScpiOpciPage() {
               onClick={() => setActiveTab("fiscalite")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "fiscalite" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -113,7 +115,7 @@ export default function ScpiOpciPage() {
               onClick={() => setActiveTab("avantages")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "avantages" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -123,7 +125,7 @@ export default function ScpiOpciPage() {
               onClick={() => setActiveTab("inconvenients")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "inconvenients" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -133,7 +135,7 @@ export default function ScpiOpciPage() {
               onClick={() => setActiveTab("types")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "types" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -143,7 +145,7 @@ export default function ScpiOpciPage() {
               onClick={() => setActiveTab("azalee")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "azalee" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -185,7 +187,7 @@ export default function ScpiOpciPage() {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#4EBBBD]">
+                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#253F60]">
                   <h3 className="text-[#112033] text-lg font-semibold mb-3">En détention directe</h3>
                   <p className="text-[#686868] text-sm">
                     Les revenus des SCPI sont imposés comme des <strong>revenus fonciers</strong>, soumis au barème progressif + 17,2 % de prélèvements sociaux.
@@ -199,7 +201,7 @@ export default function ScpiOpciPage() {
                   </p>
                 </div>
                 
-                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#59E2E4]">
+                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#253F60]">
                   <h3 className="text-[#112033] text-lg font-semibold mb-3">En nue-propriété</h3>
                   <p className="text-[#686868] text-sm">
                     Pas de revenus pendant la durée du démembrement → donc <strong>pas d'imposition</strong>, avec un prix d'achat réduit.
@@ -213,13 +215,13 @@ export default function ScpiOpciPage() {
             <div className="space-y-8">
               <div className="text-center mb-8">
                 <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
-                  ✅ Avantages des SCPI/OPCI
+                  Avantages des SCPI/OPCI
                 </h2>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-[#253F60] rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-white font-bold">✓</span>
                   </div>
                   <div>
@@ -243,7 +245,7 @@ export default function ScpiOpciPage() {
                 </div>
                 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#59E2E4] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-[#253F60] rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-white font-bold">✓</span>
                   </div>
                   <div>
@@ -255,7 +257,7 @@ export default function ScpiOpciPage() {
                 </div>
                 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-white font-bold">✓</span>
                   </div>
                   <div>
@@ -267,7 +269,7 @@ export default function ScpiOpciPage() {
                 </div>
                 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-[#253F60] rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-white font-bold">✓</span>
                   </div>
                   <div>
@@ -285,7 +287,7 @@ export default function ScpiOpciPage() {
             <div className="space-y-8">
               <div className="text-center mb-8">
                 <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
-                  ⚠️ Inconvénients et points de vigilance
+                  Inconvénients et points de vigilance
                 </h2>
               </div>
               
@@ -333,7 +335,7 @@ export default function ScpiOpciPage() {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+                <div className="bg-gradient-to-br from-[#253F60] to-[#3A5A7A] rounded-lg shadow-lg p-8 text-white">
                   <h3 className="text-2xl font-semibold mb-4">SCPI de rendement</h3>
                   <p className="text-sm mb-4">Objectif : générer des <strong>revenus réguliers</strong>.</p>
                   <ul className="space-y-2 text-sm">
@@ -342,7 +344,7 @@ export default function ScpiOpciPage() {
                   </ul>
                 </div>
                 
-                <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
+                <div className="bg-gradient-to-br from-[#B99066] to-[#A67A5A] rounded-lg shadow-lg p-8 text-white">
                   <h3 className="text-2xl font-semibold mb-4">SCPI fiscales</h3>
                   <p className="text-sm mb-4">Objectif : <strong>avantage fiscal immédiat</strong> (Pinel, Malraux, déficit foncier).</p>
                   <ul className="space-y-2 text-sm">
@@ -351,7 +353,7 @@ export default function ScpiOpciPage() {
                   </ul>
                 </div>
                 
-                <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
+                <div className="bg-gradient-to-br from-[#253F60] to-[#3A5A7A] rounded-lg shadow-lg p-8 text-white">
                   <h3 className="text-2xl font-semibold mb-4">SCPI patrimoniales (nue-propriété)</h3>
                   <p className="text-sm mb-4">Objectif : <strong>optimiser fiscalité et transmission</strong>.</p>
                   <ul className="space-y-2 text-sm">
@@ -361,7 +363,7 @@ export default function ScpiOpciPage() {
                   </ul>
                 </div>
                 
-                <div className="bg-gradient-to-br from-[#4EBBBD] to-[#B99066] rounded-lg shadow-lg p-8 text-white">
+                <div className="bg-gradient-to-br from-[#B99066] to-[#253F60] rounded-lg shadow-lg p-8 text-white">
                   <h3 className="text-2xl font-semibold mb-4">SCPI internationales</h3>
                   <p className="text-sm mb-4">Objectif : investir hors de France (Allemagne, Pays-Bas, Espagne…).</p>
                   <ul className="space-y-2 text-sm">
@@ -377,11 +379,11 @@ export default function ScpiOpciPage() {
             <div className="space-y-8">
               <div className="text-center mb-8">
                 <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
-                  🔑 L'action Azalée Patrimoine : retrouver de la liquidité
+                  L'action Azalée Patrimoine : retrouver de la liquidité
                 </h2>
               </div>
               
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-lg shadow-lg p-8 text-white">
                 <div className="mb-6">
                   <p className="text-lg mb-4">
                     Chez <strong>Azalée Patrimoine</strong>, nous avons constaté que de nombreux épargnants de notre <strong>Club</strong> sont immobilisés depuis 2023 dans des SCPI historiques devenues <strong>illiquides</strong>.
@@ -397,25 +399,25 @@ export default function ScpiOpciPage() {
                 </div>
                 
                 <div className="bg-white bg-opacity-20 rounded-lg p-6">
-                  <h3 className="text-xl font-semibold mb-4">👉 Notre solution : marché secondaire de gré à gré</h3>
+                  <h3 className="text-xl font-semibold mb-4">Notre solution : marché secondaire de gré à gré</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="text-center">
                       <div className="w-12 h-12 bg-white bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <span className="text-white text-xl">🤝</span>
+                        <span className="text-white text-sm font-bold">1</span>
                       </div>
                       <h4 className="font-semibold mb-2">Mise en relation</h4>
                       <p className="text-sm">Acheteurs / vendeurs avec carnet d'ordres interne</p>
                     </div>
                     <div className="text-center">
                       <div className="w-12 h-12 bg-white bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <span className="text-white text-xl">💰</span>
+                        <span className="text-white text-sm font-bold">2</span>
                       </div>
                       <h4 className="font-semibold mb-2">Décote maîtrisée</h4>
                       <p className="text-sm">~10 % HT pour fluidifier les transactions</p>
                     </div>
                     <div className="text-center">
                       <div className="w-12 h-12 bg-white bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <span className="text-white text-xl">🛡️</span>
+                        <span className="text-white text-sm font-bold">3</span>
                       </div>
                       <h4 className="font-semibold mb-2">Accompagnement</h4>
                       <p className="text-sm">Fiscalité, transmission, sécurisation</p>
@@ -424,7 +426,7 @@ export default function ScpiOpciPage() {
                 </div>
                 
                 <div className="mt-6 text-center">
-                  <p className="text-lg font-semibold mb-2">🎯 Objectif</p>
+                  <p className="text-lg font-semibold mb-2">Objectif</p>
                   <p className="text-sm">
                     Permettre à nos clients <strong>d'éviter d'être "bloqués"</strong> et de <strong>continuer à faire évoluer leur stratégie patrimoniale</strong>, plutôt que de subir une immobilisation forcée.
                   </p>
@@ -436,11 +438,11 @@ export default function ScpiOpciPage() {
       </section>
 
       {/* Classement SCPI Section */}
-      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
-              📋 Classement des SCPI parmi les plus performantes (S1 2025)
+              Classement des SCPI parmi les plus performantes (S1 2025)
             </h2>
             <p className="text-[#686868] text-lg max-w-4xl mx-auto">
               Voici un tableau actualisé des SCPI les plus performantes au 1er semestre 2025, avec les rendements déclarés, points forts, et mises en garde.
@@ -450,7 +452,7 @@ export default function ScpiOpciPage() {
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-[#4EBBBD] text-white">
+                <thead className="bg-[#253F60] text-white">
                   <tr>
                     <th className="px-4 py-3 text-left text-sm font-semibold">Rang</th>
                     <th className="px-4 py-3 text-left text-sm font-semibold">SCPI</th>
@@ -461,35 +463,35 @@ export default function ScpiOpciPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-3 text-sm font-semibold text-[#4EBBBD]">1</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-[#253F60]">1</td>
                     <td className="px-4 py-3 text-sm font-semibold">Comète</td>
                     <td className="px-4 py-3 text-sm">Alderan</td>
                     <td className="px-4 py-3 text-sm font-bold text-green-600">≈ 11,18%</td>
                     <td className="px-4 py-3 text-sm">Très jeune SCPI (2023), stratégie diversifiée, investissements internationaux. Attention : profil de risque plus important.</td>
                   </tr>
                   <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-3 text-sm font-semibold text-[#4EBBBD]">2</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-[#253F60]">2</td>
                     <td className="px-4 py-3 text-sm font-semibold">Osmo Énergie</td>
                     <td className="px-4 py-3 text-sm">Mata Capital</td>
                     <td className="px-4 py-3 text-sm font-bold text-green-600">≈ 9,33%</td>
                     <td className="px-4 py-3 text-sm">Entreprise très jeune, forte progression, rendement élevé au départ. Risque sur la pérennité.</td>
                   </tr>
                   <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-3 text-sm font-semibold text-[#4EBBBD]">3</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-[#253F60]">3</td>
                     <td className="px-4 py-3 text-sm font-semibold">Mistral Sélection</td>
                     <td className="px-4 py-3 text-sm">Swiss Life REIM</td>
                     <td className="px-4 py-3 text-sm font-bold text-green-600">≈ 8,59%</td>
                     <td className="px-4 py-3 text-sm">SCPI "sans frais de souscription", bonne diversification, groupe reconnu. Risque modéré.</td>
                   </tr>
                   <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-3 text-sm font-semibold text-[#4EBBBD]">4</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-[#253F60]">4</td>
                     <td className="px-4 py-3 text-sm font-semibold">Transitions Europe</td>
                     <td className="px-4 py-3 text-sm">Arkéa REIM</td>
                     <td className="px-4 py-3 text-sm font-bold text-green-600">≈ 8,25%</td>
                     <td className="px-4 py-3 text-sm">Capitalisation importante, stratégie très européenne. Risques liés à l'évolution macroéconomique.</td>
                   </tr>
                   <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-3 text-sm font-semibold text-[#4EBBBD]">5</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-[#253F60]">5</td>
                     <td className="px-4 py-3 text-sm font-semibold">Upeka</td>
                     <td className="px-4 py-3 text-sm">Axipit REP</td>
                     <td className="px-4 py-3 text-sm font-bold text-green-600">≈ 7,96%</td>
@@ -501,7 +503,7 @@ export default function ScpiOpciPage() {
           </div>
 
           <div className="mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-lg">
-            <h3 className="text-[#112033] text-lg font-semibold mb-3">⚠️ Ce qu'il faut nuancer / risques à connaître</h3>
+            <h3 className="text-[#112033] text-lg font-semibold mb-3">Ce qu'il faut nuancer / risques à connaître</h3>
             <ul className="space-y-2 text-sm text-[#686868]">
               <li>• <strong>Actualisation des chiffres</strong> : beaucoup de rendements sont ceux de 2024 et ne se traduisent pas nécessairement sur S1 2025</li>
               <li>• <strong>Valeur des parts</strong> : certaines SCPI ont vu leur prix de souscription / valeur des parts baisser en début d'année</li>
@@ -513,11 +515,11 @@ export default function ScpiOpciPage() {
       </section>
 
       {/* Comparatif Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
-              📊 Comparatif SCPI en fonction de l'accès
+              Comparatif SCPI en fonction de l'accès
             </h2>
           </div>
 
@@ -571,12 +573,14 @@ export default function ScpiOpciPage() {
       </section>
 
       {/* OPCI Section */}
-      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
-              Les OPCI : une alternative plus liquide
-            </h2>
+            <div className="bg-[#253F60] rounded-lg p-6 mb-6">
+              <h2 className="text-white text-2xl sm:text-3xl font-cairo font-semibold">
+                Les OPCI : une alternative plus liquide
+              </h2>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -584,7 +588,7 @@ export default function ScpiOpciPage() {
               <h3 className="text-[#112033] text-xl font-semibold mb-4">Caractéristiques des OPCI</h3>
               <ul className="space-y-3 text-[#686868]">
                 <li className="flex items-start gap-3">
-                  <span className="text-[#4EBBBD] font-bold">•</span>
+                  <span className="text-[#253F60] font-bold">•</span>
                   <span><strong>OPCI (Organismes de Placement Collectif Immobilier)</strong> : proches des SCPI mais investis à la fois en immobilier direct et en actifs financiers (actions, obligations, liquidités).</span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -592,11 +596,11 @@ export default function ScpiOpciPage() {
                   <span>Objectif : offrir une <strong>meilleure liquidité</strong> (rachat sous quelques jours).</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-[#59E2E4] font-bold">•</span>
+                  <span className="text-[#253F60] font-bold">•</span>
                   <span>Contrepartie : plus de <strong>volatilité</strong>, car sensibles aux marchés financiers.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-[#4EBBBD] font-bold">•</span>
+                  <span className="text-[#B99066] font-bold">•</span>
                   <span>Fiscalité : similaire aux fonds classiques (OPCVM) en assurance-vie.</span>
                 </li>
               </ul>
@@ -618,7 +622,7 @@ export default function ScpiOpciPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-gradient-to-r from-[#59E2E4] to-[#B99066] py-12 sm:py-16 lg:py-20">
+      <section className="w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
             En résumé
@@ -634,14 +638,14 @@ export default function ScpiOpciPage() {
               Depuis 2023, la crise de liquidité a mis en évidence la <strong>fragilité du marché secondaire</strong>.
             </p>
             <p className="text-xl font-semibold">
-              👉 Avec son service de <strong>vente de gré à gré</strong>, <strong>Azalée Patrimoine</strong> offre une <strong>solution concrète et innovante</strong> pour aider ses clients à <strong>retrouver de la liberté</strong> dans leur allocation patrimoniale.
+              Avec son service de <strong>vente de gré à gré</strong>, <strong>Azalée Patrimoine</strong> offre une <strong>solution concrète et innovante</strong> pour aider ses clients à <strong>retrouver de la liberté</strong> dans leur allocation patrimoniale.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-cairo font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
+            <button className="bg-white text-[#253F60] px-8 py-4 rounded-lg shadow-lg font-cairo font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
               Découvrir notre marché secondaire
             </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-cairo font-semibold text-lg hover:bg-white hover:text-[#4EBBBD] transition-colors duration-200">
+            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-cairo font-semibold text-lg hover:bg-white hover:text-[#253F60] transition-colors duration-200">
               Prendre rendez-vous
             </button>
           </div>

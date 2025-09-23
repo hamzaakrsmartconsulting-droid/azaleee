@@ -19,19 +19,19 @@ export default function BourseActionsPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="w-full lg:w-1/2">
-              <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
+              <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
                 La Bourse (actions, CAC 40, indices, ETF…) : guide pour débuter
             </h1>
-              <p className="text-[#686868] text-lg font-inter leading-relaxed mb-8">
+              <p className="text-white text-lg font-inter leading-relaxed mb-8">
                 Investir en Bourse attire de plus en plus d'épargnants français. Entre l'<strong>attrait de la performance</strong> (bien supérieure aux livrets ou fonds en euros) et la possibilité de <strong>participer à la croissance des entreprises</strong>, la Bourse est un passage obligé pour diversifier son patrimoine.
               </p>
-              <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg mb-8">
-                <p className="text-[#112033] text-sm font-inter">
+              <div className="bg-white bg-opacity-20 border-l-4 border-white p-4 rounded-r-lg mb-8">
+                <p className="text-white text-sm font-inter">
                   👉 Mais la Bourse peut sembler complexe : actions, dividendes, CAC 40, indices mondiaux, ETF, volatilité… Cette page vous aide à <strong>décrypter les bases</strong> pour investir de manière éclairée.
                 </p>
               </div>
@@ -39,7 +39,7 @@ export default function BourseActionsPage() {
                 <button className="bg-[#B99066] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
                   Commencer à investir
                 </button>
-                <button className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#B99066] hover:text-white transition-colors duration-200">
+                <button className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors duration-200">
                   Voir nos analyses
                 </button>
               </div>
@@ -93,7 +93,7 @@ export default function BourseActionsPage() {
               onClick={() => setActiveTab("introduction")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "introduction" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -103,7 +103,7 @@ export default function BourseActionsPage() {
               onClick={() => setActiveTab("definition")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "definition" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -113,7 +113,7 @@ export default function BourseActionsPage() {
               onClick={() => setActiveTab("actions")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "actions" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -123,7 +123,7 @@ export default function BourseActionsPage() {
               onClick={() => setActiveTab("indices")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "indices" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -133,7 +133,7 @@ export default function BourseActionsPage() {
               onClick={() => setActiveTab("investir")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "investir" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -143,7 +143,7 @@ export default function BourseActionsPage() {
               onClick={() => setActiveTab("enveloppes")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "enveloppes" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -153,7 +153,7 @@ export default function BourseActionsPage() {
               onClick={() => setActiveTab("faq")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "faq" 
-                  ? "bg-[#4EBBBD] text-white" 
+                  ? "bg-[#253F60] text-white" 
                   : "bg-gray-100 text-[#686868] hover:bg-gray-200"
               }`}
             >
@@ -181,8 +181,7 @@ export default function BourseActionsPage() {
                 <h3 className="text-[#112033] text-xl font-semibold mb-4">Pourquoi investir en Bourse ?</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-white font-bold">📈</span>
+                    <div className="w-10 h-10 bg-[#253F60] rounded-full flex items-center justify-center flex-shrink-0">
                     </div>
                     <div>
                       <h4 className="text-[#112033] font-semibold mb-2">Performance supérieure</h4>
@@ -193,7 +192,6 @@ export default function BourseActionsPage() {
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-white font-bold">🏢</span>
                     </div>
                     <div>
                       <h4 className="text-[#112033] font-semibold mb-2">Participation à l'économie réelle</h4>
@@ -219,7 +217,7 @@ export default function BourseActionsPage() {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#4EBBBD]">
+                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#253F60]">
                   <h3 className="text-[#112033] text-lg font-semibold mb-3">Actions</h3>
                   <p className="text-[#686868] text-sm">
                     Parts de sociétés cotées
@@ -240,7 +238,7 @@ export default function BourseActionsPage() {
                   </p>
                 </div>
                 
-                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#4EBBBD]">
+                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#253F60]">
                   <h3 className="text-[#112033] text-lg font-semibold mb-3">Produits dérivés</h3>
                   <p className="text-[#686868] text-sm">
                     Options, turbos, warrants (pour investisseurs avertis)
@@ -248,7 +246,7 @@ export default function BourseActionsPage() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+              <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
                 <h3 className="text-xl font-semibold mb-4">Rôle de la Bourse</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -284,8 +282,7 @@ export default function BourseActionsPage() {
                   <h3 className="text-[#112033] text-xl font-semibold mb-6">Détenir une action vous donne :</h3>
                   <div className="space-y-4">
                     <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">✓</span>
+                      <div className="w-8 h-8 bg-[#253F60] rounded-full flex items-center justify-center flex-shrink-0">
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Droit de vote</h4>
@@ -294,7 +291,6 @@ export default function BourseActionsPage() {
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">✓</span>
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Droit aux dividendes</h4>
@@ -302,8 +298,7 @@ export default function BourseActionsPage() {
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 bg-[#59E2E4] rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold">✓</span>
+                      <div className="w-8 h-8 bg-[#253F60] rounded-full flex items-center justify-center flex-shrink-0">
                       </div>
                       <div>
                         <h4 className="text-[#112033] font-semibold mb-1">Espérance de plus-value</h4>
@@ -313,7 +308,7 @@ export default function BourseActionsPage() {
                   </div>
                 </div>
 
-            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
                   <h3 className="text-xl font-semibold mb-6">Exemple concret : TotalÉnergies</h3>
                   <div className="space-y-4">
                     <div className="bg-white bg-opacity-20 rounded-lg p-4">
@@ -351,10 +346,9 @@ export default function BourseActionsPage() {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+                <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
                   <div className="text-center mb-6">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-[#4EBBBD] font-bold text-xl">🇫🇷</span>
                     </div>
                     <h3 className="text-2xl font-semibold mb-2">CAC 40</h3>
                     <p className="text-xl font-bold">7,245.69</p>
@@ -368,10 +362,9 @@ export default function BourseActionsPage() {
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-[#B99066] font-bold text-xl">🇺🇸</span>
                     </div>
                     <h3 className="text-2xl font-semibold mb-2">S&P 500</h3>
                     <p className="text-xl font-bold">4,783.35</p>
@@ -385,10 +378,9 @@ export default function BourseActionsPage() {
                   </ul>
                 </div>
                 
-                <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
+                <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
                   <div className="text-center mb-6">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-[#59E2E4] font-bold text-xl">🌍</span>
                     </div>
                     <h3 className="text-2xl font-semibold mb-2">MSCI World</h3>
                     <p className="text-xl font-bold">2,156.78</p>
@@ -424,10 +416,9 @@ export default function BourseActionsPage() {
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+                <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
                   <div className="text-center mb-6">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-[#4EBBBD] text-2xl">📈</span>
                     </div>
                     <h3 className="text-2xl font-semibold mb-2">En direct</h3>
                   </div>
@@ -440,10 +431,9 @@ export default function BourseActionsPage() {
                   </ul>
                 </div>
                 
-                <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
+                <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
                   <div className="text-center mb-6">
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-[#B99066] text-2xl">📊</span>
                     </div>
                     <h3 className="text-2xl font-semibold mb-2">Via des fonds / ETF</h3>
                   </div>
@@ -456,10 +446,9 @@ export default function BourseActionsPage() {
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-[#59E2E4] text-2xl">🛡️</span>
                     </div>
                     <h3 className="text-2xl font-semibold mb-2">Produits structurés</h3>
                   </div>
@@ -518,7 +507,7 @@ export default function BourseActionsPage() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+              <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
                 <h3 className="text-xl font-semibold mb-4">👉 Le choix dépend de vos objectifs :</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
@@ -547,7 +536,7 @@ export default function BourseActionsPage() {
               </div>
               
               <div className="space-y-6">
-                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#4EBBBD]">
+                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#253F60]">
                   <h3 className="text-[#112033] text-lg font-semibold mb-3">1. Comment débuter en Bourse avec 1 000 € ?</h3>
                   <p className="text-[#686868] mb-2">
                     Oui, il est possible de commencer en Bourse avec <strong>1 000 €</strong>.
@@ -590,7 +579,7 @@ export default function BourseActionsPage() {
                   </div>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#4EBBBD]">
+                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#253F60]">
                   <h3 className="text-[#112033] text-lg font-semibold mb-3">4. Peut-on perdre tout son argent en Bourse ?</h3>
                   <p className="text-[#686868] mb-2">
                     La Bourse comporte un <strong>risque de perte en capital</strong>.
@@ -628,7 +617,7 @@ export default function BourseActionsPage() {
                   </div>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#4EBBBD]">
+                <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-[#253F60]">
                   <h3 className="text-[#112033] text-lg font-semibold mb-3">7. Combien de temps faut-il investir en Bourse ?</h3>
                   <p className="text-[#686868] mb-2">
                     La Bourse est un <strong>placement long terme</strong>.
@@ -645,7 +634,7 @@ export default function BourseActionsPage() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white text-center">
+              <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white text-center">
                 <p className="text-lg font-semibold">
                   👉 Chez <strong>Azalée Patrimoine</strong>, nous accompagnons les épargnants débutants comme les investisseurs confirmés pour construire une stratégie boursière adaptée à leurs objectifs de <strong>performance, fiscalité et transmission</strong>.
                 </p>
@@ -667,8 +656,7 @@ export default function BourseActionsPage() {
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">📈</span>
+                  <div className="w-10 h-10 bg-[#253F60] rounded-full flex items-center justify-center flex-shrink-0">
                   </div>
                   <div>
                     <h3 className="text-[#112033] font-semibold mb-2">Rendement historique supérieur</h3>
@@ -680,7 +668,6 @@ export default function BourseActionsPage() {
                 
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">💧</span>
                   </div>
                   <div>
                     <h3 className="text-[#112033] font-semibold mb-2">Liquidité</h3>
@@ -691,8 +678,7 @@ export default function BourseActionsPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#59E2E4] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">🌍</span>
+                  <div className="w-10 h-10 bg-[#253F60] rounded-full flex items-center justify-center flex-shrink-0">
                   </div>
                   <div>
                     <h3 className="text-[#112033] font-semibold mb-2">Diversification</h3>
@@ -703,8 +689,7 @@ export default function BourseActionsPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">🚪</span>
+                  <div className="w-10 h-10 bg-[#253F60] rounded-full flex items-center justify-center flex-shrink-0">
                   </div>
                   <div>
                     <h3 className="text-[#112033] font-semibold mb-2">Accessibilité</h3>
@@ -789,30 +774,27 @@ export default function BourseActionsPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#4EBBBD] text-2xl">🎯</span>
                 </div>
                 <h3 className="text-2xl font-semibold mb-2">Allocation personnalisée</h3>
               </div>
               <p className="text-sm mb-4">Selon votre profil (prudent, équilibré, dynamique).</p>
             </div>
 
-            <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#B99066] text-2xl">🔗</span>
                 </div>
                 <h3 className="text-2xl font-semibold mb-2">Intégration patrimoniale</h3>
               </div>
               <p className="text-sm mb-4">Avec vos autres actifs (immobilier, épargne retraite, SCPI).</p>
             </div>
 
-            <div className="bg-gradient-to-br from-[#59E2E4] to-[#4EBBBD] rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#59E2E4] text-2xl">📊</span>
               </div>
                 <h3 className="text-2xl font-semibold mb-2">Simulations sur mesure</h3>
               </div>
@@ -820,7 +802,7 @@ export default function BourseActionsPage() {
             </div>
           </div>
 
-          <div className="mt-12 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white text-center">
+          <div className="mt-12 bg-[#253F60] rounded-lg shadow-lg p-8 text-white text-center">
             <h3 className="text-xl font-semibold mb-4">🎯 Objectif</h3>
             <p className="text-lg">
               Transformer la Bourse en un <strong>outil durable de croissance</strong>, adapté à votre horizon de vie et à vos projets.
@@ -830,7 +812,7 @@ export default function BourseActionsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-gradient-to-r from-[#59E2E4] to-[#B99066] py-12 sm:py-16 lg:py-20">
+      <section className="w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
             En résumé
@@ -866,10 +848,13 @@ export default function BourseActionsPage() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-cairo font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
+            <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-cairo font-semibold text-lg hover:bg-[#A67C52] transition-colors duration-200">
             Démarrer mon investissement
           </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-cairo font-semibold text-lg hover:bg-white hover:text-[#4EBBBD] transition-colors duration-200">
+            <button 
+              onClick={() => window.open('https://calendly.com/azalee-patrimoine', '_blank')}
+              className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-cairo font-semibold text-lg hover:bg-white hover:text-[#253F60] transition-colors duration-200"
+            >
               Prendre rendez-vous
             </button>
           </div>

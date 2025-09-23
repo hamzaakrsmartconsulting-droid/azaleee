@@ -207,17 +207,18 @@ export default function ContactFormPage() {
                   Scannez le QR code pour accéder directement à notre calendrier de rendez-vous
                 </p>
                 
-                {/* Placeholder pour QR Code - vous pouvez remplacer par un vrai QR code */}
-                <div className="bg-gray-100 rounded-lg p-8 mb-4 mx-auto w-48 h-48 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-4xl mb-2">📱</div>
-                    <p className="text-sm text-gray-600">QR Code Calendly</p>
-                  </div>
+                {/* QR Code Calendly */}
+                <div className="mb-4 mx-auto w-48 h-48 flex items-center justify-center">
+                  <img 
+                    src="/images/qr.jpg" 
+                    alt="QR Code Calendly" 
+                    className="w-full h-full object-contain rounded-lg"
+                  />
                 </div>
                 
                 <button
-                  onClick={() => window.open('https://calendly.com/contact-azalee-patrimoine', '_blank')}
-                  className="bg-[#4EBBBD] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#59E2E4] transition-colors duration-200"
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-[#B99066] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#A67C52] transition-colors duration-200"
                 >
                   Ouvrir Calendly
                 </button>
@@ -247,8 +248,8 @@ export default function ContactFormPage() {
               {/* Retour */}
               <div className="text-center">
                 <button
-                  onClick={() => window.history.back()}
-                  className="bg-transparent border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-3 rounded-lg font-semibold hover:bg-[#4EBBBD] hover:text-white transition-all duration-200"
+                  onClick={() => window.location.href = 'http://localhost:4028'}
+                  className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-8 py-3 rounded-lg font-semibold hover:bg-[#B99066] hover:text-white transition-all duration-200"
                 >
                   ← Retour à l'accueil
                 </button>

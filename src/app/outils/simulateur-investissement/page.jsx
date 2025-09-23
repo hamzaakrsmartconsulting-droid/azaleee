@@ -180,15 +180,15 @@ export default function SimulateurInvestissementPage() {
       <Header />
       
       {/* Professional Hero Section */}
-      <section className="relative bg-gradient-to-r from-[#112033] via-[#19515e] to-[#4EBBBD] text-white py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-r from-[#253F60] to-[#B99066] text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#4EBBBD] rounded-full opacity-10 transform translate-x-48 -translate-y-48"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#B99066] rounded-full opacity-10 transform translate-x-48 -translate-y-48"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#b99066] rounded-full opacity-10 transform -translate-x-32 translate-y-32"></div>
         
         <div className="relative max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="inline-flex items-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
-              <span className="w-2 h-2 bg-[#4EBBBD] rounded-full mr-2"></span>
+              <span className="w-2 h-2 bg-[#B99066] rounded-full mr-2"></span>
               Outil professionnel
             </div>
             <h1 className="text-5xl font-bold mb-6 leading-tight">
@@ -236,7 +236,7 @@ export default function SimulateurInvestissementPage() {
                         type="number"
                         value={formData[champ.id]}
                         onChange={(e) => handleInputChange(champ.id, Number(e.target.value))}
-                        className="w-full px-4 py-4 pr-16 border-2 border-gray-200 rounded-lg focus:ring-4 focus:ring-[#4EBBBD] focus:ring-opacity-20 focus:border-[#4EBBBD] transition-all duration-200 text-lg font-medium"
+                        className="w-full px-4 py-4 pr-16 border-2 border-gray-200 rounded-lg focus:ring-4 focus:ring-[#253F60] focus:ring-opacity-20 focus:border-[#253F60] transition-all duration-200 text-lg font-medium"
                         placeholder={champ.placeholder}
                       />
                       <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">
@@ -261,7 +261,7 @@ export default function SimulateurInvestissementPage() {
                         type="number"
                         value={formData[champ.id]}
                         onChange={(e) => handleInputChange(champ.id, Number(e.target.value))}
-                        className="w-full px-4 py-4 pr-16 border-2 border-gray-200 rounded-lg focus:ring-4 focus:ring-[#4EBBBD] focus:ring-opacity-20 focus:border-[#4EBBBD] transition-all duration-200 text-lg font-medium"
+                        className="w-full px-4 py-4 pr-16 border-2 border-gray-200 rounded-lg focus:ring-4 focus:ring-[#253F60] focus:ring-opacity-20 focus:border-[#253F60] transition-all duration-200 text-lg font-medium"
                         placeholder={champ.placeholder}
                       />
                       <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">
@@ -280,7 +280,7 @@ export default function SimulateurInvestissementPage() {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={handleCalculate}
-                className="px-10 py-4 bg-gradient-to-r from-[#4EBBBD] to-[#3DA8AA] text-white font-bold rounded-xl hover:from-[#3DA8AA] hover:to-[#2C9597] transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg"
+                className="px-10 py-4 bg-gradient-to-r from-[#4EBBBD] to-[#3DA8AA] text-white font-bold rounded-xl hover:from-[#A67A5A] hover:to-[#8E6A4E] transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg"
               >
                 {content.interface.boutonCalculer}
               </button>
@@ -369,10 +369,8 @@ export default function SimulateurInvestissementPage() {
               {/* Investment Timeline */}
               <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <div className="w-8 h-8 bg-[#4EBBBD] rounded-lg mr-3 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
+                  <div className="w-8 h-8 bg-[#253F60] rounded-lg mr-3 flex items-center justify-center">
+                    <span className="text-white text-lg font-bold">1</span>
                   </div>
                   Évolution temporelle
                 </h3>
@@ -380,7 +378,7 @@ export default function SimulateurInvestissementPage() {
                   {results.annualData.slice(-8).map((yearData, index) => (
                     <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-200">
                       <div className="flex items-center">
-                        <div className="w-3 h-3 bg-[#4EBBBD] rounded-full mr-3"></div>
+                        <div className="w-3 h-3 bg-[#253F60] rounded-full mr-3"></div>
                         <span className="font-semibold text-gray-900">Année {yearData.year}</span>
                       </div>
                       <div className="text-right">
@@ -395,12 +393,10 @@ export default function SimulateurInvestissementPage() {
               </div>
 
               {/* Investment Summary */}
-              <div className="bg-gradient-to-br from-[#112033] to-[#19515e] rounded-2xl p-8 text-white">
+              <div className="bg-[#253F60] rounded-2xl p-8 text-white">
                 <h3 className="text-2xl font-bold mb-6 flex items-center">
-                  <div className="w-8 h-8 bg-[#4EBBBD] rounded-lg mr-3 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                  <div className="w-8 h-8 bg-[#B99066] rounded-lg mr-3 flex items-center justify-center">
+                    <span className="text-white text-lg font-bold">2</span>
                   </div>
                   Résumé de l'investissement
                 </h3>
@@ -428,7 +424,7 @@ export default function SimulateurInvestissementPage() {
             {/* Performance Overview */}
             <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 mb-16">
               <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                <div className="w-8 h-8 bg-[#4EBBBD] rounded-lg mr-3 flex items-center justify-center">
+                <div className="w-8 h-8 bg-[#B99066] rounded-lg mr-3 flex items-center justify-center">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>

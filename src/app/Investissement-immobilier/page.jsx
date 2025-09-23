@@ -371,19 +371,19 @@ export default function InvestissementImmobilierPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
             {/* Left Content */}
             <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               {/* Main Title */}
               <h1 className="text-black text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8">
-                {content.hero?.title || "Investissement Immobilier – Faites fructifier votre patrimoine avec Azalee Wealth"}
+                {(content.hero?.title || "Investissement Immobilier – Faites fructifier votre patrimoine avec Azalee Wealth").replace(/\s+\d+$/, '')}
               </h1>
               
               {/* Description */}
-              <p className="text-[#374151] text-sm sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10">
-                {content.hero?.subtitle || "Votre partenaire de confiance en stratégie immobilière depuis plus de 30 ans. Nous vous accompagnons pour valoriser votre patrimoine, sécuriser vos investissements, et bâtir des solutions d'investissement sur mesure, adaptées à vos objectifs."}
+              <p className="text-[#686868] text-sm sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10">
+                {(content.hero?.subtitle || "Votre partenaire de confiance en stratégie immobilière depuis plus de 30 ans. Nous vous accompagnons pour valoriser votre patrimoine, sécuriser vos investissements, et bâtir des solutions d'investissement sur mesure, adaptées à vos objectifs.").replace(/\s+\d+$/, '')}
               </p>
               
               {/* CTA Button */}
@@ -396,7 +396,7 @@ export default function InvestissementImmobilierPage() {
             <div className="w-full lg:w-[467px] flex justify-center lg:justify-end">
               <div className="relative">
                 {/* Decorative background */}
-                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#4EBBBD]/20 rounded-2xl"></div>
+                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#253F60]/20 rounded-2xl"></div>
                 
                 {/* Main image */}
                 <img
@@ -413,7 +413,7 @@ export default function InvestissementImmobilierPage() {
                 {/* Floating badge */}
                 <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gradient-to-r from-[#B99066] to-[#253F60] rounded-full flex items-center justify-center">
                       <span className="text-white text-lg">✓</span>
                     </div>
                     <div>
@@ -457,7 +457,7 @@ export default function InvestissementImmobilierPage() {
                     {service.title}
                   </h3>
                   <p className={`text-xs sm:text-sm lg:text-base font-inter leading-relaxed ${
-                    service.bgColor === '#253F60' ? 'text-white' : 'text-[#374151]'
+                    service.bgColor === '#253F60' ? 'text-white' : 'text-[#686868]'
                   }`}>
                     {service.description}
                   </p>
@@ -884,7 +884,7 @@ export default function InvestissementImmobilierPage() {
         <div className="max-w-[1256px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative">
             {/* Blockquote Container */}
-            <div className="relative bg-gradient-to-r from-[#253F60] to-[#5B4733] rounded-lg shadow-lg p-8 sm:p-12 lg:p-16">
+            <div className="relative bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-lg shadow-lg p-8 sm:p-12 lg:p-16">
               {/* Quote Icon */}
               <div className="absolute top-4 sm:top-6 left-4 sm:left-6 w-12 h-16 sm:w-16 sm:h-20">
                 <img
@@ -1010,7 +1010,7 @@ export default function InvestissementImmobilierPage() {
         <div className="max-w-[1256px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative">
             {/* Blockquote Container */}
-            <div className="relative bg-gradient-to-r from-[#253F60] to-[#5B4733] rounded-lg shadow-lg p-8 sm:p-12 lg:p-16">
+            <div className="relative bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-lg shadow-lg p-8 sm:p-12 lg:p-16">
               {/* Quote Icon */}
               <div className="absolute top-4 sm:top-6 left-4 sm:left-6 w-12 h-16 sm:w-16 sm:h-20">
                 <img
@@ -1618,7 +1618,7 @@ export default function InvestissementImmobilierPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Agencies Card */}
             <div className="lg:col-start-2 bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
-              <h3 className="text-[#005C69] text-sm sm:text-base lg:text-lg font-source-sans font-semibold mb-6">
+              <h3 className="text-[#112033] text-sm sm:text-base lg:text-lg font-source-sans font-semibold mb-6">
                 Discover our agencies
               </h3>
               

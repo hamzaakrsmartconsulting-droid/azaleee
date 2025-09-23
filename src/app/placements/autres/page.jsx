@@ -17,43 +17,47 @@ export default function AutresPage() {
       <Header />
       
       {/* Hero Section with diverse products */}
-      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-6">
+            <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-6">
               Autres Solutions de Placement
             </h1>
-            <p className="text-[#686868] text-lg sm:text-xl lg:text-2xl font-inter leading-relaxed max-w-4xl mx-auto">
+            <p className="text-white text-lg sm:text-xl lg:text-2xl font-inter leading-relaxed max-w-4xl mx-auto">
               Découvrez nos solutions d'investissement alternatives et spécialisées
             </p>
           </div>
           
           {/* Product Categories Display */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🏛️</span>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#A67A5A] transition-colors duration-300">
+                <span className="text-white text-2xl font-bold">PE</span>
               </div>
               <h3 className="text-[#112033] text-lg font-semibold mb-2">Private Equity</h3>
               <p className="text-[#686868] text-sm">Investissement dans des entreprises non cotées</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🌾</span>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#A67A5A] transition-colors duration-300">
+                <span className="text-white text-2xl font-bold">FA</span>
               </div>
               <h3 className="text-[#112033] text-lg font-semibold mb-2">Foncière Agricole</h3>
               <p className="text-[#686868] text-sm">Investissement dans les terres agricoles</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">💎</span>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="w-16 h-16 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:from-[#1A2F4A] hover:to-[#A67A5A] transition-colors duration-300">
+                <span className="text-white text-2xl font-bold">MP</span>
               </div>
               <h3 className="text-[#112033] text-lg font-semibold mb-2">Matières Premières</h3>
               <p className="text-[#686868] text-sm">Or, argent, pétrole et autres commodités</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🎨</span>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#A67A5A] transition-colors duration-300">
+                <span className="text-white text-2xl font-bold">AC</span>
               </div>
               <h3 className="text-[#112033] text-lg font-semibold mb-2">Art & Collection</h3>
               <p className="text-[#686868] text-sm">Œuvres d'art et objets de collection</p>
@@ -65,7 +69,10 @@ export default function AutresPage() {
             <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-[#A67A5A] transition-colors duration-200">
               Découvrir nos solutions
             </button>
-            <button className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-[#B99066] hover:text-white transition-colors duration-200">
+            <button 
+              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+              className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#253F60] transition-colors duration-200"
+            >
               Prendre rendez-vous
             </button>
           </div>
@@ -80,7 +87,7 @@ export default function AutresPage() {
       />
 
       {/* Alternative Investments Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
@@ -90,10 +97,10 @@ export default function AutresPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Private Equity */}
-            <div className="bg-gradient-to-br from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#4EBBBD] text-2xl">🏛️</span>
+                  <span className="text-[#253F60] text-2xl font-bold">1</span>
                 </div>
                 <h3 className="text-2xl font-source-sans font-semibold mb-2">Private Equity</h3>
               </div>
@@ -109,10 +116,10 @@ export default function AutresPage() {
             </div>
 
             {/* Agricultural Real Estate */}
-            <div className="bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-8 text-white">
+            <div className="bg-[#253F60] rounded-lg shadow-lg p-8 text-white">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#B99066] text-2xl">🌾</span>
+                  <span className="text-[#B99066] text-2xl font-bold">2</span>
                 </div>
                 <h3 className="text-2xl font-source-sans font-semibold mb-2">Foncière Agricole</h3>
               </div>
@@ -142,8 +149,8 @@ export default function AutresPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Gold */}
             <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-              <div className="w-20 h-20 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-white text-3xl">🥇</span>
+              <div className="w-20 h-20 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-white text-3xl font-bold">1</span>
               </div>
               <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-4">Or</h3>
               <p className="text-[#B99066] font-bold text-lg mb-4">+15.2% sur 1 an</p>
@@ -160,7 +167,7 @@ export default function AutresPage() {
             {/* Silver */}
             <div className="bg-white rounded-lg shadow-lg p-8 text-center">
               <div className="w-20 h-20 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-white text-3xl">🥈</span>
+                <span className="text-white text-3xl font-bold">2</span>
               </div>
               <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-4">Argent</h3>
               <p className="text-[#B99066] font-bold text-lg mb-4">+8.7% sur 1 an</p>
@@ -176,8 +183,8 @@ export default function AutresPage() {
 
             {/* Oil */}
             <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-              <div className="w-20 h-20 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-white text-3xl">🛢️</span>
+              <div className="w-20 h-20 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-white text-3xl font-bold">3</span>
               </div>
               <h3 className="text-[#112033] text-xl font-source-sans font-semibold mb-4">Pétrole</h3>
               <p className="text-[#B99066] font-bold text-lg mb-4">+12.3% sur 1 an</p>
@@ -206,8 +213,8 @@ export default function AutresPage() {
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#4EBBBD] rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold">✓</span>
+                  <div className="w-12 h-12 bg-[#B99066] rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold">1</span>
                   </div>
                   <div>
                     <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
@@ -236,7 +243,7 @@ export default function AutresPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#59E2E4] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-[#B99066] rounded-lg flex items-center justify-center flex-shrink-0">
                     <span className="text-white font-bold">✓</span>
                   </div>
                   <div>
@@ -261,10 +268,10 @@ export default function AutresPage() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-[#686868] text-sm">Art contemporain</span>
-                  <span className="text-[#4EBBBD] font-semibold">+18.5%</span>
+                  <span className="text-[#B99066] font-semibold">+18.5%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-[#4EBBBD] h-2 rounded-full" style={{width: '85%'}}></div>
+                  <div className="bg-[#B99066] h-2 rounded-full" style={{width: '85%'}}></div>
                 </div>
                 
                 <div className="flex justify-between items-center">
@@ -280,7 +287,7 @@ export default function AutresPage() {
                   <span className="text-[#59E2E4] font-semibold">+8.7%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-[#59E2E4] h-2 rounded-full" style={{width: '45%'}}></div>
+                  <div className="bg-[#B99066] h-2 rounded-full" style={{width: '45%'}}></div>
                 </div>
               </div>
             </div>
@@ -300,24 +307,24 @@ export default function AutresPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Benefits */}
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-[#4EBBBD] text-2xl font-source-sans font-semibold mb-6 text-center">
+              <h3 className="text-[#B99066] text-2xl font-source-sans font-semibold mb-6 text-center">
                 Avantages
               </h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <span className="text-[#4EBBBD] font-bold">✓</span>
+                  <span className="text-[#B99066] font-bold">✓</span>
                   <span className="text-[#686868]">Diversification du portefeuille</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[#4EBBBD] font-bold">✓</span>
+                  <span className="text-[#B99066] font-bold">✓</span>
                   <span className="text-[#686868]">Potentiel de rendement élevé</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[#4EBBBD] font-bold">✓</span>
+                  <span className="text-[#B99066] font-bold">✓</span>
                   <span className="text-[#686868]">Protection contre l'inflation</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[#4EBBBD] font-bold">✓</span>
+                  <span className="text-[#B99066] font-bold">✓</span>
                   <span className="text-[#686868]">Corrélation faible avec les marchés</span>
                 </div>
               </div>
@@ -330,19 +337,19 @@ export default function AutresPage() {
               </h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <span className="text-[#B99066] font-bold">⚠️</span>
+                  <span className="text-[#B99066] font-bold">!</span>
                   <span className="text-[#686868]">Liquidité limitée</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[#B99066] font-bold">⚠️</span>
+                  <span className="text-[#B99066] font-bold">!</span>
                   <span className="text-[#686868]">Volatilité élevée</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[#B99066] font-bold">⚠️</span>
+                  <span className="text-[#B99066] font-bold">!</span>
                   <span className="text-[#686868]">Expertise spécialisée requise</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[#B99066] font-bold">⚠️</span>
+                  <span className="text-[#B99066] font-bold">!</span>
                   <span className="text-[#686868]">Frais de gestion élevés</span>
                 </div>
               </div>
@@ -362,7 +369,7 @@ export default function AutresPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">1</span>
               </div>
               <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
@@ -386,7 +393,7 @@ export default function AutresPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">3</span>
               </div>
               <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
@@ -398,7 +405,7 @@ export default function AutresPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl">4</span>
               </div>
               <h3 className="text-[#112033] font-source-sans font-semibold mb-2">
@@ -413,7 +420,7 @@ export default function AutresPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-gradient-to-r from-[#59E2E4] to-[#B99066] py-12 sm:py-16 lg:py-20">
+      <section className="w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-source-sans font-semibold mb-6">
             Prêt à explorer les investissements alternatifs ?
@@ -422,7 +429,7 @@ export default function AutresPage() {
             Nos experts vous accompagnent dans la découverte et la mise en place 
             de solutions d'investissement alternatives adaptées à votre profil.
           </p>
-          <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-source-sans font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
+          <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-source-sans font-semibold text-lg hover:bg-[#A67A5A] transition-colors duration-200">
             Découvrir nos solutions
           </button>
         </div>

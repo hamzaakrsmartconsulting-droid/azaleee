@@ -17,30 +17,36 @@ export default function DonationOnereusePage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#FFEFD5] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="w-full lg:w-1/2">
-              <h1 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
+              <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
                 Donation à titre onéreux & donation de la nue-propriété
               </h1>
-              <p className="text-[#686868] text-lg font-inter leading-relaxed mb-8">
+              <p className="text-white text-lg font-inter leading-relaxed mb-8">
                 Une <strong>donation à titre onéreux</strong> est une donation assortie de <strong>charges ou contreparties</strong> pour le bénéficiaire.
               </p>
-              <p className="text-[#686868] text-lg font-inter leading-relaxed mb-8">
+              <p className="text-white text-lg font-inter leading-relaxed mb-8">
                 Contrairement à la donation à titre gratuit (sans aucune obligation), le donataire doit respecter certaines conditions fixées par le donateur : entretien du bien, prise en charge de dettes, obligation de conserver ou d'exploiter un actif transmis, etc.
               </p>
-              <div className="bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-4 rounded-r-lg mb-8">
-                <p className="text-[#112033] text-sm font-inter">
-                  👉 Ce mécanisme permet de <strong>transmettre</strong> tout en <strong>conservant un contrôle</strong> ou en <strong>fixant des conditions</strong> adaptées à la situation familiale et patrimoniale.
+              <div className="bg-white bg-opacity-20 border-l-4 border-white p-4 rounded-r-lg mb-8">
+                <p className="text-white text-sm font-inter">
+                  Ce mécanisme permet de <strong>transmettre</strong> tout en <strong>conservant un contrôle</strong> ou en <strong>fixant des conditions</strong> adaptées à la situation familiale et patrimoniale.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-[#B99066] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-[#B99066] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-medium hover:bg-[#A67C52] transition-colors duration-200"
+                >
                   Évaluer ma donation
                 </button>
-                <button className="bg-transparent border-2 border-[#B99066] text-[#B99066] px-6 py-3 rounded-lg font-inter font-medium hover:bg-[#B99066] hover:text-white transition-colors duration-200">
+                <button 
+                  onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                  className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors duration-200"
+                >
                   Consulter un expert
                 </button>
               </div>
@@ -49,9 +55,11 @@ export default function DonationOnereusePage() {
             {/* Right: Key Features Cards */}
             <div className="w-full lg:w-1/2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">⚖️</span>
+                <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#1A2F4A] transition-colors duration-300 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    <span className="text-white text-2xl font-bold relative z-10">1</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Avec charges</h3>
                   <p className="text-[#686868] text-sm mb-2">Obligations pour le bénéficiaire</p>
@@ -59,9 +67,11 @@ export default function DonationOnereusePage() {
                   <p className="text-[#686868] text-xs">Conservation du pouvoir</p>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">🏠</span>
+                <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#A67C52] transition-colors duration-300 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    <span className="text-white text-2xl font-bold relative z-10">2</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Nue-propriété</h3>
                   <p className="text-[#686868] text-sm mb-2">Conservation de l'usufruit</p>
@@ -69,9 +79,11 @@ export default function DonationOnereusePage() {
                   <p className="text-[#686868] text-xs">Droit d'usage</p>
                 </div>
                 
-                <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">📊</span>
+                <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#1A2F4A] transition-colors duration-300 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    <span className="text-white text-2xl font-bold relative z-10">3</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Optimisation fiscale</h3>
                   <p className="text-[#686868] text-sm mb-2">Démembrement</p>
@@ -79,9 +91,11 @@ export default function DonationOnereusePage() {
                   <p className="text-[#686868] text-xs">Selon l'âge</p>
                 </div>
                 
-                <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl">🔄</span>
+                <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#A67C52] transition-colors duration-300 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    <span className="text-white text-2xl font-bold relative z-10">4</span>
                   </div>
                   <h3 className="text-[#112033] text-lg font-semibold mb-2">Transmission progressive</h3>
                   <p className="text-[#686868] text-sm mb-2">Anticipation</p>
@@ -95,60 +109,80 @@ export default function DonationOnereusePage() {
       </section>
 
       {/* Chart Section */}
-      <PlacementChart 
-        title="Caractéristiques des donations à titre onéreux"
-        data={chartData}
-        chartImage="/images/variation-chart-image-944f04.png"
-      />
-
-      {/* Les formes de donations à titre onéreux Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-white py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
+              Caractéristiques des donations à titre onéreux
+            </h2>
+            <p className="text-[#686868] text-lg max-w-3xl mx-auto">
+              Visualisez les paramètres clés des donations à titre onéreux
+            </p>
+          </div>
+          
+          <div className="bg-white rounded-2xl p-8 sm:p-12 shadow-lg">
+            <PlacementChart 
+              title="Caractéristiques des donations à titre onéreux"
+              data={chartData}
+              chartImage="/images/variation-chart-image-944f04.png"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Les formes de donations à titre onéreux Section */}
+      <section className="w-full bg-[#F2F2F2] py-16 sm:py-20">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
               Les formes de donations à titre onéreux
             </h2>
+            <p className="text-[#686868] text-lg max-w-3xl mx-auto">
+              Découvrez les 2 principales formes de donations à titre onéreux
+            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Donation avec charges */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#4EBBBD]">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-[#4EBBBD] rounded-lg flex items-center justify-center">
-                  <span className="text-white text-xl">⚖️</span>
+            <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#253F60] hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="flex items-center gap-4 mb-6 relative z-10">
+                <div className="w-12 h-12 bg-[#253F60] rounded-lg flex items-center justify-center">
+                  <span className="text-white text-xl font-bold">1</span>
                 </div>
                 <div>
-                  <h3 className="text-[#112033] text-xl font-semibold">1. Donation avec charges</h3>
+                  <h3 className="text-[#112033] text-xl font-semibold">Donation avec charges</h3>
                   <p className="text-[#B99066] font-bold">Obligations pour le bénéficiaire</p>
                 </div>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-3 relative z-10">
                 <p className="text-[#686868] text-sm">
                   Le donateur transmet un bien mais impose au bénéficiaire des obligations (par exemple : prendre en charge un parent, assumer une dette, entretenir le bien).
                 </p>
                 <p className="text-[#686868] text-sm">
                   Juridiquement, la donation reste valable, mais la <strong>valeur des charges est déduite de la base taxable</strong>.
                 </p>
-                <div className="bg-[#E8F4F8] p-3 rounded-lg">
+                <div className="bg-[#F0F9FF] p-3 rounded-lg">
                   <p className="text-[#112033] text-xs">
-                    👉 Exemple : un parent donne un bien immobilier de 400 000 € avec obligation pour l'enfant de rembourser un emprunt de 100 000 € lié au bien → base taxable = 300 000 €.
+                    Exemple : un parent donne un bien immobilier de 400 000 € avec obligation pour l'enfant de rembourser un emprunt de 100 000 € lié au bien → base taxable = 300 000 €.
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Donation de la nue-propriété */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#B99066]">
-              <div className="flex items-center gap-4 mb-6">
+            <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#B99066] hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="flex items-center gap-4 mb-6 relative z-10">
                 <div className="w-12 h-12 bg-[#B99066] rounded-lg flex items-center justify-center">
-                  <span className="text-white text-xl">🏠</span>
+                  <span className="text-white text-xl font-bold">2</span>
                 </div>
                 <div>
-                  <h3 className="text-[#112033] text-xl font-semibold">2. Donation de la nue-propriété avec conservation de l'usufruit</h3>
+                  <h3 className="text-[#112033] text-xl font-semibold">Donation de la nue-propriété avec conservation de l'usufruit</h3>
                   <p className="text-[#B99066] font-bold">Démembrement de propriété</p>
                 </div>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-3 relative z-10">
                 <p className="text-[#686868] text-sm">
                   Le donateur transmet uniquement la <strong>nue-propriété</strong> d'un bien, mais conserve :
                 </p>
@@ -161,7 +195,7 @@ export default function DonationOnereusePage() {
                 </p>
                 <div className="bg-[#FFF8E1] p-3 rounded-lg">
                   <p className="text-[#112033] text-xs">
-                    👉 C'est l'un des mécanismes les plus utilisés pour <strong>anticiper la transmission immobilière</strong>.
+                    C'est l'un des mécanismes les plus utilisés pour <strong>anticiper la transmission immobilière</strong>.
                   </p>
                 </div>
               </div>
@@ -171,10 +205,10 @@ export default function DonationOnereusePage() {
       </section>
 
       {/* Barème fiscal Section */}
-      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-white py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
               Barème fiscal (article 669 CGI)
             </h2>
             <p className="text-[#686868] text-lg max-w-4xl mx-auto">
@@ -186,7 +220,7 @@ export default function DonationOnereusePage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-[#4EBBBD] text-white">
+                  <tr className="bg-[#253F60] text-white">
                     <th className="px-6 py-4 text-left font-semibold">Âge du donateur</th>
                     <th className="px-6 py-4 text-center font-semibold">Usufruit</th>
                     <th className="px-6 py-4 text-center font-semibold">Nue-propriété</th>
@@ -195,32 +229,32 @@ export default function DonationOnereusePage() {
                 <tbody>
                   <tr className="border-b border-gray-200">
                     <td className="px-6 py-4 font-medium">Moins de 51 ans</td>
-                    <td className="px-6 py-4 text-center text-[#4EBBBD] font-bold">50 %</td>
+                    <td className="px-6 py-4 text-center text-[#253F60] font-bold">50 %</td>
                     <td className="px-6 py-4 text-center text-[#B99066] font-bold">50 %</td>
                   </tr>
                   <tr className="bg-gray-50 border-b border-gray-200">
                     <td className="px-6 py-4 font-medium">51 à 60 ans</td>
-                    <td className="px-6 py-4 text-center text-[#4EBBBD] font-bold">50 %</td>
+                    <td className="px-6 py-4 text-center text-[#253F60] font-bold">50 %</td>
                     <td className="px-6 py-4 text-center text-[#B99066] font-bold">50 %</td>
                   </tr>
                   <tr className="border-b border-gray-200">
                     <td className="px-6 py-4 font-medium">61 à 70 ans</td>
-                    <td className="px-6 py-4 text-center text-[#4EBBBD] font-bold">40 %</td>
+                    <td className="px-6 py-4 text-center text-[#253F60] font-bold">40 %</td>
                     <td className="px-6 py-4 text-center text-[#B99066] font-bold">60 %</td>
                   </tr>
                   <tr className="bg-gray-50 border-b border-gray-200">
                     <td className="px-6 py-4 font-medium">71 à 80 ans</td>
-                    <td className="px-6 py-4 text-center text-[#4EBBBD] font-bold">30 %</td>
+                    <td className="px-6 py-4 text-center text-[#253F60] font-bold">30 %</td>
                     <td className="px-6 py-4 text-center text-[#B99066] font-bold">70 %</td>
                   </tr>
                   <tr className="border-b border-gray-200">
                     <td className="px-6 py-4 font-medium">81 à 90 ans</td>
-                    <td className="px-6 py-4 text-center text-[#4EBBBD] font-bold">20 %</td>
+                    <td className="px-6 py-4 text-center text-[#253F60] font-bold">20 %</td>
                     <td className="px-6 py-4 text-center text-[#B99066] font-bold">80 %</td>
                   </tr>
                   <tr>
                     <td className="px-6 py-4 font-medium">Plus de 91 ans</td>
-                    <td className="px-6 py-4 text-center text-[#4EBBBD] font-bold">10 %</td>
+                    <td className="px-6 py-4 text-center text-[#253F60] font-bold">10 %</td>
                     <td className="px-6 py-4 text-center text-[#B99066] font-bold">90 %</td>
                   </tr>
                 </tbody>
@@ -228,19 +262,19 @@ export default function DonationOnereusePage() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+          <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-lg shadow-lg p-8 text-white">
             <h3 className="text-xl font-semibold mb-6 text-center">
-              👉 Exemple : à 70 ans, une donation de la nue-propriété d'un appartement de 500 000 € est taxée sur 300 000 € (60 %), réduisant considérablement les droits.
+              Exemple : à 70 ans, une donation de la nue-propriété d'un appartement de 500 000 € est taxée sur 300 000 € (60 %), réduisant considérablement les droits.
             </h3>
           </div>
         </div>
       </section>
 
       {/* Coût fiscal d'une donation Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-[#F2F2F2] py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
               Coût fiscal d'une donation
             </h2>
             <p className="text-[#686868] text-lg max-w-4xl mx-auto">
@@ -252,10 +286,10 @@ export default function DonationOnereusePage() {
             {/* Left: Exemple de base */}
             <div>
               <h3 className="text-[#112033] text-xl font-semibold mb-8">
-                👉 Exemple de base
+                Exemple de base
               </h3>
               
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white mb-8">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-lg shadow-lg p-8 text-white mb-8">
                 <h4 className="text-lg font-semibold mb-6 text-center">
                   Donation de 200 000 € à un enfant, parent âgé de 70 ans
                 </h4>
@@ -292,7 +326,7 @@ export default function DonationOnereusePage() {
             {/* Right: Astuce patrimoniale */}
             <div>
               <h3 className="text-[#112033] text-xl font-semibold mb-8">
-                💡 Astuce patrimoniale
+                Astuce patrimoniale
               </h3>
               
               <div className="bg-white rounded-lg shadow-lg p-8 border-l-4 border-[#B99066]">
@@ -300,7 +334,7 @@ export default function DonationOnereusePage() {
                   Il peut être pertinent de <strong>dépasser volontairement l'abattement</strong> et de payer la tranche basse (5 % ou 10 %).
                 </p>
                 
-                <div className="bg-gradient-to-r from-[#B99066] to-[#D4A574] rounded-lg shadow-lg p-6 text-white mb-6">
+                <div className="bg-gradient-to-r from-[#B99066] to-[#A67C52] rounded-lg shadow-lg p-6 text-white mb-6">
                   <h4 className="font-semibold mb-4 text-center">Exemple : donner 120 000 € au lieu de 100 000 €</h4>
                   
                   <div className="space-y-3">
@@ -321,9 +355,9 @@ export default function DonationOnereusePage() {
                   </div>
                 </div>
                 
-                <div className="bg-[#E8F4F8] p-4 rounded-lg">
+                <div className="bg-[#F0F9FF] p-4 rounded-lg">
                   <p className="text-[#112033] text-sm text-center">
-                    👉 Cela permet de <strong>gonfler la donation nette</strong> pour un coût fiscal très limité.
+                    Cela permet de <strong>gonfler la donation nette</strong> pour un coût fiscal très limité.
                   </p>
                 </div>
               </div>
@@ -333,59 +367,70 @@ export default function DonationOnereusePage() {
       </section>
 
       {/* Intérêts de la donation à titre onéreux Section */}
-      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-white py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6">
+            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
               Intérêts de la donation à titre onéreux
             </h2>
+            <p className="text-[#686868] text-lg max-w-3xl mx-auto">
+              Découvrez les 4 principaux avantages de la donation à titre onéreux
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🔄</span>
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#1A2F4A] transition-colors duration-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <span className="text-white text-2xl font-bold relative z-10">1</span>
               </div>
-              <h3 className="text-[#112033] text-xl font-semibold mb-3">
+              <h3 className="text-[#112033] text-xl font-semibold mb-3 relative z-10">
                 Transmission progressive
               </h3>
-              <p className="text-[#686868] text-sm">
+              <p className="text-[#686868] text-sm relative z-10">
                 Permet de transmettre progressivement son patrimoine sans tout donner d'un coup.
               </p>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">📊</span>
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#A67C52] transition-colors duration-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <span className="text-white text-2xl font-bold relative z-10">2</span>
               </div>
-              <h3 className="text-[#112033] text-xl font-semibold mb-3">
+              <h3 className="text-[#112033] text-xl font-semibold mb-3 relative z-10">
                 Optimisation fiscale
               </h3>
-              <p className="text-[#686868] text-sm">
+              <p className="text-[#686868] text-sm relative z-10">
                 Optimise la fiscalité grâce au démembrement de propriété.
               </p>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🎯</span>
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#1A2F4A] transition-colors duration-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <span className="text-white text-2xl font-bold relative z-10">3</span>
               </div>
-              <h3 className="text-[#112033] text-xl font-semibold mb-3">
+              <h3 className="text-[#112033] text-xl font-semibold mb-3 relative z-10">
                 Maîtrise du bien
               </h3>
-              <p className="text-[#686868] text-sm">
+              <p className="text-[#686868] text-sm relative z-10">
                 Conserve une maîtrise du bien (loyers, usage, décisions).
               </p>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🛡️</span>
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-[#A67C52] transition-colors duration-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <span className="text-white text-2xl font-bold relative z-10">4</span>
               </div>
-              <h3 className="text-[#112033] text-xl font-semibold mb-3">
+              <h3 className="text-[#112033] text-xl font-semibold mb-3 relative z-10">
                 Sécurise la transmission
               </h3>
-              <p className="text-[#686868] text-sm">
+              <p className="text-[#686868] text-sm relative z-10">
                 Sécurise la transmission en évitant les conflits ultérieurs.
               </p>
             </div>
@@ -394,11 +439,11 @@ export default function DonationOnereusePage() {
       </section>
 
       {/* La vision Azalée Patrimoine Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+      <section className="w-full bg-[#F2F2F2] py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl font-cairo font-semibold mb-6 flex items-center justify-center gap-3">
-              <span className="text-[#4EBBBD] text-3xl">🚀</span>
+            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6 flex items-center justify-center gap-3">
+              <span className="text-[#253F60] text-3xl">🚀</span>
               La vision Azalée Patrimoine
             </h2>
             <p className="text-[#686868] text-lg max-w-4xl mx-auto">
@@ -408,8 +453,8 @@ export default function DonationOnereusePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🎯</span>
+              <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white text-2xl font-bold">1</span>
               </div>
               <h3 className="text-[#112033] text-xl font-semibold mb-3">Déterminer la bonne forme</h3>
               <p className="text-[#686868] text-sm">
@@ -419,7 +464,7 @@ export default function DonationOnereusePage() {
             
             <div className="text-center">
               <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">💰</span>
+                <span className="text-white text-2xl font-bold">2</span>
               </div>
               <h3 className="text-[#112033] text-xl font-semibold mb-3">Chiffrer précisément</h3>
               <p className="text-[#686868] text-sm">
@@ -428,8 +473,8 @@ export default function DonationOnereusePage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#59E2E4] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🤝</span>
+              <div className="w-16 h-16 bg-[#253F60] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white text-2xl font-bold">3</span>
               </div>
               <h3 className="text-[#112033] text-xl font-semibold mb-3">Optimiser le transfert</h3>
               <p className="text-[#686868] text-sm">
@@ -438,8 +483,8 @@ export default function DonationOnereusePage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#4EBBBD] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🏗️</span>
+              <div className="w-16 h-16 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white text-2xl font-bold">4</span>
               </div>
               <h3 className="text-[#112033] text-xl font-semibold mb-3">Stratégie globale</h3>
               <p className="text-[#686868] text-sm">
@@ -448,14 +493,14 @@ export default function DonationOnereusePage() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg shadow-lg p-8 text-white">
+          <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-lg shadow-lg p-8 text-white">
             <h3 className="text-xl font-semibold mb-6 text-center">
-              👉 La donation à titre onéreux est un outil puissant quand elle est <strong>anticipée et bien structurée</strong>.
+              La donation à titre onéreux est un outil puissant quand elle est <strong>anticipée et bien structurée</strong>.
             </h3>
             
-            <div className="mt-8 bg-[#E8F4F8] border-l-4 border-[#4EBBBD] p-6 rounded-r-lg">
-              <p className="text-[#112033] text-center font-semibold">
-                📅 <strong>Contactez Azalée Patrimoine</strong> pour évaluer vos options et construire une stratégie de transmission adaptée à votre famille et à votre patrimoine.
+            <div className="mt-8 bg-white bg-opacity-20 border-l-4 border-white p-6 rounded-r-lg">
+              <p className="text-white text-center font-semibold">
+                <strong>Contactez Azalée Patrimoine</strong> pour évaluer vos options et construire une stratégie de transmission adaptée à votre famille et à votre patrimoine.
               </p>
             </div>
           </div>
@@ -463,7 +508,7 @@ export default function DonationOnereusePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-gradient-to-r from-[#59E2E4] to-[#B99066] py-12 sm:py-16 lg:py-20">
+      <section className="w-full bg-gradient-to-br from-[#253F60] to-[#B99066] py-16 sm:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
             Prêt à optimiser votre transmission patrimoniale ?
@@ -472,10 +517,16 @@ export default function DonationOnereusePage() {
             Nos experts vous accompagnent pour mettre en place la stratégie de donation la plus adaptée à votre situation familiale et patrimoniale.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-[#4EBBBD] px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-gray-100 transition-colors duration-200">
+            <button 
+              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+              className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-lg hover:bg-[#A67C52] transition-colors duration-200"
+            >
               Évaluer ma donation
             </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#4EBBBD] transition-colors duration-200">
+            <button 
+              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+              className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg hover:bg-white hover:text-[#253F60] transition-colors duration-200"
+            >
               Prendre rendez-vous
             </button>
           </div>
@@ -483,4 +534,4 @@ export default function DonationOnereusePage() {
       </section>
     </>
   );
-} 
+}

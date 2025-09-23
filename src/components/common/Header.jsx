@@ -65,7 +65,6 @@ const Header = () => {
     { title: "Immobilier neuf", path: "/immobilier/immobilier-neuf" },
     { title: "VEFA", path: "/immobilier/vefa" },
     { title: "Scellier", path: "/immobilier/scellier" },
-    { title: "Robien", path: "/immobilier/robien" },
     { title: "Faire construire (terrain + constr.)", path: "/immobilier/faire-construire" },
     { title: "Investissement locatif", path: "/immobilier/investissement-locatif" },
     { title: "SCI", path: "/immobilier/sci" },
@@ -234,7 +233,16 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full bg-[#253F60] lg:bg-gradient-to-r lg:from-[#253F60] lg:to-[#B99066] px-4 sm:px-6 lg:px-[100px] py-2 lg:py-0">
+    <>
+      {/* Mobile Menu Overlay */}
+      {menuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
+      
+      <header className="w-full bg-[#253F60] lg:bg-gradient-to-r lg:from-[#253F60] lg:to-[#B99066] px-4 sm:px-6 lg:px-[100px] py-2 lg:py-0 relative z-50">
       {/* Top Header Bar */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-2 lg:gap-8 py-2">
         {/* Contact Info */}
@@ -261,7 +269,7 @@ const Header = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full lg:w-auto">
           {/* Espace Client */}
           <div className="ml-2">
-            <Link href="/espace-client" className="bg-[#B99066] lg:bg-[#253F60] text-white px-3 py-1 rounded text-sm font-medium hover:bg-[#A67C52] lg:hover:bg-[#1A2A4A] transition-colors duration-200">
+            <Link href="/espace-client" className="bg-[#B99066] lg:bg-[#253F60] text-white px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm font-medium hover:bg-[#A67C52] lg:hover:bg-[#1A2A4A] transition-colors duration-200">
               Espace client
             </Link>
           </div>
@@ -288,7 +296,7 @@ const Header = () => {
           <Link href="/">
             <img 
                 src="/images/azalee-patrimoine3.png" 
-                className="w-[120px] h-[118px] sm:w-[130px] sm:h-[128px] mx-auto cursor-pointer hover:opacity-80 transition-opacity relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000" 
+                className="w-[100px] h-[98px] sm:w-[120px] sm:h-[118px] mx-auto cursor-pointer hover:opacity-80 transition-opacity relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000" 
               alt="Azalee Wealth Logo" 
             />
           </Link>
@@ -316,8 +324,24 @@ const Header = () => {
           </button>
         </div>
         {/* Navigation Menu */}
-        <nav className={`${menuOpen ? 'block' : 'hidden'} lg:block absolute lg:relative top-full left-0 w-full lg:w-auto bg-transparent lg:bg-transparent shadow-lg lg:shadow-none z-50`}>
+        <nav className={`${menuOpen ? 'block' : 'hidden'} lg:block absolute lg:relative top-full left-0 w-full lg:w-auto bg-[#253F60] lg:bg-transparent shadow-lg lg:shadow-none z-50`}>
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-6 p-4 lg:p-0">
+            {/* Mobile Menu Header */}
+            {menuOpen && (
+              <div className="lg:hidden w-full border-b border-white/20 pb-4 mb-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-white font-semibold text-lg">Menu</h3>
+                  <button 
+                    onClick={() => setMenuOpen(false)}
+                    className="text-white hover:text-gray-300 p-2"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            )}
             {/* Patrimoine Dropdown */}
             <div 
               className="relative"
@@ -495,7 +519,7 @@ const Header = () => {
               onMouseEnter={handleFiscaliteMouseEnter}
               onMouseLeave={handleFiscaliteMouseLeave}
             >
-              <Link href="/placements" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
+              <Link href="/fiscalite" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
                 Fiscalité
                 <svg className={`w-4 h-4 transition-transform ${fiscaliteDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -663,6 +687,7 @@ const Header = () => {
         </nav>
       </div>
     </header>
+    </>
   );
 };
 

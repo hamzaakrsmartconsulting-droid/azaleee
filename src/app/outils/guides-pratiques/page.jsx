@@ -157,13 +157,13 @@ export default function GuidesPratiquesPage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-[#112033] via-[#19515e] to-[#4EBBBD] text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#4EBBBD] rounded-full opacity-10 transform translate-x-48 -translate-y-48"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#B99066] rounded-full opacity-10 transform translate-x-48 -translate-y-48"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#b99066] rounded-full opacity-10 transform -translate-x-32 translate-y-32"></div>
         
         <div className="relative max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="inline-flex items-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
-              <span className="w-2 h-2 bg-[#4EBBBD] rounded-full mr-2"></span>
+              <span className="w-2 h-2 bg-[#B99066] rounded-full mr-2"></span>
               Guides pratiques
             </div>
             <h1 className="text-5xl font-bold mb-6 leading-tight">
@@ -213,7 +213,7 @@ export default function GuidesPratiquesPage() {
                 onClick={() => setSelectedCategory(key)}
                 className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
                   selectedCategory === key
-                    ? 'bg-[#4EBBBD] text-white shadow-lg'
+                    ? 'bg-[#B99066] text-white shadow-lg'
                     : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
                 }`}
               >
@@ -260,7 +260,7 @@ export default function GuidesPratiquesPage() {
                       <h3 className="text-xl font-bold text-gray-900 mb-1">
                         {partner.name}
                       </h3>
-                      <span className="px-3 py-1 bg-[#4EBBBD] bg-opacity-10 text-[#4EBBBD] rounded-full text-sm font-medium">
+                      <span className="px-3 py-1 bg-[#B99066] bg-opacity-10 text-[#4EBBBD] rounded-full text-sm font-medium">
                         {content.categories[partner.category]}
                       </span>
                     </div>
@@ -286,7 +286,7 @@ export default function GuidesPratiquesPage() {
                     <ul className="space-y-1">
                       {partner.features.map((feature, index) => (
                         <li key={index} className="flex items-center gap-2 text-sm text-gray-600">
-                          <div className="w-1.5 h-1.5 bg-[#4EBBBD] rounded-full"></div>
+                          <div className="w-1.5 h-1.5 bg-[#B99066] rounded-full"></div>
                           {feature}
                         </li>
                       ))}
@@ -318,7 +318,7 @@ export default function GuidesPratiquesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {content.benefits.benefits.map((benefit, index) => (
               <div key={index} className="flex items-start gap-4 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
-                <div className="w-8 h-8 bg-[#4EBBBD] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                   <span className="text-white font-bold text-sm">{index + 1}</span>
                 </div>
                 <p className="text-gray-700 font-medium">{benefit}</p>
@@ -343,7 +343,7 @@ export default function GuidesPratiquesPage() {
               placeholder="Votre adresse email"
               className="flex-1 px-6 py-3 rounded-xl border-0 focus:ring-4 focus:ring-[#4EBBBD] focus:ring-opacity-20"
             />
-            <button className="px-8 py-3 bg-[#4EBBBD] text-white font-bold rounded-xl hover:bg-[#3DA8AA] transition-colors">
+            <button className="px-8 py-3 bg-[#B99066] text-white font-bold rounded-xl hover:bg-[#A67A5A] transition-colors">
               S'abonner
             </button>
           </div>
