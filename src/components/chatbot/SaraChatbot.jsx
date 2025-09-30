@@ -546,24 +546,23 @@ export default function SaraChatbot() {
         onClick={toggleChatbot}
         className="fixed bottom-6 right-6 bg-[#B99066] text-white p-4 rounded-full shadow-lg hover:bg-[#A67C52] transition-colors z-50"
       >
-        <img 
-          src="/images/azalee-patrimoine.png" 
-          alt="AZALEE Logo" 
-          className="w-6 h-6 object-contain"
-        />
+        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+        </svg>
       </button>
 
       {/* Chatbot */}
       {isOpen && (
         <div className="fixed bottom-24 right-6 w-96 h-[600px] bg-white border border-gray-200 rounded-lg shadow-xl z-50 flex flex-col">
           {/* Header */}
-          <div className="bg-[#B99066] text-white p-4 rounded-t-lg flex items-center justify-between">
+          <div className="bg-[#1A2A4A] text-white p-4 rounded-t-lg flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
                 <img 
                   src="/images/azalee-patrimoine.png" 
                   alt="AZALEE Logo" 
                   className="w-8 h-8 object-contain"
+                  style={{ filter: 'invert(1)' }}
                 />
               </div>
               <div>

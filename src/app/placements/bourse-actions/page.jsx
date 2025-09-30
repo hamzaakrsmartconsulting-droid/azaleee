@@ -1,10 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function BourseActionsPage() {
   const [activeTab, setActiveTab] = useState("introduction");
+  const [marketData, setMarketData] = useState({
+    cac40: { value: 7245.69, change: 1.2 },
+    sp500: { value: 4783.35, change: 0.8 },
+    msciWorld: { value: 2156.78, change: 0.5 },
+    averageReturn: 7.0
+  });
   
   const chartData = [
     { label: "Performance CAC 40 (YTD)", value: "+12.5%" },
@@ -14,6 +20,29 @@ export default function BourseActionsPage() {
     { label: "Performance sur 5 ans", value: "+45.8%" }
   ];
 
+  // Simulate real-time market data updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMarketData(prevData => ({
+        cac40: {
+          value: prevData.cac40.value + (Math.random() - 0.5) * 10,
+          change: prevData.cac40.change + (Math.random() - 0.5) * 0.2
+        },
+        sp500: {
+          value: prevData.sp500.value + (Math.random() - 0.5) * 15,
+          change: prevData.sp500.change + (Math.random() - 0.5) * 0.3
+        },
+        msciWorld: {
+          value: prevData.msciWorld.value + (Math.random() - 0.5) * 8,
+          change: prevData.msciWorld.change + (Math.random() - 0.5) * 0.15
+        },
+        averageReturn: prevData.averageReturn + (Math.random() - 0.5) * 0.1
+      }));
+    }, 3000); // Update every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+  
   return (
     <>
       <Header />
@@ -21,58 +50,63 @@ export default function BourseActionsPage() {
       {/* Hero Section */}
       <section className="relative w-full min-h-[600px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-            {/* Left Content */}
-            <div className="w-full lg:w-1/2">
-              <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
-                La Bourse (actions, CAC 40, indices, ETF…) : guide pour débuter
+          <div className="text-center">
+            <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold leading-tight mb-6">
+              La Bourse (actions, CAC 40, indices, ETF…) : guide pour débuter
             </h1>
-              <p className="text-white text-lg font-inter leading-relaxed mb-8">
-                Investir en Bourse attire de plus en plus d'épargnants français. Entre l'<strong>attrait de la performance</strong> (bien supérieure aux livrets ou fonds en euros) et la possibilité de <strong>participer à la croissance des entreprises</strong>, la Bourse est un passage obligé pour diversifier son patrimoine.
+            <p className="text-white text-lg font-inter leading-relaxed mb-8 max-w-4xl mx-auto">
+              Investir en Bourse attire de plus en plus d'épargnants français. Entre l'<strong>attrait de la performance</strong> (bien supérieure aux livrets ou fonds en euros) et la possibilité de <strong>participer à la croissance des entreprises</strong>, la Bourse est un passage obligé pour diversifier son patrimoine.
+            </p>
+            <div className="bg-white bg-opacity-20 border-l-4 border-white p-4 rounded-r-lg mb-8 max-w-4xl mx-auto">
+              <p className="text-white text-sm font-inter">
+                👉 Mais la Bourse peut sembler complexe : actions, dividendes, CAC 40, indices mondiaux, ETF, volatilité… Cette page vous aide à <strong>décrypter les bases</strong> pour investir de manière éclairée.
               </p>
-              <div className="bg-white bg-opacity-20 border-l-4 border-white p-4 rounded-r-lg mb-8">
-                <p className="text-white text-sm font-inter">
-                  👉 Mais la Bourse peut sembler complexe : actions, dividendes, CAC 40, indices mondiaux, ETF, volatilité… Cette page vous aide à <strong>décrypter les bases</strong> pour investir de manière éclairée.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-[#B99066] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
-                  Commencer à investir
-                </button>
-                <button className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors duration-200">
-                  Voir nos analyses
-                </button>
-              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="bg-[#B99066] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors duration-200">
+                Commencer à investir
+              </button>
+              <button className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-inter font-medium hover:bg-white hover:text-[#253F60] transition-colors duration-200">
+                Voir nos analyses
+              </button>
+            </div>
           </div>
-          
-            {/* Right: Market Data Cards */}
-            <div className="w-full lg:w-1/2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+        </div>
+      </section>
+
+      {/* Market Data Section */}
+      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center border border-gray-100">
               <h3 className="text-[#686868] text-sm font-medium mb-2">CAC 40</h3>
-              <p className="text-[#28A745] text-2xl font-bold">7,245.69</p>
-              <p className="text-[#28A745] text-sm">+1.2%</p>
-                  <p className="text-[#686868] text-xs mt-2">40 plus grandes entreprises françaises</p>
+              <p className="text-[#28A745] text-2xl font-bold">{marketData.cac40.value.toFixed(2)}</p>
+              <p className={`text-sm ${marketData.cac40.change >= 0 ? 'text-[#28A745]' : 'text-red-500'}`}>
+                {marketData.cac40.change >= 0 ? '+' : ''}{marketData.cac40.change.toFixed(1)}%
+              </p>
+              <p className="text-[#686868] text-xs mt-2">40 plus grandes entreprises françaises</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center border border-gray-100">
               <h3 className="text-[#686868] text-sm font-medium mb-2">S&P 500</h3>
-              <p className="text-[#28A745] text-2xl font-bold">4,783.35</p>
-              <p className="text-[#28A745] text-sm">+0.8%</p>
-                  <p className="text-[#686868] text-xs mt-2">500 plus grandes sociétés américaines</p>
+              <p className="text-[#28A745] text-2xl font-bold">{marketData.sp500.value.toFixed(2)}</p>
+              <p className={`text-sm ${marketData.sp500.change >= 0 ? 'text-[#28A745]' : 'text-red-500'}`}>
+                {marketData.sp500.change >= 0 ? '+' : ''}{marketData.sp500.change.toFixed(1)}%
+              </p>
+              <p className="text-[#686868] text-xs mt-2">500 plus grandes sociétés américaines</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <h3 className="text-[#686868] text-sm font-medium mb-2">MSCI World</h3>
-                  <p className="text-[#28A745] text-2xl font-bold">2,156.78</p>
-                  <p className="text-[#28A745] text-sm">+0.5%</p>
-                  <p className="text-[#686868] text-xs mt-2">1 500 actions dans 23 pays développés</p>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center border border-gray-100">
+              <h3 className="text-[#686868] text-sm font-medium mb-2">MSCI World</h3>
+              <p className="text-[#28A745] text-2xl font-bold">{marketData.msciWorld.value.toFixed(2)}</p>
+              <p className={`text-sm ${marketData.msciWorld.change >= 0 ? 'text-[#28A745]' : 'text-red-500'}`}>
+                {marketData.msciWorld.change >= 0 ? '+' : ''}{marketData.msciWorld.change.toFixed(1)}%
+              </p>
+              <p className="text-[#686868] text-xs mt-2">1 500 actions dans 23 pays développés</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                  <h3 className="text-[#686868] text-sm font-medium mb-2">Rendement moyen</h3>
-                  <p className="text-[#B99066] text-2xl font-bold">7%</p>
-                  <p className="text-[#686868] text-sm">par an</p>
-                  <p className="text-[#686868] text-xs mt-2">Performance historique S&P 500</p>
-                </div>
-              </div>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center border border-gray-100">
+              <h3 className="text-[#686868] text-sm font-medium mb-2">Rendement moyen</h3>
+              <p className="text-[#B99066] text-2xl font-bold">{marketData.averageReturn.toFixed(1)}%</p>
+              <p className="text-[#686868] text-sm">par an</p>
+              <p className="text-[#686868] text-xs mt-2">Performance historique S&P 500</p>
             </div>
           </div>
         </div>
@@ -82,7 +116,7 @@ export default function BourseActionsPage() {
       <PlacementChart 
         title="Performance des marchés actions"
         data={chartData}
-        chartImage="/images/cac40-chart-image-4f18b8.png"
+        chartImage="/images/bourse.png"
       />
 
       {/* Navigation Tabs */}

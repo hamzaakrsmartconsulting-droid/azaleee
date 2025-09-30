@@ -191,23 +191,20 @@ export default function OutilsFinanciersPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-[#FAFFEF] via-[#E8F5E8] to-[#D7E8FF] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="inline-block bg-[#4EBBBD] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-                Innovation digitale
-              </span>
-              <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
+              <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6">
                 {content.hero.title}
               </h1>
-              <p className="text-[#686868] text-lg leading-relaxed mb-4">
+              <p className="text-white text-lg leading-relaxed mb-4">
                 {content.hero.subtitle}
               </p>
-              <p className="text-[#686868] text-lg leading-relaxed mb-8">
+              <p className="text-white text-lg leading-relaxed mb-8">
                 {content.hero.description}
               </p>
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
+              <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200 text-lg">
                 {content.hero.button}
               </button>
             </div>
@@ -234,8 +231,8 @@ export default function OutilsFinanciersPage() {
               onClick={() => setActiveTab("outils")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "outils"
-                  ? "bg-[#4EBBBD] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
               Nos outils
@@ -244,8 +241,8 @@ export default function OutilsFinanciersPage() {
               onClick={() => setActiveTab("innovation")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "innovation"
-                  ? "bg-[#4EBBBD] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
               Innovation
@@ -254,8 +251,8 @@ export default function OutilsFinanciersPage() {
               onClick={() => setActiveTab("faq")}
               className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 activeTab === "faq"
-                  ? "bg-[#4EBBBD] text-white"
-                  : "bg-gray-100 text-[#686868] hover:bg-gray-200"
+                  ? "bg-[#253F60] text-white"
+                  : "bg-gray-100 text-[#253F60] hover:bg-gray-200"
               }`}
             >
               FAQ
@@ -313,9 +310,9 @@ export default function OutilsFinanciersPage() {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 {content.innovation.fonctionnalites.map((fonctionnalite, index) => (
-                  <div key={index} className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white">
+                  <div key={index} className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl p-6 text-white">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-white text-[#4EBBBD] rounded-full flex items-center justify-center text-sm font-bold">
+                      <div className="w-8 h-8 bg-white text-[#253F60] rounded-full flex items-center justify-center text-sm font-bold">
                         {index + 1}
                       </div>
                       <p className="text-sm font-medium">{fonctionnalite}</p>
@@ -336,7 +333,7 @@ export default function OutilsFinanciersPage() {
                 </div>
               </div>
               
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl p-6 text-white text-center">
                 <p className="font-medium">{content.innovation.avantage}</p>
               </div>
             </div>
@@ -356,7 +353,7 @@ export default function OutilsFinanciersPage() {
                 {content.digitalisation.points.map((point, index) => (
                   <div key={index} className="bg-white rounded-xl shadow-lg p-6">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-[#4EBBBD] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-[#B99066] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {index + 1}
                       </div>
                       <p className="text-[#112033] text-sm font-medium">{point}</p>
@@ -365,7 +362,7 @@ export default function OutilsFinanciersPage() {
                 ))}
               </div>
               
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">{content.digitalisation.promesse}</p>
               </div>
             </div>
@@ -380,7 +377,7 @@ export default function OutilsFinanciersPage() {
               <p className="text-[#686868] text-lg text-center mb-8 max-w-3xl mx-auto">
                 {content.promesse.description}
               </p>
-              <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-8 text-white text-center">
+              <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl p-8 text-white text-center">
                 <p className="text-lg font-medium">{content.promesse.avantage}</p>
               </div>
             </div>
@@ -406,7 +403,7 @@ export default function OutilsFinanciersPage() {
                       <ul className="space-y-2">
                         {faq.details.map((detail, idx) => (
                           <li key={idx} className="text-[#112033] text-sm flex items-start gap-2">
-                            <span className="w-2 h-2 bg-[#4EBBBD] rounded-full mt-2 flex-shrink-0"></span>
+                            <span className="w-2 h-2 bg-[#B99066] rounded-full mt-2 flex-shrink-0"></span>
                             {detail}
                           </li>
                         ))}
@@ -415,8 +412,8 @@ export default function OutilsFinanciersPage() {
                   )}
                   
                   {faq.precision && (
-                    <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-lg p-4 text-white">
-                      <p className="text-sm font-medium">👉 {faq.precision}</p>
+                    <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-lg p-4 text-white">
+                      <p className="text-sm font-medium">{faq.precision}</p>
                     </div>
                   )}
                 </div>
@@ -436,15 +433,15 @@ export default function OutilsFinanciersPage() {
             <p className="text-[#686868] text-lg mb-8 max-w-3xl mx-auto">
               {content.cta.subtitle}
             </p>
-            <div className="bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-xl p-6 text-white mb-8">
+            <div className="bg-gradient-to-r from-[#253F60] to-[#3A5A7A] rounded-xl p-6 text-white mb-8 shadow-2xl shadow-[#253F60]/50 ring-2 ring-[#253F60]/20">
               <h3 className="text-xl font-semibold mb-3">{content.cta.email}</h3>
               <p className="text-sm opacity-90">Découvrez la gestion patrimoniale nouvelle génération</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="bg-[#4EBBBD] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#3DA8AA] transition-colors duration-200 text-lg">
+              <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200 text-lg shadow-xl shadow-[#B99066]/30 ring-2 ring-[#B99066]/20">
                 {content.cta.primaryButton}
               </button>
-              <button className="border-2 border-[#4EBBBD] text-[#4EBBBD] px-8 py-4 rounded-lg font-medium hover:bg-[#4EBBBD] hover:text-white transition-colors duration-200 text-lg">
+              <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg font-medium hover:bg-[#A67C52] transition-colors duration-200 text-lg shadow-xl shadow-[#B99066]/30 ring-2 ring-[#B99066]/20">
                 {content.cta.secondaryButton}
               </button>
             </div>

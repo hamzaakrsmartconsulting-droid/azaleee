@@ -200,7 +200,7 @@ export default function Page() {
           <div className="mb-8">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#112033] mb-6">
               Les 10 meilleurs dispositifs de réduction d'impôts
-            </h1>
+          </h1>
             <p className="text-[#374151] font-inter text-base sm:text-lg leading-relaxed mb-8">
               Après avoir compris le fonctionnement et le calcul de l'impôt sur le revenu, il est essentiel d'identifier les leviers à votre disposition pour réduire votre fiscalité. Les dispositifs ci-dessous constituent des solutions légales et encadrées, dont l'efficacité dépend toujours de votre situation personnelle, de vos objectifs patrimoniaux et de votre horizon d'investissement.
             </p>
@@ -617,8 +617,8 @@ export default function Page() {
                 <br/><br/>
                 Au total, c'est plus de 4 500 € d'économie et de soutien financier pour nos enfants chaque année. Nous n'aurions jamais imaginé qu'un simple arbitrage administratif pouvait avoir un tel impact. C'est rassurant de savoir que notre situation est optimisée et suivie par un expert ».
               </blockquote>
-            </div>
-          </div>
+        </div>
+      </div>
 
           {/* Bouton CTA */}
           <div className="text-center">

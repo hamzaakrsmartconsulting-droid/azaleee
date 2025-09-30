@@ -64,6 +64,8 @@ export default function CalculsFinanciersPage() {
   const [activeTab, setActiveTab] = useState("capitalisation"); // capitalisation | amortissement | roi
   const [cmsContent, setCmsContent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showResults, setShowResults] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const [principal, setPrincipal] = useState(10000);
   const [annualRatePct, setAnnualRatePct] = useState(3);
@@ -274,6 +276,12 @@ export default function CalculsFinanciersPage() {
     setYears(5);
     setPeriodsPerYear(12);
     setContributionPerPeriod(0);
+    setShowResults(false);
+  }
+
+  function calculateResults() {
+    setShowResults(true);
+    setShowPopup(true);
   }
 
   if (isLoading) {
@@ -321,17 +329,17 @@ export default function CalculsFinanciersPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
               <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Valeur future</p>
-              <p className="text-[#112033] text-2xl font-cairo font-semibold">{formatCurrency(futureValue)}</p>
+              <p className="text-[#112033] text-2xl font-cairo font-semibold">{showResults ? formatCurrency(futureValue) : '***'}</p>
               <p className="text-[#686868] text-xs mt-1">Montant final</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
               <div className="text-[#686868] text-xs uppercase tracking-wide mb-1">Intérêts générés</div>
-              <p className="text-[#112033] text-2xl font-cairo font-semibold">{formatCurrency(interestEarned)}</p>
+              <p className="text-[#112033] text-2xl font-cairo font-semibold">{showResults ? 'Prendre RDV pour connaître le détail' : '***'}</p>
               <p className="text-[#686868] text-xs mt-1">Gains totaux</p>
             </div>
             <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
               <p className="text-[#686868] text-xs uppercase tracking-wide mb-1">Versements</p>
-              <p className="text-[#112033] text-2xl font-cairo font-semibold">{formatCurrency(totalContrib)}</p>
+              <p className="text-[#112033] text-2xl font-cairo font-semibold">{showResults ? 'Prendre RDV pour connaître le détail' : '***'}</p>
               <p className="text-[#686868] text-xs mt-1">Apports totaux</p>
             </div>
           </div>
@@ -464,10 +472,10 @@ export default function CalculsFinanciersPage() {
                           {safeContent.actions.reset}
                         </button>
                         <button
-                          onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                          onClick={calculateResults}
                           className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#253F60] text-white text-sm font-medium hover:bg-[#1E2F4A]"
                         >
-                          Prendre rendez-vous
+                          Calculer mes résultats
                         </button>
                       </div>
                     </div>
@@ -482,13 +490,13 @@ export default function CalculsFinanciersPage() {
                           <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
                             {safeContent.capitalisation.results.sections.montantFinal}
                           </p>
-                          <p className="text-[#112033] text-3xl font-cairo font-semibold">{formatCurrency(futureValue)}</p>
+                          <p className="text-[#112033] text-3xl font-cairo font-semibold">{showResults ? formatCurrency(futureValue) : '***'}</p>
                         </div>
                         <div>
                           <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
                             {safeContent.capitalisation.results.sections.interetsGeneres}
                           </p>
-                          <p className="text-[#112033] text-3xl font-cairo font-semibold">{formatCurrency(interestEarned)}</p>
+                          <p className="text-[#112033] text-3xl font-cairo font-semibold">{showResults ? 'Prendre RDV pour connaître le détail' : '***'}</p>
                         </div>
                       </div>
 
@@ -497,19 +505,19 @@ export default function CalculsFinanciersPage() {
                           <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
                             {safeContent.capitalisation.results.sections.capitalInitial}
                           </p>
-                          <p className="text-[#112033] font-source-sans font-semibold">{formatCurrency(principal)}</p>
+                          <p className="text-[#112033] font-source-sans font-semibold">{showResults ? formatCurrency(principal) : '***'}</p>
                         </div>
                         <div className="bg-[#F9FAFB] rounded-lg p-4">
                           <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
                             {safeContent.capitalisation.results.sections.versements}
                           </p>
-                          <p className="text-[#112033] font-source-sans font-semibold">{formatCurrency(totalContrib)}</p>
+                          <p className="text-[#112033] font-source-sans font-semibold">{showResults ? 'Prendre RDV pour connaître le détail' : '***'}</p>
                         </div>
                         <div className="bg-[#F9FAFB] rounded-lg p-4">
                           <p className="text-[#6B7280] text-xs uppercase tracking-wide mb-1">
                             {safeContent.capitalisation.results.sections.cagr}
                           </p>
-                          <p className="text-[#112033] font-source-sans font-semibold">{isFinite(cagr) && cagr > 0 ? `${(cagr * 100).toFixed(2)}%` : "—"}</p>
+                          <p className="text-[#112033] font-source-sans font-semibold">{showResults ? 'Prendre RDV pour connaître le détail' : '***'}</p>
                         </div>
                       </div>
 
@@ -592,6 +600,39 @@ export default function CalculsFinanciersPage() {
           </div>
         </div>
       </section>
+
+      {/* Popup Modal */}
+      {showPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full mx-4 shadow-2xl">
+            <div className="text-center">
+              <h3 className="text-xl sm:text-2xl font-semibold text-[#112033] mb-3 sm:mb-4">
+                Calcul terminé
+              </h3>
+              <p className="text-sm sm:text-base text-[#4A5568] mb-4 sm:mb-6">
+                Pour connaître le détail de vos calculs financiers et obtenir des conseils personnalisés, prenez rendez-vous avec nos experts.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() => {
+                    window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank');
+                    setShowPopup(false);
+                  }}
+                  className="flex-1 bg-gradient-to-r from-[#253F60] to-[#B99066] text-white py-3 px-4 sm:px-6 rounded-lg font-semibold hover:from-[#1E2F4A] hover:to-[#A67A5A] transition-all duration-200 shadow-lg text-sm sm:text-base"
+                >
+                  Prendre rendez-vous
+                </button>
+                <button
+                  onClick={() => setShowPopup(false)}
+                  className="flex-1 border-2 border-[#253F60] text-[#253F60] py-3 px-4 sm:px-6 rounded-lg font-semibold hover:bg-[#253F60] hover:text-white transition-all duration-200 text-sm sm:text-base"
+                >
+                  Fermer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>

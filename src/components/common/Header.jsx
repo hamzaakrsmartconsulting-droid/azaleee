@@ -111,6 +111,7 @@ const Header = () => {
     { title: "Guide de défiscalisation", path: "/outils-financiers/guide-defiscalisation" },
     { title: "Calculatrice d'impôts", path: "/outils/calculatrice-impots" },
     { title: "Calculs financiers divers", path: "/outils/calculs-financiers" },
+    { title: "Assurance-vie vs PER", path: "/outils-financiers/assurance-vie-vs-per" },
     { 
       title: "Simulateur d'investissement", 
       path: "/outils/simulateur-investissement",
@@ -462,12 +463,12 @@ const Header = () => {
               onMouseEnter={handleImmobilierMouseEnter}
               onMouseLeave={handleImmobilierMouseLeave}
             >
-              <Link href="/Investissement-immobilier" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
+              <button className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
                 Investissement immobilier
                 <svg className={`w-4 h-4 transition-transform ${immobilierDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-              </Link>
+              </button>
               
               {/* Desktop Dropdown */}
               <div className={`${immobilierDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>

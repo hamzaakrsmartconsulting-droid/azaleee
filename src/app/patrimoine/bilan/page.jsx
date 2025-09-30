@@ -31,6 +31,15 @@ export default function BilanPage() {
                 C'est le point de départ indispensable pour construire une <strong>stratégie patrimoniale sur mesure</strong>.
               </p>
             </div>
+            
+            {/* Bilan Image */}
+            <div className="flex justify-center mb-8">
+              <img 
+                src="/images/bilan.png" 
+                alt="Bilan patrimonial" 
+                className="max-w-full h-auto rounded-lg shadow-lg"
+              />
+            </div>
           </div>
           
           {/* Bilan Statistics */}
@@ -76,27 +85,6 @@ export default function BilanPage() {
         </div>
       </section>
 
-      {/* Chart Section */}
-      <section className="w-full bg-white py-16 sm:py-20">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-[#112033] text-2xl sm:text-3xl lg:text-4xl font-cairo font-semibold mb-6">
-              Indicateurs de bilan patrimonial
-            </h2>
-            <p className="text-[#686868] text-lg max-w-3xl mx-auto">
-              Visualisez les paramètres clés d'un bilan patrimonial complet
-            </p>
-          </div>
-          
-          <div className="bg-white rounded-2xl p-8 sm:p-12 shadow-lg">
-            <PlacementChart 
-              title="Indicateurs de bilan patrimonial"
-              data={chartData}
-              chartImage="/images/variation-chart-image-944f04.png"
-            />
-          </div>
-        </div>
-      </section>
 
       {/* Pourquoi réaliser un bilan patrimonial Section */}
       <section className="w-full bg-[#F2F2F2] py-16 sm:py-20">
