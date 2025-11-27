@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { executeQuery } from '../../../../lib/cmsDatabase';
+import { executeQuery } from '../../../lib/cmsDatabase';
 
 // Generic public API for all pages
 export async function GET(request) {
