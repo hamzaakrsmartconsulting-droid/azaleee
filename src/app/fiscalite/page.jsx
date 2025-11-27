@@ -426,8 +426,8 @@ export default function FiscalitePage() {
                     src="/images/I6644.jpg" 
                     alt="Barème de l'impôt sur le revenu 2025 - Tranches et taux d'imposition" 
                     className="w-full h-auto"
-                  />
-                </div>
+            />
+          </div>
               </div>
               </div>
             </div>
@@ -507,13 +507,13 @@ export default function FiscalitePage() {
 
           {/* Bouton CTA */}
           <div className="mb-12 text-center">
-            <button 
+              <button 
               onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
               className="bg-[#253F60] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-base lg:text-lg hover:bg-[#1a2d47] hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
-            >
+              >
               Faites le point sur vos déductions possibles avec un conseiller
-            </button>
-          </div>
+              </button>
+            </div>
 
           {/* Grille 2 colonnes - Pinel et Girardin */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
@@ -563,13 +563,13 @@ export default function FiscalitePage() {
                 </div>
               </div>
             </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Section Les dispositifs de défiscalisation immobilière */}
       <section className="w-full bg-gray-50 py-16 sm:py-20 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold text-center mb-12">
             Les dispositifs de défiscalisation immobilière
           </h2>
@@ -590,7 +590,7 @@ export default function FiscalitePage() {
                   <circle cx="12" cy="6" r="2.5" fill="url(#pinel-gradient)" />
                   <path d="M10 4h4" strokeWidth="2" stroke="url(#pinel-gradient)" />
                 </svg>
-              </div>
+            </div>
               <h4 className="text-[#253F60] text-lg font-cairo font-bold mb-3 text-center">Loi Pinel</h4>
               <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                 Investissement dans le neuf avec engagement locatif de 6, 9 ou 12 ans. Réduction d'impôt progressive : <strong className="text-[#253F60] font-semibold">12%</strong> pour 6 ans, <strong className="text-[#253F60] font-semibold">18%</strong> pour 9 ans, jusqu'à <strong className="text-[#253F60] font-semibold">21% pour 12 ans</strong>. Plafonds de loyers et ressources locataires à respecter.
@@ -614,7 +614,7 @@ export default function FiscalitePage() {
                   <circle cx="8" cy="16" r="1" fill="url(#girardin-gradient)" />
                   <circle cx="16" cy="16" r="1" fill="url(#girardin-gradient)" />
                 </svg>
-              </div>
+                            </div>
               <h4 className="text-[#253F60] text-lg font-cairo font-bold mb-3 text-center">Loi Girardin</h4>
               <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                 Soutien aux investissements dans les DOM-TOM via l'immobilier ou l'industrie locale : en échange, <strong className="text-[#253F60] font-semibold">réduction d'impôt immédiate</strong> l'année suivante. Dispositifs industriels ou logement social offrant des taux attractifs mais nécessitant une analyse rigoureuse des risques.
@@ -635,7 +635,7 @@ export default function FiscalitePage() {
                   <path d="M9 21V9l6-6" strokeWidth="2" stroke="url(#denormandie-gradient)" />
                   <path d="M12 3l3 3-3 3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" stroke="url(#denormandie-gradient)" />
                 </svg>
-              </div>
+                                </div>
               <h4 className="text-[#253F60] text-lg font-cairo font-bold mb-3 text-center">Loi Denormandie</h4>
               <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                 Encourager la rénovation dans certains centres-villes : l'achat et la rénovation d'un bien ancien à louer ouvre droit à une réduction d'impôt proche du Pinel. Travaux représentant au moins <strong className="text-[#253F60] font-semibold">25%</strong> du prix d'acquisition, favorisant la revitalisation des centres urbains.
@@ -655,7 +655,7 @@ export default function FiscalitePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke="url(#malraux-gradient)" fill="none" />
                   <path d="M12 2v4M12 18v4M6 12h12" strokeWidth="1.5" stroke="url(#malraux-gradient)" />
                 </svg>
-              </div>
+                            </div>
               <h4 className="text-[#253F60] text-lg font-cairo font-bold mb-3 text-center">Loi Malraux</h4>
               <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                 Réservé à la restauration complète d'immeubles en secteur sauvegardé : <strong className="text-[#253F60] font-semibold">22 à 30%</strong> de réduction d'impôt sur le montant des travaux engagés, plafond annuel élevé. Investissement patrimonial et fiscal combinant plaisir et optimisation.
@@ -676,7 +676,7 @@ export default function FiscalitePage() {
                   <path d="M8 12h8M12 8v8" strokeWidth="2" stroke="url(#cosse-gradient)" />
                   <circle cx="12" cy="12" r="1" fill="url(#cosse-gradient)" />
                 </svg>
-              </div>
+                          </div>
               <h4 className="text-[#253F60] text-lg font-cairo font-bold mb-3 text-center">Loi Cosse</h4>
               <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                 Conventionnement "Louer abordable" permettant une <strong className="text-[#253F60] font-semibold">déduction majorée</strong> des revenus fonciers : <strong className="text-[#253F60] font-semibold">15% à 85%</strong> selon l'engagement pris et la zone géographique, en contrepartie d'un engagement social.
@@ -702,8 +702,8 @@ export default function FiscalitePage() {
               <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                 Les propriétaires d'immeubles classés peuvent déduire la quasi-totalité des travaux de restauration de leur revenu global, sans plafond, en échange de fortes contraintes de conservation. Investissement patrimonial d'exception pour contribuables fortement imposés.
               </p>
-            </Link>
-          </div>
+                              </Link>
+                          </div>
 
           {/* Boutons CTA */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -716,8 +716,8 @@ export default function FiscalitePage() {
             >
               Découvrir nos solutions d'investissement immobilier
             </Link>
-          </div>
-        </div>
+                  </div>
+                </div>
       </section>
 
       {/* Section Les erreurs fréquentes à éviter */}
@@ -762,7 +762,7 @@ export default function FiscalitePage() {
                 <strong className="font-semibold text-[#253F60]">Astuce :</strong>{" "}
                 <span className="italic">Relisez toujours votre déclaration et recoupez vos justificatifs ; conservez toutes vos pièces en cas de contrôle.</span>
               </p>
-            </div>
+              </div>
           </div>
         </div>
       </section>
@@ -799,7 +799,7 @@ export default function FiscalitePage() {
                     </p>
                   </li>
                 </ul>
-              </div>
+                        </div>
 
               {/* Profil 2: Retraité avec revenus passifs */}
               <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200">
@@ -820,7 +820,7 @@ export default function FiscalitePage() {
                     </p>
                   </li>
                 </ul>
-              </div>
+                      </div>
 
               {/* Profil 3: Profession libérale / chef d'entreprise */}
               <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200">
@@ -841,7 +841,7 @@ export default function FiscalitePage() {
                     </p>
                   </li>
                 </ul>
-              </div>
+                    </div>
 
               {/* Profil 4: Héritier d'un patrimoine */}
               <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200">
@@ -863,14 +863,14 @@ export default function FiscalitePage() {
                   </li>
                 </ul>
               </div>
-            </div>
-
+                </div>
+                
             {/* Paragraphe de conclusion */}
             <div className="mt-12 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl shadow-lg p-6 sm:p-8 text-white">
               <p className="text-base sm:text-lg font-inter leading-relaxed text-center">
                 Chaque profil a ses leviers d'optimisation : s'informer, se faire accompagner et ajuster régulièrement sa stratégie restent la clé pour valoriser durablement son patrimoine.
               </p>
-            </div>
+                </div>
           </div>
         </div>
       </section>
@@ -1066,14 +1066,14 @@ export default function FiscalitePage() {
               <p className="text-base sm:text-lg font-inter leading-relaxed">
                 En résumé, s'entourer d'un CGP Azalée Patrimoine, c'est s'assurer la tranquillité et l'efficacité d'une gestion patrimoniale et fiscale sur-mesure, tournée vers la valorisation durable de votre patrimoine et la réalisation de vos objectifs personnels.
               </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Section L'expertise Azalée Patrimoine à votre service */}
       <section className="w-full bg-[#253F60] py-16 sm:py-20 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-[#B99066] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-6">
               L'expertise Azalée Patrimoine à votre service
@@ -1271,7 +1271,7 @@ export default function FiscalitePage() {
             <div className="bg-[#1e3a5a] rounded-xl p-6 sm:p-8 border-2 border-[#B99066]/30">
               <h3 className="text-[#B99066] text-xl sm:text-2xl font-cairo font-bold mb-6">
                 Audit fiscal personnalisé
-              </h3>
+                </h3>
               <div className="space-y-4 text-white text-sm sm:text-base font-inter leading-relaxed">
                 <p>
                   Notre audit fiscal approfondi examine l'ensemble de vos revenus, placements et charges pour identifier les optimisations possibles. Cette analyse produit un rapport chiffré détaillant les économies potentielles et les risques associés à chaque préconisation.
@@ -1322,7 +1322,7 @@ export default function FiscalitePage() {
             <div className="space-y-4">
               {/* Question 1 */}
               <div className="border border-gray-200 rounded-lg overflow-hidden">
-                <button
+                <button 
                   onClick={() => toggleQuestion(0)}
                   className="w-full text-left p-4 sm:p-6 bg-white hover:bg-gray-50 transition-colors flex items-center justify-between"
                 >
@@ -1343,7 +1343,7 @@ export default function FiscalitePage() {
                     <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
                       Selon votre profil : <Link href="/fiscalite/loi-pinel" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline">Pinel/Denormandie</Link> (neuf/ancien), <Link href="/fiscalite/loi-girardin" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline">Girardin</Link> (réduction ponctuelle), <Link href="/fiscalite/loi-malraux" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline">Malraux/MH</Link> (rénovation patrimoniale).
                     </p>
-                  </div>
+              </div>
                 )}
               </div>
 
@@ -1370,9 +1370,9 @@ export default function FiscalitePage() {
                     <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
                       En combinant dispositifs légaux, <span className="text-[#8B5CF6] font-semibold">diversification</span> des placements et accompagnement par un conseiller agréé.
                     </p>
-                  </div>
+            </div>
                 )}
-              </div>
+          </div>
 
               {/* Question 3 */}
               <div className="border border-gray-200 rounded-lg overflow-hidden">

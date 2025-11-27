@@ -59,7 +59,7 @@ export default function PlanRetraitePage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-12 text-center">
             PER, PERP, PERCO, Madelin, Préfon : comprendre les différences
-          </h2>
+            </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
             {/* Colonne gauche : Contenu textuel */}
@@ -102,8 +102,8 @@ export default function PlanRetraitePage() {
                       <span className="font-inter">Intégration dans votre stratégie de revenus complémentaires à la retraite.</span>
                     </li>
                   </ul>
-                </div>
-
+          </div>
+          
                 <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-4">
                   Le PER est aujourd'hui le produit privilégié des cadres et dirigeants pour préparer une retraite anticipée, sécuriser la transmission et réduire la fiscalité.
                 </p>
@@ -136,9 +136,9 @@ export default function PlanRetraitePage() {
                     </h4>
                     <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                       Permettait de constituer une rente viagère, avec des versements déductibles du revenu imposable.
-                    </p>
-                  </div>
-                  
+              </p>
+            </div>
+            
                   <div className="bg-[#F9FAFB] rounded-xl p-6 border-2 border-[#B99066]/20">
                     <h4 className="text-[#253F60] font-cairo font-bold mb-3">
                       Le contrat Madelin
@@ -173,8 +173,8 @@ export default function PlanRetraitePage() {
                     <span className="text-green-600 font-bold text-xl">✓</span>
                     <p className="text-[#4B5563] text-sm font-inter">
                       <strong className="text-[#253F60]">Bon à savoir :</strong> La prime de départ à la retraite dans le privé peut être investie sur un PERCO/PERECO pour capitaliser sans fiscalité immédiate.
-                    </p>
-                  </div>
+              </p>
+            </div>
                 </div>
               </div>
 
@@ -208,7 +208,7 @@ export default function PlanRetraitePage() {
                 </div>
               </div>
             </div>
-
+            
             {/* Colonne droite : Tableau récapitulatif */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-[#253F60]/20 sticky top-8">
@@ -298,7 +298,7 @@ export default function PlanRetraitePage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-12 text-center">
             Reconstituer sa carrière et anticiper le montant de sa retraite
-          </h2>
+            </h2>
 
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
             <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-6">
@@ -309,13 +309,13 @@ export default function PlanRetraitePage() {
               <div className="bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-xl p-6 text-white">
                 <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mb-4">
                   <span className="text-white font-bold text-xl">1</span>
-                </div>
+          </div>
                 <h3 className="font-cairo font-bold mb-3 text-lg">Consulter vos relevés</h3>
                 <p className="font-inter text-sm text-white/90">
                   Vérifier vos trimestres validés sur vos relevés de carrière retraite
                 </p>
-              </div>
-
+            </div>
+            
               <div className="bg-gradient-to-br from-[#B99066] to-[#A67C52] rounded-xl p-6 text-white">
                 <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-4">
                   <span className="text-white font-bold text-xl">2</span>
@@ -324,7 +324,7 @@ export default function PlanRetraitePage() {
                 <p className="font-inter text-sm text-white/90">
                   Repérer les années incomplètes (congé parental, chômage, invalidité, temps partiel)
                 </p>
-              </div>
+                  </div>
 
               <div className="bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-xl p-6 text-white">
                 <div className="w-12 h-12 bg-[#B99066] rounded-full flex items-center justify-center mb-4">
@@ -335,7 +335,7 @@ export default function PlanRetraitePage() {
                   Estimer le montant minimum de retraite, incluant la prime ARRCO pour les salariés du privé
                 </p>
               </div>
-            </div>
+                  </div>
 
             <div className="bg-gradient-to-r from-[#B99066] to-[#A67C52] rounded-xl p-6 text-white">
               <div className="flex items-start gap-4">
@@ -404,7 +404,7 @@ export default function PlanRetraitePage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-12 text-center">
             L'accompagnement Azalée Patrimoine
-          </h2>
+            </h2>
 
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
             <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8">
@@ -423,15 +423,15 @@ export default function PlanRetraitePage() {
                 <h3 className="font-cairo font-bold mb-4 text-lg">Indépendants</h3>
                 <p className="font-inter text-sm text-white/90">
                   Pour transférer leurs contrats Madelin vers un PER
-                </p>
-              </div>
-
+            </p>
+          </div>
+          
               <div className="bg-gradient-to-r from-[#253F60] to-[#1a2d47] rounded-xl p-6 text-white">
                 <h3 className="font-cairo font-bold mb-4 text-lg">Fonctionnaires et militaires</h3>
                 <p className="font-inter text-sm text-white/90">
                   Pour compléter leur retraite publique via Préfon Retraite ou un PER individuel
                 </p>
-              </div>
+                </div>
 
               <div className="bg-gradient-to-r from-[#B99066] to-[#A67C52] rounded-xl p-6 text-white">
                 <h3 className="font-cairo font-bold mb-4 text-lg">Dirigeants d'entreprise</h3>
@@ -459,7 +459,7 @@ export default function PlanRetraitePage() {
           <div className="bg-white rounded-2xl shadow-2xl p-8 sm:p-10 lg:p-12 text-center">
             <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-4 sm:mb-6">
               Prendre rendez-vous avec un conseiller Azalée
-            </h2>
+          </h2>
             <p className="text-[#4B5563] text-base sm:text-lg font-inter mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
               👉 Vous souhaitez savoir quel plan d'épargne retraite correspond à votre profil ?
             </p>

@@ -231,8 +231,8 @@ export default function RetraitePage() {
                           <svg className="w-6 h-6 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                        </div>
-                      </div>
+        </div>
+      </div>
                       
                       {/* Texte principal */}
                       <div className="space-y-2">
@@ -254,12 +254,12 @@ export default function RetraitePage() {
                       <p className="font-inter text-xs sm:text-sm italic text-white/80 leading-relaxed">
                         N'attendez pas qu'il soit trop tard
                       </p>
-                    </div>
+        </div>
                     
                     {/* Bordure décorative au survol */}
                     <div className="absolute inset-0 rounded-2xl border-2 border-[#B99066]/0 group-hover:border-[#B99066]/30 transition-all duration-500"></div>
-                  </div>
-                  
+        </div>
+        
                   {/* Ombre portée améliorée */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#253F60]/20 to-transparent rounded-2xl blur-xl -z-10 transform translate-y-4 group-hover:translate-y-6 transition-transform duration-500"></div>
                 </div>
@@ -284,8 +284,8 @@ export default function RetraitePage() {
                 </span>
               </a>
             </div>
-          </div>
-
+            </div>
+            
           {/* H3.2: Préparer la liberté financière */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-16">
             {/* Boîte sombre avec chiffres */}
@@ -493,7 +493,7 @@ export default function RetraitePage() {
           </div>
         </div>
       </section>
-
+      
       {/* Section 2: Évaluer vos besoins futurs */}
       <section className="w-full bg-[#F2F2F2] py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -531,7 +531,7 @@ export default function RetraitePage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-8 text-center">
             S'organiser pour partir à la retraite à 50 ans : un objectif atteignable avec une stratégie patrimoniale solide
-          </h2>
+            </h2>
 
           {/* Introduction */}
           <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl shadow-lg p-8 sm:p-10 mb-12 text-white">
@@ -881,7 +881,7 @@ export default function RetraitePage() {
               <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
                 Nos engagements
               </h3>
-              <div className="space-y-6">
+            <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center flex-shrink-0 text-white font-cairo font-bold">
                     1
@@ -915,9 +915,9 @@ export default function RetraitePage() {
                     </p>
                   </div>
                 </div>
+                </div>
               </div>
-            </div>
-
+              
             {/* Mission */}
             <div className="bg-gradient-to-r from-[#B99066] to-[#A67C52] rounded-xl shadow-lg p-6 sm:p-8 text-white text-center">
               <p className="text-xl sm:text-2xl font-cairo font-bold mb-4">
@@ -988,7 +988,7 @@ export default function RetraitePage() {
                   <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
                 </svg>
                 Liens internes SEO
-              </h3>
+                </h3>
               <ul className="flex flex-wrap gap-4 text-sm font-inter">
                 <li>
                   <Link href="/placements/assurance-vie" className="text-[#B99066] hover:text-[#D4A574] transition-colors">
@@ -1095,19 +1095,19 @@ export default function RetraitePage() {
               <p className="text-[#4B5563] text-base font-inter leading-relaxed mb-4">
                 Un cadre ayant cotisé au plafond de la Sécurité sociale toute sa carrière, mais manquant de 8 trimestres (2 ans) pour atteindre le taux plein.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white rounded-lg p-4 border-2 border-red-200">
                   <h5 className="text-red-600 font-cairo font-bold mb-3">Sans rachat de trimestres</h5>
                   <p className="text-sm text-[#4B5563] mb-2">Décote d'environ 10%</p>
                   <p className="text-lg font-cairo font-bold text-[#253F60]">1 766 €/mois brut</p>
-                </div>
+                    </div>
                 <div className="bg-white rounded-lg p-4 border-2 border-green-200">
                   <h5 className="text-green-600 font-cairo font-bold mb-3">Avec rachat de 8 trimestres</h5>
                   <p className="text-sm text-[#4B5563] mb-2">Coût estimé : 35 000 € (à 50 ans)</p>
                   <p className="text-lg font-cairo font-bold text-[#253F60]">1 962 €/mois brut</p>
                   <p className="text-sm text-green-600 font-semibold mt-2">Gain mensuel : +196 €</p>
-                </div>
-              </div>
+                  </div>
+                    </div>
               <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                 <p className="text-sm text-[#4B5563] font-inter">
                   <strong className="text-[#253F60]">Gain annuel :</strong> 2 352 € | <strong className="text-[#253F60]">Amortissement :</strong> ~15 ans (hors avantage fiscal)
@@ -1115,15 +1115,15 @@ export default function RetraitePage() {
                 <p className="text-sm text-[#4B5563] font-inter mt-2">
                   <strong className="text-[#253F60]">Pour un profil à fort revenu (taux marginal 41%) :</strong> Gain fiscal immédiat de 14 000 €. Coût net réduit à 21 000 €. Rendement implicite d'environ 4 à 5% par an sur 15 ans.
                 </p>
-              </div>
-            </div>
+                  </div>
+                </div>
 
             <div className="bg-red-50 border-l-4 border-red-400 p-4">
               <p className="text-sm text-[#4B5563] font-inter leading-relaxed">
                 <strong className="text-[#253F60]">Inconvénients :</strong> Aucune flexibilité, aucun effet de levier patrimonial, aucun gain de capitalisation.
               </p>
+              </div>
             </div>
-          </div>
 
           {/* H3.2: Le versement déductible dans le PER */}
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
@@ -1286,7 +1286,7 @@ export default function RetraitePage() {
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-8 text-center">
             Racheter des trimestres : est-ce rentable ?
           </h2>
-
+          
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
             <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-4">
               Le rachat de trimestres peut être avantageux pour réduire la décote appliquée en cas de carrière incomplète.
@@ -1314,7 +1314,7 @@ export default function RetraitePage() {
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20">
             <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
               Déterminer le capital nécessaire
-            </h3>
+              </h3>
             <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-4">
               Azalée Patrimoine vous aide à calculer le capital cible pour maintenir votre confort de vie : montant de pension, dépenses futures, voyages, projets ou aides aux enfants.
             </p>
@@ -1372,17 +1372,17 @@ export default function RetraitePage() {
                 <span className="text-[#B99066] mt-1 font-bold">•</span>
                 <span>de choisir la sortie (rente ou capital) à la retraite.</span>
               </li>
-            </ul>
+              </ul>
             <p className="text-[#4B5563] text-base font-inter">
               À lire aussi : <Link href="/fiscalite/per" className="text-[#B99066] hover:text-[#D4A574] underline">Fiscalité du PER - optimiser ses déductions d'impôt</Link>.
             </p>
-          </div>
-
+            </div>
+            
           {/* H3: L'assurance-vie */}
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
             <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
               L'assurance-vie à long terme
-            </h3>
+              </h3>
             <p className="text-[#4B5563] text-base font-inter leading-relaxed mb-4">
               Souple et accessible, l'assurance-vie permet d'allier capitalisation et transmission. Elle constitue un complément idéal du PER, notamment pour les épargnants souhaitant garder une certaine liquidité avant la retraite.
             </p>
@@ -1408,10 +1408,10 @@ export default function RetraitePage() {
               </svg>
               <p className="text-[#4B5563] text-base font-inter">
                 Consultez notre page <Link href="/immobilier" className="text-[#B99066] hover:text-[#D4A574] underline font-semibold">Investissement immobilier</Link> pour découvrir nos stratégies locatives durables.
-              </p>
+                </p>
             </div>
           </div>
-
+          
           {/* H3: Les placements financiers */}
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20">
             <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
@@ -1436,7 +1436,7 @@ export default function RetraitePage() {
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-12 text-center">
             Comment défiscaliser en préparant sa retraite
           </h2>
-
+          
           {/* H3: Le levier fiscal du PER */}
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
             <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
@@ -1449,12 +1449,12 @@ export default function RetraitePage() {
               <p className="text-[#4B5563] text-base font-inter">
                 <strong className="text-[#253F60]">Par exemple,</strong> pour un taux marginal d'imposition de 41%, un versement de 10 000 € ne coûte réellement que <strong className="text-[#253F60]">5 900 €</strong>.
               </p>
-            </div>
+              </div>
             <p className="text-[#4B5563] text-base font-inter leading-relaxed">
               Un avantage considérable pour les contribuables fortement imposés.
             </p>
-          </div>
-
+              </div>
+              
           {/* H3: Les dispositifs immobiliers */}
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
             <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
@@ -1545,7 +1545,7 @@ export default function RetraitePage() {
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-12 text-center">
             Retraite, transmission et prévoyance : penser globalement
           </h2>
-
+          
           {/* H3: Anticiper la transmission */}
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
             <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
@@ -1578,9 +1578,9 @@ export default function RetraitePage() {
               <p className="text-[#4B5563] text-sm font-inter italic">
                 Pensez à revoir régulièrement la rédaction de vos clauses bénéficiaires avec votre conseiller Azalée Patrimoine.
               </p>
-            </div>
-          </div>
-
+              </div>
+              </div>
+              
           {/* H3: Protéger sa famille */}
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
             <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
@@ -1635,7 +1635,7 @@ export default function RetraitePage() {
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-12 text-center">
             L'expertise Azalée Patrimoine
           </h2>
-
+          
           {/* H3: Un accompagnement humain */}
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20 mb-8">
             <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
@@ -1701,8 +1701,8 @@ export default function RetraitePage() {
                 <span className="text-2xl">👉</span>
                 <strong>Prendre rendez-vous avec un conseiller Azalée Patrimoine</strong>
               </a>
-            </div>
-          </div>
+                </div>
+                </div>
 
           {/* H3: Des stratégies concrètes */}
           <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 border-2 border-[#253F60]/20">
@@ -1721,8 +1721,8 @@ export default function RetraitePage() {
               <p className="text-[#4B5563] text-base font-inter leading-relaxed">
                 Les versements réguliers permettent de lisser l'effort d'épargne dans le temps.
               </p>
-            </div>
-
+              </div>
+              
             {/* H4: Pour les indépendants */}
             <div className="mb-6 pb-6 border-b border-[#E5E7EB]">
               <h4 className="text-[#253F60] text-lg font-cairo font-bold mb-3">
@@ -1752,7 +1752,7 @@ export default function RetraitePage() {
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-12 text-center">
             Questions fréquentes sur la retraite
           </h2>
-
+          
           <div className="space-y-4">
             {/* Question 1 */}
             <div className="bg-white rounded-xl shadow-lg border-2 border-[#253F60]/20 overflow-hidden transition-all duration-300">
@@ -1813,8 +1813,8 @@ export default function RetraitePage() {
                     Les versements sur un PER individuel sont <strong className="text-[#253F60]">déductibles du revenu imposable</strong>, dans la limite de 10 % des revenus professionnels nets. Le gain fiscal dépend de votre tranche marginale d'imposition.
                   </p>
                 </div>
-              </div>
             </div>
+          </div>
 
             {/* Question 3 */}
             <div className="bg-white rounded-xl shadow-lg border-2 border-[#253F60]/20 overflow-hidden transition-all duration-300">
@@ -2090,4 +2090,4 @@ export default function RetraitePage() {
       <Footer />
     </>
   );
-}
+} 

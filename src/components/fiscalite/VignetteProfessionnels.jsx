@@ -95,3 +95,4 @@ const VignetteProfessionnels = () => {
 
 export default VignetteProfessionnels;
 
+
