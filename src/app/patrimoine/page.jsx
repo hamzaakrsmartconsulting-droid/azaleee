@@ -218,7 +218,7 @@ export default function PatrimoinePage() {
     <>
       {/* Loading indicator */}
       {isLoadingFromDatabase && (
-        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
+        <div className="fixed top-4 right-4 z-50 bg-[#253F60] text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
           <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
           Loading Patrimoine from Database...
         </div>
@@ -326,7 +326,7 @@ export default function PatrimoinePage() {
           
           <div className="max-w-5xl mx-auto space-y-8 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
             <p className="text-xl sm:text-2xl">
-              <strong className="text-[#253F60] font-bold">La gestion de patrimoine</strong> = structurer, valoriser et transmettre un ensemble de biens (<a href="/immobilier" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">immobilier</a>, <a href="/placements" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">placements financiers</a>, liquidités, entreprise, objets de valeur).
+              <strong className="text-[#253F60] font-bold">La gestion de patrimoine</strong> = structurer, valoriser et transmettre un ensemble de biens (<a href="/immobilier" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">immobilier</a>, <a href="/placements" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">placements financiers</a>, liquidités, entreprise, objets de valeur).
             </p>
             
             <p>
@@ -367,11 +367,11 @@ export default function PatrimoinePage() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#253F60] font-bold mt-1">•</span>
-                <span><strong className="text-[#253F60]"><a href="/patrimoine/protection-famille" className="text-[#9333EA] hover:text-[#7C3AED] underline transition-colors">protéger votre famille</a></strong> grâce à des dispositifs juridiques adaptés</span>
+                <span><strong className="text-[#253F60]"><a href="/patrimoine/protection-famille" className="text-[#B99066] hover:text-[#A67C52] underline transition-colors">protéger votre famille</a></strong> grâce à des dispositifs juridiques adaptés</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#253F60] font-bold mt-1">•</span>
-                <span><strong className="text-[#253F60]"><a href="/fiscalite" className="text-[#9333EA] hover:text-[#7C3AED] underline transition-colors">réduire votre fiscalité</a></strong> et préparer la <strong className="text-[#253F60]"><a href="/patrimoine/transmission" className="text-[#9333EA] hover:text-[#7C3AED] underline transition-colors">transmission</a></strong> dans les meilleures conditions</span>
+                <span><strong className="text-[#253F60]"><a href="/fiscalite" className="text-[#B99066] hover:text-[#A67C52] underline transition-colors">réduire votre fiscalité</a></strong> et préparer la <strong className="text-[#253F60]"><a href="/patrimoine/transmission" className="text-[#B99066] hover:text-[#A67C52] underline transition-colors">transmission</a></strong> dans les meilleures conditions</span>
               </li>
             </ul>
             
@@ -405,7 +405,7 @@ export default function PatrimoinePage() {
                   IAS (Intermédiaire en Assurance)
             </h3>
                 <p className="text-lg">
-                  habilité à conseiller et distribuer des produits d'<strong className="text-[#253F60]"><a href="/placements/assurance-vie" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">assurance-vie</a>, de <a href="/retraite/prevoyance-protection" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">prévoyance</a> ou de <a href="/retraite" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">retraite</a></strong>.
+                  habilité à conseiller et distribuer des produits d'<strong className="text-[#253F60]"><a href="/placements/assurance-vie" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">assurance-vie</a>, de <a href="/retraite/prevoyance-protection" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">prévoyance</a> ou de <a href="/retraite" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">retraite</a></strong>.
                 </p>
                 </div>
               
@@ -423,7 +423,7 @@ export default function PatrimoinePage() {
                   CIF (Conseiller en Investissements Financiers)
                 </h3>
                 <p className="text-lg">
-                  autorisé à proposer des placements financiers (<strong className="text-[#253F60]"><a href="/placements" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">OPCVM</a>, <a href="/placements/scpi-opci" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">SCPI</a>, produits structurés, private equity</strong>...) dans le cadre d'un conseil indépendant.
+                  autorisé à proposer des placements financiers (<strong className="text-[#253F60]"><a href="/placements" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">OPCVM</a>, <a href="/placements/scpi-opci" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">SCPI</a>, produits structurés, private equity</strong>...) dans le cadre d'un conseil indépendant.
                 </p>
               </div>
               
@@ -432,7 +432,7 @@ export default function PatrimoinePage() {
                   CJA (Conseiller en Juridique Accessoire)
             </h3>
                 <p className="text-lg">
-                  peut apporter un conseil d'ordre juridique en lien direct avec la gestion de patrimoine (<strong className="text-[#253F60]"><a href="/patrimoine" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">structuration</a>, <a href="/patrimoine/transmission" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">transmission</a>, <a href="/fiscalite" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">fiscalité patrimoniale</a></strong>).
+                  peut apporter un conseil d'ordre juridique en lien direct avec la gestion de patrimoine (<strong className="text-[#253F60]"><a href="/patrimoine" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">structuration</a>, <a href="/patrimoine/transmission" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">transmission</a>, <a href="/fiscalite" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">fiscalité patrimoniale</a></strong>).
                 </p>
               </div>
                 </div>
@@ -448,23 +448,23 @@ export default function PatrimoinePage() {
             <ul className="list-none space-y-4 ml-2 mt-6">
               <li className="flex items-start gap-4">
                 <span className="text-[#B99066] text-2xl font-bold mt-1">➤</span>
-                <span className="text-lg">la <strong className="text-[#253F60]"><a href="/fiscalite" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">fiscalité</a></strong>,</span>
+                <span className="text-lg">la <strong className="text-[#253F60]"><a href="/fiscalite" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">fiscalité</a></strong>,</span>
               </li>
               <li className="flex items-start gap-4">
                 <span className="text-[#B99066] text-2xl font-bold mt-1">➤</span>
-                <span className="text-lg">la <strong className="text-[#253F60]"><a href="/patrimoine/protection-famille" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">protection de la famille</a></strong>,</span>
+                <span className="text-lg">la <strong className="text-[#253F60]"><a href="/patrimoine/protection-famille" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">protection de la famille</a></strong>,</span>
               </li>
               <li className="flex items-start gap-4">
                 <span className="text-[#B99066] text-2xl font-bold mt-1">➤</span>
-                <span className="text-lg">la <strong className="text-[#253F60]"><a href="/placements" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">stratégie d'investissement</a></strong>,</span>
+                <span className="text-lg">la <strong className="text-[#253F60]"><a href="/placements" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">stratégie d'investissement</a></strong>,</span>
               </li>
               <li className="flex items-start gap-4">
                 <span className="text-[#B99066] text-2xl font-bold mt-1">➤</span>
-                <span className="text-lg">la <strong className="text-[#253F60]"><a href="/retraite" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">préparation de la retraite</a></strong>,</span>
+                <span className="text-lg">la <strong className="text-[#253F60]"><a href="/retraite" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">préparation de la retraite</a></strong>,</span>
               </li>
               <li className="flex items-start gap-4">
                 <span className="text-[#B99066] text-2xl font-bold mt-1">➤</span>
-                <span className="text-lg">et la <strong className="text-[#253F60]"><a href="/patrimoine/transmission" className="text-[#9333EA] hover:text-[#7C3AED] underline font-semibold transition-colors">transmission du patrimoine</a></strong></span>
+                <span className="text-lg">et la <strong className="text-[#253F60]"><a href="/patrimoine/transmission" className="text-[#B99066] hover:text-[#A67C52] underline font-semibold transition-colors">transmission du patrimoine</a></strong></span>
               </li>
             </ul>
             
@@ -1229,7 +1229,7 @@ export default function PatrimoinePage() {
           
           <div className="max-w-5xl mx-auto">
             <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed text-center mb-8">
-              <strong className="text-[#9333EA] font-bold">Nos simulateurs patrimoniaux</strong> vous permettent de visualiser :
+              <strong className="text-[#253F60] font-bold">Nos simulateurs patrimoniaux</strong> vous permettent de visualiser :
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -1340,7 +1340,7 @@ export default function PatrimoinePage() {
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-                  Un <strong className="text-[#9333EA] font-bold">Family Office</strong> dédié à la gestion de vos investissements immobiliers, pour un suivi optimal
+                  Un <strong className="text-[#253F60] font-bold">Family Office</strong> dédié à la gestion de vos investissements immobiliers, pour un suivi optimal
                 </p>
               </div>
             </div>
@@ -1647,7 +1647,7 @@ export default function PatrimoinePage() {
                 Un engagement éthique et responsable
               </h3>
               <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                Azalée Patrimoine intègre dans sa démarche les critères <strong className="text-[#9333EA] font-bold">ESG (Environnement, Social, Gouvernance)</strong>. Nous privilégions des investissements responsables, transparents et alignés avec vos valeurs, sans compromis sur la performance.
+                Azalée Patrimoine intègre dans sa démarche les critères <strong className="text-[#253F60] font-bold">ESG (Environnement, Social, Gouvernance)</strong>. Nous privilégions des investissements responsables, transparents et alignés avec vos valeurs, sans compromis sur la performance.
               </p>
               <div className="mt-6 flex justify-center">
                 <div className="w-24 h-24 bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-lg flex items-center justify-center shadow-md">
@@ -1755,10 +1755,10 @@ export default function PatrimoinePage() {
               </h3>
               <div className="space-y-4">
                 <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                  <strong className="text-[#9333EA] font-bold">Le CGP</strong> accompagne un client pour diagnostiquer sa situation, optimiser sa fiscalité et mettre en place des placements (assurance-vie, PER, SCPI...), retraite/succession, avec une rémunération en honoraires et/ou rétrocommissions sur un périmètre financier et immobilier.
+                  <strong className="text-[#253F60] font-bold">Le CGP</strong> accompagne un client pour diagnostiquer sa situation, optimiser sa fiscalité et mettre en place des placements (assurance-vie, PER, SCPI...), retraite/succession, avec une rémunération en honoraires et/ou rétrocommissions sur un périmètre financier et immobilier.
                 </p>
                 <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                  <strong className="text-[#9333EA] font-bold">Le Family Officer</strong> est un chef d'orchestre global (gouvernance familiale, consolidation multi-banques/actifs, coordination banques-notaires-avocats, reporting), rémunéré principalement à l'honoraire, sans distribution de produits et avec un ticket d'entrée plus élevé.
+                  <strong className="text-[#253F60] font-bold">Le Family Officer</strong> est un chef d'orchestre global (gouvernance familiale, consolidation multi-banques/actifs, coordination banques-notaires-avocats, reporting), rémunéré principalement à l'honoraire, sans distribution de produits et avec un ticket d'entrée plus élevé.
                 </p>
               </div>
             </div>
@@ -1801,56 +1801,56 @@ export default function PatrimoinePage() {
           
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <a href="/placements" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#9333EA] hover:border-[#7C3AED] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
-                <svg className="w-8 h-8 text-[#9333EA] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href="/placements" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#B99066] hover:border-[#A67C52] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
+                <svg className="w-8 h-8 text-[#B99066] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
-                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#9333EA] transition-colors">
+                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#B99066] transition-colors">
                   Placements financiers
                 </span>
               </a>
               
-              <a href="/fiscalite" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#9333EA] hover:border-[#7C3AED] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
-                <svg className="w-8 h-8 text-[#9333EA] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href="/fiscalite" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#B99066] hover:border-[#A67C52] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
+                <svg className="w-8 h-8 text-[#B99066] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-5m-6 5h.01M19 21a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V21z" />
                 </svg>
-                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#9333EA] transition-colors">
+                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#B99066] transition-colors">
                   Fiscalité du patrimoine
                 </span>
               </a>
               
-              <a href="/immobilier" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#9333EA] hover:border-[#7C3AED] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
-                <svg className="w-8 h-8 text-[#9333EA] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href="/immobilier" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#B99066] hover:border-[#A67C52] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
+                <svg className="w-8 h-8 text-[#B99066] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
-                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#9333EA] transition-colors">
+                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#B99066] transition-colors">
                   Immobilier & SCPI
                 </span>
               </a>
               
-              <a href="/retraite" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#9333EA] hover:border-[#7C3AED] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
-                <svg className="w-8 h-8 text-[#9333EA] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href="/retraite" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#B99066] hover:border-[#A67C52] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
+                <svg className="w-8 h-8 text-[#B99066] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#9333EA] transition-colors">
+                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#B99066] transition-colors">
                   Retraite
                 </span>
               </a>
               
-              <a href="/simulateurs" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#9333EA] hover:border-[#7C3AED] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
-                <svg className="w-8 h-8 text-[#9333EA] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href="/simulateurs" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#B99066] hover:border-[#A67C52] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
+                <svg className="w-8 h-8 text-[#B99066] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
-                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#9333EA] transition-colors">
+                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#B99066] transition-colors">
                   Simulateurs
                 </span>
               </a>
               
-              <a href="/qui-sommes-nous" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#9333EA] hover:border-[#7C3AED] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
-                <svg className="w-8 h-8 text-[#9333EA] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <a href="/qui-sommes-nous" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#B99066] hover:border-[#A67C52] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
+                <svg className="w-8 h-8 text-[#B99066] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.503-1.135-2.01M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.503 1.135-2.01m0 0A5.002 5.002 0 0112 13c1.242 0 2.4.402 3.332 1.09M9 9a3 3 0 116 0m-6 0a3 3 0 106 0m-6 0a3 3 0 106 0" />
                 </svg>
-                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#9333EA] transition-colors">
+                <span className="text-[#253F60] text-lg font-inter font-semibold group-hover:text-[#B99066] transition-colors">
                   Qui sommes-nous ?
                 </span>
               </a>

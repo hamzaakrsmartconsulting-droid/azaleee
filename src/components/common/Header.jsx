@@ -4,8 +4,6 @@ import Button from '@/components/ui/Button';
 import dynamic from "next/dynamic";
 const LanguageSwitcher = dynamic(() => import("./LanguageSwitcher"), { ssr: false });
 import Link from "next/link";
-import VignetteRetraites from "../fiscalite/VignetteRetraites";
-import VignetteProfessionnels from "../fiscalite/VignetteProfessionnels";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -284,6 +282,7 @@ const Header = () => {
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
             </a>
+            <span className="text-sm font-inter text-white">Suivez-nous</span>
           </div>
         </div>
 
@@ -427,12 +426,12 @@ const Header = () => {
               onMouseEnter={handlePlacementsMouseEnter}
               onMouseLeave={handlePlacementsMouseLeave}
             >
-              <button className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
+              <Link href="/placements" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
                 Placements
                 <svg className={`w-4 h-4 transition-transform ${placementsDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-              </button>
+              </Link>
               
               {/* Desktop Dropdown */}
               <div className={`${placementsDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>
@@ -484,12 +483,12 @@ const Header = () => {
               onMouseEnter={handleImmobilierMouseEnter}
               onMouseLeave={handleImmobilierMouseLeave}
             >
-              <button className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
+              <Link href="/immobilier" className="text-lg font-inter text-white hover:text-gray-300 transition-colors flex items-center gap-1">
                 Investissement immobilier
                 <svg className={`w-4 h-4 transition-transform ${immobilierDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-              </button>
+              </Link>
               
               {/* Desktop Dropdown */}
               <div className={`${immobilierDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>
@@ -592,12 +591,6 @@ const Header = () => {
                         </div>
                       ))}
                     </div>
-                  </div>
-
-                  {/* Vignettes à droite */}
-                  <div className="flex flex-col gap-4">
-                    <VignetteRetraites />
-                    <VignetteProfessionnels />
                   </div>
                 </div>
               </div>

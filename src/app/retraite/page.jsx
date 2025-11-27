@@ -129,11 +129,6 @@ export default function RetraitePage() {
           <div className="grid grid-cols-1 gap-8 lg:gap-10">
             {/* Carte gauche */}
             <div className="bg-white rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 border border-gray-100 hover:shadow-3xl transition-shadow duration-300 max-w-4xl mx-auto">
-              <div className="mb-6">
-                <h2 className="text-[#253F60] text-lg sm:text-xl font-cairo font-bold uppercase mb-2">
-                  <span className="underline decoration-wavy decoration-[#B99066]">PILLIER</span> RETRAITE
-                </h2>
-              </div>
               <h1 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight mb-8 tracking-tight">
                 Préparer sa retraite sereinement avec Azalée Patrimoine
               </h1>
@@ -894,7 +889,7 @@ export default function RetraitePage() {
                   href="https://calendly.com/rdv-azalee-patrimoine/30min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-[#8B5CF6] font-inter font-semibold text-base hover:text-[#7C3AED] transition-colors underline decoration-wavy"
+                  className="inline-block text-[#B99066] font-inter font-semibold text-base hover:text-[#A67C52] transition-colors underline decoration-wavy"
                 >
                   Échangez avec un conseiller Azalée Patrimoine dès aujourd'hui.
                 </a>
@@ -911,7 +906,7 @@ export default function RetraitePage() {
                   href="https://calendly.com/rdv-azalee-patrimoine/30min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#8B5CF6] font-inter font-semibold hover:text-[#7C3AED] transition-colors"
+                  className="text-[#B99066] font-inter font-semibold hover:text-[#A67C52] transition-colors"
                 >
                   Prendre rendez-vous
                 </a>
@@ -922,7 +917,7 @@ export default function RetraitePage() {
                 </svg>
                 <a
                   href="mailto:contact@azalee-patrimoine.fr"
-                  className="text-[#8B5CF6] font-inter font-semibold hover:text-[#7C3AED] transition-colors"
+                  className="text-[#B99066] font-inter font-semibold hover:text-[#A67C52] transition-colors"
                 >
                   contact@azalee-patrimoine.fr
                 </a>
@@ -1010,7 +1005,7 @@ export default function RetraitePage() {
                   <p className="text-sm text-green-600 font-semibold mt-2">Gain mensuel : +196 €</p>
                   </div>
                     </div>
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+              <div className="mt-4 p-4 bg-[#F5F0E8] rounded-lg">
                 <p className="text-sm text-[#4B5563] font-inter">
                   <strong className="text-[#253F60]">Gain annuel :</strong> 2 352 € | <strong className="text-[#253F60]">Amortissement :</strong> ~15 ans (hors avantage fiscal)
                 </p>
@@ -1172,7 +1167,7 @@ export default function RetraitePage() {
                 href="https://calendly.com/rdv-azalee-patrimoine/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#8B5CF6] font-inter font-semibold hover:text-[#7C3AED] transition-colors"
+                className="flex items-center gap-2 text-[#B99066] font-inter font-semibold hover:text-[#A67C52] transition-colors"
               >
                 <span className="text-2xl">👉</span>
                 Échanger avec un conseiller Azalée Patrimoine
@@ -1199,8 +1194,8 @@ export default function RetraitePage() {
             <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-6">
               Nos conseillers vous aident à déterminer si un rachat de trimestres est fiscalement et financièrement pertinent.
             </p>
-            <div className="flex items-start gap-4 bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
-              <svg className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex items-start gap-4 bg-[#F5F0E8] border-l-4 border-[#B99066] p-4 rounded">
+              <svg className="w-6 h-6 text-[#B99066] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
               <div>
@@ -1239,7 +1234,7 @@ export default function RetraitePage() {
               href="https://calendly.com/rdv-azalee-patrimoine/30min"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[#8B5CF6] font-inter font-semibold hover:text-[#7C3AED] transition-colors underline decoration-wavy"
+              className="inline-flex items-center gap-2 text-[#B99066] font-inter font-semibold hover:text-[#A67C52] transition-colors underline decoration-wavy"
             >
               <span className="text-green-400">✓</span>
               Réaliser mon diagnostic retraite personnalisé
@@ -1347,7 +1342,7 @@ export default function RetraitePage() {
             <p className="text-[#4B5563] text-base font-inter leading-relaxed mb-4">
               Le PER permet une déduction fiscale immédiate des versements, souvent supérieure au rendement financier espéré.
             </p>
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded mb-4">
+            <div className="bg-[#F5F0E8] border-l-4 border-[#B99066] p-4 rounded mb-4">
               <p className="text-[#4B5563] text-base font-inter">
                 <strong className="text-[#253F60]">Par exemple,</strong> pour un taux marginal d'imposition de 41%, un versement de 10 000 € ne coûte réellement que <strong className="text-[#253F60]">5 900 €</strong>.
               </p>
@@ -1848,7 +1843,7 @@ export default function RetraitePage() {
                 </svg>
                 <div>
                   <p className="text-[#253F60] font-inter font-semibold mb-1">Être rappelé par un conseiller</p>
-                  <a href="mailto:contact@azalee-patrimoine.fr" className="text-[#8B5CF6] font-inter hover:text-[#7C3AED] transition-colors">
+                  <a href="mailto:contact@azalee-patrimoine.fr" className="text-[#B99066] font-inter hover:text-[#A67C52] transition-colors">
                     contact@azalee-patrimoine.fr
                   </a>
                 </div>
@@ -1861,7 +1856,7 @@ export default function RetraitePage() {
                   href="https://calendly.com/rdv-azalee-patrimoine/30min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#8B5CF6] font-inter font-semibold hover:text-[#7C3AED] transition-colors"
+                  className="text-[#B99066] font-inter font-semibold hover:text-[#A67C52] transition-colors"
                 >
                   Prendre rendez-vous en ligne
                 </a>

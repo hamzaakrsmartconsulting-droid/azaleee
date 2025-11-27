@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const VignetteProfessionnels = () => {
   return (
-    <div className="w-[900px] bg-[#253F60] rounded-lg shadow-2xl overflow-hidden">
+    <div className="w-full max-w-4xl bg-[#253F60] rounded-lg shadow-2xl overflow-hidden">
       {/* Titre */}
       <div className="bg-[#253F60] p-6 border-b border-[#B99066]/20">
         <h3 className="text-white text-2xl font-cairo font-bold">

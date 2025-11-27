@@ -3,12 +3,34 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
+import VignetteRetraites from "../../components/fiscalite/VignetteRetraites";
+import VignetteProfessionnels from "../../components/fiscalite/VignetteProfessionnels";
+import VignetteInvestisseurImmobilier from "../../components/fiscalite/VignetteInvestisseurImmobilier";
+import VignetteHeritier from "../../components/fiscalite/VignetteHeritier";
 
 export default function FiscalitePage() {
   const [openQuestion, setOpenQuestion] = useState(null);
+  const [hoveredProfil, setHoveredProfil] = useState(null);
+  const [profilTimeoutId, setProfilTimeoutId] = useState(null);
+  const [hoveredIcon, setHoveredIcon] = useState(null);
 
   const toggleQuestion = (index) => {
     setOpenQuestion(openQuestion === index ? null : index);
+  };
+
+  const handleProfilMouseEnter = (profilType) => {
+    if (profilTimeoutId) {
+      clearTimeout(profilTimeoutId);
+      setProfilTimeoutId(null);
+    }
+    setHoveredProfil(profilType);
+  };
+
+  const handleProfilMouseLeave = () => {
+    const id = setTimeout(() => {
+      setHoveredProfil(null);
+    }, 200);
+    setProfilTimeoutId(id);
   };
 
   return (
@@ -118,22 +140,22 @@ export default function FiscalitePage() {
                 </li>
               </ul>
             </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Section L'essentiel */}
       <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative pl-6 sm:pl-8">
-            {/* Ligne verticale rouge à gauche - plus épaisse et visible */}
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-red-600 rounded-full"></div>
+            {/* Ligne verticale bleu azalée à gauche - plus épaisse et visible */}
+            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#253F60] rounded-full"></div>
             
             {/* En-tête avec icône et titre */}
             <div className="flex items-center gap-4 mb-10 sm:mb-12">
               {/* Icône cible avec flèche intégrée */}
               <div className="relative flex-shrink-0">
-                <svg className="w-14 h-14 sm:w-16 sm:h-16 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                <svg className="w-14 h-14 sm:w-16 sm:h-16 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                   {/* Cible */}
                   <circle cx="12" cy="12" r="9" strokeWidth="2"/>
                   <circle cx="12" cy="12" r="5" strokeWidth="2"/>
@@ -142,22 +164,22 @@ export default function FiscalitePage() {
                   <path d="M18 12L15 9M18 12L15 15M18 12H21" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <h2 className="text-red-600 text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold italic">
+              <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold italic">
                 L'essentiel
               </h2>
             </div>
 
-            {/* Liste à puces avec cercles rouges */}
+            {/* Liste à puces avec cercles or azalée */}
             <ul className="space-y-6 sm:space-y-8">
               <li className="flex items-start gap-5">
-                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-red-600 rounded-full shadow-sm"></div>
+                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-[#B99066] rounded-full shadow-sm"></div>
                 <p className="text-[#374151] text-base sm:text-lg lg:text-xl font-inter leading-relaxed pt-0.5">
-                  L'optimisation fiscale consiste à réduire légalement votre impôt en combinant arbitrages déclaratifs, enveloppes fiscales (<Link href="/placements/assurance-vie" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline transition-colors">assurance-vie</Link>, <Link href="/placements/contrat-capitalisation" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline transition-colors">capitalisation</Link>, <Link href="/placements/pea-per" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline transition-colors">PEA</Link>, <Link href="/placements/per" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline transition-colors">PER</Link>) et investissements (<Link href="/immobilier" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline transition-colors">immobilier</Link>, financiers), sans prendre de risques inutiles.
+                  L'optimisation fiscale consiste à réduire légalement votre impôt en combinant arbitrages déclaratifs, enveloppes fiscales (<Link href="/placements/assurance-vie" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">assurance-vie</Link>, <Link href="/placements/contrat-capitalisation" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">capitalisation</Link>, <Link href="/placements/pea-per" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">PEA</Link>, <Link href="/placements/per" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">PER</Link>) et investissements (<Link href="/immobilier" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">immobilier</Link>, financiers), sans prendre de risques inutiles.
                 </p>
               </li>
               
               <li className="flex items-start gap-5">
-                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-red-600 rounded-full shadow-sm"></div>
+                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-[#B99066] rounded-full shadow-sm"></div>
                 <div className="flex-1 pt-0.5">
                   <p className="text-[#374151] text-base sm:text-lg lg:text-xl font-inter leading-relaxed mb-4">
                     Plusieurs leviers complémentaires existent :
@@ -179,32 +201,32 @@ export default function FiscalitePage() {
                       <strong className="text-[#253F60] font-semibold">Transmission</strong> (<Link href="/patrimoine/donation-gratuite" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">donations</Link>, démembrement)
                     </li>
                   </ul>
-                          </div>
+                            </div>
               </li>
               
               <li className="flex items-start gap-5">
-                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-red-600 rounded-full shadow-sm"></div>
+                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-[#B99066] rounded-full shadow-sm"></div>
                 <p className="text-[#374151] text-base sm:text-lg lg:text-xl font-inter leading-relaxed pt-0.5">
                   Gains potentiels (selon votre situation et la réglementation) : jusqu'à <strong className="text-[#253F60] font-semibold">66 000 €</strong> de réduction d'IR sur certains dispositifs, jusqu'à <strong className="text-[#253F60] font-semibold">10 700 €/an</strong> de <Link href="/fiscalite/reductions-impot-deficit-foncier" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">déficit foncier</Link> imputable, et jusqu'à <strong className="text-[#253F60] font-semibold">45 %</strong> de l'investissement déductible de la base imposable sur des montages éligibles.
                 </p>
               </li>
               
               <li className="flex items-start gap-5">
-                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-red-600 rounded-full shadow-sm"></div>
+                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-[#B99066] rounded-full shadow-sm"></div>
                 <p className="text-[#374151] text-base sm:text-lg lg:text-xl font-inter leading-relaxed pt-0.5">
-                  Le bon choix dépend de votre profil, de votre <Link href="/fiscalite/tmi-prelevements-sociaux" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline transition-colors">TMI</Link>, de votre horizon, de vos objectifs (revenus complémentaires, transmission) et de votre tolérance au risque.
+                  Le bon choix dépend de votre profil, de votre <Link href="/fiscalite/tmi-prelevements-sociaux" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">TMI</Link>, de votre horizon, de vos objectifs (revenus complémentaires, transmission) et de votre tolérance au risque.
                 </p>
               </li>
               
               <li className="flex items-start gap-5">
-                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-red-600 rounded-full shadow-sm"></div>
+                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-[#B99066] rounded-full shadow-sm"></div>
                 <p className="text-[#374151] text-base sm:text-lg lg:text-xl font-inter leading-relaxed pt-0.5">
-                  Cette rubrique propose une définition claire des mots-clés pour comprendre les principaux mécanismes liés à la fiscalité (<Link href="/fiscalite/tmi-prelevements-sociaux" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline transition-colors">TMI</Link>, <Link href="/fiscalite/pfu" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline transition-colors">PFU/flat tax</Link>, quotient familial, déduction vs réduction, micro vs réel, IFI, abattements) et favoriser votre éducation financière.
+                  Cette rubrique propose une définition claire des mots-clés pour comprendre les principaux mécanismes liés à la fiscalité (<Link href="/fiscalite/tmi-prelevements-sociaux" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">TMI</Link>, <Link href="/fiscalite/pfu" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline transition-colors">PFU/flat tax</Link>, quotient familial, déduction vs réduction, micro vs réel, IFI, abattements) et favoriser votre éducation financière.
                 </p>
               </li>
               
               <li className="flex items-start gap-5">
-                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-red-600 rounded-full shadow-sm"></div>
+                <div className="mt-2.5 flex-shrink-0 w-4 h-4 bg-[#B99066] rounded-full shadow-sm"></div>
                 <p className="text-[#374151] text-base sm:text-lg lg:text-xl font-inter leading-relaxed pt-0.5">
                   Se faire accompagner par <strong className="text-[#253F60] font-semibold">Azalée Patrimoine</strong> permet d'orchestrer ces leviers dans une stratégie cohérente, durable et adaptée à votre situation.
                 </p>
@@ -212,7 +234,7 @@ export default function FiscalitePage() {
             </ul>
 
             {/* Note de conclusion */}
-            <div className="mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+            <div className="mt-8 bg-[#F5F0E8] border-l-4 border-[#B99066] p-4 rounded">
               <p className="text-[#4B5563] text-sm font-inter italic">
                 Les avantages fiscaux dépendent de votre situation et des textes en vigueur. Ces exemples sont indicatifs, sous conditions d'éligibilité et plafonds. Une étude personnalisée est nécessaire.
               </p>
@@ -227,7 +249,7 @@ export default function FiscalitePage() {
           <div className="max-w-4xl">
             <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-6">
               Comprendre l'impôt sur le revenu
-            </h2>
+                                  </h2>
             
             {/* Ligne horizontale grise */}
             <div className="w-full h-px bg-gray-300 mb-8"></div>
@@ -243,10 +265,10 @@ export default function FiscalitePage() {
               
               <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
                 L'impôt sur le revenu joue un rôle déterminant dans la gestion et la valorisation de votre patrimoine. Avant même de songer à l'optimisation fiscale, il est essentiel de bien comprendre son fonctionnement pour faire les bons choix et saisir toutes les opportunités offertes par la législation.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                                  </p>
+                                </div>
+                            </div>
+                          </div>
       </section>
 
       {/* Section Les différentes catégories de revenus */}
@@ -260,7 +282,7 @@ export default function FiscalitePage() {
             <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-10">
               Vos revenus sont classés en plusieurs catégories, chacune répondant à des règles spécifiques.
             </p>
-          </div>
+                          </div>
 
           {/* Grille 2x2 des catégories */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-8">
@@ -289,7 +311,7 @@ export default function FiscalitePage() {
                   <span className="text-[#4B5563] text-base font-inter">allocations chômages</span>
                 </li>
               </ul>
-                </div>
+                  </div>
                 
             {/* Catégorie 2: Revenus fonciers */}
             <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200 hover:border-[#B99066] hover:shadow-xl transition-all duration-300">
@@ -369,14 +391,14 @@ export default function FiscalitePage() {
           <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             {/* Colonne gauche - Texte */}
-            <div>
-              <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-8 bg-yellow-100 inline-block px-4 py-2 rounded-lg">
+                        <div>
+              <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-8 bg-[#F5F0E8] inline-block px-4 py-2 rounded-lg">
                 Barème, tranches, décote et quotient familial
                 </h3>
               
               <div className="space-y-6">
                 <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                  L'imposition repose sur un <strong className="text-[#8B5CF6] font-semibold">barème progressif</strong> comportant plusieurs tranches : à chaque "part" du foyer fiscal, un taux s'applique selon le revenu déclaré. Plus vous avez de parts (enfants, conjoint), plus votre revenu imposable par part diminue, grâce au <strong className="text-[#8B5CF6] font-semibold">quotient familial</strong>.
+                  L'imposition repose sur un <strong className="text-[#253F60] font-semibold">barème progressif</strong> comportant plusieurs tranches : à chaque "part" du foyer fiscal, un taux s'applique selon le revenu déclaré. Plus vous avez de parts (enfants, conjoint), plus votre revenu imposable par part diminue, grâce au <strong className="text-[#253F60] font-semibold">quotient familial</strong>.
                 </p>
                 
                 <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
@@ -384,28 +406,28 @@ export default function FiscalitePage() {
                 </p>
                 
                 <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                  Bien comprendre ces fondamentaux permet de saisir le potentiel d'optimisation offert par le système français, de la réduction d'impôt via l'<strong className="text-[#8B5CF6] font-semibold">investissement immobilier (<Link href="/fiscalite/loi-pinel" className="text-[#B99066] hover:text-[#A67C52] underline">Pinel</Link>, <Link href="/fiscalite/loi-girardin" className="text-[#B99066] hover:text-[#A67C52] underline">Girardin</Link>...)</strong> à l'ajustement des frais réels ou à la mise en place de <strong className="text-[#8B5CF6] font-semibold">donations stratégiques</strong>.
-                </p>
-              </div>
-            </div>
+                  Bien comprendre ces fondamentaux permet de saisir le potentiel d'optimisation offert par le système français, de la réduction d'impôt via l'<strong className="text-[#253F60] font-semibold">investissement immobilier (<Link href="/fiscalite/loi-pinel" className="text-[#B99066] hover:text-[#A67C52] underline">Pinel</Link>, <Link href="/fiscalite/loi-girardin" className="text-[#B99066] hover:text-[#A67C52] underline">Girardin</Link>...)</strong> à l'ajustement des frais réels ou à la mise en place de <strong className="text-[#253F60] font-semibold">donations stratégiques</strong>.
+                          </p>
+                        </div>
+                      </div>
 
             {/* Colonne droite - Infographie */}
             <div className="lg:sticky lg:top-8">
-              <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-xl p-6 sm:p-8 border-2 border-blue-100">
+              <div className="bg-gradient-to-br from-[#F5F0E8] to-white rounded-2xl shadow-xl p-6 sm:p-8 border-2 border-[#B99066]/30">
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-blue-600 text-sm font-inter font-semibold uppercase">Fiscalité</span>
+                    <span className="text-[#253F60] text-sm font-inter font-semibold uppercase">Fiscalité</span>
                     <svg className="w-6 h-6" viewBox="0 0 20 20" fill="none">
                       <rect x="0" y="0" width="6.67" height="20" fill="#002654"/>
                       <rect x="6.67" y="0" width="6.67" height="20" fill="#FFFFFF"/>
                       <rect x="13.33" y="0" width="6.67" height="20" fill="#ED2939"/>
                     </svg>
-                  </div>
+                    </div>
                   <h4 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-2">
                     Impôt sur le revenu
                   </h4>
-                  <div className="bg-yellow-200 px-3 py-1 rounded inline-block mb-4">
-                    <p className="text-[#253F60] text-sm sm:text-base font-cairo font-bold">
+                  <div className="bg-[#B99066] px-3 py-1 rounded inline-block mb-4">
+                    <p className="text-white text-sm sm:text-base font-cairo font-bold">
                       Tranches et taux d'imposition 2025
                     </p>
                   </div>
@@ -483,7 +505,7 @@ export default function FiscalitePage() {
                 href="https://www.service-public.gouv.fr/particuliers/vosdroits/F359" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-[#8B5CF6] hover:text-[#7C3AED] font-inter underline text-base sm:text-lg transition-colors"
+                className="text-[#B99066] hover:text-[#A67C52] font-inter underline text-base sm:text-lg transition-colors"
               >
                 Quelle est la date limite pour faire sa déclaration de revenus pour les impôts ? | Service Public
               </a>
@@ -513,56 +535,6 @@ export default function FiscalitePage() {
               >
               Faites le point sur vos déductions possibles avec un conseiller
               </button>
-            </div>
-
-          {/* Grille 2 colonnes - Pinel et Girardin */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            {/* Carte Pinel */}
-            <Link href="/fiscalite/loi-pinel" className="group bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200 hover:border-[#B99066] hover:shadow-xl transition-all duration-300">
-              <div className="flex items-start gap-4 mb-4">
-                {/* Pictogramme maison neuve avec casque */}
-                <div className="flex-shrink-0">
-                  <svg className="w-12 h-12 text-[#253F60]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    <circle cx="12" cy="6" r="2" fill="currentColor" />
-                    <path d="M10 4h4" strokeWidth="2" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-[#8B5CF6] text-xl sm:text-2xl font-cairo font-bold mb-3 group-hover:text-[#7C3AED] transition-colors">
-                    Dispositif Pinel :
-                  </h3>
-                  <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                    Investir dans un logement neuf à louer permet d'obtenir une réduction d'impôt pouvant aller jusqu'à <strong className="text-[#253F60] font-semibold">21%</strong> du montant investi, en fonction de la durée de mise en location.
-                  </p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Carte Girardin */}
-            <Link href="/fiscalite/loi-girardin" className="group bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200 hover:border-[#B99066] hover:shadow-xl transition-all duration-300">
-              <div className="flex items-start gap-4 mb-4">
-                {/* Pictogramme soleil avec îles (DOM-TOM) */}
-                <div className="flex-shrink-0">
-                  <svg className="w-12 h-12 text-[#253F60]" fill="currentColor" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="5" />
-                    <path d="M12 1v4M12 19v4M5.64 5.64l2.83 2.83M15.53 15.53l2.83 2.83M1 12h4M19 12h4M5.64 18.36l2.83-2.83M15.53 8.47l2.83-2.83" stroke="currentColor" strokeWidth="2" fill="none" />
-                    <circle cx="8" cy="8" r="1" fill="currentColor" />
-                    <circle cx="16" cy="8" r="1" fill="currentColor" />
-                    <circle cx="8" cy="16" r="1" fill="currentColor" />
-                    <circle cx="16" cy="16" r="1" fill="currentColor" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-[#8B5CF6] text-xl sm:text-2xl font-cairo font-bold mb-3 group-hover:text-[#7C3AED] transition-colors">
-                    Loi Girardin :
-                  </h3>
-                  <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                    Soutenir le développement économique dans les DOM-TOM via l'immobilier ou l'industrie locale : en échange, réduction d'impôt très attractive (principalement sur une seule année).
-                  </p>
-                </div>
-              </div>
-            </Link>
             </div>
           </div>
         </section>
@@ -724,7 +696,7 @@ export default function FiscalitePage() {
       <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
-            <h2 className="text-red-600 text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-8">
+            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-8">
               Les erreurs fréquentes à éviter
             </h2>
 
@@ -757,7 +729,7 @@ export default function FiscalitePage() {
             </ul>
 
             {/* Section Astuce */}
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg">
+            <div className="bg-[#F5F0E8] border-l-4 border-[#B99066] p-6 rounded-lg">
               <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
                 <strong className="font-semibold text-[#253F60]">Astuce :</strong>{" "}
                 <span className="italic">Relisez toujours votre déclaration et recoupez vos justificatifs ; conservez toutes vos pièces en cas de contrôle.</span>
@@ -770,7 +742,7 @@ export default function FiscalitePage() {
       {/* Section Optimiser sa fiscalité selon son profil */}
       <section className="w-full bg-gray-50 py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl">
+          <div className="max-w-7xl">
             <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-6">
               Optimiser sa fiscalité selon son profil
             </h2>
@@ -780,104 +752,160 @@ export default function FiscalitePage() {
             </p>
 
             <div className="space-y-10">
-              {/* Profil 1: Investisseur immobilier */}
-              <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200">
-                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
-                  Investisseur immobilier
-                </h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                    <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                      Priorisez les dispositifs adaptés à vos objectifs : <Link href="/fiscalite/loi-pinel" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Pinel</Link> et <Link href="/fiscalite/loi-denormandie" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Denormandie</Link> si vous ciblez la réduction d'impôt ; <Link href="/fiscalite/loi-malraux" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Malraux</Link> ou <Link href="/fiscalite/monument-historique" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Monuments Historiques</Link> pour les amateurs de rénovation de prestige.
-                    </p>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                    <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                      Optimisez vos revenus fonciers : analysez l'intérêt du régime réel pour déduire au maximum vos charges.
-                    </p>
-                  </li>
-                </ul>
+              {/* Profil 1: Investisseur immobilier - Avec vignette au survol */}
+              <div 
+                className="relative"
+                onMouseEnter={() => handleProfilMouseEnter('investisseur')}
+                onMouseLeave={handleProfilMouseLeave}
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Carte profil */}
+                  <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200 hover:border-[#B99066] transition-colors">
+                    <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
+                      Investisseur immobilier
+                    </h3>
+                    <ul className="space-y-4">
+                      <li className="flex items-start gap-3">
+                        <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                          Priorisez les dispositifs adaptés à vos objectifs : <Link href="/fiscalite/loi-pinel" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Pinel</Link> et <Link href="/fiscalite/loi-denormandie" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Denormandie</Link> si vous ciblez la réduction d'impôt ; <Link href="/fiscalite/loi-malraux" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Malraux</Link> ou <Link href="/fiscalite/monument-historique" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Monuments Historiques</Link> pour les amateurs de rénovation de prestige.
+                        </p>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                          Optimisez vos revenus fonciers : analysez l'intérêt du régime réel pour déduire au maximum vos charges.
+                        </p>
+                      </li>
+                    </ul>
                         </div>
-
-              {/* Profil 2: Retraité avec revenus passifs */}
-              <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200">
-                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
-                  Retraité avec revenus passifs
-                </h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                    <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                      Choisissez le bon mode d'imposition de vos rentes, revenus locatifs et placements : arbitrage entre <Link href="/fiscalite/pfu" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">flat tax</Link> et barème progressif, adaptation de votre portefeuille pour réduire la fiscalité sur les dividendes.
-                    </p>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                    <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                      Pensez à la transmission : donations graduelles, souscription de contrats d'<Link href="/placements/assurance-vie" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">assurance-vie</Link> optimisés pour la succession.
-                    </p>
-                  </li>
-                </ul>
+                  
+                  {/* Vignette au survol */}
+                  <div className={`${hoveredProfil === 'investisseur' ? 'block' : 'hidden'} transition-opacity duration-300`}>
+                    <VignetteInvestisseurImmobilier />
                       </div>
-
-              {/* Profil 3: Profession libérale / chef d'entreprise */}
-              <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200">
-                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
-                  Profession libérale / chef d'entreprise
-                </h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                    <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                      Profitez des dispositifs de retraite complémentaire (<Link href="/retraite/plan-retraite" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">PER</Link>, <Link href="/retraite/plan-retraite" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Madelin</Link>) pour déduire des versements tout en capitalisant pour l'avenir.
-                    </p>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                    <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                      Valorisez la cession progressive de votre entreprise pour bénéficier d'abattements spécifiques, ou réorganisez la détention de vos actifs via des sociétés civiles.
-                    </p>
-                  </li>
-                </ul>
                     </div>
-
-              {/* Profil 4: Héritier d'un patrimoine */}
-              <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200">
-                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
-                  Héritier d'un patrimoine
-                </h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                    <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                      <strong className="text-[#253F60] font-semibold">Anticipez les droits de succession</strong> : donations échelonnées, démembrement de propriété, utilisation des abattements familiaux, investissement dans des actifs défiscalisés.
-                    </p>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                    <p className="text-[#4B5563] text-base font-inter leading-relaxed">
-                      <strong className="text-[#253F60] font-semibold">Optimisez la gestion des biens transmis</strong> : Favorisez les outils juridiques permettant d'adapter la détention du patrimoine à votre situation personnelle et fiscale.
-                    </p>
-                  </li>
-                </ul>
-              </div>
                 </div>
+                
+              {/* Profil 2: Retraité avec revenus passifs - Avec vignette au survol */}
+              <div 
+                className="relative"
+                onMouseEnter={() => handleProfilMouseEnter('retraite')}
+                onMouseLeave={handleProfilMouseLeave}
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Carte profil */}
+                  <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200 hover:border-[#B99066] transition-colors">
+                    <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
+                      Retraité avec revenus passifs
+                    </h3>
+                    <ul className="space-y-4">
+                      <li className="flex items-start gap-3">
+                        <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                          Choisissez le bon mode d'imposition de vos rentes, revenus locatifs et placements : arbitrage entre <Link href="/fiscalite/pfu" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">flat tax</Link> et barème progressif, adaptation de votre portefeuille pour réduire la fiscalité sur les dividendes.
+                        </p>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                          Pensez à la transmission : donations graduelles, souscription de contrats d'<Link href="/placements/assurance-vie" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">assurance-vie</Link> optimisés pour la succession.
+                        </p>
+                      </li>
+                    </ul>
+                </div>
+                  
+                  {/* Vignette au survol */}
+                  <div className={`${hoveredProfil === 'retraite' ? 'block' : 'hidden'} transition-opacity duration-300`}>
+                    <VignetteRetraites />
+                  </div>
+                </div>
+              </div>
+
+              {/* Profil 3: Profession libérale / chef d'entreprise - Avec vignette au survol */}
+              <div 
+                className="relative"
+                onMouseEnter={() => handleProfilMouseEnter('professionnel')}
+                onMouseLeave={handleProfilMouseLeave}
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Carte profil */}
+                  <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200 hover:border-[#B99066] transition-colors">
+                    <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
+                      Profession libérale / chef d'entreprise
+                    </h3>
+                    <ul className="space-y-4">
+                      <li className="flex items-start gap-3">
+                        <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                          Profitez des dispositifs de retraite complémentaire (<Link href="/retraite/plan-retraite" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">PER</Link>, <Link href="/retraite/plan-retraite" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Madelin</Link>) pour déduire des versements tout en capitalisant pour l'avenir.
+                        </p>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                          Valorisez la cession progressive de votre entreprise pour bénéficier d'abattements spécifiques, ou réorganisez la détention de vos actifs via des sociétés civiles.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Vignette au survol */}
+                  <div className={`${hoveredProfil === 'professionnel' ? 'block' : 'hidden'} transition-opacity duration-300`}>
+                    <VignetteProfessionnels />
+                  </div>
+                </div>
+              </div>
+
+              {/* Profil 4: Héritier d'un patrimoine - Avec vignette au survol */}
+              <div 
+                className="relative"
+                onMouseEnter={() => handleProfilMouseEnter('heritier')}
+                onMouseLeave={handleProfilMouseLeave}
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Carte profil */}
+                  <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-gray-200 hover:border-[#B99066] transition-colors">
+                    <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
+                      Héritier d'un patrimoine
+                    </h3>
+                    <ul className="space-y-4">
+                      <li className="flex items-start gap-3">
+                        <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                          <strong className="text-[#253F60] font-semibold">Anticipez les droits de succession</strong> : donations échelonnées, démembrement de propriété, utilisation des abattements familiaux, investissement dans des actifs défiscalisés.
+                        </p>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                          <strong className="text-[#253F60] font-semibold">Optimisez la gestion des biens transmis</strong> : Favorisez les outils juridiques permettant d'adapter la détention du patrimoine à votre situation personnelle et fiscale.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Vignette au survol */}
+                  <div className={`${hoveredProfil === 'heritier' ? 'block' : 'hidden'} transition-opacity duration-300`}>
+                    <VignetteHeritier />
+                  </div>
+                </div>
+              </div>
+            </div>
                 
             {/* Paragraphe de conclusion */}
             <div className="mt-12 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl shadow-lg p-6 sm:p-8 text-white">
               <p className="text-base sm:text-lg font-inter leading-relaxed text-center">
                 Chaque profil a ses leviers d'optimisation : s'informer, se faire accompagner et ajuster régulièrement sa stratégie restent la clé pour valoriser durablement son patrimoine.
               </p>
-                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Section Conseils de l'expert Azalée Patrimoine */}
       <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mb-12">
             <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-8">
               Conseils de l'expert Azalée Patrimoine
@@ -885,7 +913,7 @@ export default function FiscalitePage() {
 
             <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-semibold mb-6">
               Pourquoi travailler avec un Conseiller en Gestion de Patrimoine (CGP) ?
-            </h3>
+                </h3>
 
             <div className="space-y-4 mb-10">
               <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
@@ -899,34 +927,34 @@ export default function FiscalitePage() {
             {/* Grille Avantages / Inconvénients */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
               {/* Avantages */}
-              <div className="bg-green-50 rounded-xl p-6 border-2 border-green-200">
+              <div className="bg-[#F5F0E8] rounded-xl p-6 border-2 border-[#B99066]">
                 <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4 flex items-center gap-2">
-                  <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-6 h-6 text-[#B99066]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   Les avantages d'un accompagnement par un CGP :
                 </h3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-green-600 rounded-full"></div>
+                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
                     <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                       Diagnostic précis de votre situation fiscale et patrimoniale ;
                     </p>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-green-600 rounded-full"></div>
+                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
                     <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                       Accès à des stratégies sur-mesure, souvent inaccessibles au grand public ;
                     </p>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-green-600 rounded-full"></div>
+                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
                     <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                       Veille réglementaire et anticipation des évolutions fiscales ;
                     </p>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-green-600 rounded-full"></div>
+                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
                     <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                       Vision transversale : immobilier, placements, retraite, succession, transmission.
                     </p>
@@ -935,34 +963,34 @@ export default function FiscalitePage() {
               </div>
 
               {/* Inconvénients */}
-              <div className="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+              <div className="bg-[#F5F0E8] rounded-xl p-6 border-2 border-[#253F60]">
                 <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4 flex items-center gap-2">
-                  <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-6 h-6 text-[#253F60]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                   </svg>
                   Inconvénients à considérer
                 </h3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-red-600 rounded-full"></div>
+                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#253F60] rounded-full"></div>
                     <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                       Trouver le bon profil : privilégier un professionnel pluridisciplinaire et équilibré (pas "mono-produit"), transparent sur son univers d'investissement.
                     </p>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-red-600 rounded-full"></div>
+                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#253F60] rounded-full"></div>
                     <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                       Coût de l'accompagnement : honoraires de conseil et/ou intégration de la rémunération dans les rétro-commissions si un investissement est mis en place ; demander une lettre de mission claire.
                     </p>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-red-600 rounded-full"></div>
+                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#253F60] rounded-full"></div>
                     <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                       Transparence & conflits d'intérêts : exiger le détail des frais (entrée, gestion, arbitrages) et un rapport d'adéquation justifiant chaque recommandation.
                     </p>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-red-600 rounded-full"></div>
+                    <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#253F60] rounded-full"></div>
                     <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
                       Suivi dans le temps : sans revue annuelle et reporting, la stratégie peut devenir obsolète (évolutions de vie, fiscalité, marchés).
                     </p>
@@ -972,7 +1000,7 @@ export default function FiscalitePage() {
             </div>
 
             {/* Astuce */}
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg mb-10">
+            <div className="bg-[#F5F0E8] border-l-4 border-[#B99066] p-6 rounded-lg mb-10">
               <h3 className="text-[#253F60] text-lg font-cairo font-bold mb-3">Astuce :</h3>
               <ul className="space-y-2 text-[#4B5563] text-sm font-inter">
                 <li>• Comparez au moins 2 CGP</li>
@@ -1184,8 +1212,12 @@ export default function FiscalitePage() {
                 </svg>
 
                 {/* Badge 1: Diagnostic (Top Left segment - positionné à l'intérieur du segment) */}
-                <div className="absolute top-[25%] left-[25%] transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-xl border-2 border-[#B99066]">
+                <div 
+                  className="absolute top-[25%] left-[25%] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                  onMouseEnter={() => setHoveredIcon('diagnostic')}
+                  onMouseLeave={() => setHoveredIcon(null)}
+                >
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-xl border-2 border-[#B99066] hover:scale-110 transition-transform">
                     <svg className="w-6 h-6 sm:w-7 sm:h-7 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
@@ -1193,7 +1225,7 @@ export default function FiscalitePage() {
                 </div>
                 
                 {/* Texte Diagnostic - Top Left (autour du cercle, éloigné) */}
-                <div className="absolute -top-8 -left-4 sm:-top-12 sm:-left-8 lg:-left-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px]">
+                <div className={`absolute -top-8 -left-4 sm:-top-12 sm:-left-8 lg:-left-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] transition-opacity duration-300 ${hoveredIcon === 'diagnostic' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                   <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">Diagnostic complet</h3>
                   <p className="text-white text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
                     Analyse approfondie de votre situation fiscale, patrimoniale, professionnelle et familiale pour identifier tous les leviers d'optimisation disponibles.
@@ -1201,8 +1233,12 @@ export default function FiscalitePage() {
                 </div>
 
                 {/* Badge 2: Stratégie (Top Right segment - positionné à l'intérieur du segment) */}
-                <div className="absolute top-[25%] right-[25%] transform translate-x-1/2 -translate-y-1/2">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-xl border-2 border-[#B99066]">
+                <div 
+                  className="absolute top-[25%] right-[25%] transform translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                  onMouseEnter={() => setHoveredIcon('strategie')}
+                  onMouseLeave={() => setHoveredIcon(null)}
+                >
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-xl border-2 border-[#B99066] hover:scale-110 transition-transform">
                     <svg className="w-6 h-6 sm:w-7 sm:h-7 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -1211,7 +1247,7 @@ export default function FiscalitePage() {
                 </div>
                 
                 {/* Texte Stratégie - Top Right (autour du cercle, éloigné) */}
-                <div className="absolute -top-8 -right-4 sm:-top-12 sm:-right-8 lg:-right-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] text-right">
+                <div className={`absolute -top-8 -right-4 sm:-top-12 sm:-right-8 lg:-right-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] text-right transition-opacity duration-300 ${hoveredIcon === 'strategie' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                   <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">Stratégie personnalisée</h3>
                   <p className="text-white text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
                     Élaboration d'un plan d'action sur-mesure intégrant vos objectifs, contraintes et aversion au risque, avec priorisation des actions selon leur impact.
@@ -1219,8 +1255,12 @@ export default function FiscalitePage() {
                 </div>
 
                 {/* Badge 3: Mise en œuvre (Bottom Right segment - positionné à l'intérieur du segment) */}
-                <div className="absolute bottom-[25%] right-[25%] transform translate-x-1/2 translate-y-1/2">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-xl border-2 border-[#B99066]">
+                <div 
+                  className="absolute bottom-[25%] right-[25%] transform translate-x-1/2 translate-y-1/2 cursor-pointer"
+                  onMouseEnter={() => setHoveredIcon('mise-en-oeuvre')}
+                  onMouseLeave={() => setHoveredIcon(null)}
+                >
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-xl border-2 border-[#B99066] hover:scale-110 transition-transform">
                     <svg className="w-6 h-6 sm:w-7 sm:h-7 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
@@ -1228,7 +1268,7 @@ export default function FiscalitePage() {
                 </div>
                 
                 {/* Texte Mise en œuvre - Bottom Right (autour du cercle, éloigné) */}
-                <div className="absolute -bottom-8 -right-4 sm:-bottom-12 sm:-right-8 lg:-right-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] text-right">
+                <div className={`absolute -bottom-8 -right-4 sm:-bottom-12 sm:-right-8 lg:-right-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] text-right transition-opacity duration-300 ${hoveredIcon === 'mise-en-oeuvre' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                   <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">Mise en œuvre</h3>
                   <p className="text-white text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
                     Accompagnement opérationnel pour la concrétisation des recommandations : sélection des investissements, formalités administratives, suivi des échéances.
@@ -1236,8 +1276,12 @@ export default function FiscalitePage() {
                 </div>
 
                 {/* Badge 4: Suivi (Bottom Left segment - positionné à l'intérieur du segment) */}
-                <div className="absolute bottom-[25%] left-[25%] transform -translate-x-1/2 translate-y-1/2">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-xl border-2 border-[#B99066]">
+                <div 
+                  className="absolute bottom-[25%] left-[25%] transform -translate-x-1/2 translate-y-1/2 cursor-pointer"
+                  onMouseEnter={() => setHoveredIcon('suivi')}
+                  onMouseLeave={() => setHoveredIcon(null)}
+                >
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-xl border-2 border-[#B99066] hover:scale-110 transition-transform">
                     <svg className="w-6 h-6 sm:w-7 sm:h-7 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
@@ -1245,7 +1289,7 @@ export default function FiscalitePage() {
                 </div>
                 
                 {/* Texte Suivi - Bottom Left (autour du cercle, éloigné) */}
-                <div className="absolute -bottom-8 -left-4 sm:-bottom-12 sm:-left-8 lg:-left-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px]">
+                <div className={`absolute -bottom-8 -left-4 sm:-bottom-12 sm:-left-8 lg:-left-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] transition-opacity duration-300 ${hoveredIcon === 'suivi' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                   <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">Suivi et ajustement</h3>
                   <p className="text-white text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
                     Veille réglementaire continue, adaptation de la stratégie aux évolutions législatives, optimisation permanente selon l'évolution de votre situation.
@@ -1341,7 +1385,7 @@ export default function FiscalitePage() {
                 {openQuestion === 0 && (
                   <div className="p-4 sm:p-6 pt-0 bg-white">
                     <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                      Selon votre profil : <Link href="/fiscalite/loi-pinel" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline">Pinel/Denormandie</Link> (neuf/ancien), <Link href="/fiscalite/loi-girardin" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline">Girardin</Link> (réduction ponctuelle), <Link href="/fiscalite/loi-malraux" className="text-[#8B5CF6] hover:text-[#7C3AED] font-semibold underline">Malraux/MH</Link> (rénovation patrimoniale).
+                      Selon votre profil : <Link href="/fiscalite/loi-pinel" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Pinel/Denormandie</Link> (neuf/ancien), <Link href="/fiscalite/loi-girardin" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Girardin</Link> (réduction ponctuelle), <Link href="/fiscalite/loi-malraux" className="text-[#B99066] hover:text-[#A67C52] font-semibold underline">Malraux/MH</Link> (rénovation patrimoniale).
                     </p>
               </div>
                 )}
@@ -1368,7 +1412,7 @@ export default function FiscalitePage() {
                 {openQuestion === 1 && (
                   <div className="p-4 sm:p-6 pt-0 bg-white">
                     <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                      En combinant dispositifs légaux, <span className="text-[#8B5CF6] font-semibold">diversification</span> des placements et accompagnement par un conseiller agréé.
+                      En combinant dispositifs légaux, <span className="text-[#253F60] font-semibold">diversification</span> des placements et accompagnement par un conseiller agréé.
                     </p>
             </div>
                 )}
@@ -1395,7 +1439,7 @@ export default function FiscalitePage() {
                 {openQuestion === 2 && (
                   <div className="p-4 sm:p-6 pt-0 bg-white">
                     <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                      Pour bénéficier d'une <span className="text-[#8B5CF6] font-semibold">approche globale</span> (fiscalité, placements, retraite, transmission) intégrée dans une stratégie cohérente et évolutive.
+                      Pour bénéficier d'une <span className="text-[#253F60] font-semibold">approche globale</span> (fiscalité, placements, retraite, transmission) intégrée dans une stratégie cohérente et évolutive.
                     </p>
                   </div>
                 )}
