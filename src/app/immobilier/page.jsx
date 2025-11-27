@@ -41,155 +41,6 @@ if (typeof window !== 'undefined') {
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 }
 
-// Composants SVG pour les pictos (style contour brun sur fond dégradé)
-const IconWrapper = ({ children, size = 24 }) => (
-  <div className={`w-${size} h-${size} bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md`}>
-    {children}
-  </div>
-);
-
-const PercentIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 5L5 19M9 7C9 8.10457 8.10457 9 7 9C5.89543 9 5 8.10457 5 7C5 5.89543 5.89543 5 7 5C8.10457 5 9 5.89543 9 7ZM19 17C19 18.1046 18.1046 19 17 19C15.8954 19 15 18.1046 15 17C15 15.8954 15.8954 15 17 15C18.1046 15 19 15.8954 19 17Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const LightningIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const MoneyIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 8V16M9 12H15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const ShieldIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const KeyIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M21 2L19 4M7 20L5 22M15 8L17 6M19 4L17 6M19 4L21 6M17 6L15 8M13 10C11.8954 10 11 10.8954 11 12C11 13.1046 11.8954 14 13 14C14.1046 14 15 13.1046 15 12C15 10.8954 14.1046 10 13 10Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const BuildingIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3 21H21M5 21V7L12 3L19 7V21M9 9V13M15 9V13M9 17V21M15 17V21" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const ChartUpIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3 17L9 11L13 15L21 7M21 7H15M21 7V13" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const DoveIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C8 2 5 5 5 9C5 13 8 16 12 16C16 16 19 13 19 9C19 5 16 2 12 2Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M12 16V22M8 20L12 22L16 20" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const ChartDownIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3 7L9 13L13 9L21 17M21 17H15M21 17V11" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const HouseIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3 12L5 10M5 10L12 3L19 10M5 10V20C5 20.5523 5.44772 21 6 21H9M19 10L21 12M19 10V20C19 20.5523 18.5523 21 18 21H15M9 21C9.55228 21 10 20.5523 10 20V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V20C14 20.5523 14.4477 21 15 21M9 21H15" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const CompassIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" stroke="#8B4513" strokeWidth="2"/>
-    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const SearchIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="11" cy="11" r="8" stroke="#8B4513" strokeWidth="2"/>
-    <path d="M21 21L16.65 16.65" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const LightbulbIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9 21H15M12 3C8.68629 3 6 5.68629 6 9C6 11.2091 7.79086 13 10 13H14C16.2091 13 18 11.2091 18 9C18 5.68629 15.3137 3 12 3Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M12 13V17" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const DocumentIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14 2H6C5.44772 2 5 2.44772 5 3V21C5 21.5523 5.44772 22 6 22H18C18.5523 22 19 21.5523 19 21V8L14 2Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M14 2V8H19" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const ChartBarIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3 3V21H21M7 16L11 12L15 16L21 10M21 10H17M21 10V14" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const BookIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M6.5 2H20V20H6.5C5.83696 20 5.20107 19.7366 4.73223 19.2678C4.26339 18.7989 4 18.163 4 17.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const CalculatorIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="2" width="16" height="20" rx="2" stroke="#8B4513" strokeWidth="2"/>
-    <path d="M8 6H16M8 10H16M8 14H12M8 18H12" stroke="#8B4513" strokeWidth="2" strokeLinecap="round"/>
-  </svg>
-);
-
-const BrainIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C8 2 6 5 6 9C6 11 7 13 9 14C9 16 10 18 12 18C14 18 15 16 15 14C17 13 18 11 18 9C18 5 16 2 12 2Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M9 14C9 16 10 18 12 18C14 18 15 16 15 14" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const DiamondIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 3H18L22 9L12 21L2 9L6 3Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const LeafIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M11 20C7.13401 20 4 16.866 4 13C4 9.13401 7.13401 6 11 6C14.866 6 18 9.13401 18 13C18 16.866 14.866 20 11 20Z" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M11 6C11 3 13 2 15 2C17 2 19 3 19 6" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const HandshakeIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M11 12H9C8.44772 12 8 12.4477 8 13V15C8 15.5523 8.44772 16 9 16H11M11 12H13C13.5523 12 14 12.4477 14 13V15C14 15.5523 13.5523 16 13 16H11M11 12V8C11 7.44772 11.4477 7 12 7H13C13.5523 7 14 7.44772 14 8V12" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M7 12V8C7 7.44772 7.44772 7 8 7H9C9.55228 7 10 7.44772 10 8V12" stroke="#8B4513" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const FlowerIcon = ({ size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="3" stroke="#8B4513" strokeWidth="2"/>
-    <path d="M12 2V6M12 18V22M2 12H6M18 12H22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M4.93 19.07L7.76 16.24M16.24 7.76L19.07 4.93" stroke="#8B4513" strokeWidth="2" strokeLinecap="round"/>
-  </svg>
-);
 
 export default function ImmobilierPage() {
   const [content, setContent] = useState({});
@@ -232,10 +83,10 @@ export default function ImmobilierPage() {
           services: {
             servicesTitle: "Nos Services Immobilier",
             servicesList: [
-              { name: "Investissement Locatif", description: "Générez des revenus réguliers", icon: "🏠" },
-              { name: "Défiscalisation", description: "Réduisez vos impôts légalement", icon: "💰" },
-              { name: "Conseil en Acquisition", description: "Trouvez le bien idéal", icon: "🔍" },
-              { name: "Gestion Locative", description: "Gérez vos biens sans contraintes", icon: "📋" }
+              { name: "Investissement Locatif", description: "Générez des revenus réguliers", icon: "" },
+              { name: "Défiscalisation", description: "Réduisez vos impôts légalement", icon: "" },
+              { name: "Conseil en Acquisition", description: "Trouvez le bien idéal", icon: "" },
+              { name: "Gestion Locative", description: "Gérez vos biens sans contraintes", icon: "" }
             ]
           },
           advantages: {
@@ -540,9 +391,6 @@ export default function ImmobilierPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
               <div className="bg-[#F9FAFB] rounded-lg p-6 border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-start gap-4">
-                  <IconWrapper size={12}>
-                    <PercentIcon size={20} />
-                  </IconWrapper>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
                       Rendement locatif brut moyen
@@ -556,9 +404,6 @@ export default function ImmobilierPage() {
 
               <div className="bg-[#F9FAFB] rounded-lg p-6 border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-start gap-4">
-                  <IconWrapper size={12}>
-                    <LightningIcon size={20} />
-                  </IconWrapper>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
                       Effet de levier du crédit immobilier
@@ -572,9 +417,6 @@ export default function ImmobilierPage() {
 
               <div className="bg-[#F9FAFB] rounded-lg p-6 border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-start gap-4">
-                  <IconWrapper size={12}>
-                    <MoneyIcon size={20} />
-                  </IconWrapper>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
                       Fiscalité avantageuse
@@ -588,9 +430,6 @@ export default function ImmobilierPage() {
 
               <div className="bg-[#F9FAFB] rounded-lg p-6 border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-start gap-4">
-                  <IconWrapper size={12}>
-                    <ShieldIcon size={20} />
-                  </IconWrapper>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
                       Protection et transmission
@@ -621,7 +460,7 @@ export default function ImmobilierPage() {
           {/* CTA Formulaire Tally */}
           <div className="text-center mt-12">
             <p className="text-xl sm:text-2xl font-cairo font-semibold text-[#253F60] mb-6">
-              📈 Découvrez quelle stratégie immobilière correspond à votre profil
+              Découvrez quelle stratégie immobilière correspond à votre profil
             </p>
             <button 
               onClick={() => {
@@ -661,7 +500,6 @@ export default function ImmobilierPage() {
               <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md">
-                    <KeyIcon size={24} />
                   </div>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
@@ -677,7 +515,6 @@ export default function ImmobilierPage() {
               <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md">
-                    <BuildingIcon size={24} />
                   </div>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
@@ -693,7 +530,6 @@ export default function ImmobilierPage() {
               <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md">
-                    <ChartUpIcon size={24} />
                   </div>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
@@ -709,7 +545,6 @@ export default function ImmobilierPage() {
               <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md">
-                    <ShieldIcon size={24} />
                   </div>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
@@ -753,7 +588,7 @@ export default function ImmobilierPage() {
             {/* Graphique comparatif Chart.js */}
             <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg mt-10">
               <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-6 text-center">
-                📊 Rendement moyen des SCPI vs immobilier locatif direct
+                Rendement moyen des SCPI vs immobilier locatif direct
               </h3>
               <div className="h-80 sm:h-96">
                 <ChartBar
@@ -866,7 +701,7 @@ export default function ImmobilierPage() {
               </div>
               <div className="mt-6 bg-gradient-to-r from-[#F9FAFB] to-white rounded-lg p-4 border-l-4 border-[#B99066]">
                 <p className="text-sm font-inter text-[#374151] leading-relaxed">
-                  💡 <strong className="text-[#253F60] font-semibold">Note Azalée</strong> : Les rendements varient selon le type de SCPI, la localisation du bien locatif et la fiscalité appliquée. L'effet de levier du crédit peut significativement améliorer la rentabilité de l'immobilier direct.
+                  <strong className="text-[#253F60] font-semibold">Note Azalée</strong> : Les rendements varient selon le type de SCPI, la localisation du bien locatif et la fiscalité appliquée. L'effet de levier du crédit peut significativement améliorer la rentabilité de l'immobilier direct.
                 </p>
               </div>
             </div>
@@ -980,7 +815,7 @@ export default function ImmobilierPage() {
             {/* Astuce Azalée */}
             <div className="mt-10 bg-gradient-to-r from-[#F9FAFB] to-white rounded-xl p-8 border-l-4 border-[#B99066] shadow-md">
               <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-4">
-                💡 Astuce Azalée
+                Astuce Azalée
               </h3>
               <p className="text-lg font-inter text-[#374151] leading-relaxed">
                 Pensez à comparer les rendements <strong className="text-[#253F60] font-semibold">"ajustés du risque"</strong> : la SCPI offre une <strong className="text-[#253F60] font-semibold">meilleure stabilité de revenu</strong> que l'immobilier direct.
@@ -1273,7 +1108,6 @@ export default function ImmobilierPage() {
               <div className="bg-white rounded-xl p-6 sm:p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center">
-                    <ChartDownIcon size={20} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
@@ -1290,7 +1124,6 @@ export default function ImmobilierPage() {
               <div className="bg-white rounded-xl p-6 sm:p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center">
-                    <ChartUpIcon size={20} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
@@ -1307,7 +1140,6 @@ export default function ImmobilierPage() {
               <div className="bg-white rounded-xl p-6 sm:p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center">
-                    <HouseIcon size={20} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
@@ -1324,7 +1156,6 @@ export default function ImmobilierPage() {
               <div className="bg-white rounded-xl p-6 sm:p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center">
-                    <CompassIcon size={20} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
@@ -1458,7 +1289,7 @@ export default function ImmobilierPage() {
             {/* Zone pour infographie */}
             <div className="mt-10 bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB] rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg">
               <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-6 text-center">
-                📊 Infographie comparative SCPI / OPCI / REITs
+                Infographie comparative SCPI / OPCI / REITs
               </h3>
               
               {/* Données pour les graphiques */}
@@ -1752,7 +1583,6 @@ export default function ImmobilierPage() {
               {/* Guide SCPI 2025 */}
               <div className="bg-gradient-to-br from-white to-[#F9FAFB] rounded-xl p-6 sm:p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl hover:border-[#B99066] transition-all duration-300 text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
-                  <BookIcon size={24} />
                 </div>
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                   Guide SCPI 2025
@@ -1774,7 +1604,6 @@ export default function ImmobilierPage() {
               {/* Simulateur de rentabilité */}
               <div className="bg-gradient-to-br from-white to-[#F9FAFB] rounded-xl p-6 sm:p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl hover:border-[#B99066] transition-all duration-300 text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
-                  <CalculatorIcon size={24} />
                 </div>
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                   Simulateur de rentabilité immobilière
@@ -1796,7 +1625,6 @@ export default function ImmobilierPage() {
               {/* Quiz */}
               <div className="bg-gradient-to-br from-white to-[#F9FAFB] rounded-xl p-6 sm:p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl hover:border-[#B99066] transition-all duration-300 text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
-                  <BrainIcon size={24} />
                 </div>
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                   Quiz personnalisé
@@ -1865,7 +1693,7 @@ export default function ImmobilierPage() {
                 {/* Sélecteur de type de bien */}
                 <div>
                   <label className="block text-sm font-inter font-semibold text-[#253F60] mb-2">
-                    🏠 Type de bien
+                    Type de bien
                   </label>
                   <select
                     value={propertyType}
@@ -1914,7 +1742,7 @@ export default function ImmobilierPage() {
             {selectedCity && marketData && (
               <div className="bg-white rounded-xl p-6 sm:p-8 shadow-lg border-2 border-[#E5E7EB] mb-8">
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-6 text-center">
-                  📈 Évolution des prix au m² sur 12 mois - {selectedCity}
+                  Évolution des prix au m² sur 12 mois - {selectedCity}
                 </h3>
                 <div className="h-64 sm:h-80">
                   <Line
@@ -2039,7 +1867,7 @@ export default function ImmobilierPage() {
             {!selectedCity && (
               <div className="bg-white rounded-xl p-6 sm:p-8 shadow-lg border-2 border-[#E5E7EB] mb-8">
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-6 text-center">
-                  📈 Graphique et carte interactive
+                  Graphique et carte interactive
                 </h3>
                 <div className="h-64 sm:h-80 bg-gradient-to-br from-white to-[#F9FAFB] rounded-lg flex items-center justify-center border-2 border-dashed border-[#D1D5DB]">
                   <p className="text-[#6B7280] font-inter text-center">
@@ -2127,7 +1955,6 @@ export default function ImmobilierPage() {
                   <div className="relative h-48 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                     <div className="absolute inset-0 bg-[url('/images/construction-building.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                     <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                      <FlowerIcon size={20} />
                     </div>
                   </div>
                   <div className="p-6">
@@ -2155,7 +1982,6 @@ export default function ImmobilierPage() {
                   <div className="relative h-48 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                     <div className="absolute inset-0 bg-[url('/images/apartment-keys.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                     <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                      <FlowerIcon size={20} />
                     </div>
                   </div>
                   <div className="p-6">
@@ -2183,7 +2009,6 @@ export default function ImmobilierPage() {
                   <div className="relative h-48 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                     <div className="absolute inset-0 bg-[url('/images/family-house.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                     <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                      <FlowerIcon size={20} />
                     </div>
                   </div>
                   <div className="p-6">
@@ -2232,7 +2057,6 @@ export default function ImmobilierPage() {
                 {/* Étape 1 */}
                 <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                    <SearchIcon size={20} />
                   </div>
                   <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
                     1
@@ -2248,7 +2072,6 @@ export default function ImmobilierPage() {
                 {/* Étape 2 */}
                 <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                    <LightbulbIcon size={20} />
                   </div>
                   <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
                     2
@@ -2264,7 +2087,6 @@ export default function ImmobilierPage() {
                 {/* Étape 3 */}
                 <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                    <span className="text-white text-2xl">🏢</span>
                   </div>
                   <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
                     3
@@ -2280,7 +2102,6 @@ export default function ImmobilierPage() {
                 {/* Étape 4 */}
                 <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                    <DocumentIcon size={20} />
                   </div>
                   <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
                     4
@@ -2296,7 +2117,6 @@ export default function ImmobilierPage() {
                 {/* Étape 5 */}
                 <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                    <ChartBarIcon size={20} />
                   </div>
                   <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
                     5
@@ -2314,7 +2134,7 @@ export default function ImmobilierPage() {
             {/* Message différenciant */}
             <div className="mt-12 bg-gradient-to-r from-[#253F60] to-[#2d4a6b] rounded-xl p-8 text-white shadow-xl">
               <h3 className="text-xl sm:text-2xl font-cairo font-bold mb-4 text-center">
-                🔍 La différence Azalée
+                La différence Azalée
               </h3>
               <p className="text-lg sm:text-xl font-inter leading-relaxed text-center">
                 Une vision d'ensemble qui marie <strong className="text-[#B99066] font-semibold">finance, fiscalité et sérénité</strong>.
@@ -2416,7 +2236,6 @@ export default function ImmobilierPage() {
                 <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                   <div className="absolute inset-0 bg-[url('/images/construction-site.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                   <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                    <FlowerIcon size={16} />
                   </div>
                 </div>
                 <div className="p-6">
@@ -2440,7 +2259,6 @@ export default function ImmobilierPage() {
                 <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                   <div className="absolute inset-0 bg-[url('/images/modern-apartment.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                   <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                    <FlowerIcon size={16} />
                   </div>
                 </div>
                 <div className="p-6">
@@ -2464,7 +2282,6 @@ export default function ImmobilierPage() {
                 <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                   <div className="absolute inset-0 bg-[url('/images/notary-signing.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                   <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                    <FlowerIcon size={16} />
                   </div>
                 </div>
                 <div className="p-6">
@@ -2488,7 +2305,6 @@ export default function ImmobilierPage() {
                 <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                   <div className="absolute inset-0 bg-[url('/images/mortgage-documents.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                   <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                    <FlowerIcon size={16} />
                   </div>
                 </div>
                 <div className="p-6">
@@ -2512,7 +2328,6 @@ export default function ImmobilierPage() {
                 <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                   <div className="absolute inset-0 bg-[url('/images/paris-building-facade.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                   <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                    <FlowerIcon size={16} />
                   </div>
                 </div>
                 <div className="p-6">
@@ -2566,7 +2381,6 @@ export default function ImmobilierPage() {
 
               <div className="bg-gradient-to-r from-[#F9FAFB] to-white rounded-xl p-6 border-l-4 border-[#B99066] shadow-md">
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl">🧮</span>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
                       Simulez votre rendement locatif
@@ -2580,7 +2394,6 @@ export default function ImmobilierPage() {
 
               <div className="bg-gradient-to-r from-[#F9FAFB] to-white rounded-xl p-6 border-l-4 border-[#B99066] shadow-md">
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl">🧠</span>
                   <div>
                     <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-2">
                       Faites le test
@@ -2632,7 +2445,6 @@ export default function ImmobilierPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <DiamondIcon size={24} />
                 </div>
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                   Indépendance
@@ -2656,7 +2468,6 @@ export default function ImmobilierPage() {
 
               <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <span className="text-[#253F60] text-3xl">🤝</span>
                 </div>
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                   Accompagnement humain

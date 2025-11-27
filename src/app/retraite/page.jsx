@@ -126,9 +126,14 @@ export default function RetraitePage() {
       {/* Hero Section - Pilier Retraite */}
       <section className="relative w-full min-h-[650px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-20 sm:py-24 lg:py-32">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 gap-8 lg:gap-10">
             {/* Carte gauche */}
-            <div className="bg-white rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 border border-gray-100 hover:shadow-3xl transition-shadow duration-300">
+            <div className="bg-white rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 border border-gray-100 hover:shadow-3xl transition-shadow duration-300 max-w-4xl mx-auto">
+              <div className="mb-6">
+                <h2 className="text-[#253F60] text-lg sm:text-xl font-cairo font-bold uppercase mb-2">
+                  <span className="underline decoration-wavy decoration-[#B99066]">PILLIER</span> RETRAITE
+                </h2>
+              </div>
               <h1 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight mb-8 tracking-tight">
                 Préparer sa retraite sereinement avec Azalée Patrimoine
               </h1>
@@ -136,7 +141,7 @@ export default function RetraitePage() {
                 Anticiper sa retraite, c'est protéger son niveau de vie futur tout en optimisant la gestion de son patrimoine. Dans un contexte de réformes successives et d'allongement des carrières, bien préparer sa retraite ne relève plus du confort, mais d'une véritable stratégie patrimoniale.
               </p>
               <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8">
-                Chez Azalée Patrimoine, nous accompagnons nos clients — salariés, dirigeants, indépendants ou professions libérales — pour qu'ils puissent transformer leur épargne en revenus durables, tout en bénéficiant d'une optimisation fiscale et d'une vision globale de leur patrimoine.
+                Chez <strong className="font-semibold">Azalée Patrimoine</strong>, nous accompagnons nos clients — salariés, dirigeants, indépendants ou professions libérales — pour qu'ils puissent <strong className="font-semibold">transformer leur épargne en revenus durables</strong>, tout en bénéficiant d'une <strong className="font-semibold">optimisation fiscale</strong> et d'une <strong className="font-semibold">vision globale</strong> de leur patrimoine.
               </p>
               <a
                 href="https://calendly.com/rdv-azalee-patrimoine/30min"
@@ -148,46 +153,6 @@ export default function RetraitePage() {
               </a>
             </div>
             
-            {/* Carte droite */}
-            <div className="relative bg-white rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 border border-gray-100 hover:shadow-3xl transition-shadow duration-300">
-              {/* Badge circulaire */}
-              <div className="absolute -top-8 -right-8 w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 bg-gradient-to-r from-[#B99066] to-[#253F60] rounded-full shadow-lg flex flex-col items-center justify-center text-center z-10">
-                <div className="text-white font-source-sans font-semibold text-xs sm:text-sm lg:text-base leading-tight px-2">
-                  <span className="block">Votre 1er</span>
-                  <span className="block mt-1">Diagnostique</span>
-                  <span className="block mt-1 font-bold">offert</span>
-                </div>
-              </div>
-              
-              <h2 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 pr-16">
-                Azalée Patrimoine vous accompagne
-              </h2>
-              <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-6">
-                Dans une vision globale de la retraite :
-              </p>
-              <ul className="space-y-3 text-[#4B5563] text-base font-inter">
-                <li className="flex items-start gap-3">
-                  <span className="text-[#B99066] mt-1">•</span>
-                  <span>Épargne retraite (PER, PERCO, PEE…)</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[#B99066] mt-1">•</span>
-                  <span>Optimisation via le rachat de trimestres</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[#B99066] mt-1">•</span>
-                  <span>Simulations personnalisées pour anticiper ses revenus futurs</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[#B99066] mt-1">•</span>
-                  <span>Mise en place de solutions de prévoyance et de protection familiale</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[#B99066] mt-1">•</span>
-                  <span>Diversification avec d'autres solutions retraite</span>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </section>
@@ -203,37 +168,23 @@ export default function RetraitePage() {
           <div className="mb-16">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
               <div className="lg:col-span-2">
-                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6">
-                  L'évolution du système de retraite français
-                </h3>
-                <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                  Le système français, historiquement fondé sur la répartition, fait face à des défis majeurs : vieillissement de la population, déséquilibre entre actifs et retraités, et allongement de la durée de cotisation. La réforme de 2023, repoussant l'âge légal à 64 ans, n'a fait qu'accentuer le besoin d'anticipation. L'État assure un socle minimal ; à chacun désormais de bâtir ses revenus complémentaires.
-                </p>
+                <div className="border-2 border-black rounded-lg p-6 mb-6">
+                  <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-4">
+                    L'évolution du système de retraite français
+                  </h3>
+                  <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+                    Le système français, historiquement fondé sur la répartition, fait face à des défis majeurs : vieillissement de la population, déséquilibre entre actifs et retraités, et allongement de la durée de cotisation. La réforme de 2023, repoussant l'âge légal à 64 ans, n'a fait qu'accentuer le besoin d'anticipation. L'État assure un socle minimal ; à chacun désormais de <strong>bâtir ses revenus complémentaires</strong>.
+                  </p>
+                </div>
               </div>
               
-              {/* Carte statistique améliorée */}
+              {/* Carte statistique rotée */}
               <div className="lg:col-span-1 flex justify-center lg:justify-end">
-                <div className="relative w-56 h-72 sm:w-64 sm:h-80 group">
-                  {/* Carte principale droite */}
-                  <div className="relative w-full h-full bg-gradient-to-br from-[#253F60] via-[#1a2d47] to-[#253F60] rounded-2xl shadow-2xl p-8 flex flex-col items-center justify-center transition-all duration-500 overflow-hidden">
-                    {/* Effet de brillance animé */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    {/* Éléments décoratifs */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#B99066]/10 rounded-full blur-2xl"></div>
-                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#B99066]/10 rounded-full blur-xl"></div>
-                    
-                    {/* Contenu */}
-                    <div className="relative z-10 text-white text-center space-y-4">
-                      {/* Icône décorative */}
-                      <div className="flex justify-center mb-2">
-                        <div className="w-12 h-12 bg-[#B99066]/20 rounded-full flex items-center justify-center">
-                          <svg className="w-6 h-6 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-        </div>
-      </div>
-                      
+                <div className="relative w-72 h-56 sm:w-80 sm:h-64 group">
+                  {/* Carte principale droite - rotée */}
+                  <div className="relative w-full h-full bg-gradient-to-br from-[#253F60] via-[#1a2d47] to-[#253F60] rounded-2xl shadow-2xl p-8 flex flex-col items-center justify-center transition-all duration-500 overflow-hidden transform rotate-90 origin-center">
+                    {/* Contenu roté */}
+                    <div className="relative z-10 text-white text-center space-y-4 transform -rotate-90">
                       {/* Texte principal */}
                       <div className="space-y-2">
                         <p className="font-inter text-xs sm:text-sm text-white/90 leading-relaxed">
@@ -254,12 +205,12 @@ export default function RetraitePage() {
                       <p className="font-inter text-xs sm:text-sm italic text-white/80 leading-relaxed">
                         N'attendez pas qu'il soit trop tard
                       </p>
-        </div>
+                    </div>
                     
                     {/* Bordure décorative au survol */}
                     <div className="absolute inset-0 rounded-2xl border-2 border-[#B99066]/0 group-hover:border-[#B99066]/30 transition-all duration-500"></div>
-        </div>
-        
+                  </div>
+                  
                   {/* Ombre portée améliorée */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#253F60]/20 to-transparent rounded-2xl blur-xl -z-10 transform translate-y-4 group-hover:translate-y-6 transition-transform duration-500"></div>
                 </div>
@@ -272,15 +223,12 @@ export default function RetraitePage() {
                 href="https://calendly.com/rdv-azalee-patrimoine/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative bg-gradient-to-r from-[#B99066] to-[#A67C52] hover:from-[#A67C52] hover:to-[#B99066] text-white px-10 py-5 rounded-xl shadow-2xl font-cairo font-bold text-base sm:text-lg transition-all duration-300 transform hover:-translate-y-2 hover:shadow-3xl uppercase overflow-hidden"
+                className="group relative bg-gradient-to-r from-[#B99066] to-[#A67C52] hover:from-[#A67C52] hover:to-[#B99066] text-white px-10 py-5 rounded-xl shadow-2xl font-cairo font-bold text-base sm:text-lg transition-all duration-300 transform hover:-translate-y-2 hover:shadow-3xl uppercase overflow-hidden w-full lg:w-auto"
               >
                 {/* Effet de brillance au survol */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                <span className="relative flex items-center gap-3">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                  Simuler votre pension retraite
+                <span className="relative flex items-center justify-center gap-3">
+                  SIMULER VOTRE PENSION RETRAITE
                 </span>
               </a>
             </div>
@@ -981,52 +929,6 @@ export default function RetraitePage() {
               </div>
             </div>
 
-            {/* Liens internes SEO */}
-            <div className="mt-8 pt-8 border-t border-[#E5E7EB]">
-              <h3 className="text-[#253F60] text-lg font-cairo font-bold mb-4 flex items-center gap-2">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
-                </svg>
-                Liens internes SEO
-                </h3>
-              <ul className="flex flex-wrap gap-4 text-sm font-inter">
-                <li>
-                  <Link href="/placements/assurance-vie" className="text-[#B99066] hover:text-[#D4A574] transition-colors">
-                    /placements/assurance-vie
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/placements/per" className="text-[#B99066] hover:text-[#D4A574] transition-colors">
-                    /placements/per
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/placements/scpi" className="text-[#B99066] hover:text-[#D4A574] transition-colors">
-                    /placements/scpi
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/placements/produits-structures" className="text-[#B99066] hover:text-[#D4A574] transition-colors underline decoration-wavy">
-                    /placements/produits-structures
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/fiscalite" className="text-[#B99066] hover:text-[#D4A574] transition-colors underline decoration-wavy">
-                    /fiscalite
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/strategie-patrimoniale" className="text-[#B99066] hover:text-[#D4A574] transition-colors underline decoration-wavy">
-                    /strategie-patrimoniale
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-[#B99066] hover:text-[#D4A574] transition-colors">
-                    /contact
-                  </Link>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </section>
@@ -1966,18 +1868,6 @@ export default function RetraitePage() {
               </div>
             </div>
 
-            {/* Maillage interne */}
-            <div className="mt-8 pt-8 border-t border-[#E5E7EB]">
-              <h3 className="text-[#253F60] text-lg font-cairo font-bold mb-4">
-                Maillage interne (à intégrer sur le site)
-              </h3>
-              <Link href="/fiscalite/per" className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-inter underline">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
-                </svg>
-                Fiscalité du patrimoine – Déduction et optimisation du PER
-              </Link>
-            </div>
           </div>
         </div>
       </section>
