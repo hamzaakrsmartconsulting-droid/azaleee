@@ -1,246 +1,134 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
+import Link from "next/link";
 import Header from "../../components/common/Header";
+import Footer from "../../components/common/Footer";
 
 export default function PlacementsPage() {
-  const [content, setContent] = useState({});
-  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(true);
-  const [contentSource, setContentSource] = useState('default');
-
-  // Default content structure
-  const defaultContent = {
-    hero: {
-      title: "Placements Financiers – Optimisez votre épargne avec Azalée Patrimoine",
-      description: "Votre partenaire de confiance en gestion de patrimoine depuis plus de 30 ans. Nous vous accompagnons pour diversifier vos placements, optimiser vos rendements, et construire un portefeuille d'investissements adapté à vos objectifs et votre profil de risque.",
-      ctaText: "Demander une étude patrimoniale gratuite",
-      image: "/images/placement.webp"
-    },
-    essentiel: {
-      title: "L'essentiel",
-      content: "Le bilan patrimonial a pour vocation d'apporter une vision claire de votre situation financière et de vos objectifs à moyen et long terme.\n\nGrâce à cette analyse, vous identifiez les leviers pertinents pour :\n• Faire grandir votre patrimoine\n• Protéger vos proches\n• Optimiser durablement votre fiscalité",
-      image: "/images/placements-responsive-content-image-94979.png"
-    },
-    definition: {
-      title: "Gestion de patrimoine : Définition",
-      content: "Le patrimoine peut inclure différents types d'actifs, notamment :\n• Biens immobiliers\n• Placements financiers\n• Participations professionnelles\n• Actifs mobiliers\n• Droits d'usufruit\n• Propriétés intellectuelles\n• Droits à la retraite et rentes"
-    },
-    services: {
-      title: "Nos Services de Placement",
-      services: [
-        { name: "Assurance Vie", description: "Placement sécurisé avec avantages fiscaux" },
-        { name: "Compte Titres", description: "Investissement en actions et obligations" },
-        { name: "PEA/PER", description: "Épargne retraite avec avantages fiscaux" },
-        { name: "SCPI/OPCI", description: "Investissement immobilier indirect" },
-        { name: "ETF", description: "Fonds négociés en bourse" },
-        { name: "Livrets", description: "Placements sécurisés et liquides" }
-      ]
-    },
-    advantages: {
-      title: "Pourquoi choisir Azalée Patrimoine ?",
-      advantages: [
-        { title: "Expertise", description: "30 ans d'expérience en gestion patrimoniale" },
-        { title: "Personnalisation", description: "Solutions adaptées à votre profil" },
-        { title: "Transparence", description: "Conseils clairs et indépendants" },
-        { title: "Suivi", description: "Accompagnement personnalisé" }
-      ]
-    },
-    cta: {
-      title: "Prêt à optimiser vos placements ?",
-      description: "Contactez nos experts pour une analyse personnalisée de votre situation patrimoniale et découvrez les meilleures opportunités d'investissement.",
-      buttonText: "Demander une consultation gratuite"
-    }
-  };
-
-  // Load content from CMS database
-  const loadContentFromCMS = async () => {
-    try {
-      console.log('Placements - Loading content from CMS database...');
-      const response = await fetch('/api/pages/placements');
-      
-      if (response.ok) {
-        const cmsContent = await response.json();
-        console.log('Placements - CMS content loaded:', cmsContent);
-        console.log('Placements - Number of CMS sections:', Object.keys(cmsContent).length);
-        
-        if (Object.keys(cmsContent).length > 0) {
-          // Database has content - merge it with default content
-          console.log('Placements - Database sections found:', Object.keys(cmsContent));
-          console.log('Placements - Database content details:', cmsContent);
-          
-          const mergedContent = { ...defaultContent };
-          
-          // Merge each CMS section with default content
-          Object.keys(cmsContent).forEach(sectionKey => {
-            if (mergedContent[sectionKey]) {
-              mergedContent[sectionKey] = {
-                ...mergedContent[sectionKey],
-                ...cmsContent[sectionKey]
-              };
-            } else {
-              mergedContent[sectionKey] = cmsContent[sectionKey];
-            }
-          });
-          
-          console.log('Placements - Using database content merged with default');
-          console.log('Placements - Merged content keys:', Object.keys(mergedContent));
-          
-          setContent(mergedContent);
-          setContentSource('database');
-        } else {
-          // No database content - use default
-          console.log('Placements - No database content found, using default content');
-          setContent(defaultContent);
-          setContentSource('default');
-        }
-      } else {
-        console.log('Placements - CMS API error, using default content');
-        setContent(defaultContent);
-        setContentSource('default');
-      }
-    } catch (error) {
-      console.error('Placements - Error loading CMS content:', error);
-      console.log('Placements - Falling back to default content');
-      setContent(defaultContent);
-      setContentSource('default');
-    } finally {
-      setIsLoadingFromDatabase(false);
-    }
-  };
-
+  // Smooth scroll for anchor links
   useEffect(() => {
-    // Always set default content first to prevent empty state
-    setContent(defaultContent);
-    setContentSource('default');
-    
-    // Then load from database and merge
-    loadContentFromCMS();
-    
-    // Listen for content update events
-    const handleContentUpdate = async () => {
-      console.log('Placements - Content update event received - reloading from CMS');
-      await loadContentFromCMS();
+    const handleAnchorClick = (e) => {
+      const href = e.currentTarget.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
     };
 
-    // Use polling for real-time updates
-    let pollingInterval = null;
-    
-    const startPolling = () => {
-      console.log('Placements - Starting polling for content updates');
-      
-      pollingInterval = setInterval(async () => {
-        try {
-          // Check if page is visible before polling
-          if (document.visibilityState === 'visible') {
-            console.log('Placements - Polling for updates...');
-            await loadContentFromCMS();
-          }
-        } catch (error) {
-          console.error('Placements - Polling error:', error);
-        }
-      }, 3000); // Poll every 3 seconds for faster updates
-    };
-    
-    // Start polling after initial load is complete
-    setTimeout(() => {
-      if (!isLoadingFromDatabase) {
-        startPolling();
-      }
-    }, 2000);
-    
-    // Also keep the old event listeners as backup
-    window.addEventListener('contentUpdated', handleContentUpdate);
-    
-    // Listen for localStorage changes (cross-tab communication)
-    const handleStorageChange = (e) => {
-      if (e.key === 'cms_content_updated') {
-        console.log('Placements - localStorage change detected - reloading content');
-        loadContentFromCMS();
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
+      link.addEventListener('click', handleAnchorClick);
+    });
+
     return () => {
-      if (pollingInterval) {
-        clearInterval(pollingInterval);
-      }
-      window.removeEventListener('contentUpdated', handleContentUpdate);
-      window.removeEventListener('storage', handleStorageChange);
+      anchorLinks.forEach(link => {
+        link.removeEventListener('click', handleAnchorClick);
+      });
     };
   }, []);
+  // Content structure - ready for your new content
+  const content = {
+    hero: {
+      h1: "Construire son patrimoine",
+      introText: "Construire son patrimoine, c'est bien plus qu'investir. C'est donner du sens à son argent, structurer ses actifs avec méthode et préparer l'avenir de sa famille. Chez Azalée Patrimoine, nous vous accompagnons à chaque étape, en alliant performance, fiscalité optimisée et indépendance de conseil.",
+      question: "Que souhaitez-vous faire ?",
+      objectives: [
+        "Faire fructifier votre épargne",
+        "Financer un projet",
+        "Optimiser ma transmission",
+        "Revenus complémentaires",
+        "Réduire ma fiscalité",
+        "Préparer la retraite"
+      ]
+    },
+    section1: {
+      h2: "Comprendre les placements patrimoniaux",
+      introText: "Avant de parler de produits, parlons de stratégie. La réussite patrimoniale repose d'abord sur la bonne compréhension des outils disponibles et de leur articulation. Nous distinguons deux notions essentielles : les enveloppes et les supports d'investissement.",
+      linkText: "Liens vers Section 8 : Les enveloppes - les Supports"
+    },
+    section2: {
+      h2: "Les placements sans risques sont-ils vraiment les meilleurs placements ?",
+      h3_inflation: {
+        title: "Quel rôle joue l'inflation dans le choix d'un placement ?",
+        content: "Les placements dits \"sans risque\", comme le Livret A, le LDDS ou les fonds euros, rassurent parce qu'ils garantissent le capital. Pourtant, leur rendement est souvent inférieur à l'inflation, ce qui signifie que votre argent perd de la valeur avec le temps.",
+        inflation_explanation: "L'inflation, c'est l'augmentation générale des prix. Autrement dit, avec le même euro, vous pouvez acheter moins de choses qu'avant.",
+        example: "Exemple : si une baguette coûtait 1 € il y a cinq ans et qu'elle coûte aujourd'hui 1,20 €, votre pouvoir d'achat a diminué de 20 %.",
+        conclusion: "Ainsi, un placement \"sans risque\" peut cacher un risque invisible : celui de l'érosion du pouvoir d'achat.",
+        strategy: "Pour faire fructifier votre épargne, l'objectif n'est pas d'éviter le risque, mais de le maîtriser intelligemment.",
+        balanced_strategy: "Une stratégie équilibrée doit combiner liquidité, sécurité et rendement, selon votre horizon de placement et votre profil investisseur.",
+        tip: "Astuce Azalée Patrimoine : conservez vos placements garantis pour votre épargne de précaution, et explorez des solutions plus performantes pour vos projets à moyen et long terme."
+      },
+      h3_risk_zero: {
+        title: "Pourquoi le risque zéro n'existe pas en matière de placement ?",
+        content: "Même un placement dit \"sûr\" comporte un risque : celui de ne pas atteindre vos objectifs financiers.",
+        graph_explanation: "Le graphique ci-dessous illustre sept scénarios de rendement sur cinq ans : plus le rendement moyen augmente, plus la volatilité (les fluctuations à court terme) est forte.",
+        compromise: "Ce compromis entre risque et performance est au cœur de toute stratégie d'investissement.",
+        azalee_help: "Chez Azalée Patrimoine, nous vous aidons à déterminer le niveau de risque optimal pour que votre argent travaille sans compromettre votre sérénité."
+      },
+      h3_test: {
+        title: "Testez vos connaissances et découvrez votre profil investisseur",
+        content: "Avant d'investir, il est essentiel de comprendre votre relation au risque et votre niveau de connaissance financière.",
+        help_list: [
+          "votre taux de tolérance au risque",
+          "vos objectifs patrimoniaux",
+          "et les placements adaptés à votre horizon de temps."
+        ],
+        ctas: [
+          { text: "Évaluer mes connaissances financières", link: "#" },
+          { text: "Découvrir mon profil investisseur avec un conseiller Azalée", link: "https://calendly.com/contact-azalee-patrimoine" }
+        ]
+      }
+    }
+  };
 
   return (
     <>
-      {/* Loading indicator */}
-      {isLoadingFromDatabase && (
-        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
-          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
-          Loading Placements from Database...
-        </div>
-      )}
-      
-      {/* Content source indicator */}
-      {!isLoadingFromDatabase && (
-        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
-          <div className="w-2 h-2 bg-white rounded-full"></div>
-          Content: {contentSource === 'database' ? 'CMS Database' : 'Default'}
-        </div>
-      )}
-
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full min-h-[543px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-16 sm:py-20 lg:py-24">
+      <section className="relative w-full bg-[#253F60] lg:bg-gradient-to-r lg:from-[#253F60] lg:to-[#B99066] py-12 sm:py-16 lg:py-20">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-            {/* Left Content */}
-            <div className="w-full lg:w-[733px] bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
-              {/* Main Title */}
-              <h1 className="text-black text-xs sm:text-2xl lg:text-4xl font-cairo font-semibold leading-tight mb-6 sm:mb-8 text-center lg:text-left">
-                {content.hero?.title || defaultContent.hero.title}
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            {/* Left Column: H1 and Intro Text */}
+            <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-6">
+              {/* H1 */}
+              <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-cairo font-bold leading-tight">
+                {content.hero?.h1 || "Construire son patrimoine"}
               </h1>
               
-              {/* Description */}
-              <p className="text-[#374151] text-xs sm:text-base lg:text-lg font-inter leading-relaxed mb-8 sm:mb-10 text-center lg:text-left">
-                {content.hero?.description || defaultContent.hero.description}
+              {/* Introductory Text */}
+              <p className="text-white/90 text-base sm:text-lg lg:text-xl font-inter leading-relaxed max-w-2xl">
+                {content.hero?.introText || "Construire son patrimoine, c'est bien plus qu'investir. C'est donner du sens à son argent, structurer ses actifs avec méthode et préparer l'avenir de sa famille. Chez Azalée Patrimoine, nous vous accompagnons à chaque étape, en alliant performance, fiscalité optimisée et indépendance de conseil."}
               </p>
-              
-              {/* CTA Button */}
-              <div className="flex justify-center lg:justify-start">
-                <button className="bg-[#B99066] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg font-inter font-medium text-xs sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                  lien manquant
-                </button>
+            </div>
+
+            {/* Right Column: Question Bubble and Objectives Grid */}
+            <div className="lg:col-span-5 flex flex-col justify-center space-y-6 sm:space-y-8">
+              {/* Or Azalée Question Bubble */}
+              <div className="flex justify-center lg:justify-end">
+                <div className="bg-[#B99066] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-full shadow-xl font-inter font-semibold text-base sm:text-lg lg:text-xl whitespace-nowrap">
+                  {content.hero?.question || "Que souhaitez-vous faire ?"}
               </div>
             </div>
             
-            {/* Right Image */}
-            <div className="w-full lg:w-[467px] flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Decorative background */}
-                <div className="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-[#B99066]/20 to-[#4EBBBD]/20 rounded-2xl"></div>
-                
-                {/* Main image */}
-                <img
-                  src={content.hero?.image || defaultContent.hero.image}
-                  alt="Expert en placements financiers consultant des graphiques et analyses de marché"
-                  className="relative z-10 w-full max-w-md lg:max-w-lg rounded-2xl shadow-2xl object-cover border-4 border-white"
-                  style={{ aspectRatio: '4/3' }}
-                  onError={(e) => {
-                    console.log('Placement card image failed to load:', e.target.src);
-                  }}
-                  onLoad={() => console.log('Placement card image loaded successfully')}
-                />
-                
-                {/* Floating badge */}
-                <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-[#4EBBBD] to-[#59E2E4] rounded-full flex items-center justify-center">
-                      <span className="text-white text-lg">✓</span>
-                    </div>
-                    <div>
-                      <p className="text-[#112033] font-semibold text-sm">0 €</p>
-                      <p className="text-[#4A5568] text-xs">Analyse gratuite</p>
-                    </div>
-                  </div>
+              {/* Objectives Grid with Azalée colors */}
+              <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl border-2 border-white/30">
+                <div className="grid grid-cols-2 gap-4 sm:gap-5">
+                  {(content.hero?.objectives || []).map((objective, index) => (
+                    <button
+                      key={index}
+                      className="bg-white rounded-xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-left hover:scale-105 border-2 border-transparent hover:border-[#B99066] group"
+                    >
+                      <p className="text-[#253F60] text-sm sm:text-base lg:text-lg font-inter font-semibold leading-tight group-hover:text-[#B99066] transition-colors duration-300">
+                        {objective}
+                      </p>
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -248,923 +136,1564 @@ export default function PlacementsPage() {
         </div>
       </section>
 
-      {/* Content Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+      {/* Section 1: Comprendre les placements patrimoniaux */}
+      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
-          <div className="mb-4 sm:mb-6 lg:mb-8">
-            <nav className="flex items-center text-xs sm:text-sm lg:text-base">
-              <a href="#" className="text-[#005C69] font-source-sans font-semibold hover:underline">
-                Accueil
-              </a>
-              <span className="text-[#686868] mx-2">{'>'}</span>
-              <span className="text-[#4EBBBD] font-source-sans font-semibold">
-                Solutions de placement
-              </span>
-            </nav>
+          {/* H2 Title */}
+          <div className="mb-12 sm:mb-16">
+            <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-8 sm:mb-12 text-center tracking-tight">
+              {content.section1?.h2 || "Comprendre les placements patrimoniaux"}
+            </h2>
           </div>
 
-          {/* L'essentiel Block */}
-          <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 lg:p-10 mb-8 sm:mb-12 relative">
-            {/* Left Vertical Bar - Mobile/Tablet */}
-            <div className="absolute left-2 sm:left-4 lg:hidden top-0 bottom-0 w-1 bg-[#B99066]"></div>
-            
-            <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 lg:gap-8">
-              {/* Left: Image */}
-              <div className="w-full lg:w-[96px] flex-shrink-0 flex justify-center lg:justify-start">
-                <img
-                  src={content.essentiel?.image || defaultContent.essentiel.image}
-                  alt="L'essentiel"
-                  className="w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24 rounded-lg"
-                />
+          {/* Introductory Text */}
+          <div className="max-w-5xl mx-auto mb-12 sm:mb-16">
+            <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed text-center">
+              {content.section1?.introText || "Avant de parler de produits, parlons de stratégie. La réussite patrimoniale repose d'abord sur la bonne compréhension des outils disponibles et de leur articulation. Nous distinguons deux notions essentielles : les enveloppes et les supports d'investissement."}
+            </p>
               </div>
               
-              {/* Right: Content */}
-              <div className="flex-1">
-                {/* Title */}
-                <h2 className="text-[#B99066] text-xs sm:text-sm lg:text-4xl font-source-sans font-semibold leading-tight mb-2 sm:mb-3 lg:mb-8">
-                  {content.essentiel?.title || defaultContent.essentiel.title}
-                </h2>
+          {/* Key Concepts Boxes */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
+            {/* ENVELOPPES Box */}
+            <Link href="#section8" className="group relative block">
+              <div className="bg-gradient-to-br from-[#253F60] via-[#1e3a5a] to-[#253F60] rounded-2xl p-8 sm:p-10 lg:p-12 shadow-xl border-2 border-[#253F60] hover:border-[#B99066] hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                {/* Decorative corner accent */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#B99066]/30 to-transparent rounded-bl-full"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-[#B99066]/30 to-transparent rounded-tr-full"></div>
                 
                 {/* Content */}
-                <div className="text-black text-xs sm:text-sm lg:text-lg font-source-sans font-semibold leading-relaxed">
-                  <div dangerouslySetInnerHTML={{ 
-                    __html: (content.essentiel?.content || defaultContent.essentiel.content).replace(/\n/g, '<br />') 
-                  }} />
+                <div className="relative z-10">
+                  <h3 className="text-[#B99066] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold uppercase text-center mb-4 group-hover:text-[#D4A574] transition-colors duration-300">
+                    ENVELOPPES
+                  </h3>
+                  <div className="flex justify-center mt-6">
+                    <div className="w-16 h-1 bg-gradient-to-r from-[#B99066] to-[#D4A574] rounded-full"></div>
                 </div>
               </div>
             </div>
-          </div>
+            </Link>
 
-          {/* Wealth Management Definition */}
-          <div className="mb-6 sm:mb-8 lg:mb-12">
-            <h3 className="text-black text-xs sm:text-lg lg:text-4xl font-source-sans font-normal leading-tight mb-3 sm:mb-4 lg:mb-8">
-              {content.definition?.title || defaultContent.definition.title}
+            {/* Supports d'investissement Box */}
+            <Link href="#section8" className="group relative block">
+              <div className="bg-gradient-to-br from-[#253F60] via-[#1e3a5a] to-[#253F60] rounded-2xl p-8 sm:p-10 lg:p-12 shadow-xl border-2 border-[#253F60] hover:border-[#B99066] hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                {/* Decorative corner accent */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#B99066]/30 to-transparent rounded-bl-full"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-[#B99066]/30 to-transparent rounded-tr-full"></div>
+                
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-[#B99066] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold uppercase text-center mb-4 group-hover:text-[#D4A574] transition-colors duration-300">
+                    Supports d'investissement
             </h3>
-            <div className="text-black text-xs sm:text-sm lg:text-lg font-source-sans leading-relaxed">
-              <div dangerouslySetInnerHTML={{ 
-                __html: (content.definition?.content || defaultContent.definition.content).replace(/\n/g, '<br />') 
-              }} />
+                  <div className="flex justify-center mt-6">
+                    <div className="w-16 h-1 bg-gradient-to-r from-[#B99066] to-[#D4A574] rounded-full"></div>
             </div>
           </div>
-
-          {/* Bottom Content */}
-          <div className="text-[#686868] text-xs sm:text-sm lg:text-lg font-source-sans leading-relaxed">
-            <div dangerouslySetInnerHTML={{ 
-              __html: (content.essentiel?.content || defaultContent.essentiel.content).replace(/\n/g, '<br />') 
-            }} />
-          </div>
-        </div>
-      </section>
-
-      {/* Assets Types Section */}
-      <section className="w-full bg-white py-6 sm:py-8 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-12 items-start">
-            {/* Left: Image */}
-            <div className="w-full lg:w-[338px] flex-shrink-0 flex justify-center lg:justify-start">
-              <img
-                src="/images/placements-responsive-assets-types-image-95080.png"
-                alt="Types d'actifs patrimoniaux"
-                className="w-40 h-40 sm:w-48 sm:h-48 lg:w-full lg:h-auto rounded-lg shadow-lg"
-              />
-            </div>
-            
-            {/* Right: Content */}
-            <div className="flex-1">
-              <div className="text-black text-xs sm:text-sm lg:text-2xl font-source-sans leading-relaxed">
-                <div dangerouslySetInnerHTML={{ 
-                  __html: (content.definition?.content || defaultContent.definition.content).replace(/\n/g, '<br />') 
-                }} />
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      {content.services && (
-        <section className="w-full bg-gray-50 py-8 sm:py-12 lg:py-16">
-          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-8 sm:mb-12 text-center">
-              {content.services.title || defaultContent.services.title}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {(content.services.services || defaultContent.services.services).map((service, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-                  <h4 className="text-[#005C69] text-lg font-semibold mb-3">{service.name}</h4>
-                  <p className="text-gray-600 text-sm">{service.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* CTA Section */}
-      {content.cta && (
-        <section className="w-full bg-[#005C69] py-8 sm:py-12 lg:py-16">
-          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h3 className="text-white text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-4">
-              {content.cta.title || defaultContent.cta.title}
-            </h3>
-            <p className="text-gray-200 text-base sm:text-lg mb-8 max-w-3xl mx-auto">
-              {content.cta.description || defaultContent.cta.description}
-            </p>
-            <button className="bg-[#B99066] text-white px-8 py-4 rounded-lg shadow-lg font-semibold text-lg hover:bg-[#A67A5A] transition-colors duration-200">
-              lien manquant
-            </button>
-          </div>
-        </section>
-      )}
-
-      {/* Wealth Management Advisor Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16 relative">
-        {/* Left Vertical Bar */}
-        <div className="absolute left-0 top-0 w-1 h-full bg-[#B99066] opacity-50"></div>
-        
+      {/* Section 2: Les placements sans risques */}
+      <section className="w-full bg-gradient-to-b from-white to-gray-50 py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Title */}
-          <div className="mb-8 sm:mb-12">
-            <h4 className="text-[#005C69] text-2xl sm:text-3xl lg:text-4xl font-source-sans font-normal leading-tight">
-              Pourquoi s'entourer d'un conseiller en gestion de patrimoine ?
-            </h4>
-          </div>
-          
-          {/* Content */}
-          <div className="text-black text-base sm:text-lg lg:text-xl font-source-sans leading-relaxed">
-            <p className="mb-6">
-              Le conseiller en gestion de patrimoine est votre allié pour structurer, développer et sécuriser votre patrimoine.
-            </p>
-            <p className="mb-6">
-              Son rôle commence par une analyse complète de votre situation financière — le bilan patrimonial — pour dresser l'inventaire de vos actifs existants.
-            </p>
-            <p className="mb-6">
-              À partir de ce diagnostic, il définit avec vous une stratégie d'investissement alignée sur vos objectifs : accroître vos revenus, préparer votre retraite, protéger vos proches ou anticiper votre transmission.
-            </p>
-            <p className="mb-6">
-              Au-delà du simple conseil, le gestionnaire de patrimoine vous accompagne dans le suivi de vos placements, l'optimisation fiscale et l'adaptation de votre stratégie aux évolutions de votre situation ou de la réglementation.
-            </p>
-            <p>
-              Un partenaire de confiance, pour un accompagnement global et durable.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Wealth Assessment Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16 relative">
-        {/* Left Vertical Bar */}
-        <div className="absolute left-0 top-0 w-1 h-full bg-[#B99066] opacity-50"></div>
-        
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Title */}
-          <div className="mb-8 sm:mb-12">
-            <h3 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight">
-              Réalisez un bilan complet de votre situation patrimoniale
-            </h3>
-          </div>
-          
-          {/* Introduction */}
+          {/* H2 Title */}
           <div className="mb-12 sm:mb-16">
-            <p className="text-[#686868] text-base sm:text-lg lg:text-xl font-source-sans leading-relaxed">
-              Pour vous conseiller efficacement, votre conseiller en gestion de patrimoine (CGP) commence par établir un état précis de votre patrimoine.
-            </p>
-          </div>
-          
-          {/* Three Steps Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-12 sm:mb-16">
-            {/* Step 1: L'inventaire */}
-            <div className="text-center">
-              <h4 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-source-sans font-semibold uppercase leading-tight mb-4 sm:mb-6">
-                L'inventaire
-              </h4>
-              <p className="text-[#686868] text-sm sm:text-base lg:text-lg font-source-sans leading-relaxed">
-                Recensement détaillé de vos actifs : immobilier, placements financiers, épargne, mais aussi de vos revenus, dettes et charges futures. Cette étape constitue la base de toute stratégie patrimoniale solide.
-              </p>
+            <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-8 sm:mb-12 text-center tracking-tight">
+              {content.section2?.h2 || "Les placements sans risques sont-ils vraiment les meilleurs placements ?"}
+            </h2>
             </div>
             
-            {/* Step 2: Le diagnostic */}
-            <div className="text-center">
-              <h4 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-source-sans font-semibold uppercase leading-tight mb-4 sm:mb-6">
-                Le diagnostic
-              </h4>
-              <p className="text-[#686868] text-sm sm:text-base lg:text-lg font-source-sans leading-relaxed">
-                Analyse complète de votre situation financière et patrimoniale. Cette évaluation permet de définir votre profil d'investisseur et d'identifier les axes d'optimisation possibles.
-              </p>
-            </div>
-            
-            {/* Step 3: Le plan d'action */}
-            <div className="text-center">
-              <h4 className="text-[#005C69] text-lg sm:text-xl lg:text-2xl font-source-sans font-semibold uppercase leading-tight mb-4 sm:mb-6">
-                Le plan d'action
-              </h4>
-              <p className="text-[#686868] text-sm sm:text-base lg:text-lg font-source-sans leading-relaxed">
-                Mise en place d'une stratégie personnalisée d'investissement, ajustée à votre profil, vos objectifs et les conclusions du diagnostic. Votre conseiller vous oriente vers les placements les mieux adaptés.
-              </p>
-            </div>
-          </div>
-          
-          {/* CTA Button */}
-          <div className="flex justify-center">
-            <button className="bg-gradient-to-r from-[#B99066] to-[#B99066] text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg shadow-lg font-source-sans font-semibold text-base sm:text-lg lg:text-xl hover:bg-[#A67A5A] transition-colors duration-200">
-              Prendre rendez-vous
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Wealth Building Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16 relative">
-        {/* Left Vertical Bar */}
-        <div className="absolute left-0 top-0 w-1 h-full bg-[#B99066] opacity-50"></div>
-        
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-black text-lg sm:text-xl lg:text-2xl font-source-sans leading-relaxed">
-            <h3 className="text-black text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-6 sm:mb-8">
-              Construire et valoriser son patrimoine
+          {/* H3 - Inflation */}
+          <div className="mb-12 sm:mb-16">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 sm:mb-8">
+              {content.section2?.h3_inflation?.title || "Quel rôle joue l'inflation dans le choix d'un placement ?"}
             </h3>
             
-            <p className="mb-6">
-              Assurer votre avenir financier passe par une gestion active et réfléchie de votre patrimoine. Qu'il s'agisse d'investissements immobiliers, de placements financiers ou d'autres actifs, bâtir un patrimoine solide vous permet de générer des revenus complémentaires et d'améliorer votre qualité de vie, tout en sécurisant l'avenir de vos proches.
-            </p>
-            
-            <p className="mb-6">
-              Nos conseillers vous aident à comprendre les différentes composantes de votre patrimoine :
-            </p>
-            
-            <ul className="space-y-2 sm:space-y-3 ml-4">
-              <li>• Investissements immobiliers ou financiers</li>
-              <li>• Patrimoine professionnel</li>
-              <li>• Biens mobiliers</li>
-              <li>• Usufruit et démembrement de propriété</li>
-              <li>• Propriétés intellectuelles</li>
-              <li>• Droits à la retraite ou rentes viagères</li>
-            </ul>
+            <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              <p>{content.section2?.h3_inflation?.content}</p>
+              
+              {/* Inflation Explanation Box */}
+              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
+                <p className="font-semibold text-[#253F60] mb-2">💬 {content.section2?.h3_inflation?.inflation_explanation}</p>
+              </div>
+              
+              {/* Example Box */}
+              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#253F60] shadow-md hover:shadow-lg transition-shadow duration-300">
+                <p className="font-semibold text-[#253F60] mb-2">🥖 {content.section2?.h3_inflation?.example}</p>
+            </div>
+              
+              <p className="font-semibold text-[#253F60]">{content.section2?.h3_inflation?.conclusion}</p>
+              <p>{content.section2?.h3_inflation?.strategy}</p>
+              <p>{content.section2?.h3_inflation?.balanced_strategy}</p>
+              
+              {/* Tip Box */}
+              <div className="bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-50 border-l-4 border-[#B99066] p-8 rounded-xl shadow-lg">
+                <p className="font-semibold text-[#253F60]">💡 {content.section2?.h3_inflation?.tip}</p>
           </div>
         </div>
-      </section>
+          </div>
 
-      {/* Bon à savoir Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+          {/* H3 - Risk Zero */}
+          <div className="mb-12 sm:mb-16">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 sm:mb-8">
+              {content.section2?.h3_risk_zero?.title || "Pourquoi le risque zéro n'existe pas en matière de placement ?"}
+            </h3>
+            
+            <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              <p>{content.section2?.h3_risk_zero?.content}</p>
+              <p>{content.section2?.h3_risk_zero?.graph_explanation}</p>
+              <p className="font-semibold text-[#253F60]">{content.section2?.h3_risk_zero?.compromise}</p>
+              <p>{content.section2?.h3_risk_zero?.azalee_help}</p>
+                </div>
+          </div>
+
+          {/* H3 - Test */}
+          <div className="mb-12 sm:mb-16">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 sm:mb-8">
+              {content.section2?.h3_test?.title || "Testez vos connaissances et découvrez votre profil investisseur"}
+            </h3>
+            
+            <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              <p>{content.section2?.h3_test?.content}</p>
+              
+              <p className="font-semibold text-[#253F60]">Nos conseillers vous accompagnent pour identifier :</p>
+              <ul className="list-none space-y-4 ml-2">
+                {(content.section2?.h3_test?.help_list || []).map((item, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <span className="text-[#B99066] font-bold mt-1">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                {(content.section2?.h3_test?.ctas || []).map((cta, index) => (
+                  <a
+                    key={index}
+                    href={cta.link}
+                    target={cta.link.startsWith('http') ? '_blank' : '_self'}
+                    rel={cta.link.startsWith('http') ? 'noopener noreferrer' : ''}
+                    className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5"
+                  >
+                    {cta.text}
+                  </a>
+                ))}
+              </div>
+            </div>
+            </div>
+          </div>
+        </section>
+
+      {/* Section 3: Private equity */}
+      <section className="w-full bg-white py-16 sm:py-20 lg:py-24" id="section3">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-black text-base sm:text-lg lg:text-xl font-inter leading-relaxed">
-            <h4 className="text-black text-lg sm:text-xl lg:text-2xl font-inter font-semibold leading-tight mb-4 sm:mb-6">
-              Bon à savoir
-            </h4>
-            
-            <p className="mb-6">
-              Prendre conseil auprès de nos experts en gestion de patrimoine, c'est faire un pas décisif pour sécuriser votre avenir et celui de vos proches. Développer son patrimoine, c'est non seulement se garantir des revenus futurs, mais aussi offrir une véritable protection financière à sa famille.
+          {/* Intro */}
+          <div className="max-w-5xl mx-auto mb-12 sm:mb-16">
+            <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed text-center">
+              Parmi les placements les plus évoqués en 2025, le private equity — ou capital-investissement — attire de plus en plus d'épargnants en quête de sens et de performance.
             </p>
-            
-            <p className="mb-6">
-              Savoir que vos enfants disposeront toujours d'un logement, ou que votre conjoint sera à l'abri du besoin en cas d'imprévu, procure une véritable sérénité face à l'avenir.
+            <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed text-center mt-4">
+              Après les placements dits "sans risques", ce type d'investissement promet une diversification vers l'économie réelle, avec des rendements potentiels bien supérieurs à ceux des marchés traditionnels.
             </p>
+            <p className="text-[#253F60] text-lg sm:text-xl font-inter leading-relaxed text-center mt-4 font-bold">
+              Mais attention : plus le potentiel est élevé, plus la compréhension et l'accompagnement sont indispensables.
+            </p>
+          </div>
+
+          {/* H2 */}
+          <div className="mb-12 sm:mb-16">
+            <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-8 sm:mb-12 text-center tracking-tight">
+              Private equity : effet de mode ou réelle opportunité ?
+            </h2>
+          </div>
+          
+          <div className="max-w-5xl mx-auto space-y-8 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+            <p>
+              Le private equity séduit de plus en plus d'épargnants attirés par des rendements élevés et des histoires d'entreprises inspirantes.
+            </p>
+            <p>
+              Mais derrière cette tendance, il est essentiel de rappeler une vérité : investir dans le non coté n'est pas anodin.
+            </p>
+            <p>
+              Chaque projet est unique, et la réussite des uns ne garantit en rien celle des autres.
+            </p>
+            <p>
+              En tant qu'ancien banquier, nous savons à quel point les entreprises peuvent être exposées à des risques d'endettement, de marché ou de gestion que le grand public mesure rarement dans leur globalité.
+            </p>
+            <p className="font-semibold text-[#253F60]">
+              Le private equity reste un univers réservé aux investisseurs capables d'en comprendre les rouages financiers, les horizons longs et les risques structurels.
+            </p>
+
+            {/* Azalée Quote */}
+            <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
+              <p className="font-semibold text-[#253F60] mb-2">💬 Chez Azalée Patrimoine, nous ne cédons pas à l'effet de mode : nous privilégions la compréhension avant l'action.</p>
+              <p className="mt-2">Un bon investissement n'est pas celui que tout le monde fait, mais celui que vous comprenez vraiment.</p>
+            </div>
             
+            <p>
+              Nous étudions avec attention les projets qui tiennent à cœur à nos clients.
+            </p>
+            <p>
+              Notre rôle est d'en analyser la structure financière, le niveau de risque, la durée d'immobilisation et les perspectives de sortie.
+            </p>
+            <p>
+              Nous mettons en lumière les avantages (diversification, potentiel de rendement, fiscalité avantageuse) autant que les inconvénients (illiquidité, risque de perte totale, complexité des valorisations).
+            </p>
+            <p className="font-semibold text-[#253F60]">
+              Le private equity peut être une opportunité réelle pour un patrimoine bien construit, mais il doit s'intégrer dans une stratégie globale et raisonnée.
+            </p>
+            <p className="font-bold text-[#253F60] text-xl">
+              Comprendre avant d'investir, c'est déjà protéger son capital.
+            </p>
+          </div>
+
+          {/* H3 - 4 questions */}
+          <div className="mt-12 sm:mt-16 max-w-5xl mx-auto">
+            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-8 text-center">
+              Les 4 questions à se poser avant d'investir dans le private equity
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Question 1 */}
+              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
+                <h4 className="text-[#253F60] font-bold text-lg mb-4">🟢 1. Est-ce que je comprends réellement le modèle économique de l'entreprise ?</h4>
+                <p className="text-[#4B5563]">Avant tout, il faut savoir comment l'entreprise gagne de l'argent, quels sont ses leviers de croissance et quels risques elle affronte.</p>
+                <p className="mt-2 font-semibold text-[#253F60]">Si vous ne pouvez pas expliquer son activité simplement, mieux vaut attendre avant d'investir.</p>
+        </div>
+
+              {/* Question 2 */}
+              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
+                <h4 className="text-[#253F60] font-bold text-lg mb-4">🟡 2. Puis-je immobiliser mon argent plusieurs années ?</h4>
+                <p className="text-[#4B5563]">Le private equity implique souvent une durée d'investissement longue (5 à 10 ans) sans possibilité de revente.</p>
+                <p className="mt-2 font-semibold text-[#253F60]">Il ne doit donc jamais concerner votre épargne de précaution.</p>
+              </div>
+
+              {/* Question 3 */}
+              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
+                <h4 className="text-[#253F60] font-bold text-lg mb-4">🔵 3. Suis-je conscient du risque de perte en capital ?</h4>
+                <p className="text-[#4B5563]">Investir dans le non coté, c'est accepter la possibilité de perdre tout ou partie du capital.</p>
+                <p className="mt-2 font-semibold text-[#253F60]">Ce risque doit être compensé par une diversification de vos placements.</p>
+          </div>
+          
+              {/* Question 4 */}
+              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
+                <h4 className="text-[#253F60] font-bold text-lg mb-4">🟣 4. Ai-je un conseil objectif pour m'accompagner ?</h4>
+                <p className="text-[#4B5563]">Les intermédiaires en private equity ne sont pas tous indépendants.</p>
+                <p className="mt-2 font-semibold text-[#253F60]">Chez Azalée Patrimoine, nous analysons les projets sans parti pris commercial, en nous concentrant sur votre intérêt patrimonial.</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Encadré pédagogique */}
+          <div className="mt-12 sm:mt-16 max-w-5xl mx-auto">
+            <div className="bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-2xl p-10 text-white shadow-2xl">
+              <h3 className="text-2xl sm:text-3xl font-cairo font-bold mb-6">💡 À retenir :</h3>
+              <p className="text-xl sm:text-2xl leading-relaxed font-light mb-4">
+                Le private equity n'est ni un effet de mode, ni une solution miracle.
+              </p>
+              <p className="text-xl sm:text-2xl leading-relaxed font-light mb-4">
+                C'est un investissement de conviction, réservé à ceux qui prennent le temps de comprendre ce dans quoi ils s'engagent.
+              </p>
+            <p className="text-lg font-semibold">
+              🔍 Azalée Patrimoine vous accompagne pour analyser la solidité des projets, mesurer le risque et bâtir une stratégie d'investissement cohérente avec vos objectifs.
+              </p>
+            </div>
+            </div>
+            
+          {/* CTAs */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Échanger sur un projet de private equity
+            </a>
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#B99066] hover:bg-[#A67A5A] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Comprendre les risques avant d'investir
+            </a>
+            </div>
+            
+          {/* Conclusion */}
+          <div className="mt-12 space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+            <p>
+              Chaque investissement a son rôle, ses avantages et ses risques.
+            </p>
+            <p>
+              Ce qui compte, ce n'est pas de suivre une tendance, mais de bâtir une stratégie cohérente avec votre profil, vos projets et votre horizon de vie.
+            </p>
+            <p>
+              Chez Azalée Patrimoine, nous réalisons un diagnostic patrimonial complet pour identifier les forces et les zones d'amélioration de votre portefeuille.
+            </p>
             <p className="font-semibold">
-              ➔ Évaluez dès maintenant si votre patrimoine est adapté à votre situation et à votre âge.
+              L'objectif : vous aider à faire les bons choix d'investissement, en toute transparence et avec une vision à long terme.
             </p>
+            
+            <div className="bg-gradient-to-r from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#B99066] mt-6">
+              <p className="font-semibold text-[#253F60]">💬 Notre approche : comprendre avant d'agir, conseiller avant de placer.</p>
+            </div>
+          </div>
+          
+          {/* CTAs finaux */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Réaliser mon diagnostic patrimonial gratuit
+            </a>
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#B99066] hover:bg-[#A67A5A] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Prendre rendez-vous avec un conseiller Azalée
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Comprehensive Wealth Management Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
+      {/* Section 4: SCPI */}
+      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Main Content */}
-          <div className="text-black text-base sm:text-lg lg:text-xl font-inter leading-relaxed mb-8 sm:mb-12">
-            <h3 className="text-black text-xl sm:text-2xl lg:text-3xl font-inter font-semibold leading-tight mb-6 sm:mb-8">
-              Un accompagnement sur-mesure pour développer votre patrimoine
+          {/* H2 */}
+          <div className="mb-8 sm:mb-12">
+            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight">
+              Peut-on enfin réinvestir en SCPI ou faut-il encore craindre une baisse des valorisations ?
+            </h2>
+          </div>
+
+          <div className="space-y-6 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-12">
+            <p>
+              Les SCPI (Sociétés Civiles de Placement Immobilier) ont traversé une période mouvementée depuis 2022, marquée par la hausse brutale des taux d'intérêt et une revalorisation à la baisse de nombreuses parts.
+            </p>
+            <p>
+              Mais faut-il pour autant s'en détourner ? Pas forcément. Comprendre le lien entre taux, immobilier et valorisation permet de replacer les choses dans leur contexte.
+            </p>
+          </div>
+              
+          {/* H3 - Taux et immobilier */}
+          <div className="mb-12">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6">
+              Quand les taux montent, la valeur de l'immobilier baisse : pourquoi ?
             </h3>
             
-            <p className="mb-6">
-              Avec votre conseiller Azalee Wealth, différentes stratégies peuvent être étudiées pour bâtir un patrimoine solide et pérenne.
-            </p>
-            
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              <p>Le lien de cause à effet est simple :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>Lorsque les taux d'intérêt augmentent, les crédits immobiliers coûtent plus cher.</li>
+                <li>Les acheteurs (particuliers ou institutionnels) peuvent donc emprunter moins, ce qui réduit la demande.</li>
+                <li>Or, moins de demande = baisse mécanique des prix pour rétablir l'équilibre du marché.</li>
+            </ul>
               <p>
-                ➔ L'investissement immobilier reste une solution sûre et durable pour faire croître votre patrimoine et générer des revenus complémentaires.
+                Dans le cas des SCPI, dont la valeur dépend des expertises immobilières, cette correction des prix se traduit par une réévaluation à la baisse des parts.
+              </p>
+            <p className="font-semibold">
+                Certaines SCPI ont ainsi enregistré entre -5 % et -15 % de baisse depuis 2022, selon leur exposition (bureaux, commerces, logistique…).
+            </p>
+          </div>
+        </div>
+
+          {/* H3 - Réglementation */}
+          <div className="mb-12">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6">
+              L'impact de la réglementation sur les valorisations depuis 2022
+            </h3>
+            
+            <div className="space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              <p>
+                Depuis 2022, la réglementation de l'Autorité des Marchés Financiers (AMF) impose davantage de transparence et de réalisme dans l'évaluation des SCPI.
+              </p>
+              <p className="font-semibold">Les sociétés de gestion doivent désormais :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>se baser sur des valeurs d'expertise actualisées au moins une fois par an ;</li>
+                <li>ajuster la valeur de retrait des parts si elle s'écarte trop de la valeur réelle du patrimoine ;</li>
+                <li>et communiquer un rendement global (ou rendement interne) plutôt qu'un simple taux de distribution, jugé parfois trompeur.</li>
+              </ul>
+              <div className="bg-gradient-to-r from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#B99066] mt-4">
+                <p className="font-semibold text-[#253F60]">👉 Résultat : les baisses de 2023–2024 ne traduisent pas une crise du marché, mais une mise à niveau comptable et réglementaire.</p>
+                <p className="mt-2">Elles visent à rétablir la cohérence entre les prix affichés et la réalité économique.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* H3 - Revente gré à gré */}
+          <div className="mb-12">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6">
+              Revente de gré à gré : une solution alternative en période d'illiquidité
+            </h3>
+            
+            <div className="space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              <p>
+                Depuis 2023, de nombreux épargnants se heurtent à un ralentissement du marché secondaire des SCPI, avec des délais de vente allongés.
+              </p>
+              <p>Dans ce contexte, la vente de gré à gré revient sur le devant de la scène.</p>
+              <p>Ce mécanisme consiste à vendre directement ses parts à un autre investisseur, sans passer par le carnet d'ordres officiel de la société de gestion.</p>
+              
+              <p className="font-semibold mt-4">Elle présente plusieurs avantages :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>une plus grande flexibilité sur le prix de cession (souvent négocié à une légère décote, entre –5 % et –10 %),</li>
+                <li>une rapidité d'exécution lorsqu'un acheteur est identifié,</li>
+                <li>et une solution adaptée aux investisseurs souhaitant céder des parts anciennes ou moins liquides.</li>
+              </ul>
+              
+              <p className="mt-4">
+                Mais cette pratique suppose de bien évaluer la valeur réelle des parts et de maîtriser les aspects fiscaux et administratifs de la transaction (agrément de la société de gestion, frais, droits d'enregistrement).
               </p>
               
+              <div className="bg-gradient-to-r from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#B99066] mt-4">
+                <p className="font-semibold text-[#253F60]">💬 Chez Azalée Patrimoine, nous accompagnons nos clients dans la revente de gré à gré pour garantir la sécurité juridique et financière de l'opération, tout en optimisant le prix de cession.</p>
+          </div>
+        </div>
+          </div>
+
+          {/* H3 - Réinvestir en 2025 */}
+          <div className="mb-12">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6">
+              Faut-il revenir sur les SCPI en 2025 ?
+            </h3>
+            
+            <div className="space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
               <p>
-                ➔ Les placements financiers, quant à eux, offrent l'opportunité de faire fructifier votre capital tout en bénéficiant de leviers fiscaux avantageux.
+                Après plusieurs trimestres d'ajustement, le marché montre des signes de stabilisation.
+              </p>
+              <p>
+                Les taux semblent proches de leur pic, et certaines SCPI commencent déjà à retrouver des opportunités d'achat à prix décoté.
+              </p>
+              <p className="font-semibold">
+                C'est donc une période propice pour réinvestir avec discernement, en privilégiant :
+              </p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>les SCPI diversifiées (secteurs, zones géographiques, types d'actifs),</li>
+                <li>les SCPI à capital variable réactives,</li>
+                <li>et celles ayant anticipé la remontée des taux par une gestion prudente de la dette.</li>
+              </ul>
+            </div>
+            </div>
+            
+          {/* Encadré pédagogique */}
+          <div className="mb-12 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl p-8 text-white">
+            <h3 className="text-2xl font-bold mb-6">Comprendre le cycle SCPI</h3>
+            <div className="space-y-4 text-lg">
+              <p className="font-semibold">À retenir :</p>
+              <p>Les SCPI ne sont pas des placements à court terme.</p>
+              <p>Elles suivent un cycle immobilier de 7 à 10 ans, avec des phases d'expansion, de correction et de stabilisation.</p>
+              <div className="mt-4 space-y-2">
+                <p>📉 Quand les taux montent → les valeurs baissent.</p>
+                <p>📈 Quand les taux se stabilisent → les SCPI redeviennent attractives grâce à des rendements plus élevés sur les prix ajustés.</p>
+              </div>
+              <p className="mt-4 font-semibold">Chez Azalée Patrimoine, nous analysons les SCPI selon trois critères :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                <li>Qualité du patrimoine (localisation, taux d'occupation, solidité des locataires)</li>
+                <li>Politique de gestion (diversification, endettement, transparence)</li>
+                <li>Potentiel de revalorisation à moyen terme</li>
+              </ul>
+                </div>
+              </div>
+              
+          {/* Conclusion */}
+          <div className="mb-8">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-4">
+              Conclusion – Vers un réinvestissement raisonné
+            </h3>
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              Les SCPI ne sont pas en déclin, elles se réinventent dans un nouveau cycle économique.
+            </p>
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mt-2">
+              Réinvestir aujourd'hui, c'est profiter de prix ajustés et de rendements potentiellement plus élevés, à condition d'être accompagné par un conseiller indépendant capable de décoder le marché.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Faire le point sur mes SCPI actuelles
+            </a>
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#B99066] hover:bg-[#A67A5A] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Identifier les opportunités 2025 avec un conseiller Azalée
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 5: Assurance-vie luxembourgeoise */}
+      <section className="w-full bg-gradient-to-b from-white to-gray-50 py-16 sm:py-20 lg:py-24">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* H2 */}
+          <div className="mb-8 sm:mb-12">
+            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight">
+              Les contrats d'assurance-vie luxembourgeois : vers une démocratisation de l'exode ?
+            </h2>
+              </div>
+
+          <div className="space-y-6 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-12">
+            <p>
+              Dans un contexte politique et fiscal incertain, de plus en plus de Français s'interrogent sur l'avenir de leur patrimoine.
+            </p>
+            <p>
+              L'assurance-vie luxembourgeoise (AV Lux) attire ceux qui envisagent une expatriation, séduits par sa portabilité internationale et sa neutralité fiscale.
+            </p>
+            <p className="font-semibold">
+              Mais est-ce réellement une solution pour tous ? Ou seulement un outil réservé aux patrimoines internationaux ?
+            </p>
+          </div>
+
+          {/* H3 - Pourquoi */}
+          <div className="mb-12">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6">
+              Pourquoi l'Assurance Vie Lux peut faire sens
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-green-500">
+                <p className="font-semibold text-[#253F60] mb-2">✅ Sécurité renforcée</p>
+                <p className="text-sm">le triangle de sécurité et le super-privilège protègent mieux les souscripteurs en cas de faillite de l'assureur.</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-green-500">
+                <p className="font-semibold text-[#253F60] mb-2">✅ Portabilité et neutralité fiscale</p>
+                <p className="text-sm">idéale pour ceux qui changent de résidence fiscale.</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-green-500">
+                <p className="font-semibold text-[#253F60] mb-2">✅ Large univers d'investissement</p>
+                <p className="text-sm">supports multi-devises, fonds institutionnels, gestion sur mesure.</p>
+              </div>
+                </div>
+              </div>
+              
+          {/* H3 - Limites */}
+          <div className="mb-12">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6">
+              Les limites à connaître
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-yellow-500">
+                <p className="font-semibold text-[#253F60] mb-2">⚠️ Ticket d'entrée élevé</p>
+                <p className="text-sm">(souvent &gt; 250 000 €)</p>
+                </div>
+              <div className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-yellow-500">
+                <p className="font-semibold text-[#253F60] mb-2">⚠️ Frais plus importants</p>
+                <p className="text-sm">pour les patrimoines inférieurs à 1 M€</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-yellow-500">
+                <p className="font-semibold text-[#253F60] mb-2">⚠️ Arbitrages complexes</p>
+                <p className="text-sm">à distance en cas d'expatriation</p>
+            </div>
+              <div className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-yellow-500">
+                <p className="font-semibold text-[#253F60] mb-2">⚠️ Fonds en euros</p>
+                <p className="text-sm">peu accessibles ou moins performants</p>
+          </div>
+              <div className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-yellow-500 md:col-span-2">
+                <p className="font-semibold text-[#253F60] mb-2">⚠️ Liquidité réduite</p>
+                <p className="text-sm">et gestion sous mandat fréquente</p>
+        </div>
+              </div>
+            </div>
+            
+          {/* Le regard Azalée */}
+          <div className="mb-12 bg-gradient-to-r from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#B99066]">
+            <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Le regard Azalée :</h3>
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              Le contrat luxembourgeois est une belle invention patrimoniale — mais surtout pour les bi-nationaux, expatriés ou familles à patrimoine supérieur à 1 M€.
+            </p>
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mt-2">
+              Pour un résident français, il faut se demander si l'on ne paie pas des fonctions dont on ne profitera jamais.
+            </p>
+          </div>
+
+          {/* À retenir */}
+          <div className="mb-12 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl p-8 text-white">
+            <h3 className="text-2xl font-bold mb-6">💡 À retenir</h3>
+            <p className="text-lg mb-4">
+              L'assurance-vie luxembourgeoise est un outil stratégique si :
+            </p>
+            <ul className="list-disc list-inside space-y-2 ml-4 text-lg">
+              <li>vous préparez une expatriation,</li>
+              <li>vous disposez d'un capital important,</li>
+              <li>vous avez besoin d'une gestion sur mesure et internationale.</li>
+            </ul>
+            <p className="text-lg mt-4 font-semibold">
+              Mais elle reste peu adaptée aux épargnants français cherchant un contrat souple, réactif et rentable à moindre coût.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Évaluer la pertinence d'un contrat luxembourgeois
+            </a>
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#B99066] hover:bg-[#A67A5A] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Comparer avec un contrat français haut de gamme
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 6: Or et métaux précieux */}
+      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* H2 */}
+          <div className="mb-8 sm:mb-12">
+            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight">
+              L'or et les métaux précieux : après +50 % en 2025, est-il trop tard pour investir ?
+            </h2>
+          </div>
+
+          <div className="space-y-6 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-12">
+            <p>
+              L'année 2025 a confirmé le retour en force de l'or et des métaux précieux.
+            </p>
+            <p>
+              Entre inflation persistante, tensions géopolitiques et ralentissement économique mondial, l'or a progressé de plus de 50 % sur un an, atteignant de nouveaux sommets historiques.
+            </p>
+            <p className="font-semibold">
+              Mais cette performance spectaculaire pose une question cruciale : est-il encore temps d'acheter, ou le train est-il déjà passé ?
+            </p>
+          </div>
+
+          {/* H3 - Pourquoi l'or a flambé */}
+          <div className="mb-12">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6">
+              Pourquoi l'or a flambé en 2025
+            </h3>
+            
+            <div className="space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              <p className="font-semibold">L'or reste avant tout une valeur refuge.</p>
+              <p>Sa flambée récente s'explique par plusieurs facteurs conjoints :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li><span className="font-semibold">📈 L'inflation durable</span> : même si elle ralentit, elle continue d'éroder le pouvoir d'achat des monnaies fiduciaires.</li>
+                <li><span className="font-semibold">💸 Les politiques monétaires expansionnistes</span> : la baisse anticipée des taux d'intérêt réels a dopé l'attrait des actifs non rémunérés comme l'or.</li>
+                <li><span className="font-semibold">🌍 Les tensions géopolitiques</span> (Europe de l'Est, Asie) : elles alimentent la recherche de sécurité.</li>
+                <li><span className="font-semibold">🏦 Les achats massifs des banques centrales</span>, notamment asiatiques, qui renforcent la demande structurelle.</li>
+              </ul>
+              <p>
+                L'or a ainsi joué pleinement son rôle de bouclier contre la perte de confiance et la dépréciation monétaire.
+              </p>
+                </div>
+          </div>
+
+          {/* H3 - Trop tard ? */}
+          <div className="mb-12">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6">
+              Trop tard pour investir ? Pas forcément. Mais autrement.
+            </h3>
+            
+            <div className="space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              <p>
+                Historiquement, acheter de l'or au plus haut n'a jamais été catastrophique… à condition de savoir pourquoi on le détient.
+              </p>
+              <p className="font-semibold">
+                L'or n'est pas un placement spéculatif, c'est un outil de diversification et de préservation de valeur.
               </p>
               
+              <div className="bg-gradient-to-r from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#B99066]">
+                <p className="font-semibold text-[#253F60]">💬 En d'autres termes : on n'achète pas l'or "pour gagner", on l'achète "pour ne pas perdre".</p>
+          </div>
+
+              <p>Aujourd'hui, il serait risqué d'augmenter fortement son exposition après une telle hausse, mais il reste pertinent de :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>détenir une part stratégique (5 à 10 % du patrimoine) en or ou métaux précieux,</li>
+                <li>privilégier les supports indirects (ETF adossés, certificats, fonds matières premières) pour la liquidité,</li>
+                <li>échelonner ses achats dans le temps (DCA) plutôt que d'entrer d'un bloc.</li>
+              </ul>
+            </div>
+              </div>
+              
+          {/* H3 - Autres métaux */}
+          <div className="mb-12">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6">
+              Et les autres métaux précieux ?
+            </h3>
+            
+            <div className="space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
               <p>
-                ➔ L'assurance prévoyance complète cette approche en protégeant vos proches des aléas de la vie, tout en vous permettant d'optimiser votre fiscalité.
+                L'argent a souvent un effet de levier sur l'or, mais il reste plus volatil et dépend davantage de la demande industrielle.
+              </p>
+              <p>
+                Le platine et le palladium sont liés au secteur automobile (catalyseurs), donc plus cycliques.
+              </p>
+              <p>
+                Le cuivre, considéré comme le "métal de la transition énergétique", attire aussi les investisseurs thématiques.
+              </p>
+              <p className="font-semibold">
+                👉 Ces métaux peuvent compléter une stratégie de diversification, mais ils n'ont pas le même rôle que l'or : ce sont des actifs de croissance, pas de protection.
+                  </p>
+                </div>
+              </div>
+
+          {/* Encadré pédagogique */}
+          <div className="mb-12 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl p-8 text-white">
+            <h3 className="text-2xl font-bold mb-6">L'or dans une stratégie patrimoniale équilibrée</h3>
+            <div className="space-y-4 text-lg">
+              <p className="font-semibold">À retenir :</p>
+              <p>L'or ne rapporte rien, mais il protège en cas de crise.</p>
+              <p>Il agit comme assurance contre la perte de confiance dans les marchés financiers.</p>
+              <p>Une exposition raisonnable (5 à 10 %) suffit à réduire la volatilité d'un portefeuille.</p>
+              <p className="font-semibold mt-4">Mieux vaut acheter progressivement que spéculer sur le point d'entrée parfait.</p>
+              <p className="mt-4">Chez Azalée Patrimoine, nous intégrons l'or dans une logique d'équilibre : ni peur, ni euphorie — juste du bon sens.</p>
+            </div>
+          </div>
+
+          {/* Conclusion */}
+          <div className="mb-8">
+            <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-4">
+              Conclusion – L'or, toujours d'actualité, mais plus pour la sérénité que pour le profit
+            </h3>
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              Après +50 % de performance, l'or n'est plus une opportunité de rendement, mais reste un outil de stabilité patrimoniale.
+            </p>
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mt-2">
+              Investir aujourd'hui, c'est accepter de payer la tranquillité : la certitude que, quelle que soit la conjoncture, une partie du patrimoine reste à l'abri.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Faire le point sur ma stratégie de diversification
+            </a>
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#B99066] hover:bg-[#A67A5A] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Déterminer la part optimale d'or dans mon portefeuille
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 7: Produits structurés */}
+      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* H2 */}
+          <div className="mb-12 sm:mb-16">
+            <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-8 sm:mb-12 text-center tracking-tight">
+              Les produits structurés : pourquoi tout le monde s'accorde enfin sur ces placements ?
+            </h2>
+          </div>
+
+          <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed mb-12 text-center">
+            <p>
+              Longtemps perçus comme techniques, les produits structurés se sont imposés comme une solution d'équilibre dans les portefeuilles patrimoniaux.
+            </p>
+            <p>
+              Aujourd'hui, assureurs, brokers, conseillers et clients y trouvent chacun leur compte, un consensus rare dans l'univers de l'investissement.
+            </p>
+            <p className="font-semibold text-[#253F60]">
+              Mais pourquoi cet engouement ? Et comment expliquer que ces produits séduisent aussi bien les investisseurs prudents que les profils dynamiques ?
+            </p>
+          </div>
+
+          {/* H3 - Placement mi-chemin */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
+              Un placement à mi-chemin entre prudence et rendement
+            </h3>
+            
+            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              <p>Les produits structurés sont des instruments hybrides :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>une partie obligataire pour la protection du capital,</li>
+                <li>une partie dérivée liée à un indice ou un panier d'actions, pour capter de la performance.</li>
+              </ul>
+              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300 mt-4">
+                <p className="font-semibold text-[#253F60]">👉 Résultat : des contrats capables d'offrir un rendement cible défini à l'avance, tout en limitant les pertes grâce à des mécanismes de protection.</p>
+              </div>
+              <p>
+                C'est cette visibilité qui rassure les épargnants, surtout après les chocs boursiers récents : ils savent dans quelles conditions ils gagnent ou perdent.
+              </p>
+              </div>
+            </div>
+
+          {/* H3 - Pourquoi les assureurs */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
+              Pourquoi les assureurs aiment les produits structurés
+            </h3>
+            
+            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              <p>Pour les assureurs, ces produits répondent à un double enjeu :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>Remplacer progressivement les fonds euros (dont les rendements sont sous pression),</li>
+                <li>tout en maîtrisant leur risque global de bilan grâce à une ingénierie financière encadrée.</li>
+              </ul>
+              <p>
+                Ils permettent donc de maintenir un rendement attractif sans déséquilibrer la gestion financière du contrat d'assurance-vie.
+              </p>
+              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300 mt-4">
+                <p className="font-semibold text-[#253F60]">💬 "Les produits structurés, c'est le chaînon manquant entre le fonds euro et les marchés actions."</p>
+              </div>
+              </div>
+            </div>
+
+          {/* H3 - Pourquoi les brokers */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
+              Pourquoi les brokers et les banques les plébiscitent
+            </h3>
+            
+            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              <p>Les brokers spécialisés conçoivent aujourd'hui des structures sur mesure avec :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>des sous-jacents variés (indices, paniers sectoriels, ESG…),</li>
+                <li>des barrières de protection élevées (souvent 50 à 60 % de baisse avant perte en capital),</li>
+                <li>et une transparence accrue sur les frais et les scénarios.</li>
+              </ul>
+              <p>
+                Le marché s'est professionnalisé : les émissions sont mieux calibrées et les distributeurs mieux formés.
+              </p>
+              <p className="font-semibold text-[#253F60]">
+                Résultat : une offre lisible, standardisée et encadrée par l'AMF.
               </p>
             </div>
+          </div>
+
+          {/* H3 - Pourquoi les CGP */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
+              Pourquoi les CGP s'y retrouvent
+            </h3>
             
-            <p className="mt-6">
-              Pour faire les meilleurs choix — rentables, sécurisés et adaptés à votre profil — un bilan patrimonial personnalisé est essentiel.
-            </p>
+            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              <p>Les conseillers en gestion de patrimoine apprécient les produits structurés pour leur souplesse :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>Ils s'intègrent dans l'assurance-vie, le PER, ou un compte-titres,</li>
+                <li>Ils permettent d'adapter le profil rendement/risque au client,</li>
+                <li>Ils offrent une communication claire sur les conditions de gain et de protection.</li>
+              </ul>
+              <p>
+                En période d'incertitude, ils servent d'outil d'allocation intelligente : ni trop risqué, ni trop défensif.
+              </p>
+              <p className="font-semibold text-[#253F60]">
+                Et ils valorisent la valeur ajoutée du conseil, car leur compréhension nécessite un accompagnement professionnel.
+              </p>
+            </div>
           </div>
 
-          {/* CTA Button */}
-          <div className="flex justify-center mb-8 sm:mb-12">
-            <button className="bg-[#B99066] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg shadow-lg font-source-sans font-semibold text-sm sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-              lien manquant
-            </button>
-          </div>
-
-          {/* Tax Optimization Section */}
-          <div className="text-black text-base sm:text-lg lg:text-xl font-inter leading-relaxed mb-8 sm:mb-12">
-            <h4 className="text-black text-lg sm:text-xl lg:text-2xl font-inter font-semibold leading-tight mb-4 sm:mb-6">
-              Allégez votre fiscalité avec des solutions adaptées
-            </h4>
+          {/* H3 - Pourquoi les clients */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
+              Pourquoi les clients en redemandent
+            </h3>
             
-            <p>
-              Avec une pression fiscale parmi les plus élevées d'Europe — près de 47,5 % du PIB —, il est naturel de chercher à optimiser son imposition.
-            </p>
-          </div>
-
-          {/* Blockquote Section */}
-          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 relative">
-            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-              {/* Left: Quote Icon */}
-              <div className="w-full lg:w-[48px] flex-shrink-0">
-                <div className="w-12 h-12 bg-[#B99066] rounded-lg flex items-center justify-center">
-                  <span className="text-white text-2xl font-bold">"</span>
-                </div>
-              </div>
-              
-              {/* Right: Content */}
-              <div className="flex-1">
-                <div className="text-[#686868] text-base sm:text-lg lg:text-xl font-source-sans leading-relaxed">
-                  <h5 className="text-[#686868] text-lg sm:text-xl lg:text-2xl font-source-sans font-semibold leading-tight mb-4 sm:mb-6">
-                    Bon à savoir
-                  </h5>
-                  
-                  <p>
-                    La gestion du patrimoine des dirigeants d'entreprise nécessite une attention particulière. Leur fiscalité varie selon le statut juridique de leur société et le mode de rémunération choisi. C'est pourquoi nos experts vous conseillent sur les meilleures options pour optimiser votre fiscalité personnelle et professionnelle, tout en protégeant vos intérêts patrimoniaux.
+            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              <p className="font-semibold">Côté clients, trois éléments clés expliquent l'adhésion :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li><span className="font-semibold">Lisibilité</span> : le scénario est connu dès le départ (ex. +9 %/an si l'indice ne baisse pas de plus de 40 %).</li>
+                <li><span className="font-semibold">Protection</span> : un filet de sécurité en cas de baisse des marchés.</li>
+                <li><span className="font-semibold">Souplesse</span> : possibilité d'investir dans un produit calibré pour son horizon (3 à 8 ans) et son profil.</li>
+              </ul>
+              <p className="font-semibold text-[#253F60]">
+                Résultat : les performances réelles observées entre 2016 et 2024 sont souvent supérieures à celles des fonds euros, avec une volatilité contenue.
                   </p>
                 </div>
               </div>
+
+          {/* Encadré pédagogique */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <div className="bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-2xl p-10 text-white shadow-2xl">
+              <h3 className="text-2xl sm:text-3xl font-cairo font-bold mb-6">Les produits structurés en 3 phrases</h3>
+            <div className="space-y-4 text-lg">
+              <p className="font-semibold">À retenir :</p>
+              <p>Un produit structuré, c'est un rendement cible + une protection définie à l'avance.</p>
+              <p>Il est particulièrement adapté aux marchés incertains, où la volatilité devient une opportunité.</p>
+              <p className="font-semibold">Il ne faut pas chercher à "battre le marché", mais à sécuriser une performance maîtrisée dans le temps.</p>
+              <p className="mt-4">Chez Azalée Patrimoine, nous analysons chaque structure selon trois critères :</p>
+              <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                <li>La qualité de l'émetteur,</li>
+                <li>Le niveau de protection du capital,</li>
+                <li>Le scénario de marché réaliste sur lequel repose le rendement.</li>
+              </ul>
             </div>
-            
-            {/* Left Vertical Bar */}
-            <div className="absolute left-0 top-0 w-1 h-full bg-[#B99066] opacity-50"></div>
           </div>
         </div>
-      </section>
 
-      {/* Retirement Planning Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Main Content */}
-          <div className="text-[#686868] text-base sm:text-lg lg:text-xl font-source-sans leading-relaxed mb-8 sm:mb-12">
-            <h3 className="text-[#005C69] text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-6 sm:mb-8">
-              Préparer votre retraite
+          {/* H3 - Consensus */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
+              Pourquoi ce consensus n'est pas un hasard
             </h3>
             
-            <p className="mb-6">
-              <span className="font-semibold">Nos experts en gestion de patrimoine Selexium vous démontreront que </span>
-              <a href="#" className="text-[#4EBBBD] hover:underline">bien préparer sa retraite</a>
-              <span className="font-semibold"> quitté la vie active</span>
-              . Ce moment de la vie est important et beaucoup d'entre nous l'attendent avec impatience. Pouvoir profiter pleinement d'un temps de liberté, de repos, parfois synonyme de voyages ou de nouvelles expériences, c'est un idéal qui en fait rêver plus d'un ! Mais pour cela, il faut l
-              <span className="font-semibold">efficacement</span>.
-            </p>
-            
-            <p>
-              En effet, tout ne tourne pas toujours comme on l'avait imaginé. Il arrive que le départ en retraite entraîne une diminution du confort de vie que vous pouviez avoir en travaillant, causé notamment par des revenus revus à la baisse. De plus, selon l'évolution de votre santé, vous pouvez être amené à générer des dépenses non prévues.
+            <div className="overflow-x-auto">
+              <table className="w-full bg-white rounded-lg shadow-lg border-collapse">
+                <thead>
+                  <tr className="bg-gradient-to-r from-[#253F60] to-[#B99066] text-white">
+                    <th className="p-4 text-left font-bold">Acteur</th>
+                    <th className="p-4 text-left font-bold">Ce qu'il y gagne</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  <tr>
+                    <td className="p-4 font-semibold text-[#253F60]">Assureur</td>
+                    <td className="p-4">Un rendement attractif sans déséquilibrer son bilan</td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="p-4 font-semibold text-[#253F60]">Broker</td>
+                    <td className="p-4">Une ingénierie rentable et transparente</td>
+                  </tr>
+                  <tr>
+                    <td className="p-4 font-semibold text-[#253F60]">CGP</td>
+                    <td className="p-4">Un produit lisible et différenciant pour ses clients</td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="p-4 font-semibold text-[#253F60]">Client final</td>
+                    <td className="p-4">Un couple rendement / risque cohérent et encadré</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+
+            <p className="mt-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              Ce cercle vertueux explique leur succès : tout le monde y trouve son équilibre — à condition de les comprendre et de les choisir avec discernement.
             </p>
           </div>
 
-          {/* Blockquote Section */}
-          <div className="bg-gradient-to-r from-[#253F60] to-[#5B4733] rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 relative">
-            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-              {/* Left: Quote Image */}
-              <div className="w-full lg:w-[62px] flex-shrink-0">
-                <img
-                  src="/images/placements-retirement-quote-image-56586a.png"
-                  alt="Quote Icon"
-                  className="w-full h-auto"
-                />
-              </div>
-              
-              {/* Right: Content */}
-              <div className="flex-1">
-                <div className="text-white text-lg sm:text-xl lg:text-2xl font-source-sans leading-relaxed">
-                  <h5 className="text-white text-lg sm:text-xl lg:text-2xl font-source-sans font-semibold leading-tight mb-4 sm:mb-6">
-                    À savoir
-                  </h5>
-                  
-                  <p>
-                    Avec l'âge, la perte d'autonomie ou les frais de santé peuvent peser lourdement sur votre budget. Pour vivre votre retraite selon vos attentes, il est essentiel de prévoir dès aujourd'hui des solutions d'investissement adaptées.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Retirement Planning Continuation & Heritage Transmission Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Retirement Planning Continuation */}
-          <div className="text-[#686868] text-base sm:text-lg lg:text-xl font-source-sans leading-relaxed mb-8 sm:mb-12">
-            <p className="mb-6">
-              <span className="font-semibold">pour assurer son niveau de vie après avoir</span>
-              <span className="font-semibold">'anticiper</span>
-            </p>
-            
-            <p className="mb-6">
-              Anticiper sa future retraite vous permettra de vous constituer des compléments de revenus le moment venu, tout en bénéficiant d'avantages fiscaux pendant que vous travaillez. Par ailleurs, ces capitaux épargnés pourront également être versés à vos proches en cas de décès : c'est le cas par exemple, de l'assurance-vie.
-            </p>
-            
-            <p className="mb-6">
-              D'autres dispositifs comme le plan d'épargne populaire (PERP, un produit d'épargne à long terme) ou la Loi Madelin, pour les travailleurs non-salariés, pourront, selon votre profil, vous permettre de générer des compléments de revenus ou de pallier les carences des régimes généraux. Pour pouvoir profiter de sa retraite de façon épanouie sans se soucier de ses fins de mois,
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-8">
-              <span className="font-semibold">
-                nous vous proposons des solutions pour vous constituer, à long terme, un complément de retraite adéquat à vos besoins.
-              </span>
-              <button className="bg-[#B99066] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg shadow-lg font-source-sans font-semibold text-sm sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                lien manquant
-              </button>
-            </div>
-          </div>
-
-          {/* Heritage Transmission Section */}
-          <div className="text-black text-lg sm:text-xl lg:text-2xl font-source-sans leading-relaxed mb-8 sm:mb-12">
-            <h3 className="text-black text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-6 sm:mb-8">
-              Transmettre son patrimoine
+          {/* Conclusion */}
+          <div className="mb-8 max-w-5xl mx-auto">
+            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-4 text-center">
+              Conclusion – La clé, c'est la structuration
             </h3>
-            
-            <p className="mb-6">
-              La transmission de patrimoine est une étape clé qu'il convient d'anticiper pour assurer la protection de vos proches et préserver l'harmonie familiale.
+            <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+              Les produits structurés ne sont pas des placements miracles, mais des instruments d'ingénierie patrimoniale.
             </p>
-            
-            <p className="mb-6">
-              Souvent perçue comme délicate, cette démarche permet pourtant de sécuriser l'avenir de vos enfants, de votre conjoint ou de vos héritiers, tout en limitant les risques de conflits liés à la succession.
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mt-2">
+              Leur succès repose sur la pédagogie et la qualité du conseil.
             </p>
-            
-            <p className="mb-6">
-              Nos experts vous accompagnent pour structurer la transmission de vos biens — qu'il s'agisse de donations, d'investissements immobiliers ou de dispositifs successoraux adaptés — afin d'alléger votre fiscalité et d'optimiser la gestion de votre héritage.
-            </p>
-            
-            <p className="mb-6">
-              Investir dans l'immobilier reste une solution efficace pour transmettre un patrimoine tangible, générer des revenus ou valoriser un bien à la revente.
-            </p>
-            
-            <p className="mb-6">
-              En complément, la prévoyance retraite s'intègre dans cette logique de transmission sécurisée, offrant des avantages fiscaux et une protection accrue pour votre entourage.
-            </p>
-            
-            <p className="mb-8">
-              Nous vous aidons à anticiper, organiser et formaliser votre transmission patrimoniale, pour garantir la pérennité de vos volontés et la sécurité de vos proches.
-            </p>
-            
-            <div className="flex justify-center">
-              <button className="bg-[#B99066] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg shadow-lg font-source-sans font-semibold text-sm sm:text-base hover:bg-[#A67A5A] transition-colors duration-200">
-                lien manquant
-              </button>
-            </div>
-          </div>
-
-          {/* Blockquote Section */}
-          <div className="bg-gradient-to-r from-[#253F60] to-[#5B4733] rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 relative">
-            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-              {/* Left: Quote Image */}
-              <div className="w-full lg:w-[62px] flex-shrink-0">
-                <img
-                  src="/images/placements-heritage-quote-image-56586a.png"
-                  alt="Quote Icon"
-                  className="w-full h-auto"
-                />
-              </div>
-              
-              {/* Right: Content */}
-              <div className="flex-1">
-                <div className="text-white text-lg sm:text-xl lg:text-2xl font-source-sans leading-relaxed">
-                  <h5 className="text-white text-lg sm:text-xl lg:text-2xl font-source-sans font-semibold leading-tight mb-4 sm:mb-6">
-                    Bon à savoir
-                  </h5>
-                  
-                  <p>
-                    Les solutions que nous vous recommandons — telles que l'investissement immobilier ou la préparation de la retraite — sont pensées pour vous aider à organiser efficacement la transmission de votre patrimoine.
-                  </p>
-                  
-                  <p className="mt-4">
-                    Notre objectif : construire avec vous une stratégie sur-mesure, cohérente avec votre situation personnelle et patrimoniale, afin de sécuriser vos biens et d'assurer une transmission optimisée et conforme à vos souhaits.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Protect Loved Ones Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-black text-lg sm:text-xl lg:text-2xl font-source-sans leading-relaxed">
-            <h3 className="text-black text-xl sm:text-2xl lg:text-3xl font-source-sans font-semibold leading-tight mb-6 sm:mb-8">
-              Protéger ses proches
-            </h3>
-            
-            <p className="mb-6">
-              Assurer la sécurité financière de vos proches face aux aléas de la vie est une démarche essentielle.
-            </p>
-            
-            <p className="mb-6">
-              Accidents, imprévus de santé ou événements exceptionnels peuvent survenir à tout moment, souvent sans préparation. Les dispositifs classiques de protection sociale restent insuffisants pour couvrir l'ensemble des besoins.
-            </p>
-            
-            <p className="mb-6">
-              Nous vous conseillons donc d'anticiper avec des solutions de prévoyance personnalisées qui garantissent à votre famille un soutien financier durable.
-            </p>
-            
-            <p className="mb-6">
-              L'assurance-vie, par exemple, combine protection, transmission de capital et avantages fiscaux attractifs.
-            </p>
-            
-            <p>
-              Optez pour une approche prévoyante afin de préserver la sérénité de votre entourage, quoi qu'il arrive.
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mt-2">
+              Bien construits, ils permettent de réconcilier performance et prudence, et de rassurer les clients sans brider leur rendement.
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* CTA Button Section */}
-      <section className="w-full bg-white py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center">
-            <button className="bg-[#B99066] text-white px-8 sm:px-12 py-3 sm:py-4 rounded-lg shadow-lg font-source-sans font-semibold text-sm sm:text-base lg:text-lg hover:bg-[#A67A5A] transition-colors duration-200">
-              lien manquant
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* News Section */}
-      <section className="w-full bg-[#F2F2F2] py-8 sm:py-12 lg:py-16">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
-          <div className="flex items-center gap-4 mb-8 sm:mb-12">
-            <div className="w-10 h-1 bg-[#4EBBBD] rounded-full"></div>
-            <h3 className="text-[#112033] text-xs sm:text-lg lg:text-2xl font-source-sans font-normal uppercase leading-tight">
-              Latest news
-            </h3>
-          </div>
-
-          {/* News Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
-            {/* Article 1 */}
-            <div className="bg-white/20 rounded-lg shadow-lg overflow-hidden">
-              <div className="relative">
-                <img
-                  src="/images/placements-responsive-news-article-1-48ed7d.png"
-                  alt="Budget 2026"
-                  className="w-full h-32 sm:h-48 object-cover"
-                />
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4">
-                  <h4 className="text-white text-xs sm:text-sm font-source-sans font-normal uppercase leading-tight mb-1 sm:mb-2">
-                    Budget 2026 : a financial plan contested by the French
-                  </h4>
-                  <div className="w-full h-px bg-white/80 mb-1 sm:mb-2"></div>
-                  <div className="flex justify-between items-center text-white text-xs">
-                    <span>16 Juillet 2025</span>
-                    <span className="uppercase">Taxes</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Article 2 */}
-            <div className="bg-white/20 rounded-lg shadow-lg overflow-hidden">
-              <div className="relative">
-                <img
-                  src="/images/placements-responsive-news-article-2-92e27a.png"
-                  alt="Livret A"
-                  className="w-full h-32 sm:h-48 object-cover"
-                />
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4">
-                  <h4 className="text-white text-xs sm:text-sm font-source-sans font-normal uppercase leading-tight mb-1 sm:mb-2">
-                    Livret A : une nouvelle baisse de rendement à 1,7 %
-                  </h4>
-                  <div className="w-full h-px bg-white/80 mb-1 sm:mb-2"></div>
-                  <div className="flex justify-between items-center text-white text-xs">
-                    <span>15 Juillet 2025</span>
-                    <span className="uppercase">News</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Article 3 */}
-            <div className="bg-white/20 rounded-lg shadow-lg overflow-hidden">
-              <div className="relative">
-                <img
-                  src="/images/placements-responsive-news-article-3-47d3ab.png"
-                  alt="PEA"
-                  className="w-full h-32 sm:h-48 object-cover"
-                />
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4">
-                  <h4 className="text-white text-xs sm:text-sm font-source-sans font-normal uppercase leading-tight mb-1 sm:mb-2">
-                    PEA : Éric Ciotti wants to revive investment in stocks
-                  </h4>
-                  <div className="w-full h-px bg-white/80 mb-1 sm:mb-2"></div>
-                  <div className="flex justify-between items-center text-white text-xs">
-                    <span>01 Juillet 2025</span>
-                    <span className="uppercase">Finance</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Article 4 */}
-            <div className="bg-white/20 rounded-lg shadow-lg overflow-hidden sm:col-span-2 lg:col-span-2">
-              <div className="relative">
-                <img
-                  src="/images/placements-responsive-news-article-4-7e916a.png"
-                  alt="Statut du bailleur privé"
-                  className="w-full h-32 sm:h-48 object-cover"
-                />
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4">
-                  <h4 className="text-white text-xs sm:text-sm font-source-sans font-normal uppercase leading-tight mb-1 sm:mb-2">
-                    Statut du bailleur privé : un nouveau souffle grâce au Parlement
-                  </h4>
-                  <div className="w-full h-px bg-white/80 mb-1 sm:mb-2"></div>
-                  <div className="flex justify-between items-center text-white text-xs">
-                    <span>30 juin 2025</span>
-                    <span className="uppercase">Real estate</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Discover All News Link */}
-          <div className="flex justify-end">
-            <a href="#" className="flex items-center gap-2 text-[#4EBBBD] text-xs sm:text-sm font-source-sans hover:underline">
-              Discover all the news
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="#4EBBBD" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-16">
+            <Link
+              href="/placements/produits-structures"
+              className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Découvrir les meilleures opportunités structurées du moment
+            </Link>
+            <a
+              href="https://calendly.com/contact-azalee-patrimoine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#B99066] hover:bg-[#A67A5A] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+            >
+              👉 Faire le point sur vos placements sécurisés avec un conseiller Azalée
             </a>
           </div>
 
-          {/* Featured Articles Sidebar */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8 lg:gap-12 mt-8 sm:mt-12">
-            {/* Featured Articles */}
-            <div className="lg:col-span-2">
-              <div className="space-y-2 sm:space-y-4">
-                {/* Featured Article 1 */}
-                <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-[#112033] text-xs font-source-sans leading-tight">
-                      Pension reform: the bill for 65 years old divides opinion
-                    </h4>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#112033] text-xs uppercase">Lire l'article</span>
-                      <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L6 3.5L1 6" stroke="#112033" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
+          {/* Grille de produits structurés */}
+          <div className="max-w-7xl mx-auto">
+            <h3 className="text-[#253F60] text-3xl sm:text-4xl font-cairo font-bold mb-12 text-center tracking-tight">
+              La sélection de produits structurés d'Azalée pour 2025/2026
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {/* Produit 1: ATHENA DÉGRESSIF LUXE */}
+              <div className="bg-white rounded-xl shadow-xl border-2 border-[#253F60] hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+                {/* Ovale orange avec pourcentage */}
+                <div className="absolute top-0 right-0 w-24 h-16 bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-full transform translate-x-6 -translate-y-3 flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-sm">+15%</span>
+          </div>
+
+                <div className="p-6">
+                  <h4 className="text-[#253F60] text-xl font-cairo font-bold mb-4 pr-16">
+                    ATHENA DÉGRESSIF LUXE – JUILLET 2025
+                  </h4>
+                  <p className="text-sm text-gray-600 mb-4">(FR001400ZAJ7)</p>
+                  
+                  <div className="space-y-3 text-sm text-[#4B5563]">
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Thématique :</span> Luxe & consommation mondiale
                   </div>
-                  <p className="text-[#686868] text-xs leading-relaxed">
-                    Une mesure qui continue d'alimenter les tensions sociales.
-                  </p>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Émetteur :</span> Natixis Structured Issuance SA
+                </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Garant :</span> Natixis (Notation A / A1 / A+)
+                    </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Durée :</span> 10 ans (échéance 2035)
+                    </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Rendement :</span> +1,25 % par mois écoulé, soit jusqu'à +15 % par an
+              </div>
+            </div>
+
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <Link
+                      href="/placements/produits-structures/athena-luxe-2025"
+                      className="block w-full bg-[#253F60] hover:bg-[#1a2d47] text-white px-6 py-3 rounded-lg shadow-md font-inter font-semibold text-center transition-all duration-300 text-sm"
+                    >
+                      Obtenir la brochure
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Produit 2: ATHENA DÉGRESSIF IA & ROBOTIQUE */}
+              <div className="bg-white rounded-xl shadow-xl border-2 border-[#253F60] hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-24 h-16 bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-full transform translate-x-6 -translate-y-3 flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-sm">+15%</span>
+            </div>
+
+                <div className="p-6">
+                  <h4 className="text-[#253F60] text-xl font-cairo font-bold mb-4 pr-16">
+                    ATHENA DÉGRESSIF IA & ROBOTIQUE – JUILLET 2025
+                  </h4>
+                  <p className="text-sm text-gray-600 mb-4">(FR001400ZAJ8)</p>
+                  
+                  <div className="space-y-3 text-sm text-[#4B5563]">
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Thématique :</span> Intelligence artificielle & robotique
+                  </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Émetteur :</span> Natixis Structured Issuance SA
+                </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Durée :</span> 10 ans (échéance 2035)
+                    </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Rendement :</span> +1,25 % par mois écoulé, soit jusqu'à +15 % par an
+              </div>
+            </div>
+
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <Link
+                      href="/placements/produits-structures/athena-ia-robotique-2025"
+                      className="block w-full bg-[#253F60] hover:bg-[#1a2d47] text-white px-6 py-3 rounded-lg shadow-md font-inter font-semibold text-center transition-all duration-300 text-sm"
+                    >
+                      Obtenir la brochure
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Produit 3: ÉNERGIE DÉGRESSIVE */}
+              <div className="bg-white rounded-xl shadow-xl border-2 border-[#253F60] hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-24 h-16 bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-full transform translate-x-6 -translate-y-3 flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-sm">9%</span>
+                </div>
+                
+                <div className="p-6">
+                  <h4 className="text-[#253F60] text-xl font-cairo font-bold mb-4 pr-16">
+                    ÉNERGIE DÉGRESSIVE AVRIL 2025
+                  </h4>
+                  <p className="text-sm text-gray-600 mb-4">(FR001400WTQ9)</p>
+                  
+                  <div className="space-y-3 text-sm text-[#4B5563]">
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Thématique :</span> Énergie & transition énergétique
+                  </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Émetteur :</span> BNP Paribas Issuance B.V.
+                </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Durée :</span> 10 ans (échéance 2035)
+              </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Rendement :</span> 9 % par an
+            </div>
+          </div>
+
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <Link
+                      href="/placements/produits-structures/energie-degressive-2025"
+                      className="block w-full bg-[#253F60] hover:bg-[#1a2d47] text-white px-6 py-3 rounded-lg shadow-md font-inter font-semibold text-center transition-all duration-300 text-sm"
+                    >
+                      Obtenir la brochure
+                    </Link>
+                  </div>
+                </div>
+          </div>
+
+              {/* Produit 4: AUTO-CALL CRÉDIT AGRICOLE */}
+              <div className="bg-white rounded-xl shadow-xl border-2 border-[#253F60] hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-24 h-16 bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-full transform translate-x-6 -translate-y-3 flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-sm">+15%</span>
+                </div>
+                
+                <div className="p-6">
+                  <h4 className="text-[#253F60] text-xl font-cairo font-bold mb-4 pr-16">
+                    AUTO-CALL CRÉDIT AGRICOLE – JUIN 2025
+                    </h4>
+                  <p className="text-sm text-gray-600 mb-4">(FR001459AB6990)</p>
+                  
+                  <div className="space-y-3 text-sm text-[#4B5563]">
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Thématique :</span> Secteur bancaire / action unique
+                    </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Émetteur :</span> Société Générale
+                  </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Durée :</span> 5 ans (échéance 2030)
+                    </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Rendement :</span> +15 % déjà réalisés depuis le lancement
+                    </div>
                 </div>
 
-                {/* Featured Article 2 */}
-                <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 border-t border-[#E6E6E6]">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-[#112033] text-xs font-source-sans leading-tight">
-                      Budget proposal 2026: French people facing new tax measures
-                    </h4>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#112033] text-xs uppercase">Lire l'article</span>
-                      <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L6 3.5L1 6" stroke="#112033" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <Link
+                      href="/placements/produits-structures/autocall-credit-agricole-2025"
+                      className="block w-full bg-[#253F60] hover:bg-[#1a2d47] text-white px-6 py-3 rounded-lg shadow-md font-inter font-semibold text-center transition-all duration-300 text-sm"
+                    >
+                      Obtenir la brochure
+                    </Link>
                     </div>
                   </div>
-                  <p className="text-[#686868] text-xs leading-relaxed">
-                    A budget law that sparks debates and concerns.
-                  </p>
                 </div>
 
-                {/* Featured Article 3 */}
-                <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 border-t border-[#E6E6E6]">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-[#112033] text-xs font-source-sans leading-tight">
-                      Diminution du taux du Livret A : nouvelle baisse à 1,7 %
+              {/* Produit 5: AMBITION PHARMA */}
+              <div className="bg-white rounded-xl shadow-xl border-2 border-[#253F60] hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-24 h-16 bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-full transform translate-x-6 -translate-y-3 flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-sm">10%</span>
+                </div>
+                
+                <div className="p-6">
+                  <h4 className="text-[#253F60] text-xl font-cairo font-bold mb-4 pr-16">
+                    AMBITION PHARMA JANVIER 2026
                     </h4>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#112033] text-xs uppercase">Lire l'article</span>
-                      <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L6 3.5L1 6" stroke="#112033" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+                  <p className="text-sm text-gray-600 mb-4">(EI21918ACD)</p>
+                  
+                  <div className="space-y-3 text-sm text-[#4B5563]">
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Thématique :</span> Santé & biotechnologies
                     </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Émetteur :</span> Crédit Agricole CIB
                   </div>
-                  <p className="text-[#686868] text-xs leading-relaxed">
-                    Un impact direct sur l'épargne des ménages.
-                  </p>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Durée :</span> 8 ans (échéance 2034)
+                    </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Rendement :</span> 10 % par an
+                    </div>
                 </div>
 
-                {/* Featured Article 4 */}
-                <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 border-t border-[#E6E6E6]">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-[#112033] text-xs font-source-sans leading-tight">
-                      Retraite progressive at 60 ans : green light from the Senate
-                    </h4>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#112033] text-xs uppercase">Lire l'article</span>
-                      <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L6 3.5L1 6" stroke="#112033" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <Link
+                      href="/placements/produits-structures/ambition-pharma-2026"
+                      className="block w-full bg-[#253F60] hover:bg-[#1a2d47] text-white px-6 py-3 rounded-lg shadow-md font-inter font-semibold text-center transition-all duration-300 text-sm"
+                    >
+                      Obtenir la brochure
+                    </Link>
                   </div>
-                  <p className="text-[#686868] text-xs leading-relaxed">
-                    Un vote attendu par de nombreux actifs.
-                  </p>
                 </div>
+              </div>
 
-                {/* Featured Article 5 */}
-                <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 border-t border-[#E6E6E6]">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-[#112033] text-xs font-source-sans leading-tight">
-                      MaPrimeRénov' : freeze of energy renovation grants starting in July 2025
-                    </h4>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#112033] text-xs uppercase">Lire l'article</span>
-                      <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L6 3.5L1 6" stroke="#112033" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                  <p className="text-[#686868] text-xs leading-relaxed">
-                    Changes that worry the owners.
-                  </p>
+              {/* Produit 6: Phoenix Bearish EURIBOR */}
+              <div className="bg-white rounded-xl shadow-xl border-2 border-[#253F60] hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-24 h-16 bg-gradient-to-br from-[#B99066] to-[#D4A574] rounded-full transform translate-x-6 -translate-y-3 flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-sm">7%</span>
                 </div>
-
-                {/* Featured Article 6 */}
-                <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 border-t border-[#E6E6E6]">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-[#112033] text-xs font-source-sans leading-tight">
-                      François Bayrou : un gouvernement sous le feu des critiques pour sa richesse déclarée
+                
+                <div className="p-6">
+                  <h4 className="text-[#253F60] text-xl font-cairo font-bold mb-4 pr-16">
+                    Phoenix Bearish EURIBOR 12M Novembre 2025
                     </h4>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#112033] text-xs uppercase">Lire l'article</span>
-                      <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L6 3.5L1 6" stroke="#112033" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+                  
+                  <div className="space-y-3 text-sm text-[#4B5563]">
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Thématique :</span> Taux d'intérêt
+                    </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Sous-jacent :</span> Euribor 12 mois
+                  </div>
+                    <div>
+                      <span className="font-semibold text-[#253F60]">Rendement :</span> 7 % par an
                     </div>
                   </div>
-                  <p className="text-[#686868] text-xs leading-relaxed">
-                    La HATVP révèle un patrimoine record pour l'exécutif 2025.
-                  </p>
+                  
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <Link
+                      href="/placements/produits-structures"
+                      className="block w-full bg-[#253F60] hover:bg-[#1a2d47] text-white px-6 py-3 rounded-lg shadow-md font-inter font-semibold text-center transition-all duration-300 text-sm"
+                    >
+                      Obtenir la brochure
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Agency Locations Card */}
-            <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4">
-                <h3 className="text-[#005C69] text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
-                  Discover our agencies
-                </h3>
-                <div className="grid grid-cols-1 gap-1 sm:gap-2 text-[#686868] text-xs">
-                  <div>Aix-en-Provence-Marseille</div>
-                  <div>Biarritz</div>
-                  <div>Bordeaux</div>
-                  <div>Caen</div>
-                  <div>Chambéry</div>
-                  <div>Clermont-Ferrand</div>
-                  <div>Moutarde</div>
-                  <div>Lille</div>
-                  <div>Lyon</div>
-                  <div>Metz</div>
-                  <div>Montpellier</div>
-                  <div>Nantes</div>
-                  <div>Agréable</div>
-                  <div>Orléans</div>
-                  <div>Paris</div>
-                  <div>Reims</div>
-                  <div>Rennes</div>
-                  <div>Rouen</div>
-                  <div>Strasbourg</div>
-                  <div>Toulouse</div>
-                  <div>Visites guidées</div>
-                  <div>Vannes</div>
+            {/* Disclaimer */}
+            <div className="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-lg mt-8">
+              <p className="text-sm text-[#4B5563]">
+                <strong className="text-[#253F60]">🔒 Disclaimer global :</strong> Les produits présentés sont destinés à des investisseurs avertis ayant une bonne compréhension des mécanismes et des risques associés aux produits structurés. Ils ne constituent pas un conseil en investissement personnalisé. Avant toute souscription, il est impératif de vérifier l'adéquation du produit avec le profil de risque et les objectifs d'investissement de chaque investisseur.
+                  </p>
                 </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
-      
-      {/* Footer Section */}
-      <footer className="w-full relative">
-        {/* Map Background Section */}
-        <section className="relative w-full h-[446px]">
-          {/* Map Background Image */}
-          <div className="absolute inset-0">
-            <img
-              src="/images/placements-responsive-footer-map.png"
-              alt="Map Background"
-              className="w-full h-full object-cover"
-              style={{
-                '--original-width': '1899px',
-                '--original-height': '423px',
-                backgroundSize: 'calc(var(--original-width) * 0.7880220413208008) calc(var(--original-height) * 0.7880220413208008)',
-                backgroundRepeat: 'repeat'
-              }}
-            />
-          </div>
-        </section>
 
-        {/* Footer Content Section */}
-        <section className="relative w-full">
-          {/* Background Image with Overlay */}
-          <div className="absolute inset-0">
-            <img
-              src="/images/placements-responsive-footer-overlay-3bc48d.png"
-              alt="Footer Background"
-              className="w-full h-full object-cover"
-            />
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#253F60] to-[#B99066] opacity-50"></div>
-          </div>
+      {/* Section 8: Enveloppes et supports d'investissement */}
+      <section className="w-full bg-white py-16 sm:py-20 lg:py-24" id="section8">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* H2 - Enveloppes */}
+          <div className="mb-12">
+            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight mb-6">
+              Les enveloppes d'investissement
+            </h2>
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              Les enveloppes constituent le cadre juridique et fiscal de vos placements. Elles déterminent la fiscalité applicable, la souplesse de gestion et la transmission du capital.
+                  </p>
+                    </div>
 
-          {/* Footer Content */}
-          <div className="relative z-10 max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 lg:gap-12">
-              {/* Expertise Column */}
-              <div>
-                <h3 className="text-white text-xs sm:text-lg font-semibold mb-3 sm:mb-6">Expertise</h3>
-                <ul className="space-y-2 sm:space-y-3 text-[#D1D5DB] text-xs sm:text-sm">
-                  <li>Imposition fiscale</li>
-                  <li>Investissement immobilier</li>
-                  <li>Investissements financiers</li>
-                  <li>Planification de la retraite</li>
-                  <li>Conseil en gestion de patrimoine</li>
-                </ul>
-              </div>
+          {/* Enveloppes Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {/* Assurance-vie */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all relative">
+              <Link href="/placements/assurance-vie" className="block mb-4 group">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold hover:text-[#B99066] transition-colors cursor-pointer relative z-10">L'assurance-vie</h3>
+              </Link>
+              <p className="text-[#4B5563] text-sm leading-relaxed mb-4">
+                Outil central de la gestion de patrimoine, l'assurance-vie permet de diversifier ses placements, de bénéficier d'une fiscalité avantageuse et de préparer la transmission de son patrimoine.
+              </p>
+              <Link
+                href="/placements/assurance-vie"
+                className="inline-block bg-[#253F60] hover:bg-[#1a2d47] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300"
+              >
+                Nos assureurs partenaires
+              </Link>
+                  </div>
 
-              {/* Outils Column */}
-              <div>
-                <h3 className="text-white text-xs sm:text-lg font-semibold mb-3 sm:mb-6">Outils</h3>
-                <ul className="space-y-2 sm:space-y-3 text-[#D1D5DB] text-xs sm:text-sm">
-                  <li>Blog</li>
-                  <li>Simulateurs financiers</li>
-                  <li>Calculatrices d'impôts</li>
-                  <li>Ressources</li>
-                  <li>FAQs</li>
-                </ul>
-              </div>
+            {/* PER */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all relative">
+              <Link href="/placements/pea-per" className="block mb-4 group">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold hover:text-[#B99066] transition-colors cursor-pointer relative z-10">Le Plan Épargne Retraite (PER)</h3>
+              </Link>
+              <p className="text-[#4B5563] text-sm leading-relaxed mb-4">
+                Le PER combine avantage fiscal immédiat et épargne long terme. Il permet de préparer sa retraite tout en réduisant son impôt sur le revenu.
+              </p>
+              <Link
+                href="/placements/pea-per"
+                className="inline-block bg-[#253F60] hover:bg-[#1a2d47] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300"
+              >
+                Simuler votre versement idéal
+              </Link>
+                </div>
 
-              {/* Contactez Column */}
-              <div>
-                <h3 className="text-white text-xs sm:text-lg font-semibold mb-3 sm:mb-6">Contactez</h3>
-                <ul className="space-y-2 sm:space-y-3 text-[#D1D5DB] text-xs sm:text-sm">
-                  <li>123 Rue Financière</li>
-                  <li>New York, NY 10001</li>
-                  <li>États-Unis</li>
-                  <li>Téléphone : +1 (555) 123-4567</li>
-                  <li>Courriel : <span className="underline">info@wealthadvisors.com</span></li>
-                </ul>
-              </div>
+            {/* PEA et compte-titres */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all relative">
+              <Link href="/placements/pea-per" className="block mb-4 group">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold hover:text-[#B99066] transition-colors cursor-pointer relative z-10">Le PEA et le compte-titres</h3>
+              </Link>
+              <p className="text-[#4B5563] text-sm leading-relaxed mb-4">
+                Le PEA favorise l'investissement en actions européennes dans un cadre fiscal attractif, tandis que le compte-titres permet une plus grande liberté d'investissement. Ces enveloppes favorisent l'investissement à risque fort. Ce qui peut engendrer des phases de moins values. Saviez-vous qu'elles sont reportables.
+              </p>
+              <Link
+                href="/placements/compte-titres"
+                className="inline-block bg-[#253F60] hover:bg-[#1a2d47] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300"
+              >
+                Faites analyser vos contrats et vérifier vos déclarations de revenus
+              </Link>
+                    </div>
 
-              {/* Entreprise Column */}
-              <div>
-                <h3 className="text-white text-xs sm:text-lg font-semibold mb-3 sm:mb-6">Entreprise</h3>
-                <ul className="space-y-2 sm:space-y-3 text-[#D1D5DB] text-xs sm:text-sm">
-                  <li>À propos de nous</li>
-                  <li>Nos services</li>
-                  <li>Notre équipe</li>
-                  <li>Carrières</li>
-                  <li>Contact</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+            {/* Contrat de capitalisation */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Le contrat de capitalisation</h3>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Peu connu, le contrat de capitalisation reprend les atouts de l'assurance-vie, mais offre des avantages civils spécifiques en matière de transmission.
+                  </p>
+                  </div>
 
-          {/* Bottom Footer Bar */}
-          <div className="relative z-10 border-t border-[#1F2937] bg-black/20">
-            <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-2 sm:gap-4">
-                <span className="text-[#D1D5DB] text-xs sm:text-sm">
-                  © 2025 WealthAdvisors. Tous droits réservés.
-                </span>
-                <div className="flex gap-4 sm:gap-6 text-[#0C2C5D] text-xs sm:text-sm">
-                  <a href="#" className="hover:underline">Légal</a>
-                  <a href="#" className="hover:underline">Politique de confidentialité</a>
-                  <a href="#" className="hover:underline">Conditions d'utilisation</a>
+            {/* Livrets */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les livrets réglementés et placements court terme</h3>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Utiles pour sécuriser une épargne de précaution, les livrets (A, LDDS, LEP) offrent sécurité et liquidité, mais leur rendement reste limité.
+                  </p>
                 </div>
               </div>
+
+          {/* H2 - Supports */}
+          <div className="mb-12">
+            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight mb-6">
+              Les supports d'investissement
+            </h2>
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+              Les supports représentent les actifs dans lesquels vous investissez à l'intérieur de vos enveloppes. Ils permettent d'adapter votre stratégie à votre profil de risque et à vos objectifs de rendement.
+                  </p>
+            </div>
+
+          {/* Supports Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {/* Fonds en euros */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les fonds en euros et unités de compte</h3>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Les fonds en euros garantissent le capital, tandis que les unités de compte (actions/obligations…) offrent un potentiel de performance supérieur, au prix d'une volatilité plus forte.
+              </p>
+                </div>
+
+            {/* Produits structurés */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all relative">
+              <Link href="/placements/produits-structures" className="block mb-4 group">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold hover:text-[#B99066] transition-colors cursor-pointer relative z-10">Les produits structurés</h3>
+              </Link>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Les produits structurés allient protection partielle du capital et rendement conditionnel. Chez Azalée, nous sélectionnons les meilleurs émetteurs et suivons les performances réelles de nos produits maison.
+              </p>
+              </div>
+
+            {/* SCPI et OPCI */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all relative">
+              <Link href="/placements/scpi-opci" className="block mb-4 group">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold hover:text-[#B99066] transition-colors cursor-pointer relative z-10">Les SCPI et OPCI</h3>
+              </Link>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Les SCPI et OPCI permettent d'investir dans l'immobilier sans contrainte de gestion. Nos experts sélectionnent des fonds solides, performants et diversifiés pour générer un revenu régulier.
+              </p>
+            </div>
+
+            {/* Fonds thématiques */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les fonds thématiques et ESG</h3>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Les fonds thématiques (santé, climat, technologie, infrastructures) et les fonds labellisés ESG offrent une nouvelle façon d'investir durablement tout en participant à la transition économique.
+              </p>
+          </div>
+
+            {/* Placements alternatifs */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les placements alternatifs et non cotés</h3>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Pour diversifier un patrimoine et en accroître le potentiel de rendement, les placements alternatifs occupent une place privilégiée dans nos allocations.
+              </p>
+        </div>
+
+            {/* Private Equity */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all relative">
+              <Link href="#section3" className="block mb-4 group">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold hover:text-[#B99066] transition-colors cursor-pointer relative z-10">Le Private Equity</h3>
+              </Link>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Le Private Equity (capital-investissement) permet d'investir dans des entreprises non cotées. C'est un levier puissant de création de valeur à long terme, avec des rendements potentiels élevés.
+              </p>
+          </div>
+
+            {/* GFA et GFV */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les GFA et GFV</h3>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Les groupements fonciers agricoles ou viticoles offrent la possibilité de détenir une part du patrimoine rural français tout en bénéficiant d'avantages fiscaux attractifs.
+              </p>
+          </div>
+
+            {/* Placements atypiques */}
+            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les placements atypiques</h3>
+              <p className="text-[#4B5563] text-sm leading-relaxed">
+                Forêts, vins, art ou métaux précieux : ces actifs réels offrent une diversification tangible et parfois passionnelle. Ils complètent une allocation patrimoniale équilibrée.
+              </p>
+            </div>
+              </div>
+
+          {/* Expertise Azalée */}
+          <div className="mb-12">
+            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight mb-6">
+              L'expertise Azalée Patrimoine
+            </h2>
+            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8">
+              Au-delà des produits, c'est la méthode Azalée qui fait la différence : une vision globale, un accompagnement humain et une exigence de transparence à chaque étape.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-gradient-to-br from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#253F60]">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Une méthodologie éprouvée</h3>
+                <p className="text-[#4B5563] text-sm leading-relaxed">
+                  Audit patrimonial, allocation stratégique, suivi annuel : notre approche repose sur la rigueur et la pédagogie.
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#B99066]">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Des performances mesurées et partagées</h3>
+                <p className="text-[#4B5563] text-sm leading-relaxed">
+                  Nous publions régulièrement les résultats de nos allocations et produits structurés, dans une logique de transparence totale.
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#253F60]">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Une approche responsable</h3>
+                <p className="text-[#4B5563] text-sm leading-relaxed">
+                  Nos conseils intègrent systématiquement les critères ESG pour concilier performance, durabilité et éthique.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Pourquoi Azalée */}
+          <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-xl p-8 text-white">
+            <h2 className="text-2xl sm:text-3xl font-cairo font-bold mb-6">Pourquoi investir avec Azalée Patrimoine ?</h2>
+            <p className="text-lg mb-6">
+              Faire confiance à Azalée Patrimoine, c'est choisir un cabinet indépendant, transparent et engagé. Nos experts accompagnent chaque client avec méthode, écoute et responsabilité.
+            </p>
+            <ul className="space-y-3 text-lg">
+              <li className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <span>Accompagnement personnalisé et humain</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <span>Stratégies sur-mesure et indépendantes</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <span>Accès à des produits réservés aux investisseurs avertis</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <span>Suivi digital et tableau de bord patrimonial</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <span>Engagement éthique et durable</span>
+              </li>
+                </ul>
+                </div>
+              </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="w-full bg-gradient-to-b from-white to-gray-50 py-16 sm:py-20 lg:py-24">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight mb-12 text-center">
+            FAQ - Construire son patrimoine
+          </h2>
+
+          <div className="max-w-4xl mx-auto space-y-6">
+            {[
+              {
+                question: "Quelle différence entre support et enveloppe d'investissement ?",
+                answer: "Les enveloppes (assurance-vie, PEA, PER...) sont le cadre juridique et fiscal de vos placements. Les supports (actions, obligations, SCPI...) sont les actifs dans lesquels vous investissez à l'intérieur de ces enveloppes. Pour en savoir plus, consultez la Section 1 et la Section 8.",
+                link: "#section8"
+              },
+              {
+                question: "Quels placements offrent le meilleur rendement net en 2025 ?",
+                answer: "Le rendement dépend de votre profil de risque et de votre horizon. Les ETF crypto dans l'assurance-vie peuvent offrir des rendements élevés mais avec un risque important. Consultez un conseiller Azalée pour une analyse personnalisée.",
+                link: "#"
+              },
+              {
+                question: "Comment investir dans le Private Equity ?",
+                answer: "Le Private Equity nécessite une compréhension approfondie des risques et des mécanismes. Consultez la Section 3 pour comprendre les 4 questions essentielles à se poser avant d'investir.",
+                link: "#section3"
+              },
+              {
+                question: "Quels sont les placements adaptés à mon profil fiscal ?",
+                answer: "Cela dépend de votre situation personnelle (revenus, patrimoine, objectifs). Un diagnostic patrimonial gratuit avec un conseiller Azalée vous permettra d'identifier les meilleures opportunités.",
+                link: "https://calendly.com/contact-azalee-patrimoine"
+              },
+              {
+                question: "Quels sont les risques des produits structurés ?",
+                answer: "Les produits structurés offrent une protection du capital mais comportent des risques (perte en capital, risque de l'émetteur, liquidité). Consultez la page dédiée aux produits structurés pour plus d'informations.",
+                link: "/placements/produits-structures"
+              },
+              {
+                question: "Quel est le placement préféré des français ?",
+                answer: "L'assurance-vie reste le placement préféré des Français pour sa fiscalité avantageuse et sa flexibilité. Découvrez notre page dédiée à l'assurance-vie.",
+                link: "/placements/assurance-vie"
+              },
+              {
+                question: "Le fond Défense vaut-il vraiment le coût ?",
+                answer: "Consultez l'article de blog de Medhy sur le fond Défense pour une analyse détaillée.",
+                link: "#"
+              },
+              {
+                question: "Le livret A va-t-il baisser en 2026 ?",
+                answer: "Le taux du livret A est corrélé à la baisse des taux directeurs. Consultez notre article sur la baisse du taux du livret A.",
+                link: "#"
+              },
+              {
+                question: "Que peut-on attendre d'un placement ESG ?",
+                answer: "Les placements ESG (Environnement, Social, Gouvernance) permettent d'allier performance financière et impact positif. Ils participent à la transition économique tout en offrant des opportunités de rendement.",
+                link: "#"
+              },
+              {
+                question: "C'est quoi la loi industrie verte ?",
+                answer: "La loi industrie verte est une mesure fiscale visant à encourager les investissements dans la transition écologique. Consultez un conseiller Azalée pour comprendre comment en bénéficier.",
+                link: "https://calendly.com/contact-azalee-patrimoine"
+              },
+              {
+                question: "Comment décrypter les frais de votre contrat d'assurance vie ?",
+                answer: "Les frais d'assurance-vie peuvent être complexes (frais d'entrée, de gestion, d'arbitrage...). Un conseiller Azalée peut vous aider à comprendre et optimiser ces frais.",
+                link: "https://calendly.com/contact-azalee-patrimoine"
+              }
+            ].map((faq, index) => (
+              <div key={index} className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-[#B99066]">
+                <h3 className="text-[#253F60] text-lg sm:text-xl font-cairo font-bold mb-3">
+                  {faq.question}
+                </h3>
+                <p className="text-[#4B5563] text-sm sm:text-base leading-relaxed mb-3">
+                  {faq.answer}
+                </p>
+                {faq.link && (
+                  faq.link.startsWith('http') || faq.link === '#' ? (
+                    <a
+                      href={faq.link}
+                      target={faq.link.startsWith('http') ? '_blank' : undefined}
+                      rel={faq.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="text-[#B99066] hover:text-[#A67A5A] font-semibold text-sm underline"
+                    >
+                      En savoir plus →
+                    </a>
+                  ) : (
+                    <Link
+                      href={faq.link}
+                      className="text-[#B99066] hover:text-[#A67A5A] font-semibold text-sm underline"
+                    >
+                      En savoir plus →
+                    </Link>
+                  )
+                )}
+                </div>
+            ))}
             </div>
           </div>
         </section>
-      </footer>
+
+      <Footer />
     </>
   );
 } 

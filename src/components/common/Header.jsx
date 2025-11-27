@@ -4,6 +4,8 @@ import Button from '@/components/ui/Button';
 import dynamic from "next/dynamic";
 const LanguageSwitcher = dynamic(() => import("./LanguageSwitcher"), { ssr: false });
 import Link from "next/link";
+import VignetteRetraites from "../fiscalite/VignetteRetraites";
+import VignetteProfessionnels from "../fiscalite/VignetteProfessionnels";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -93,7 +95,13 @@ const Header = () => {
     { title: "Rachat de trimestres", path: "/retraite/rachat-trimestres" },
     { title: "Simulation retraite", path: "/retraite/simulation" },
     { title: "Prévoyance / protection famille", path: "/retraite/prevoyance-protection" },
-    { title: "Autre retraite", path: "/retraite/autre" }
+    { 
+      title: "Autre retraite", 
+      path: "/retraite/autre",
+      subItems: [
+        { title: "Retraite progressive", path: "/retraite/retraite-progressive" }
+      ]
+    }
   ];
 
   const patrimoineMenuItems = [
@@ -262,6 +270,19 @@ const Header = () => {
             </div>
             <a href="mailto:contact@azalee-patrimoine.fr" className="text-sm font-inter text-white hover:text-gray-300 transition-colors duration-200">
               contact@azalee-patrimoine.fr
+            </a>
+          </div>
+          <div className="flex items-center gap-2">
+            <a 
+              href="https://www.linkedin.com/company/azalee-patrimoine" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white p-1 rounded hover:bg-gray-100 transition-colors duration-200"
+              aria-label="LinkedIn Azalée Patrimoine"
+            >
+              <svg className="w-4 h-4 text-[#253F60]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
             </a>
           </div>
         </div>
@@ -514,7 +535,7 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Fiscalité Dropdown */}
+            {/* Fiscalité Dropdown avec Vignettes */}
             <div 
               className="relative"
               onMouseEnter={handleFiscaliteMouseEnter}
@@ -527,46 +548,57 @@ const Header = () => {
                 </svg>
               </Link>
               
-              {/* Desktop Dropdown */}
-              <div className={`${fiscaliteDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50`}>
-                <div className="p-4">
-                  {fiscaliteMenuItems.map((item, index) => (
-                    <div key={index} className="mb-4 last:mb-0">
-                      <Link 
-                        href={item.path}
-                        className="block text-sm font-medium text-[#253F60] hover:text-[#B99066] transition-colors mb-2"
-                      >
-                        {item.title}
-                      </Link>
-                      {item.subItems && (
-                        <div className="ml-4 space-y-1">
-                          {item.subItems.map((subItem, subIndex) => (
-                            <div key={subIndex}>
-                              <Link 
-                                href={subItem.path}
-                                className="block text-xs text-[#374151] hover:text-[#253F60] transition-colors py-1"
-                              >
-                                {subItem.title}
-                              </Link>
-                              {subItem.subItems && (
-                                <div className="ml-4 space-y-1">
-                                  {subItem.subItems.map((subSubItem, subSubIndex) => (
-                                    <Link 
-                                      key={subSubIndex}
-                                      href={subSubItem.path}
-                                      className="block text-xs text-[#686868] hover:text-[#253F60] transition-colors py-0.5"
-                                    >
-                                      {subSubItem.title}
-                                    </Link>
-                                  ))}
+              {/* Desktop Dropdown avec Vignettes */}
+              <div className={`${fiscaliteDropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 mt-2 z-50`}>
+                <div className="flex gap-4">
+                  {/* Menu classique à gauche */}
+                  <div className="w-80 bg-white shadow-lg rounded-lg border border-gray-300">
+                    <div className="p-4">
+                      {fiscaliteMenuItems.map((item, index) => (
+                        <div key={index} className="mb-4 last:mb-0">
+                          <Link 
+                            href={item.path}
+                            className="block text-sm font-medium text-[#253F60] hover:text-[#B99066] transition-colors mb-2"
+                          >
+                            {item.title}
+                          </Link>
+                          {item.subItems && (
+                            <div className="ml-4 space-y-1">
+                              {item.subItems.map((subItem, subIndex) => (
+                                <div key={subIndex}>
+                                  <Link 
+                                    href={subItem.path}
+                                    className="block text-xs text-[#374151] hover:text-[#253F60] transition-colors py-1"
+                                  >
+                                    {subItem.title}
+                                  </Link>
+                                  {subItem.subItems && (
+                                    <div className="ml-4 space-y-1">
+                                      {subItem.subItems.map((subSubItem, subSubIndex) => (
+                                        <Link 
+                                          key={subSubIndex}
+                                          href={subSubItem.path}
+                                          className="block text-xs text-[#686868] hover:text-[#253F60] transition-colors py-0.5"
+                                        >
+                                          {subSubItem.title}
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
-                              )}
+                              ))}
                             </div>
-                          ))}
+                          )}
                         </div>
-                      )}
+                      ))}
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Vignettes à droite */}
+                  <div className="flex flex-col gap-4">
+                    <VignetteRetraites />
+                    <VignetteProfessionnels />
+                  </div>
                 </div>
               </div>
             </div>
