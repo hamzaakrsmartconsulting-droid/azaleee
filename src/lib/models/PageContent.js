@@ -32,8 +32,7 @@ const PageContentSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Index for faster queries
-PageContentSchema.index({ path: 1 });
+// Index for faster queries (path already has unique: true which creates an index)
 PageContentSchema.index({ published: 1 });
 
 const PageContent = mongoose.models.PageContent || mongoose.model('PageContent', PageContentSchema);
