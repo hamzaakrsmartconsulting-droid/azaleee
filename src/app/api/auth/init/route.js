@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import connectDB from '../../../lib/mongodb.js';
-import User from '../../../lib/models/User.js';
+import connectDB from '../../../lib/mongodb';
+import User from '../../../lib/models/User';
 
 // Initialize default admin user
 export async function GET() {

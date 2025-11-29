@@ -33,6 +33,12 @@ const nextConfig = {
       }],
     });
 
+    // Improve module resolution for .js files
+    config.resolve = {
+      ...config.resolve,
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    };
+
     // Performance optimizations
     if (isServer) {
       config.optimization = {
