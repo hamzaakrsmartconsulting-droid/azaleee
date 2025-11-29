@@ -1,3 +1,9 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: true,
@@ -34,14 +40,12 @@ const nextConfig = {
     });
 
     // Improve module resolution for .js files
-    const path = require('path');
-    
     config.resolve = {
       ...config.resolve,
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
         ...config.resolve.alias,
-        '@': path.resolve(process.cwd(), 'src'),
+        '@': path.resolve(__dirname, 'src'),
       },
     };
 
