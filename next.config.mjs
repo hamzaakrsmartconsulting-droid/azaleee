@@ -37,6 +37,10 @@ const nextConfig = {
     config.resolve = {
       ...config.resolve,
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      alias: {
+        ...config.resolve.alias,
+        '@': require('path').resolve(__dirname, './src'),
+      },
     };
 
     // Performance optimizations
