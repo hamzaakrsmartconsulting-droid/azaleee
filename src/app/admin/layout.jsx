@@ -54,17 +54,33 @@ export default function AdminLayout({ children }) {
           }
         });
 
+        // Handle 401 as expected (no token or invalid token)
+        if (response.status === 401) {
+          localStorage.removeItem('adminToken');
+          localStorage.removeItem('adminUser');
+          router.push('/admin/login');
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
 
         if (data.success) {
           setIsAuthenticated(true);
         } else {
+          // Token invalid or expired - redirect to login
           localStorage.removeItem('adminToken');
           localStorage.removeItem('adminUser');
           router.push('/admin/login');
         }
       } catch (error) {
-        console.error('Auth check error:', error);
+        // Only log non-401 errors (network issues, etc.)
+        if (!error.message?.includes('401') && !error.message?.includes('Unauthorized')) {
+          console.error('Auth check error:', error);
+        }
         localStorage.removeItem('adminToken');
         localStorage.removeItem('adminUser');
         router.push('/admin/login');
