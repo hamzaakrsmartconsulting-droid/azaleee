@@ -52,6 +52,7 @@ export async function POST(request) {
     const user = await User.findOne({ email: email.toLowerCase() });
     
     if (!user) {
+      console.log('❌ Login failed: User not found for email:', email.toLowerCase());
       return NextResponse.json(
         { success: false, message: 'Invalid email or password' },
         { status: 401 }
@@ -62,11 +63,14 @@ export async function POST(request) {
     const isPasswordValid = await user.comparePassword(password);
     
     if (!isPasswordValid) {
+      console.log('❌ Login failed: Invalid password for user:', user.email);
       return NextResponse.json(
         { success: false, message: 'Invalid email or password' },
         { status: 401 }
       );
     }
+
+    console.log('✅ Login successful for user:', user.email);
 
     // Generate JWT token
     const token = jwt.sign(
