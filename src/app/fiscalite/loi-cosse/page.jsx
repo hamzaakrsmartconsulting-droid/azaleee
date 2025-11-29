@@ -58,24 +58,6 @@ export default function LoiCossePage() {
 
   return (
     <>
-      <div className="fixed top-4 left-4 z-50 flex gap-2">
-        <button
-          onClick={handleManualReload}
-          className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
-        >
-          Reload
-        </button>
-        <button
-          onClick={() => {
-            console.log('Current content:', content);
-            console.log('Content source:', contentSource);
-          }}
-          className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
-        >
-          Debug
-        </button>
-      </div>
-
       <Header />
 
       {/* Hero Section */}

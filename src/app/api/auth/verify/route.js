@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import connectDB from '../../../../lib/mongodb';
 import User from '../../../../lib/models/User';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     const authHeader = request.headers.get('authorization');

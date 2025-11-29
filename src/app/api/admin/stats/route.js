@@ -3,6 +3,8 @@ import connectDB from '../../../../lib/mongodb';
 import User from '../../../../lib/models/User';
 import PageContent from '../../../../lib/models/PageContent';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     await connectDB();

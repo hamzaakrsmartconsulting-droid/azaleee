@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import connectDB from '../../../../lib/mongodb';
 import PageContent from '../../../../lib/models/PageContent';
 
+export const dynamic = 'force-dynamic';
+
 // GET - Get content for a specific page path
 export async function GET(request) {
   try {

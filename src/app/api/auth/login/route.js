@@ -3,6 +3,8 @@ import connectDB from '../../../../lib/mongodb';
 import User from '../../../../lib/models/User';
 import jwt from 'jsonwebtoken';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request) {
   try {
     // Wait for MongoDB connection to be fully established

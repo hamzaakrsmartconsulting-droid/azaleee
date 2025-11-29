@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import User from '@/lib/models/User';
 
+// Force dynamic rendering - don't try to connect to MongoDB during build
+export const dynamic = 'force-dynamic';
+
 // Initialize default admin user
 export async function GET() {
   try {

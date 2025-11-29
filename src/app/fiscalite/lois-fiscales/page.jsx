@@ -82,22 +82,6 @@ export default function LoisFiscalesPage() {
   return (
     <>
       <Header />
-
-      {/* Debug Indicators */}
-      <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
-        <div className="bg-white rounded-lg shadow-lg p-3 text-xs">
-          <div className="flex items-center gap-2 mb-1">
-            <span className={`w-2 h-2 rounded-full ${contentSource === 'Database' ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
-            <span className="font-medium">Lois-fiscales Content: {contentSource}</span>
-          </div>
-          {isLoadingFromDatabase && (
-            <div className="flex items-center gap-1 text-blue-600">
-              <div className="animate-spin w-3 h-3 border border-blue-600 border-t-transparent rounded-full"></div>
-              <span>Loading...</span>
-            </div>
-          )}
-        </div>
-        <div className="flex gap-2">
           <button
             onClick={reloadContent}
             className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
