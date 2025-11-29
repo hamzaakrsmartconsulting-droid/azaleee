@@ -82,14 +82,6 @@ export default function LoisFiscalesPage() {
   return (
     <>
       <Header />
-          <button
-            onClick={reloadContent}
-            className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
-          >
-            Reload
-          </button>
-        </div>
-      </div>
 
       {/* Hero Section with Law Icons */}
       <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-12 sm:py-16 lg:py-20">
