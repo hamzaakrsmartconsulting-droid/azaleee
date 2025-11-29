@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "692a0648bbe68408c888ded2",
+    "email": "admin@azalee.com",
+    "password": "$2b$10$F0jpVXMswV4AeXMuIlXj4.DqAS3Xz9A7yVW.prNKbeNaowBHcR.va",
+    "role": "admin",
+    "name": "Administrator",
+    "createdAt": "2025-11-28T20:30:00.727Z",
+    "updatedAt": "2025-11-28T20:30:00.727Z",
+    "__v": 0
+  },
+  {
+    "_id": "692a075f18174102c51d3cbf",
+    "email": "hamza@test.com",
+    "password": "$2b$10$4dyJ5OGYP9gnmi8QiCw3xe8F1jbYYJ6fTGnX5Oj4o7EAT1zZy2mMO",
+    "role": "admin",
+    "name": "Hamza",
+    "createdAt": "2025-11-28T20:34:39.324Z",
+    "updatedAt": "2025-11-28T20:34:39.324Z",
+    "__v": 0
+  }
+]

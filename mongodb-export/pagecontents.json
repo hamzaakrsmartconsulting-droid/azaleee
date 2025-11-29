@@ -1,0 +1,3242 @@
+[
+  {
+    "_id": "692a19dff3d7d1d3395f6d09",
+    "path": "patrimoine",
+    "title": "Patrimoine – Protégez et transmettez votre héritage",
+    "content": {
+      "hero": {
+        "cardLeft": {
+          "title": "Bien gérer son patrimoine en 2025, c'est anticiper, structurer et transmettre",
+          "paragraph1": "Une bonne gestion de patrimoine ne se résume pas à faire fructifier son épargne.",
+          "paragraph2": "Elle repose sur une approche globale et exclusive qui intègre la protection de la famille, la stratégie de transmission, l'optimisation fiscale, des placements performants, une structuration juridique et l'anticipation des risques.",
+          "paragraph3": "Notre équipe de conseillers en gestion de patrimoine indépendants vous accompagne pour bâtir une stratégie personnalisée et cohérente avec vos objectifs de vie.",
+          "paragraph4": "Que vous soyez chef d'entreprise, héritier, expatrié ou jeune investisseur, nous vous guidons avec clarté.",
+          "buttonText": "Faire mon bilan patrimonial",
+          "buttonUrl": "https://calendly.com/rdv-azalee-patrimoine/30min"
+        },
+        "cardRight": {
+          "badge": {
+            "line1": "Votre 1er",
+            "line2": "Diagnostique",
+            "line3": "offert"
+          },
+          "title": "Votre patrimoine mérite une stratégie claire et durable",
+          "description": "Chez Azalée Patrimoine, nous vous aidons à construire un avenir financier solide grâce à une approche personnalisée et des solutions adaptées à vos besoins spécifiques.",
+          "features": [
+            "Optimisation fiscale",
+            "Protection de la famille",
+            "Transmission sereine"
+          ]
+        }
+      },
+      "enQuelquesMots": {
+        "title": "En quelques mots : comprendre la gestion de patrimoine 1",
+        "paragraph1": "La gestion de patrimoine = structurer, valoriser et transmettre un ensemble de biens (immobilier, placements financiers, liquidités, entreprise, objets de valeur).1",
+        "paragraph2": "Consulter un conseiller en gestion de patrimoine indépendant permet de prendre des décisions éclairées en intégrant les aspects fiscaux, juridiques, financiers et familiaux.",
+        "bilanPatrimonial": {
+          "title": "Le bilan patrimonial = point de départ pour une stratégie personnalisée :",
+          "items": [
+            "Inventorier les actifs/passifs",
+            "Analyser la situation financière et fiscale",
+            "Identifier les leviers d'optimisation patrimoniale",
+            "Proposer un plan d'action clair, chiffré et évolutif"
+          ]
+        },
+        "accompagnement": {
+          "title": "Chez Azalée Patrimoine, nous vous accompagnons pour :",
+          "items": [
+            "Faire fructifier le patrimoine durablement avec des solutions sur mesure",
+            "protéger votre famille grâce à des dispositifs juridiques adaptés",
+            "réduire votre fiscalité et préparer la transmission dans les meilleures conditions"
+          ]
+        },
+        "conclusion": "Notre approche repose sur la clarté, la pédagogie et l'indépendance. L'objectif : transformer le patrimoine en levier de sérénité et de performance sur le long terme."
+      },
+      "definition": {
+        "title": "Définition de la gestion de patrimoine",
+        "intro": "La gestion de patrimoine est une discipline transversale qui consiste à analyser, organiser, valoriser et transmettre l'ensemble des actifs d'une personne ou d'une entreprise — qu'ils soient immobiliers, financiers, professionnels ou familiaux — en tenant compte de leurs objectifs personnels, fiscaux et successoraux.",
+        "paragraph1": "Contrairement à une idée reçue, le métier de conseiller en gestion de patrimoine (CGP) n'est pas réglementé en tant que tel, mais il regroupe plusieurs statuts professionnels encadrés par la loi, chacun répondant à des compétences spécifiques :",
+        "statuts": [
+          {
+            "title": "IAS (Intermédiaire en Assurance)",
+            "description": "habilité à conseiller et distribuer des produits d'assurance-vie, de prévoyance ou de retraite."
+          },
+          {
+            "title": "IOBSP (Intermédiaire en Opérations de Banque et Services de Paiement)",
+            "description": "compétent pour accompagner le financement de projets (crédits immobiliers, crédits professionnels, refinancement...)."
+          },
+          {
+            "title": "CIF (Conseiller en Investissements Financiers)",
+            "description": "autorisé à proposer des placements financiers (OPCVM, SCPI, produits structurés, private equity...) dans le cadre d'un conseil indépendant."
+          },
+          {
+            "title": "CJA (Conseiller en Juridique Accessoire)",
+            "description": "peut apporter un conseil d'ordre juridique en lien direct avec la gestion de patrimoine (structuration, transmission, fiscalité patrimoniale)."
+          }
+        ],
+        "paragraph2": "En pratique, un CGP expérimenté combine souvent plusieurs de ces statuts pour offrir une vision globale et cohérente de la situation de ses clients.",
+        "paragraph3": "Son rôle est avant tout d'accompagner, de conseiller et d'anticiper, en s'appuyant sur une approche personnalisée qui intègre :",
+        "domaines": [
+          "la fiscalité,",
+          "la protection de la famille,",
+          "la stratégie d'investissement,",
+          "la préparation de la retraite,",
+          "et la transmission du patrimoine",
+          "ttt"
+        ],
+        "resume": {
+          "title": "En résumé :",
+          "text": "la gestion de patrimoine, c'est l'art de faire dialoguer le juridique, le fiscal et le financier pour créer de la valeur et de la sérénité sur le long terme."
+        }
+      },
+      "pourquoiCGP": {
+        "title": "Pourquoi faire appel à un conseiller en gestion de patrimoine indépendant ?",
+        "intro": "Un CGP est votre copilote pour prendre les bonnes décisions patrimoniales. Il apporte une vision à 360° sur votre situation, en prenant en compte vos revenus, votre patrimoine immobilier et financier, votre environnement fiscal, familial et professionnel.",
+        "points": [
+          "Structuration patrimoniale globale 1",
+          "Optimisation fiscale et transmission",
+          "Accès à des solutions haut de gamme et sur-mesure",
+          "Suivi personnalisé et réactif dans le temps"
+        ]
+      },
+      "auditPatrimonial": {
+        "title": "L'audit patrimonial : la base de toute stratégie",
+        "intro": "Notre accompagnement commence par un audit patrimonial gratuit. Ce diagnostic complet permet de dresser une cartographie de vos actifs et passifs, d'analyser votre situation juridique et fiscale, puis de construire un plan d'action réaliste et optimisé.",
+        "stepsTitle": "Étapes de l'audit patrimonial",
+        "steps": [
+          "Inventaire des actifs et dettes 2",
+          "Etablissement d'une lettre de mission",
+          "Analyse des flux de revenus et dépenses",
+          "Identification des risques (juridiques, fiscaux, successoraux)",
+          "Propositions de stratégies (placements, transmission, structuration)",
+          "Plan d'action chiffré et suivi annuel"
+        ],
+        "buttonText": "Audit patrimonial gratuit",
+        "buttonUrl": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "expertises": {
+        "title": "Nos expertises pour structurer et valoriser votre patrimoine",
+        "services": [
+          {
+            "title": "Succession & héritage",
+            "description": "Préparez la transmission de votre patrimoine tout en limitant les droits de succession. Azalée Patrimoine vous accompagne pour anticiper, organiser et optimiser votre succession grâce à des outils juridiques et fiscaux éprouvés."
+          },
+          {
+            "title": "Donation à titre gratuit",
+            "description": "Profitez des abattements renouvelables tous les 15 ans pour transmettre sans fiscalité excessive. Nous vous aidons à choisir le bon moment, les bons bénéficiaires et le bon montage (pleine propriété, nue-propriété, démembrement)."
+          },
+          {
+            "title": "Donation à titre onéreux",
+            "description": "Rééquilibrez une succession, compensez des déséquilibres familiaux ou financez un projet avec des dispositifs fiscaux adaptés."
+          },
+          {
+            "title": "Transmission de patrimoine",
+            "description": "Nous mettons en œuvre les meilleures solutions (assurance-vie, SCI, pacte Dutreil, démembrement, holding patrimoniale) pour vous permettre de transmettre dans la sérénité et en toute sécurité."
+          },
+          {
+            "title": "Protection de la famille",
+            "description": "Anticipez les aléas de la vie : décès, divorce, incapacité. Nos solutions couvrent la clause bénéficiaire sur-mesure, le mandat de protection future, le choix du régime matrimonial."
+          },
+          {
+            "title": "Bilan patrimonial",
+            "description": "Un état des lieux personnalisé et confidentiel, base indispensable pour toute stratégie de croissance ou de transmission."
+          },
+          {
+            "title": "Conseils patrimoniaux sur-mesure",
+            "description": "Dirigeants, professions libérales, héritiers : chaque profil mérite une stratégie ajustée et évolutive. Nos conseils intègrent vos objectifs, vos contraintes et votre horizon."
+          },
+          {
+            "title": "Patrimoines complexes",
+            "description": "Indivision, expatriation, fiscalité internationale, résidences multiples : nos experts vous guident sur des montages adaptés et conformes à la réglementation."
+          },
+          {
+            "title": "Financement patrimonial",
+            "description": "Utilisez l'effet de levier du crédit pour développer votre patrimoine : crédit lombard, OBO, financement locatif ou refinancement."
+          },
+          {
+            "title": "Produits structurés & alternatifs",
+            "description": "Accédez à des placements sur-mesure : produits structurés, private equity, ETF, capital-investissement, énergies renouvelables."
+          },
+          {
+            "title": "Fiscalité et expatriation",
+            "description": "Nous accompagnons aussi les non-résidents dans leur structuration patrimoniale en tenant compte des conventions fiscales internationales."
+          }
+        ],
+        "buttonText": "Je prends rdv",
+        "buttonUrl": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "casConcrets": {
+        "title": "Cas concrets de stratégies patrimoniales",
+        "intro": "La gestion de patrimoine et la transmission nécessitent des solutions sur-mesure, adaptées à vos objectifs, à l'âge de vos bénéficiaires et à vos contraintes fiscales. Voici trois profils représentatifs pour illustrer comment structurer efficacement une stratégie patrimoniale pour les familles françaises d'aujourd'hui.",
+        "cas": [
+          {
+            "name": "Sophie, 45 ans, 2 enfants 1",
+            "situation": "Sophie souhaite protéger ses enfants en cas de décès.",
+            "miseEnOeuvre": [
+              "Prévoyance décès pour générer un capital destiné aux droits de succession",
+              "Assurance-vie",
+              "Contrat de capitalisation démembré",
+              "Testament",
+              "Mandat de protection future"
+            ],
+            "image": "/images/sophie.webp",
+            "resume": {
+              "title": "Sophie, 45 ans",
+              "subtitle": "Protection familiale et succession",
+              "points": [
+                "2 enfants à protéger",
+                "Optimisation fiscale",
+                "Sécurisation du patrimoine"
+              ]
+            }
+          },
+          {
+            "name": "Jean, 60 ans, chef d'entreprise",
+            "situation": "Jean souhaite transmettre son entreprise.",
+            "miseEnOeuvre": [
+              "Holding patrimoniale",
+              "Donation-partage",
+              "Pacte Dutreil",
+              "Assurance-vie"
+            ],
+            "image": "/images/jean.webp",
+            "resume": {
+              "title": "Jean, 60 ans",
+              "subtitle": "Transmission d'entreprise",
+              "points": [
+                "Chef d'entreprise",
+                "Continuité de l'activité",
+                "Optimisation des droits"
+              ]
+            }
+          },
+          {
+            "name": "Marie et Paul, 70 ans",
+            "situation": "Marie et Paul souhaitent alléger leur IFI et préparer leur succession.",
+            "miseEnOeuvre": [
+              "Démembrement croisé",
+              "Contrat de capitalisation",
+              "Donation transgénérationnelle"
+            ],
+            "image": "/images/couple.webp",
+            "resume": {
+              "title": "Marie & Paul, 70 ans",
+              "subtitle": "Optimisation IFI et succession",
+              "points": [
+                "Réduction fiscale",
+                "Transmission intergénérationnelle",
+                "Préservation du capital"
+              ]
+            }
+          }
+        ],
+        "conclusion1": "Ces trois situations illustrent parfaitement la diversité des approches patrimoniales selon les cycles de vie. Sophie, en pleine activité professionnelle, privilégie la protection et la sécurisation. Jean, approchant de la retraite, se concentre sur la transmission de son outil de travail. Enfin, Marie et Paul optimisent leur fiscalité tout en préparant l'avenir de leurs descendants.",
+        "conclusion2": "Chaque stratégie combine plusieurs outils juridiques et fiscaux pour maximiser l'efficacité de la transmission.",
+        "buttonText": "Je contacte un expert pour analyser ma situation",
+        "buttonUrl": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "simulateurs": {
+        "title": "Simuler pour mieux décider",
+        "intro": "Nos simulateurs patrimoniaux vous permettent de visualiser :",
+        "items": [
+          "Vos droits de succession",
+          "L'évolution de votre patrimoine sur 10 à 30 ans",
+          "Les gains potentiels d'une optimisation fiscale ou successorale"
+        ],
+        "note": "Bientôt disponible en ligne : simulateur succession, tableau de bord patrimonial, simulateur d'IFI, comparatif assurance-vie vs capitalisation."
+      },
+      "pourquoiAzalee": {
+        "title": "Pourquoi choisir Azalée Patrimoine ?",
+        "points": [
+          "Approche sur-mesure, humaine, transparente",
+          "Accompagnement à long terme, révisions annuelles",
+          "Honoraires clairs, sans surprise, adaptés à votre profil",
+          "Accès à des solutions d'investissement sélectionnées selon des critères ESG, performance et stabilité",
+          "CGP diplômés, certifiés CIF/IAS, sous assurance RCP",
+          "Un Family Office dédié à la gestion de vos investissements immobiliers, pour un suivi optimal"
+        ]
+      },
+      "autresProfessionnels": {
+        "title": "Qui sont les autres professionnels qui vous conseillent sur votre patrimoine ?",
+        "intro1": "La gestion de patrimoine ne se fait pas en vase clos.",
+        "intro2": "Pour vous offrir un accompagnement complet et cohérent, le conseiller en gestion de patrimoine collabore étroitement avec d'autres professionnels du droit, de la finance et de l'immobilier.",
+        "intro3": "Chacun joue un rôle spécifique dans la protection, la valorisation et la transmission de votre patrimoine.",
+        "professionnels": [
+          {
+            "title": "Le notaire",
+            "description": "Le notaire intervient dans la rédaction des actes authentiques (ventes immobilières, donations, testaments, SCI). Il garantit la sécurité juridique des transactions et conseille sur la transmission successorale."
+          },
+          {
+            "title": "L'avocat fiscaliste",
+            "description": "L'avocat fiscaliste vous défend en cas de contrôle fiscal, optimise votre fiscalité et vous conseille sur les montages juridiques complexes."
+          },
+          {
+            "title": "Le comptable",
+            "description": "Le comptable gère votre comptabilité, établit vos déclarations fiscales et vous conseille sur l'optimisation fiscale de votre activité professionnelle."
+          },
+          {
+            "title": "Le banquier",
+            "description": "Le banquier vous propose des crédits, des placements bancaires et des services de gestion de compte. Le CGP peut vous aider à négocier les meilleures conditions."
+          }
+        ]
+      },
+      "notreApproche": {
+        "title": "Notre approche",
+        "sections": [
+          {
+            "title": "Une approche personnalisée et humaine",
+            "content": "Notre processus démarre par un audit patrimonial approfondi pour comprendre vos besoins, vos horizons d'investissement et votre appétence au risque. Nos recommandations sont pédagogiques et adaptées à chaque profil : investisseur, dirigeant, couple ou retraité."
+          },
+          {
+            "title": "Des stratégies performantes et durables",
+            "content": "Nous combinons différents leviers (fiscal, financier (placements), juridique et immobilier) pour construire une stratégie globale axée sur : réduction d'impôt, diversification, épargne long terme, transmission et protection de la famille. Nos solutions privilégient la performance durable, la sécurité et la transparence."
+          },
+          {
+            "title": "Une relation de confiance sur le long terme",
+            "content": "La gestion de patrimoine est un parcours de vie. Nous vous accompagnons sur le long terme avec un suivi structuré annuel, une révision de vos investissements, une adaptation aux évolutions fiscales et réglementaires, et une mise à jour de votre stratégie en fonction de vos projets. Chaque client dispose d'un interlocuteur dédié et d'un tableau de bord patrimonial pour une gestion claire de ses actifs financiers. Notre Family Officer immobilier coordonne les relations avec les agences immobilières, notaires, comptables et services fiscaux pour la gestion administrative de votre patrimoine immobilier."
+          },
+          {
+            "title": "Un engagement éthique et responsable",
+            "content": "Azalée Patrimoine intègre dans sa démarche les critères ESG (Environnement, Social, Gouvernance). Nous privilégions des investissements responsables, transparents et alignés avec vos valeurs, sans compromis sur la performance."
+          }
+        ],
+        "resume": {
+          "title": "En résumé",
+          "points": [
+            "Un cabinet indépendant et certifié",
+            "Une vision 360° du patrimoine : fiscal, juridique, immobilier, financier",
+            "Une stratégie sur-mesure pour chaque profil",
+            "Un accompagnement durable et humain",
+            "Des valeurs fortes : transparence, pédagogie, responsabilité"
+          ],
+          "conclusion": "Faire appel à Azalée Patrimoine, c'est choisir la rigueur d'un expert et la proximité d'un partenaire de confiance."
+        }
+      },
+      "faq": {
+        "title": "FAQ Gestion de patrimoine",
+        "questions": [
+          {
+            "question": "Quel est le bon moment pour faire un audit patrimonial ?",
+            "answer": "Dès que vous changez de situation familiale, professionnelle ou patrimoniale. test"
+          },
+          {
+            "question": "Quelle est la différence entre CGP et gestionnaire de fortune ?",
+            "answer": "Le CGP vous accompagne globalement. Le gestionnaire de fortune intervient à partir de 5-10 M€ de patrimoine."
+          },
+          {
+            "question": "Quel est la différence entre CGP et un Family Officer ?",
+            "answer": "Le CGP accompagne un client pour diagnostiquer sa situation, optimiser sa fiscalité et mettre en place des placements (assurance-vie, PER, SCPI...), retraite/succession, avec une rémunération en honoraires et/ou rétrocommissions sur un périmètre financier et immobilier. Le Family Officer est un chef d'orchestre global (gouvernance familiale, consolidation multi-banques/actifs, coordination banques-notaires-avocats, reporting), rémunéré principalement à l'honoraire, sans distribution de produits et avec un ticket d'entrée plus élevé."
+          },
+          {
+            "question": "L'accompagnement est-il payant ?",
+            "answer": "L'audit patrimonial est offert dès 25 000 € d'investissement. Nos frais sont toujours expliqués, chiffrés et validés avec vous."
+          },
+          {
+            "question": "hey",
+            "answer": "test"
+          }
+        ]
+      },
+      "expatries": {
+        "title": "Travaillez-vous avec des expatriés ?",
+        "content": "Oui, nous accompagnons les expatriés français et les non-résidents dans leur gestion de patrimoine. Nous prenons en compte les conventions fiscales internationales, les régimes de résidence fiscale et les spécificités de chaque pays pour vous proposer des solutions adaptées."
+      },
+      "localisation": {
+        "title": "Où nous trouver ?",
+        "villes": [
+          "Paris",
+          "Lille",
+          "Nantes",
+          "La Rochelle",
+          "Salon de Provence",
+          "Annemasse",
+          "test"
+        ],
+        "buttonText": "Rencontrer un conseiller en gestion de patrimoine à {ville}",
+        "buttonUrl": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "seo": {
+        "title": "Gestion de Patrimoine et Transmission | Azalée Patrimoine",
+        "description": "Gestion de patrimoine et transmission avec Azalée Patrimoine : succession, héritage, donation, bilan patrimonial, protection famille. Protégez et transmettez votre patrimoine.",
+        "keywords": "gestion de patrimoine, transmission, succession, héritage, donation, bilan patrimonial, Azalée Patrimoine",
+        "openGraph": {
+          "title": "Gestion de Patrimoine et Transmission | Azalée Patrimoine",
+          "description": "Gestion de patrimoine et transmission avec Azalée Patrimoine : succession, héritage, donation, bilan patrimonial, protection famille. Protégez et transmettez votre patrimoine.",
+          "url": "https://azalee-patrimoine.fr/patrimoine"
+        },
+        "twitter": {
+          "title": "Gestion de Patrimoine et Transmission | Azalée Patrimoine",
+          "description": "Gestion de patrimoine et transmission avec Azalée Patrimoine : succession, héritage, donation, bilan patrimonial, protection famille. Protégez et transmettez votre patrimoine."
+        }
+      }
+    },
+    "published": true,
+    "modifiedBy": "admin",
+    "lastModified": "2025-11-29T00:48:43.971Z",
+    "createdAt": "2025-11-28T21:53:35.874Z",
+    "updatedAt": "2025-11-28T22:27:56.405Z",
+    "__v": 0
+  },
+  {
+    "_id": "692a25a15d4cf1ba38285f6c",
+    "path": "placements",
+    "title": "Placements - Construire son patrimoine",
+    "content": {
+      "hero": {
+        "h1": "Construire son patrimoine",
+        "introText": "Construire son patrimoine, c'est bien plus qu'investir. C'est donner du sens à son argent, structurer ses actifs avec méthode et préparer l'avenir de sa famille. Chez Azalée Patrimoine, nous vous accompagnons à chaque étape, en alliant performance, fiscalité optimisée et indépendance de conseil.",
+        "question": "Que souhaitez-vous faire ?",
+        "objectives": [
+          "Faire fructifier votre épargne",
+          "Financer un projet",
+          "Optimiser ma transmission",
+          "Revenus complémentaires",
+          "Réduire ma fiscalité",
+          "Préparer la retraite",
+          "test"
+        ]
+      },
+      "section1": {
+        "h2": "Comprendre les placements patrimoniaux",
+        "introText": "Avant de parler de produits, parlons de stratégie. La réussite patrimoniale repose d'abord sur la bonne compréhension des outils disponibles et de leur articulation. Nous distinguons deux notions essentielles : les enveloppes et les supports d'investissement.",
+        "linkText": "Liens vers Section 8 : Les enveloppes - les Supports"
+      },
+      "section2": {
+        "h2": "Les placements sans risques sont-ils vraiment les meilleurs placements ?",
+        "h3_inflation": {
+          "title": "Quel rôle joue l'inflation dans le choix d'un placement ?",
+          "content": "Les placements dits \"sans risque\", comme le Livret A, le LDDS ou les fonds euros, rassurent parce qu'ils garantissent le capital. Pourtant, leur rendement est souvent inférieur à l'inflation, ce qui signifie que votre argent perd de la valeur avec le temps.",
+          "inflation_explanation": "L'inflation, c'est l'augmentation générale des prix. Autrement dit, avec le même euro, vous pouvez acheter moins de choses qu'avant.",
+          "example": "Exemple : si une baguette coûtait 1 € il y a cinq ans et qu'elle coûte aujourd'hui 1,20 €, votre pouvoir d'achat a diminué de 20 %.",
+          "conclusion": "Ainsi, un placement \"sans risque\" peut cacher un risque invisible : celui de l'érosion du pouvoir d'achat.",
+          "strategy": "Pour faire fructifier votre épargne, l'objectif n'est pas d'éviter le risque, mais de le maîtriser intelligemment.",
+          "balanced_strategy": "Une stratégie équilibrée doit combiner liquidité, sécurité et rendement, selon votre horizon de placement et votre profil investisseur.",
+          "tip": "Astuce Azalée Patrimoine : conservez vos placements garantis pour votre épargne de précaution, et explorez des solutions plus performantes pour vos projets à moyen et long terme."
+        },
+        "h3_risk_zero": {
+          "title": "Pourquoi le risque zéro n'existe pas en matière de placement ?",
+          "content": "Même un placement dit \"sûr\" comporte un risque : celui de ne pas atteindre vos objectifs financiers.",
+          "graph_explanation": "Le graphique ci-dessous illustre sept scénarios de rendement sur cinq ans : plus le rendement moyen augmente, plus la volatilité (les fluctuations à court terme) est forte.",
+          "compromise": "Ce compromis entre risque et performance est au cœur de toute stratégie d'investissement.",
+          "azalee_help": "Chez Azalée Patrimoine, nous vous aidons à déterminer le niveau de risque optimal pour que votre argent travaille sans compromettre votre sérénité."
+        },
+        "h3_test": {
+          "title": "Testez vos connaissances et découvrez votre profil investisseur",
+          "content": "Avant d'investir, il est essentiel de comprendre votre relation au risque et votre niveau de connaissance financière.",
+          "help_list": [
+            "votre taux de tolérance au risque",
+            "vos objectifs patrimoniaux",
+            "et les placements adaptés à votre horizon de temps."
+          ],
+          "ctas": [
+            {
+              "text": "Évaluer mes connaissances financières",
+              "link": "#"
+            },
+            {
+              "text": "Découvrir mon profil investisseur avec un conseiller Azalée",
+              "link": "https://calendly.com/contact-azalee-patrimoine"
+            }
+          ]
+        }
+      },
+      "section3": {
+        "intro": [
+          "Parmi les placements les plus évoqués en 2025, le private equity — ou capital-investissement — attire de plus en plus d'épargnants en quête de sens et de performance.",
+          "Après les placements dits \"sans risques\", ce type d'investissement promet une diversification vers l'économie réelle, avec des rendements potentiels bien supérieurs à ceux des marchés traditionnels.",
+          "Mais attention : plus le potentiel est élevé, plus la compréhension et l'accompagnement sont indispensables."
+        ],
+        "h2": "Private equity : effet de mode ou réelle opportunité ?",
+        "paragraphs": [
+          "Le private equity séduit de plus en plus d'épargnants attirés par des rendements élevés et des histoires d'entreprises inspirantes.",
+          "Mais derrière cette tendance, il est essentiel de rappeler une vérité : investir dans le non coté n'est pas anodin.",
+          "Chaque projet est unique, et la réussite des uns ne garantit en rien celle des autres.",
+          "En tant qu'ancien banquier, nous savons à quel point les entreprises peuvent être exposées à des risques d'endettement, de marché ou de gestion que le grand public mesure rarement dans leur globalité.",
+          "Le private equity reste un univers réservé aux investisseurs capables d'en comprendre les rouages financiers, les horizons longs et les risques structurels."
+        ],
+        "quote": {
+          "text": "Chez Azalée Patrimoine, nous ne cédons pas à l'effet de mode : nous privilégions la compréhension avant l'action.",
+          "conclusion": "Un bon investissement n'est pas celui que tout le monde fait, mais celui que vous comprenez vraiment."
+        },
+        "more_paragraphs": [
+          "Nous étudions avec attention les projets qui tiennent à cœur à nos clients.",
+          "Notre rôle est d'en analyser la structure financière, le niveau de risque, la durée d'immobilisation et les perspectives de sortie.",
+          "Nous mettons en lumière les avantages (diversification, potentiel de rendement, fiscalité avantageuse) autant que les inconvénients (illiquidité, risque de perte totale, complexité des valorisations).",
+          "Le private equity peut être une opportunité réelle pour un patrimoine bien construit, mais il doit s'intégrer dans une stratégie globale et raisonnée.",
+          "Comprendre avant d'investir, c'est déjà protéger son capital."
+        ],
+        "questions": {
+          "title": "Les 4 questions à se poser avant d'investir dans le private equity",
+          "items": [
+            {
+              "emoji": "🟢",
+              "number": "1",
+              "question": "Est-ce que je comprends réellement le modèle économique de l'entreprise ?",
+              "content": "Avant tout, il faut savoir comment l'entreprise gagne de l'argent, quels sont ses leviers de croissance et quels risques elle affronte.",
+              "conclusion": "Si vous ne pouvez pas expliquer son activité simplement, mieux vaut attendre avant d'investir."
+            },
+            {
+              "emoji": "🟡",
+              "number": "2",
+              "question": "Puis-je immobiliser mon argent plusieurs années ?",
+              "content": "Le private equity implique souvent une durée d'investissement longue (5 à 10 ans) sans possibilité de revente.",
+              "conclusion": "Il ne doit donc jamais concerner votre épargne de précaution."
+            },
+            {
+              "emoji": "🔵",
+              "number": "3",
+              "question": "Suis-je conscient du risque de perte en capital ?",
+              "content": "Investir dans le non coté, c'est accepter la possibilité de perdre tout ou partie du capital.",
+              "conclusion": "Ce risque doit être compensé par une diversification de vos placements."
+            },
+            {
+              "emoji": "🟣",
+              "number": "4",
+              "question": "Ai-je un conseil objectif pour m'accompagner ?",
+              "content": "Les intermédiaires en private equity ne sont pas tous indépendants.",
+              "conclusion": "Chez Azalée Patrimoine, nous analysons les projets sans parti pris commercial, en nous concentrant sur votre intérêt patrimonial."
+            }
+          ]
+        },
+        "remember": {
+          "title": "À retenir :",
+          "points": [
+            "Le private equity n'est ni un effet de mode, ni une solution miracle.",
+            "C'est un investissement de conviction, réservé à ceux qui prennent le temps de comprendre ce dans quoi ils s'engagent.",
+            "Azalée Patrimoine vous accompagne pour analyser la solidité des projets, mesurer le risque et bâtir une stratégie d'investissement cohérente avec vos objectifs."
+          ]
+        },
+        "ctas": [
+          {
+            "text": "👉 Échanger sur un projet de private equity",
+            "link": "https://calendly.com/contact-azalee-patrimoine"
+          },
+          {
+            "text": "👉 Comprendre les risques avant d'investir",
+            "link": "https://calendly.com/contact-azalee-patrimoine"
+          }
+        ],
+        "conclusion": {
+          "paragraphs": [
+            "Chaque investissement a son rôle, ses avantages et ses risques.",
+            "Ce qui compte, ce n'est pas de suivre une tendance, mais de bâtir une stratégie cohérente avec votre profil, vos projets et votre horizon de vie.",
+            "Chez Azalée Patrimoine, nous réalisons un diagnostic patrimonial complet pour identifier les forces et les zones d'amélioration de votre portefeuille.",
+            "L'objectif : vous aider à faire les bons choix d'investissement, en toute transparence et avec une vision à long terme."
+          ],
+          "quote": "Notre approche : comprendre avant d'agir, conseiller avant de placer.",
+          "ctas": [
+            {
+              "text": "👉 Réaliser mon diagnostic patrimonial gratuit",
+              "link": "https://calendly.com/contact-azalee-patrimoine"
+            },
+            {
+              "text": "👉 Prendre rendez-vous avec un conseiller Azalée",
+              "link": "https://calendly.com/contact-azalee-patrimoine"
+            }
+          ]
+        }
+      },
+      "section4": {
+        "h2": "Peut-on enfin réinvestir en SCPI ou faut-il encore craindre une baisse des valorisations ?",
+        "intro": [
+          "Les SCPI (Sociétés Civiles de Placement Immobilier) ont traversé une période mouvementée depuis 2022, marquée par la hausse brutale des taux d'intérêt et une revalorisation à la baisse de nombreuses parts.",
+          "Mais faut-il pour autant s'en détourner ? Pas forcément. Comprendre le lien entre taux, immobilier et valorisation permet de replacer les choses dans leur contexte."
+        ],
+        "h3_taux": {
+          "title": "Quand les taux montent, la valeur de l'immobilier baisse : pourquoi ?",
+          "explanation": "Le lien de cause à effet est simple :",
+          "points": [
+            "Lorsque les taux d'intérêt augmentent, les crédits immobiliers coûtent plus cher.",
+            "Les acheteurs (particuliers ou institutionnels) peuvent donc emprunter moins, ce qui réduit la demande.",
+            "Or, moins de demande = baisse mécanique des prix pour rétablir l'équilibre du marché."
+          ],
+          "paragraphs": [
+            "Dans le cas des SCPI, dont la valeur dépend des expertises immobilières, cette correction des prix se traduit par une réévaluation à la baisse des parts.",
+            "Certaines SCPI ont ainsi enregistré entre -5 % et -15 % de baisse depuis 2022, selon leur exposition (bureaux, commerces, logistique…)."
+          ]
+        },
+        "h3_reglementation": {
+          "title": "L'impact de la réglementation sur les valorisations depuis 2022",
+          "paragraphs": [
+            "Depuis 2022, la réglementation de l'Autorité des Marchés Financiers (AMF) impose davantage de transparence et de réalisme dans l'évaluation des SCPI.",
+            "Les sociétés de gestion doivent désormais :"
+          ],
+          "points": [
+            "se baser sur des valeurs d'expertise actualisées au moins une fois par an ;",
+            "ajuster la valeur de retrait des parts si elle s'écarte trop de la valeur réelle du patrimoine ;",
+            "et communiquer un rendement global (ou rendement interne) plutôt qu'un simple taux de distribution, jugé parfois trompeur."
+          ],
+          "result": {
+            "title": "👉 Résultat :",
+            "text": "les baisses de 2023–2024 ne traduisent pas une crise du marché, mais une mise à niveau comptable et réglementaire.",
+            "conclusion": "Elles visent à rétablir la cohérence entre les prix affichés et la réalité économique."
+          }
+        },
+        "h3_revente": {
+          "title": "Revente de gré à gré : une solution alternative en période d'illiquidité",
+          "paragraphs": [
+            "Depuis 2023, de nombreux épargnants se heurtent à un ralentissement du marché secondaire des SCPI, avec des délais de vente allongés.",
+            "Dans ce contexte, la vente de gré à gré revient sur le devant de la scène.",
+            "Ce mécanisme consiste à vendre directement ses parts à un autre investisseur, sans passer par le carnet d'ordres officiel de la société de gestion."
+          ],
+          "advantages": {
+            "title": "Elle présente plusieurs avantages :",
+            "points": [
+              "une plus grande flexibilité sur le prix de cession (souvent négocié à une légère décote, entre –5 % et –10 %),",
+              "une rapidité d'exécution lorsqu'un acheteur est identifié,",
+              "et une solution adaptée aux investisseurs souhaitant céder des parts anciennes ou moins liquides."
+            ]
+          },
+          "warning": "Mais cette pratique suppose de bien évaluer la valeur réelle des parts et de maîtriser les aspects fiscaux et administratifs de la transaction (agrément de la société de gestion, frais, droits d'enregistrement).",
+          "quote": "💬 Chez Azalée Patrimoine, nous accompagnons nos clients dans la revente de gré à gré pour garantir la sécurité juridique et financière de l'opération, tout en optimisant le prix de cession."
+        },
+        "h3_reinvestir": {
+          "title": "Faut-il revenir sur les SCPI en 2025 ?",
+          "paragraphs": [
+            "Après plusieurs trimestres d'ajustement, le marché montre des signes de stabilisation.",
+            "Les taux semblent proches de leur pic, et certaines SCPI commencent déjà à retrouver des opportunités d'achat à prix décoté."
+          ],
+          "strategy": {
+            "title": "C'est donc une période propice pour réinvestir avec discernement, en privilégiant :",
+            "points": [
+              "les SCPI diversifiées (secteurs, zones géographiques, types d'actifs),",
+              "les SCPI à capital variable réactives,",
+              "et celles ayant anticipé la remontée des taux par une gestion prudente de la dette."
+            ]
+          }
+        },
+        "cycle": {
+          "title": "Comprendre le cycle SCPI",
+          "remember": "À retenir :",
+          "points": [
+            "Les SCPI ne sont pas des placements à court terme.",
+            "Elles suivent un cycle immobilier de 7 à 10 ans, avec des phases d'expansion, de correction et de stabilisation.",
+            "📉 Quand les taux montent → les valeurs baissent.",
+            "📈 Quand les taux se stabilisent → les SCPI redeviennent attractives grâce à des rendements plus élevés sur les prix ajustés."
+          ],
+          "criteria": {
+            "title": "Chez Azalée Patrimoine, nous analysons les SCPI selon trois critères :",
+            "points": [
+              "Qualité du patrimoine (localisation, taux d'occupation, solidité des locataires)",
+              "Politique de gestion (diversification, endettement, transparence)",
+              "Potentiel de revalorisation à moyen terme"
+            ]
+          }
+        },
+        "conclusion": {
+          "title": "Conclusion – Vers un réinvestissement raisonné",
+          "paragraphs": [
+            "Les SCPI ne sont pas en déclin, elles se réinventent dans un nouveau cycle économique.",
+            "Réinvestir aujourd'hui, c'est profiter de prix ajustés et de rendements potentiellement plus élevés, à condition d'être accompagné par un conseiller indépendant capable de décoder le marché."
+          ],
+          "ctas": [
+            {
+              "text": "👉 Faire le point sur mes SCPI actuelles",
+              "link": "https://calendly.com/contact-azalee-patrimoine"
+            },
+            {
+              "text": "👉 Identifier les opportunités 2025 avec un conseiller Azalée",
+              "link": "https://calendly.com/contact-azalee-patrimoine"
+            }
+          ]
+        }
+      },
+      "section5": {
+        "h2": "Les contrats d'assurance-vie luxembourgeois : vers une démocratisation de l'exode ?",
+        "intro": [
+          "Dans un contexte politique et fiscal incertain, de plus en plus de Français s'interrogent sur l'avenir de leur patrimoine.",
+          "L'assurance-vie luxembourgeoise (AV Lux) attire ceux qui envisagent une expatriation, séduits par sa portabilité internationale et sa neutralité fiscale.",
+          "Mais est-ce réellement une solution pour tous ? Ou seulement un outil réservé aux patrimoines internationaux ?"
+        ],
+        "pourquoi": {
+          "title": "Pourquoi l'Assurance Vie Lux peut faire sens",
+          "items": [
+            {
+              "title": "✅ Sécurité renforcée",
+              "text": "le triangle de sécurité et le super-privilège protègent mieux les souscripteurs en cas de faillite de l'assureur."
+            },
+            {
+              "title": "✅ Portabilité et neutralité fiscale",
+              "text": "idéale pour ceux qui changent de résidence fiscale."
+            },
+            {
+              "title": "✅ Large univers d'investissement",
+              "text": "supports multi-devises, fonds institutionnels, gestion sur mesure."
+            }
+          ]
+        },
+        "limites": {
+          "title": "Les limites à connaître",
+          "items": [
+            {
+              "title": "⚠️ Ticket d'entrée élevé",
+              "text": "(souvent > 250 000 €)"
+            },
+            {
+              "title": "⚠️ Frais plus importants",
+              "text": "pour les patrimoines inférieurs à 1 M€"
+            },
+            {
+              "title": "⚠️ Arbitrages complexes",
+              "text": "à distance en cas d'expatriation"
+            },
+            {
+              "title": "⚠️ Fonds en euros",
+              "text": "peu accessibles ou moins performants"
+            },
+            {
+              "title": "⚠️ Liquidité réduite",
+              "text": "et gestion sous mandat fréquente"
+            }
+          ]
+        },
+        "regard": {
+          "title": "Le regard Azalée :",
+          "paragraphs": [
+            "Le contrat luxembourgeois est une belle invention patrimoniale — mais surtout pour les bi-nationaux, expatriés ou familles à patrimoine supérieur à 1 M€.",
+            "Pour un résident français, il faut se demander si l'on ne paie pas des fonctions dont on ne profitera jamais."
+          ]
+        },
+        "retenir": {
+          "title": "💡 À retenir 💡",
+          "intro": "L'assurance-vie luxembourgeoise est un outil stratégique si :",
+          "points": [
+            "vous préparez une expatriation,",
+            "vous disposez d'un capital important,",
+            "vous avez besoin d'une gestion sur mesure et internationale."
+          ],
+          "conclusion": "Mais elle reste peu adaptée aux épargnants français cherchant un contrat souple, réactif et rentable à moindre coût."
+        },
+        "ctas": [
+          {
+            "text": "👉 Évaluer la pertinence d'un contrat luxembourgeois",
+            "link": "https://calendly.com/contact-azalee-patrimoine"
+          },
+          {
+            "text": "👉 Comparer avec un contrat français haut de gamme",
+            "link": "https://calendly.com/contact-azalee-patrimoine"
+          }
+        ]
+      },
+      "section6": {
+        "h2": "L'or et les métaux précieux : après +50 % en 2025, est-il trop tard pour investir ?",
+        "intro": [
+          "L'année 2025 a confirmé le retour en force de l'or et des métaux précieux.",
+          "Entre inflation persistante, tensions géopolitiques et ralentissement économique mondial, l'or a progressé de plus de 50 % sur un an, atteignant de nouveaux sommets historiques.",
+          "Mais cette performance spectaculaire pose une question cruciale : est-il encore temps d'acheter, ou le train est-il déjà passé ?"
+        ],
+        "pourquoi_flambe": {
+          "title": "Pourquoi l'or a flambé en 2025",
+          "intro": "L'or reste avant tout une valeur refuge. Sa flambée récente s'explique par plusieurs facteurs conjoints :",
+          "points": [
+            {
+              "emoji": "📈",
+              "text": "L'inflation durable : même si elle ralentit, elle continue d'éroder le pouvoir d'achat des monnaies fiduciaires."
+            },
+            {
+              "emoji": "💸",
+              "text": "Les politiques monétaires expansionnistes : la baisse anticipée des taux d'intérêt réels a dopé l'attrait des actifs non rémunérés comme l'or."
+            },
+            {
+              "emoji": "🌍",
+              "text": "Les tensions géopolitiques (Europe de l'Est, Asie) : elles alimentent la recherche de sécurité."
+            },
+            {
+              "emoji": "🏦",
+              "text": "Les achats massifs des banques centrales, notamment asiatiques, qui renforcent la demande structurelle."
+            }
+          ],
+          "conclusion": "L'or a ainsi joué pleinement son rôle de bouclier contre la perte de confiance et la dépréciation monétaire."
+        },
+        "trop_tard": {
+          "title": "Trop tard pour investir ? Pas forcément. Mais autrement.",
+          "paragraphs": [
+            "Historiquement, acheter de l'or au plus haut n'a jamais été catastrophique… à condition de savoir pourquoi on le détient.",
+            "L'or n'est pas un placement spéculatif, c'est un outil de diversification et de préservation de valeur."
+          ],
+          "quote": "💬 En d'autres termes : on n'achète pas l'or \"pour gagner\", on l'achète \"pour ne pas perdre\".",
+          "strategy": {
+            "intro": "Aujourd'hui, il serait risqué d'augmenter fortement son exposition après une telle hausse, mais il reste pertinent de :",
+            "points": [
+              "détenir une part stratégique (5 à 10 % du patrimoine) en or ou métaux précieux,",
+              "privilégier les supports indirects (ETF adossés, certificats, fonds matières premières) pour la liquidité,",
+              "échelonner ses achats dans le temps (DCA) plutôt que d'entrer d'un bloc."
+            ]
+          }
+        },
+        "autres_metaux": {
+          "title": "Et les autres métaux précieux ?",
+          "paragraphs": [
+            "L'argent a souvent un effet de levier sur l'or, mais il reste plus volatil et dépend davantage de la demande industrielle.",
+            "Le platine et le palladium sont liés au secteur automobile (catalyseurs), donc plus cycliques.",
+            "Le cuivre, considéré comme le \"métal de la transition énergétique\", attire aussi les investisseurs thématiques.",
+            "👉 Ces métaux peuvent compléter une stratégie de diversification, mais ils n'ont pas le même rôle que l'or : ce sont des actifs de croissance, pas de protection."
+          ]
+        },
+        "strategie": {
+          "title": "L'or dans une stratégie patrimoniale équilibrée",
+          "remember": "À retenir :",
+          "points": [
+            "L'or ne rapporte rien, mais il protège en cas de crise.",
+            "Il agit comme assurance contre la perte de confiance dans les marchés financiers.",
+            "Une exposition raisonnable (5 à 10 %) suffit à réduire la volatilité d'un portefeuille.",
+            "Mieux vaut acheter progressivement que spéculer sur le point d'entrée parfait.",
+            "Chez Azalée Patrimoine, nous intégrons l'or dans une logique d'équilibre : ni peur, ni euphorie — juste du bon sens."
+          ]
+        },
+        "conclusion": {
+          "title": "Conclusion – L'or, toujours d'actualité, mais plus pour la sérénité que pour le profit",
+          "paragraphs": [
+            "Après +50 % de performance, l'or n'est plus une opportunité de rendement, mais reste un outil de stabilité patrimoniale.",
+            "Investir aujourd'hui, c'est accepter de payer la tranquillité : la certitude que, quelle que soit la conjoncture, une partie du patrimoine reste à l'abri."
+          ],
+          "ctas": [
+            {
+              "text": "👉 Faire le point sur ma stratégie de diversification",
+              "link": "https://calendly.com/contact-azalee-patrimoine"
+            },
+            {
+              "text": "👉 Déterminer la part optimale d'or dans mon portefeuille",
+              "link": "https://calendly.com/contact-azalee-patrimoine"
+            }
+          ]
+        }
+      },
+      "section7": {
+        "h2": "Les produits structurés : pourquoi tout le monde s'accorde enfin sur ces placements ?",
+        "intro": [
+          "Longtemps perçus comme techniques, les produits structurés se sont imposés comme une solution d'équilibre dans les portefeuilles patrimoniaux.",
+          "Aujourd'hui, assureurs, brokers, conseillers et clients y trouvent chacun leur compte, un consensus rare dans l'univers de l'investissement.",
+          "Mais pourquoi cet engouement ? Et comment expliquer que ces produits séduisent aussi bien les investisseurs prudents que les profils dynamiques ?"
+        ],
+        "mi_chemin": {
+          "title": "Un placement à mi-chemin entre prudence et rendement",
+          "intro": "Les produits structurés sont des instruments hybrides :",
+          "points": [
+            "une partie obligataire pour la protection du capital,",
+            "une partie dérivée liée à un indice ou un panier d'actions, pour capter de la performance."
+          ],
+          "result": "👉 Résultat : des contrats capables d'offrir un rendement cible défini à l'avance, tout en limitant les pertes grâce à des mécanismes de protection.",
+          "conclusion": "C'est cette visibilité qui rassure les épargnants, surtout après les chocs boursiers récents : ils savent dans quelles conditions ils gagnent ou perdent."
+        },
+        "assureurs": {
+          "title": "Pourquoi les assureurs aiment les produits structurés",
+          "intro": "Pour les assureurs, ces produits répondent à un double enjeu :",
+          "points": [
+            "Remplacer progressivement les fonds euros (dont les rendements sont sous pression),",
+            "tout en maîtrisant leur risque global de bilan grâce à une ingénierie financière encadrée."
+          ],
+          "conclusion": "Ils permettent donc de maintenir un rendement attractif sans déséquilibrer la gestion financière du contrat d'assurance-vie.",
+          "quote": "💬 \"Les produits structurés, c'est le chaînon manquant entre le fonds euro et les marchés actions.\""
+        },
+        "brokers": {
+          "title": "Pourquoi les brokers et les banques les plébiscitent",
+          "intro": "Les brokers spécialisés conçoivent aujourd'hui des structures sur mesure avec :",
+          "points": [
+            "des sous-jacents variés (indices, paniers sectoriels, ESG…),",
+            "des barrières de protection élevées (souvent 50 à 60 % de baisse avant perte en capital),",
+            "et une transparence accrue sur les frais et les scénarios."
+          ],
+          "paragraphs": [
+            "Le marché s'est professionnalisé : les émissions sont mieux calibrées et les distributeurs mieux formés.",
+            "Résultat : une offre lisible, standardisée et encadrée par l'AMF."
+          ]
+        },
+        "cgp": {
+          "title": "Pourquoi les CGP s'y retrouvent",
+          "intro": "Les conseillers en gestion de patrimoine apprécient les produits structurés pour leur souplesse :",
+          "points": [
+            "Ils s'intègrent dans l'assurance-vie, le PER, ou un compte-titres,",
+            "Ils permettent d'adapter le profil rendement/risque au client,",
+            "Ils offrent une communication claire sur les conditions de gain et de protection."
+          ],
+          "paragraphs": [
+            "En période d'incertitude, ils servent d'outil d'allocation intelligente : ni trop risqué, ni trop défensif.",
+            "Et ils valorisent la valeur ajoutée du conseil, car leur compréhension nécessite un accompagnement professionnel."
+          ]
+        },
+        "clients": {
+          "title": "Pourquoi les clients en redemandent",
+          "intro": "Côté clients, trois éléments clés expliquent l'adhésion :",
+          "points": [
+            {
+              "title": "Lisibilité",
+              "text": " : le scénario est connu dès le départ (ex. +9 %/an si l'indice ne baisse pas de plus de 40 %)."
+            },
+            {
+              "title": "Protection",
+              "text": " : un filet de sécurité en cas de baisse des marchés."
+            },
+            {
+              "title": "Souplesse",
+              "text": " : possibilité d'investir dans un produit calibré pour son horizon (3 à 8 ans) et son profil."
+            }
+          ],
+          "conclusion": "Résultat : les performances réelles observées entre 2016 et 2024 sont souvent supérieures à celles des fonds euros, avec une volatilité contenue."
+        },
+        "resume": {
+          "title": "Les produits structurés en 3 phrases",
+          "remember": "À retenir :",
+          "points": [
+            "Un produit structuré, c'est un rendement cible + une protection définie à l'avance.",
+            "Il est particulièrement adapté aux marchés incertains, où la volatilité devient une opportunité.",
+            "Il ne faut pas chercher à \"battre le marché\", mais à sécuriser une performance maîtrisée dans le temps."
+          ],
+          "azalee": {
+            "intro": "Chez Azalée Patrimoine, nous analysons chaque structure selon trois critères :",
+            "points": [
+              "La qualité de l'émetteur,",
+              "Le niveau de protection du capital,",
+              "Le scénario de marché réaliste sur lequel repose le rendement."
+            ]
+          }
+        },
+        "consensus": {
+          "title": "Pourquoi ce consensus n'est pas un hasard",
+          "table": [
+            {
+              "acteur": "Assureur",
+              "gain": "Un rendement attractif sans déséquilibrer son bilan"
+            },
+            {
+              "acteur": "Broker",
+              "gain": "Une ingénierie rentable et transparente"
+            },
+            {
+              "acteur": "CGP",
+              "gain": "Un produit lisible et différenciant pour ses clients"
+            },
+            {
+              "acteur": "Client final",
+              "gain": "Un couple rendement / risque cohérent et encadré"
+            }
+          ],
+          "conclusion": "Ce cercle vertueux explique leur succès : tout le monde y trouve son équilibre — à condition de les comprendre et de les choisir avec discernement."
+        },
+        "conclusion": {
+          "title": "Conclusion – La clé, c'est la structuration",
+          "paragraphs": [
+            "Les produits structurés ne sont pas des placements miracles, mais des instruments d'ingénierie patrimoniale.",
+            "Leur succès repose sur la pédagogie et la qualité du conseil.",
+            "Bien construits, ils permettent de réconcilier performance et prudence, et de rassurer les clients sans brider leur rendement."
+          ],
+          "ctas": [
+            {
+              "text": "👉 Découvrir les meilleures opportunités structurées du moment",
+              "link": "/placements/produits-structures"
+            },
+            {
+              "text": "👉 Faire le point sur vos placements sécurisés avec un conseiller Azalée",
+              "link": "https://calendly.com/contact-azalee-patrimoine"
+            }
+          ]
+        },
+        "produits": {
+          "title": "La sélection de produits structurés d'Azalée pour 2025/2026",
+          "items": [
+            {
+              "name": "ATHENA DÉGRESSIF LUXE – JUILLET 2025",
+              "code": "(FR001400ZAJ7)",
+              "rendement": "+15%",
+              "thematique": "Luxe & consommation mondiale",
+              "emetteur": "Natixis Structured Issuance SA",
+              "garant": "Natixis (Notation A / A1 / A+)",
+              "duree": "10 ans (échéance 2035)",
+              "rendement_detail": "+1,25 % par mois écoulé, soit jusqu'à +15 % par an",
+              "link": "/placements/produits-structures/athena-luxe-2025"
+            },
+            {
+              "name": "ATHENA DÉGRESSIF IA & ROBOTIQUE – JUILLET 2025",
+              "code": "(FR001400ZAJ8)",
+              "rendement": "+15%",
+              "thematique": "Intelligence artificielle & robotique",
+              "emetteur": "Natixis Structured Issuance SA",
+              "duree": "10 ans (échéance 2035)",
+              "rendement_detail": "+1,25 % par mois écoulé, soit jusqu'à +15 % par an",
+              "link": "/placements/produits-structures/athena-ia-robotique-2025"
+            },
+            {
+              "name": "ÉNERGIE DÉGRESSIVE AVRIL 2025",
+              "code": "(FR001400WTQ9)",
+              "rendement": "9%",
+              "thematique": "Énergie & transition énergétique",
+              "emetteur": "BNP Paribas Issuance B.V.",
+              "duree": "10 ans (échéance 2035)",
+              "rendement_detail": "9 % par an",
+              "link": "/placements/produits-structures/energie-degressive-2025"
+            },
+            {
+              "name": "AUTO-CALL CRÉDIT AGRICOLE – JUIN 2025",
+              "code": "(FR001459AB6990)",
+              "rendement": "+15%",
+              "thematique": "Secteur bancaire / action unique",
+              "emetteur": "Société Générale",
+              "duree": "5 ans (échéance 2030)",
+              "rendement_detail": "+15 % déjà réalisés depuis le lancement",
+              "link": "/placements/produits-structures/autocall-credit-agricole-2025"
+            },
+            {
+              "name": "AMBITION PHARMA JANVIER 2026",
+              "code": "(EI21918ACD)",
+              "rendement": "10%",
+              "thematique": "Santé & biotechnologies",
+              "emetteur": "Crédit Agricole CIB",
+              "duree": "8 ans (échéance 2034)",
+              "rendement_detail": "10 % par an",
+              "link": "/placements/produits-structures/ambition-pharma-2026"
+            },
+            {
+              "name": "Phoenix Bearish EURIBOR 12M Novembre 2025",
+              "rendement": "7%",
+              "thematique": "Taux d'intérêt",
+              "sous_jacent": "Euribor 12 mois",
+              "rendement_detail": "7 % par an",
+              "link": "/placements/produits-structures"
+            }
+          ],
+          "disclaimer": "🔒 Disclaimer global : Les produits présentés sont destinés à des investisseurs avertis ayant une bonne compréhension des mécanismes et des risques associés aux produits structurés. Ils ne constituent pas un conseil en investissement personnalisé. Avant toute souscription, il est impératif de vérifier l'adéquation du produit avec le profil de risque et les objectifs d'investissement de chaque investisseur."
+        }
+      },
+      "section8": {
+        "enveloppes": {
+          "h2": "Les enveloppes d'investissement",
+          "intro": "Les enveloppes constituent le cadre juridique et fiscal de vos placements. Elles déterminent la fiscalité applicable, la souplesse de gestion et la transmission du capital.",
+          "items": [
+            {
+              "title": "L'assurance-vie",
+              "description": "Outil central de la gestion de patrimoine, l'assurance-vie permet de diversifier ses placements, de bénéficier d'une fiscalité avantageuse et de préparer la transmission de son patrimoine.",
+              "link": "/placements/assurance-vie",
+              "button": "Nos assureurs partenaires"
+            },
+            {
+              "title": "Le Plan Épargne Retraite (PER)",
+              "description": "Le PER combine avantage fiscal immédiat et épargne long terme. Il permet de préparer sa retraite tout en réduisant son impôt sur le revenu.",
+              "link": "/placements/pea-per",
+              "button": "Simuler votre versement idéal"
+            },
+            {
+              "title": "Le PEA et le compte-titres",
+              "description": "Le PEA favorise l'investissement en actions européennes dans un cadre fiscal attractif, tandis que le compte-titres permet une plus grande liberté d'investissement. Ces enveloppes favorisent l'investissement à risque fort. Ce qui peut engendrer des phases de moins values. Saviez-vous qu'elles sont reportables.",
+              "link": "/placements/compte-titres",
+              "button": "Faites analyser vos contrats et vérifier vos déclarations de revenus"
+            },
+            {
+              "title": "Le contrat de capitalisation",
+              "description": "Peu connu, le contrat de capitalisation reprend les atouts de l'assurance-vie, mais offre des avantages civils spécifiques en matière de transmission."
+            },
+            {
+              "title": "Les livrets réglementés et placements court terme",
+              "description": "Utiles pour sécuriser une épargne de précaution, les livrets (A, LDDS, LEP) offrent sécurité et liquidité, mais leur rendement reste limité."
+            }
+          ]
+        },
+        "supports": {
+          "h2": "Les supports d'investissement",
+          "intro": "Les supports représentent les actifs dans lesquels vous investissez à l'intérieur de vos enveloppes. Ils permettent d'adapter votre stratégie à votre profil de risque et à vos objectifs de rendement.",
+          "items": [
+            {
+              "title": "Les fonds en euros et unités de compte",
+              "description": "Les fonds en euros garantissent le capital, tandis que les unités de compte (actions/obligations…) offrent un potentiel de performance supérieur, au prix d'une volatilité plus forte."
+            },
+            {
+              "title": "Les produits structurés",
+              "description": "Les produits structurés allient protection partielle du capital et rendement conditionnel. Chez Azalée, nous sélectionnons les meilleurs émetteurs et suivons les performances réelles de nos produits maison.",
+              "link": "/placements/produits-structures"
+            },
+            {
+              "title": "Les SCPI et OPCI",
+              "description": "Les SCPI et OPCI permettent d'investir dans l'immobilier sans contrainte de gestion. Nos experts sélectionnent des fonds solides, performants et diversifiés pour générer un revenu régulier.",
+              "link": "/placements/scpi-opci"
+            },
+            {
+              "title": "Les fonds thématiques et ESG",
+              "description": "Les fonds thématiques (santé, climat, technologie, infrastructures) et les fonds labellisés ESG offrent une nouvelle façon d'investir durablement tout en participant à la transition économique."
+            },
+            {
+              "title": "Les placements alternatifs et non cotés",
+              "description": "Pour diversifier un patrimoine et en accroître le potentiel de rendement, les placements alternatifs occupent une place privilégiée dans nos allocations."
+            },
+            {
+              "title": "Le Private Equity",
+              "description": "Le Private Equity (capital-investissement) permet d'investir dans des entreprises non cotées. C'est un levier puissant de création de valeur à long terme, avec des rendements potentiels élevés.",
+              "link": "#section3"
+            },
+            {
+              "title": "Les GFA et GFV",
+              "description": "Les groupements fonciers agricoles ou viticoles offrent la possibilité de détenir une part du patrimoine rural français tout en bénéficiant d'avantages fiscaux attractifs."
+            },
+            {
+              "title": "Les placements atypiques",
+              "description": "Forêts, vins, art ou métaux précieux : ces actifs réels offrent une diversification tangible et parfois passionnelle. Ils complètent une allocation patrimoniale équilibrée."
+            }
+          ]
+        },
+        "expertise": {
+          "h2": "L'expertise Azalée Patrimoine",
+          "intro": "Au-delà des produits, c'est la méthode Azalée qui fait la différence : une vision globale, un accompagnement humain et une exigence de transparence à chaque étape.",
+          "items": [
+            {
+              "title": "Une méthodologie éprouvée",
+              "description": "Audit patrimonial, allocation stratégique, suivi annuel : notre approche repose sur la rigueur et la pédagogie."
+            },
+            {
+              "title": "Des performances mesurées et partagées",
+              "description": "Nous publions régulièrement les résultats de nos allocations et produits structurés, dans une logique de transparence totale."
+            },
+            {
+              "title": "Une approche responsable",
+              "description": "Nos conseils intègrent systématiquement les critères ESG pour concilier performance, durabilité et éthique."
+            }
+          ]
+        },
+        "pourquoi": {
+          "h2": "Pourquoi investir avec Azalée Patrimoine ?",
+          "intro": "Faire confiance à Azalée Patrimoine, c'est choisir un cabinet indépendant, transparent et engagé. Nos experts accompagnent chaque client avec méthode, écoute et responsabilité.",
+          "points": [
+            "Accompagnement personnalisé et humain",
+            "Stratégies sur-mesure et indépendantes",
+            "Accès à des produits réservés aux investisseurs avertis",
+            "Suivi digital et tableau de bord patrimonial",
+            "Engagement éthique et durable"
+          ]
+        }
+      },
+      "faq": {
+        "h2": "FAQ - Construire son patrimoine",
+        "items": [
+          {
+            "question": "Quelle différence entre support et enveloppe d'investissement ?",
+            "answer": "Les enveloppes (assurance-vie, PEA, PER...) sont le cadre juridique et fiscal de vos placements. Les supports (actions, obligations, SCPI...) sont les actifs dans lesquels vous investissez à l'intérieur de ces enveloppes. Pour en savoir plus, consultez la Section 1 et la Section 8.",
+            "link": "#section8"
+          },
+          {
+            "question": "Quels placements offrent le meilleur rendement net en 2025 ?",
+            "answer": "Le rendement dépend de votre profil de risque et de votre horizon. Les ETF crypto dans l'assurance-vie peuvent offrir des rendements élevés mais avec un risque important. Consultez un conseiller Azalée pour une analyse personnalisée.",
+            "link": "#"
+          },
+          {
+            "question": "Comment investir dans le Private Equity ?",
+            "answer": "Le Private Equity nécessite une compréhension approfondie des risques et des mécanismes. Consultez la Section 3 pour comprendre les 4 questions essentielles à se poser avant d'investir.",
+            "link": "#section3"
+          },
+          {
+            "question": "Quels sont les placements adaptés à mon profil fiscal ?",
+            "answer": "Cela dépend de votre situation personnelle (revenus, patrimoine, objectifs). Un diagnostic patrimonial gratuit avec un conseiller Azalée vous permettra d'identifier les meilleures opportunités.",
+            "link": "https://calendly.com/contact-azalee-patrimoine"
+          },
+          {
+            "question": "Quels sont les risques des produits structurés ?",
+            "answer": "Les produits structurés offrent une protection du capital mais comportent des risques (perte en capital, risque de l'émetteur, liquidité). Consultez la page dédiée aux produits structurés pour plus d'informations.",
+            "link": "/placements/produits-structures"
+          },
+          {
+            "question": "Quel est le placement préféré des français ?",
+            "answer": "L'assurance-vie reste le placement préféré des Français pour sa fiscalité avantageuse et sa flexibilité. Découvrez notre page dédiée à l'assurance-vie.",
+            "link": "/placements/assurance-vie"
+          },
+          {
+            "question": "Le fond Défense vaut-il vraiment le coût ?",
+            "answer": "Consultez l'article de blog de Medhy sur le fond Défense pour une analyse détaillée.",
+            "link": "#"
+          },
+          {
+            "question": "Le livret A va-t-il baisser en 2026 ?",
+            "answer": "Le taux du livret A est corrélé à la baisse des taux directeurs. Consultez notre article sur la baisse du taux du livret A.",
+            "link": "#"
+          },
+          {
+            "question": "Que peut-on attendre d'un placement ESG ?",
+            "answer": "Les placements ESG (Environnement, Social, Gouvernance) permettent d'allier performance financière et impact positif. Ils participent à la transition économique tout en offrant des opportunités de rendement.",
+            "link": "#"
+          },
+          {
+            "question": "C'est quoi la loi industrie verte ?",
+            "answer": "La loi industrie verte est une mesure fiscale visant à encourager les investissements dans la transition écologique. Consultez un conseiller Azalée pour comprendre comment en bénéficier.",
+            "link": "https://calendly.com/contact-azalee-patrimoine"
+          },
+          {
+            "question": "Comment décrypter les frais de votre contrat d'assurance vie ?",
+            "answer": "Les frais d'assurance-vie peuvent être complexes (frais d'entrée, de gestion, d'arbitrage...). Un conseiller Azalée peut vous aider à comprendre et optimiser ces frais.",
+            "link": "https://calendly.com/contact-azalee-patrimoine"
+          }
+        ]
+      },
+      "seo": {
+        "title": "Placements Financiers et Épargne | Azalée Patrimoine",
+        "description": "Placements financiers et épargne avec Azalée Patrimoine : assurance-vie, SCPI, PEA, PER, contrats de capitalisation. Optimisez votre épargne et préparez votre retraite.",
+        "keywords": "placements financiers, assurance-vie, SCPI, PEA, PER, épargne, investissement, Azalée Patrimoine",
+        "openGraph": {
+          "title": "Placements Financiers et Épargne | Azalée Patrimoine",
+          "description": "Placements financiers et épargne avec Azalée Patrimoine : assurance-vie, SCPI, PEA, PER, contrats de capitalisation. Optimisez votre épargne et préparez votre retraite.",
+          "url": "https://azalee-patrimoine.fr/placements"
+        },
+        "twitter": {
+          "title": "Placements Financiers et Épargne | Azalée Patrimoine",
+          "description": "Placements financiers et épargne avec Azalée Patrimoine : assurance-vie, SCPI, PEA, PER, contrats de capitalisation. Optimisez votre épargne et préparez votre retraite."
+        }
+      }
+    },
+    "published": true,
+    "modifiedBy": "admin",
+    "lastModified": "2025-11-29T00:48:43.947Z",
+    "createdAt": "2025-11-28T22:43:45.209Z",
+    "updatedAt": "2025-11-28T22:57:03.402Z",
+    "__v": 0
+  },
+  {
+    "_id": "692a2ab838b766744a361e92",
+    "path": "immobilier",
+    "title": "Investissement Immobilier",
+    "content": {
+      "hero": {
+        "h1": "Investir dans l'immobilier avec Azalée Patrimoine ",
+        "description": "L'immobilier, pilier de votre indépendance financière et de la transmission familiale. Chez Azalée Patrimoine, nous considérons l'immobilier comme un socle fondamental d'un patrimoine équilibré : tangible, résilient et porteur de sens. Notre rôle est de transformer vos projets immobiliers — qu'ils soient locatifs, neufs ou patrimoniaux — en véritables stratégies d'enrichissement à long terme, intégrant rendement, fiscalité et transmission.",
+        "ctaButton1": "Demandez votre audit patrimonial personnalisé",
+        "ctaButton1Link": "https://calendly.com/rdv-azalee-patrimoine/30min",
+        "ctaButton2": "Découvrir nos solutions",
+        "ctaButton2Link": "#pourquoi-investir",
+        "rightCard": {
+          "percentage": "61,2%",
+          "text": "des français",
+          "description": "61.2% des français possèdent un ou plusieurs biens immobiliers.",
+          "buttonText": "Téléchargez le guide complet pour bâtir et optimiser votre patrimoine"
+        }
+      },
+      "section2": {
+        "h2": "Pourquoi investir dans l'immobilier aujourd'hui ?",
+        "intro": "L'immobilier reste l'actif préféré des Français, et ce n'est pas un hasard :",
+        "statistic": {
+          "value": "61,2%",
+          "text": "des ménages possèdent un bien immobilier",
+          "source": "INSEE 2024"
+        },
+        "keyPoints": [
+          {
+            "title": "Rendement locatif brut moyen",
+            "description": "5 à 6 %, voire plus selon la localisation."
+          },
+          {
+            "title": "Plus-value patrimoniale",
+            "description": "Appréciation de la valeur du bien dans le temps."
+          },
+          {
+            "title": "Effet de levier du crédit immobilier",
+            "description": "Investir sans mobiliser tout son capital."
+          },
+          {
+            "title": "Fiscalité avantageuse",
+            "description": "Via des dispositifs spécifiques (LMNP, Pinel, déficit foncier…)."
+          },
+          {
+            "title": "Protection et transmission",
+            "description": "Protection contre l'inflation et création d'un actif transmissible."
+          }
+        ],
+        "scpiMention": "\"Mais il n'est pas toujours nécessaire d'acheter un bien en direct pour profiter du dynamisme immobilier : les SCPI permettent d'accéder à la pierre autrement.\"",
+        "azaleeMessage": "💬 Chez Azalée Patrimoine, nous intégrons chaque actif immobilier dans une vision globale — financière, fiscale et humaine — pour bâtir la liberté patrimoniale de demain.",
+        "ctaTitle": "Découvrez quelle stratégie immobilière correspond à votre profil",
+        "ctaButton": "Faire le test de profil",
+        "ctaLink": "https://tally.so"
+      },
+      "section3": {
+        "h2": "Investir dans les SCPI : la pierre sans les contraintes",
+        "intro": [
+          "Les SCPI (Sociétés Civiles de Placement Immobilier) offrent la possibilité d'investir dans un portefeuille d'immeubles géré par des professionnels, sans contrainte de gestion locative.",
+          "Elles constituent une porte d'entrée idéale pour diversifier son patrimoine et générer des revenus réguliers.",
+          "test"
+        ],
+        "advantages": [
+          {
+            "title": "Accessibilité",
+            "description": "Ticket d'entrée dès quelques centaines d'euros."
+          },
+          {
+            "title": "Diversification",
+            "description": "Bureaux, commerces, santé, logistique."
+          },
+          {
+            "title": "Rendement attractif",
+            "description": "Entre 4 % et 6 % net selon les SCPI en 2024."
+          },
+          {
+            "title": "Gestion déléguée",
+            "description": "Vous percevez les loyers sans gérer les locataires."
+          },
+          {
+            "title": "test",
+            "description": "test"
+          }
+        ],
+        "scpiExamples": {
+          "title": "Exemples de SCPI performantes",
+          "scpis": [
+            "Amundi Immobilier",
+            "Corum Origin",
+            "Épargne Pierre",
+            "Primovie"
+          ],
+          "note": "(liens vers la bibliothèque de partenaires où l'on pourrait avoir 1 fiche par partenaire)"
+        },
+        "quote": "💬 \"Avec les SCPI, vous profitez du potentiel de l'immobilier professionnel, sans les soucis de la location.\"",
+        "chartTitle": "Rendement moyen des SCPI vs immobilier locatif direct",
+        "chartNote": "Note Azalée : Les rendements varient selon le type de SCPI, la localisation du bien locatif et la fiscalité appliquée. L'effet de levier du crédit peut significativement améliorer la rentabilité de l'immobilier direct.",
+        "ctaButton": "👉 Comparez les meilleures SCPI du moment avec un conseiller Azalée",
+        "ctaLink": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "section5": {
+        "h2": "Rendement immobilier : ce que rapportent vraiment vos placements",
+        "h3": "Pour bâtir une stratégie équilibrée, il faut comparer le rendement brut, net de charges et net d'impôts.",
+        "table": {
+          "headers": [
+            "Type d'investissement",
+            "Rendement brut moyen",
+            "Rendement net estimé",
+            "Fiscalité principale"
+          ],
+          "rows": [
+            {
+              "type": "Immobilier locatif",
+              "rendementBrut": "5,5 %",
+              "rendementNet": "3,5 %",
+              "fiscalite": "Revenus fonciers"
+            },
+            {
+              "type": "SCPI",
+              "rendementBrut": "4,6 %",
+              "rendementNet": "3,8 %",
+              "fiscalite": "Revenus fonciers / IR"
+            },
+            {
+              "type": "Assurance vie (fonds euros)",
+              "rendementBrut": "2,5 %",
+              "rendementNet": "2 %",
+              "fiscalite": "Flat tax"
+            },
+            {
+              "type": "ETF immobilier",
+              "rendementBrut": "3,2 %",
+              "rendementNet": "2,8 %",
+              "fiscalite": "Flat tax"
+            }
+          ]
+        }
+      },
+      "section6": {
+        "h2": "SCPI, LMNP, Pinel… quelle stratégie pour quel profil ?",
+        "intro": "L'immobilier est l'un des rares actifs que l'on peut financer à crédit.",
+        "leverageExplanation": "Cet effet de levier permet de se constituer un patrimoine sans immobiliser tout son capital.",
+        "example": {
+          "title": "Exemple concret :",
+          "points": [
+            "Un investissement de 200 000 € financé à 90 % par emprunt",
+            "Avec un rendement locatif de 5 %",
+            "Permet de générer plus de 60 000 € de capital net après 20 ans",
+            "Tout en profitant de la déductibilité des intérêts d'emprunt"
+          ]
+        },
+        "quote": "💬 \"L'argent de la banque travaille pour vous : c'est la magie du levier patrimonial.\"",
+        "ctaButton": "👉 Simuler mon financement immobilier",
+        "ctaLink": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "section8": {
+        "h2": "Marché immobilier 2025 : opportunités et mutations",
+        "intro": "L'année 2024 marque un tournant : baisse des prix dans certaines zones, remontée des taux, mais forte tension locative dans les métropoles régionales.",
+        "trends": [
+          {
+            "title": "Paris et grandes métropoles",
+            "description": "Correction modérée (-3 à -5 %)"
+          },
+          {
+            "title": "Villes moyennes",
+            "description": "Attractivité accrue (Rennes, Bordeaux, Annecy…)"
+          },
+          {
+            "title": "Immobilier locatif",
+            "description": "Rendement moyen de 5,8 %"
+          },
+          {
+            "title": "Investissement \"pierre papier\"",
+            "description": "Stabilité des revenus et diversification européenne"
+          }
+        ],
+        "source": "Source : PAPERS.immo, Notaires de France, INSEE 2024.",
+        "perspective2026": {
+          "title": "🔮 Perspective 2026",
+          "paragraph1": "Sur 2025, on observe une légère reprise grâce à l'inflexion des taux d'intérêt, mais la prochaine loi de finance (2026) risque de mettre un coup d'arrêt à la dynamique d'investissement qui s'était relancée.",
+          "paragraph2": "En effet, la suppression de l'amortissement sur les meublés va impacter à nouveau le choix des investisseurs. L'objectif est de redonner un peu de souffle à la location nue qui devrait bénéficier d'un meilleur abattement."
+        }
+      },
+      "section9": {
+        "h2": "L'immobilier papier : SCPI, OPCI, REITs",
+        "description": "Description de l'immobilier papier..."
+      },
+      "section10": {
+        "h2": "Avis et retours d'expérience",
+        "testimonials": [
+          {
+            "name": "Isabelle L.",
+            "role": "Cadre supérieure à Paris",
+            "text": "J'étais hésitante à cause des frais d'entrée, mais l'équipe m'a montré la rentabilité réelle nette d'impôt : convaincue !",
+            "rating": 5
+          }
+        ],
+        "averageRating": {
+          "value": "4,9",
+          "max": "5",
+          "label": "Note moyenne",
+          "source": "(avis clients Azalée)"
+        },
+        "ctaButton": "👉 Demandez un comparatif SCPI personnalisé",
+        "ctaLink": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "section11": {
+        "h2": "Guides et simulateurs",
+        "subtitle": "🎁 Téléchargez gratuitement nos ressources exclusives",
+        "intro": "Tous nos outils sont conçus pour vous aider à prendre des décisions éclairées, fondées sur des données réelles.",
+        "resources": [
+          {
+            "title": "Guide SCPI 2025",
+            "description": "Comprendre, comparer, investir intelligemment",
+            "buttonText": "Télécharger",
+            "link": "#"
+          },
+          {
+            "title": "Simulateur de rentabilité immobilière",
+            "description": "Calculez votre rendement locatif en quelques clics",
+            "buttonText": "Utiliser le simulateur",
+            "link": "/outils"
+          },
+          {
+            "title": "Quiz personnalisé",
+            "description": "Quel type d'investissement immobilier est fait pour vous ?",
+            "buttonText": "Faire le quiz",
+            "link": "https://tally.so"
+          }
+        ],
+        "ctaButton": "👉 Accéder à nos outils immobiliers",
+        "ctaLink": "/outils"
+      },
+      "section12": {
+        "h2": "Les prix de l'immobilier en temps réel dans votre région",
+        "description": "Suivez l'évolution du marché immobilier en direct grâce à nos données partenaires PAPERS.immo.",
+        "placeholder": "Ex: Lyon, 69001, Paris..."
+      },
+      "section13": {
+        "h2": "Les trois leviers de la stratégie immobilière Azalée",
+        "levers": [
+          {
+            "title": "Rentabiliser et optimiser fiscalement",
+            "description": "LMNP, Pinel, déficit foncier, SCI",
+            "link": "/immobilier/lmnp"
+          },
+          {
+            "title": "Diversifier avec la pierre papier",
+            "description": "SCPI, OPCI, assurance vie immobilière",
+            "link": "/placements/scpi-opci"
+          },
+          {
+            "title": "Structurer et transmettre durablement",
+            "description": "SCI, immeubles de rapport, financement, PTZ",
+            "link": "/immobilier/sci"
+          }
+        ]
+      },
+      "section14": {
+        "h2": "La méthode Azalée : une approche patrimoniale globale",
+        "subtitle": "Nous ne proposons pas de \"produits\", mais une stratégie complète, sur mesure et durable.",
+        "steps": [
+          {
+            "number": "1",
+            "title": "Diagnostic patrimonial",
+            "description": "Analyse de votre situation et de vos objectifs"
+          },
+          {
+            "number": "2",
+            "title": "Élaboration d'une stratégie sur mesure",
+            "description": "Rendement, fiscalité, transmission"
+          },
+          {
+            "number": "3",
+            "title": "Sélection des supports adaptés",
+            "description": "Immobilier direct, LMNP, SCI, SCPI, assurance vie…"
+          },
+          {
+            "number": "4",
+            "title": "Accompagnement juridique et fiscal",
+            "description": "Démembrement, SCI, clauses bénéficiaires"
+          },
+          {
+            "number": "5",
+            "title": "Suivi continu et reporting",
+            "description": "Réajustement annuel de la stratégie"
+          }
+        ],
+        "difference": {
+          "title": "La différence Azalée",
+          "text": "Une vision d'ensemble qui marie finance, fiscalité et sérénité."
+        }
+      },
+      "section15": {
+        "h2": "Témoignages et cas concrets",
+        "testimonials": [
+          {
+            "name": "Laurent D.",
+            "role": "Chef d'entreprise à Lyon",
+            "text": "« Grâce à Azalée, j'ai optimisé mon investissement locatif tout en réduisant mon impôt sur le revenu. Leur accompagnement va bien au-delà du simple achat. »",
+            "rating": "4"
+          },
+          {
+            "name": "Sophie B.",
+            "role": "Cadre supérieure à Paris",
+            "text": "« J'avais un projet LMNP, ils m'ont aidée à le rendre rentable, sécurisé et transmissible. »",
+            "rating": 5
+          }
+        ]
+      },
+      "section16": {
+        "h2": "Nos expertises immobilières",
+        "expertises": [
+          {
+            "title": "Investissement locatif",
+            "description": "LMNP, Pinel, location nue, défiscalisation",
+            "link": "/immobilier/lmnp"
+          },
+          {
+            "title": "Immobilier neuf",
+            "description": "VEFA, loi Pinel, PTZ, défiscalisation",
+            "link": "/immobilier/immobilier-neuf"
+          },
+          {
+            "title": "Faire construire",
+            "description": "Construction neuve, terrains, financement",
+            "link": "/immobilier/faire-construire"
+          },
+          {
+            "title": "SCI et transmission",
+            "description": "Création de SCI, démembrement, transmission",
+            "link": "/immobilier/sci"
+          }
+        ]
+      },
+      "section17": {
+        "h2": "Ressources gratuites pour aller plus loin",
+        "resources": [
+          {
+            "title": "Guide complet de l'investissement immobilier",
+            "description": "Téléchargez notre guide PDF de 50 pages",
+            "buttonText": "Télécharger",
+            "link": "#"
+          },
+          {
+            "title": "Calculatrice de rentabilité locative",
+            "description": "Calculez votre rendement net d'impôt",
+            "buttonText": "Utiliser",
+            "link": "/outils"
+          }
+        ]
+      },
+      "section18": {
+        "h2": "Faites confiance à un partenaire indépendant",
+        "description": "Azalée Patrimoine est un cabinet indépendant, sans conflit d'intérêts. Nous sélectionnons les meilleurs produits pour vos objectifs, pas pour nos commissions."
+      },
+      "section19": {
+        "h2": "FAQ – Investir dans l'immobilier",
+        "faqs": [
+          {
+            "question": "Qu'est-ce qu'une SCPI ?",
+            "answer": "Une  SCPI (Société Civile de Placement Immobilier) est un placement collectif permettant d'investir dans un portefeuille immobilier géré par une société de gestion. Vous percevez des revenus locatifs réguliers, proportionnels à votre part dans la SCPI, sans avoir à gérer de biens."
+          },
+          {
+            "question": "Quel rendement peut-on espérer d'une SCPI ?",
+            "answer": "Le rendement moyen des SCPI de rendement se situe entre 4 % et 6 % par an (source AMF 2024). Certaines SCPI thématiques comme Corum Origin ou Épargne Pierre affichent de meilleures performances grâce à une diversification européenne ou sectorielle."
+          },
+          {
+            "question": "Quels sont les risques d'un investissement en SCPI ?",
+            "answer": "Comme tout placement, les SCPI comportent des risques : la valeur des parts peut fluctuer, les loyers ne sont pas garantis, et la liquidité peut être limitée en cas de forte demande de revente. 👉 C'est pourquoi Azalée Patrimoine sélectionne des SCPI solides, diversifiées et bien capitalisées."
+          },
+          {
+            "question": "SCPI, LMNP, Pinel… que choisir ?",
+            "answer": "Tout dépend de vos objectifs : • Réduire vos impôts 👉 LMNP ou Pinel • Générer un revenu complémentaire 👉 SCPI de rendement • Transmettre un bien 👉 SCI ou démembrement. Nos conseillers peuvent modéliser votre situation et définir la stratégie la plus pertinente."
+          },
+          {
+            "question": "Peut-on financer un investissement en SCPI à crédit ?",
+            "answer": "Oui. Certaines banques acceptent le crédit SCPI, souvent avec des durées plus courtes (10-15 ans). L'avantage : les intérêts d'emprunt sont déductibles de vos revenus fonciers, ce qui améliore la rentabilité nette."
+          },
+          {
+            "question": "Quelle différence entre SCPI et OPCI ?",
+            "answer": "Une OPCI (Organisme de Placement Collectif Immobilier) investit à la fois dans la pierre et les marchés financiers. Elle offre une meilleure liquidité mais un rendement généralement plus faible que les SCPI."
+          },
+          {
+            "question": "Les revenus d'une SCPI sont-ils imposables ?",
+            "answer": "Oui. Ils sont considérés comme des revenus fonciers et imposés selon votre TMI. Il existe toutefois des stratégies de SCPI européennes ou logées dans l'assurance vie pour réduire la fiscalité."
+          },
+          {
+            "question": "Est-ce le bon moment pour investir dans l'immobilier ?",
+            "answer": "En 2025, les taux de crédit se stabilisent et les prix s'ajustent à la baisse : une opportunité pour investir à long terme. Les actifs bien situés et les SCPI résilientes conservent de très bonnes perspectives de rendement."
+          }
+        ],
+        "ctaText": "Vous avez d'autres questions ?",
+        "ctaButton": "Prenez rendez-vous avec un conseiller Azalée Patrimoine pour un audit personnalisé",
+        "ctaLink": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "section20": {
+        "h2": "Articles et guides immobiliers",
+        "description": "Découvrez nos articles détaillés pour approfondir vos connaissances sur l'investissement immobilier",
+        "articles": [
+          {
+            "title": "Investissement immobilier rentable : comment bâtir une stratégie durable",
+            "description": "Découvrez comment construire un investissement immobilier rentable avec Azalée Patrimoine : SCPI, LMNP, crédit, fiscalité, rendement net et stratégies durables pour bâtir votre indépendance financière.",
+            "link": "/immobilier/investissement-immobilier-rentable",
+            "badge": "Guide complet"
+          },
+          {
+            "title": "LMNP 2025 : le meublé reste-t-il un bon investissement après la réforme ?",
+            "description": "La réforme 2025 change la donne pour le LMNP : les amortissements sont désormais réintégrés à la revente. Découvrez comment investir intelligemment en location meublée non professionnelle malgré la nouvelle fiscalité.",
+            "link": "/immobilier/lmnp-2025",
+            "badge": "Analyse 2025"
+          }
+        ]
+      },
+      "cta": {
+        "ctaTitle": "Prêt à Investir dans l'Immobilier ?",
+        "ctaText": "Contactez nos experts pour une consultation personnalisée et découvrez comment optimiser votre patrimoine immobilier.",
+        "ctaButton": "Demander une consultation",
+        "ctaLink": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "seo": {
+        "title": "Investissement Immobilier | Azalée Patrimoine - LMNP, SCI, SCPI, Crédit",
+        "description": "Découvrez comment Azalée Patrimoine transforme vos projets immobiliers en véritables stratégies patrimoniales : immobilier neuf, LMNP, SCI, SCPI, crédit et transmission.",
+        "keywords": "investissement immobilier, LMNP, SCI, SCPI, crédit immobilier, défiscalisation, immobilier neuf, VEFA, location meublée, Azalée Patrimoine, gestion de patrimoine",
+        "openGraph": {
+          "title": "Investissement Immobilier | Azalée Patrimoine",
+          "description": "Découvrez comment Azalée Patrimoine transforme vos projets immobiliers en véritables stratégies patrimoniales : immobilier neuf, LMNP, SCI, SCPI, crédit et transmission.",
+          "url": "https://azalee-patrimoine.fr/immobilier"
+        },
+        "twitter": {
+          "title": "Investissement Immobilier | Azalée Patrimoine",
+          "description": "Découvrez comment Azalée Patrimoine transforme vos projets immobiliers en véritables stratégies patrimoniales : immobilier neuf, LMNP, SCI, SCPI, crédit et transmission."
+        }
+      }
+    },
+    "published": true,
+    "modifiedBy": "admin",
+    "lastModified": "2025-11-29T00:48:43.912Z",
+    "createdAt": "2025-11-28T23:05:28.525Z",
+    "updatedAt": "2025-11-28T23:19:11.215Z",
+    "__v": 0
+  },
+  {
+    "_id": "692a2efd4314d420e63c7eb7",
+    "path": "fiscalite",
+    "title": "Fiscalité - Optimiser votre fiscalité en 2025",
+    "content": {
+      "hero": {
+        "leftCard": {
+          "h1": "Optimiser votre fiscalité en 2025 pour mieux valoriser votre patrimoine",
+          "description1": "La fiscalité influence directement la rentabilité de vos investissements et la transmission de votre patrimoine. Comprendre les mécanismes de l'impôt, maîtriser les déductions et utiliser les bons dispositifs vous permet de transformer la fiscalité en levier de croissance.",
+          "description2": "Azalée Patrimoine vous accompagne pour bâtir une stratégie fiscale cohérente, durable et adaptée à votre profil.",
+          "ctaButton": "Je prends ma fiscalité en main maintenant",
+          "ctaLink": "https://calendly.com/rdv-azalee-patrimoine/30min"
+        },
+        "rightCard": {
+          "bubble": {
+            "amount": "66 768€",
+            "text": "d'économie d'impôts"
+          },
+          "h2": [
+            "Je choisis",
+            "La meilleure stratégie",
+            "Pour réduire mes impôts"
+          ],
+          "benefits": [
+            "Optimisations immobilières, financières et déclaratives",
+            "Jusqu'à 10 700 € de déficit foncier imputable/an",
+            "Jusqu'à 45 % de mon investissement déductible de ma base imposable atteignant presque 67 000€ de baisse d'impôt",
+            "Approche 100 % personnalisée"
+          ]
+        }
+      },
+      "essentiel": {
+        "h2": "L'essentiel",
+        "items": [
+          {
+            "text": "L'optimisation fiscale consiste à réduire légalement votre impôt en combinant arbitrages déclaratifs, enveloppes fiscales (assurance-vie, capitalisation, PEA, PER) et investissements (immobilier, financiers), sans prendre de risques inutiles."
+          },
+          {
+            "text": "Plusieurs leviers complémentaires existent :",
+            "subItems": [
+              "IR (frais réels, déductions, crédits d'impôt)",
+              "Capital (PFU/flat tax ou barème, abattements)",
+              "Immobilier (Pinel, Denormandie, déficit foncier, LMNP/LMP, Girardin, Malraux, Monuments Historiques, Cosse)",
+              "Retraite (versements PER déductibles)",
+              "Transmission (donations, démembrement)"
+            ]
+          },
+          {
+            "text": "Gains potentiels (selon votre situation et la réglementation) : jusqu'à 66 000 € de réduction d'IR sur certains dispositifs, jusqu'à 10 700 €/an de déficit foncier imputable, et jusqu'à 45 % de l'investissement déductible de la base imposable sur des montages éligibles."
+          },
+          {
+            "text": "Le bon choix dépend de votre profil, de votre TMI, de votre horizon, de vos objectifs (revenus complémentaires, transmission) et de votre tolérance au risque."
+          },
+          {
+            "text": "Cette rubrique propose une définition claire des mots-clés pour comprendre les principaux mécanismes liés à la fiscalité (TMI, PFU/flat tax, quotient familial, déduction vs réduction, micro vs réel, IFI, abattements) et favoriser votre éducation financière."
+          },
+          {
+            "text": "Se faire accompagner par Azalée Patrimoine permet d'orchestrer ces leviers dans une stratégie cohérente, durable et adaptée à votre situation."
+          }
+        ],
+        "note": "Les avantages fiscaux dépendent de votre situation et des textes en vigueur. Ces exemples sont indicatifs, sous conditions d'éligibilité et plafonds. Une étude personnalisée est nécessaire."
+      },
+      "comprendreIR": {
+        "h2": "Comprendre l'impôt sur le revenu",
+        "h3": "Comment fonctionne l'impôt en France",
+        "paragraphs": [
+          "En France, l'impôt sur le revenu est prélevé sur l'ensemble des revenus perçus par un foyer fiscal au cours de l'année civile. Il s'applique de façon progressive : plus vos revenus sont élevés, plus le taux d'imposition applicable à chaque \"tranche\" de revenus augmente. Ce système vise l'équité fiscale, tout en incitant à la structuration de votre stratégie patrimoniale.",
+          "L'impôt sur le revenu joue un rôle déterminant dans la gestion et la valorisation de votre patrimoine. Avant même de songer à l'optimisation fiscale, il est essentiel de bien comprendre son fonctionnement pour faire les bons choix et saisir toutes les opportunités offertes par la législation."
+        ]
+      },
+      "categoriesRevenus": {
+        "h3": "Les différentes catégories de revenus",
+        "intro": "Vos revenus sont classés en plusieurs catégories, chacune répondant à des règles spécifiques.",
+        "categories": [
+          {
+            "title": "Salaires et assimilés",
+            "items": [
+              "rémunérations",
+              "pensions retraites, alimentaires",
+              "allocations chômages"
+            ]
+          },
+          {
+            "title": "Revenus fonciers",
+            "items": [
+              "loyers issus de biens immobiliers"
+            ]
+          },
+          {
+            "title": "Revenus de Capitaux Mobiliers",
+            "items": [
+              "Intérêts",
+              "Dividendes"
+            ]
+          },
+          {
+            "title": "BIC / BNC",
+            "items": [
+              "activités indépendantes",
+              "Professions libérales",
+              "revenus d'entreprise individuelle."
+            ]
+          }
+        ],
+        "conclusion": "Chaque catégorie répond à des règles propres et offre des dispositifs d'optimisation spécifiques (déductions, abattements, régimes particuliers)."
+      },
+      "bareme": {
+        "h3": "Barème, tranches, décote et quotient familial",
+        "paragraphs": [
+          "L'imposition repose sur un barème progressif comportant plusieurs tranches : à chaque \"part\" du foyer fiscal, un taux s'applique selon le revenu déclaré. Plus vous avez de parts (enfants, conjoint), plus votre revenu imposable par part diminue, grâce au quotient familial.",
+          "La décote vient réduire l'impôt des foyers faiblement imposés. À l'inverse, pour les revenus les plus élevés, des contributions additionnelles peuvent s'appliquer, renforçant l'importance de bien organiser la déclaration et le choix des dispositifs fiscaux adaptés à votre profil.",
+          "Bien comprendre ces fondamentaux permet de saisir le potentiel d'optimisation offert par le système français, de la réduction d'impôt via l'investissement immobilier (Pinel, Girardin...) à l'ajustement des frais réels ou à la mise en place de donations stratégiques."
+        ],
+        "infographic": {
+          "title": "Impôt sur le revenu",
+          "subtitle": "Tranches et taux d'imposition 2025",
+          "description1": "L'impôt sur vos revenus de 2024, déclarés en 2025, est calculé par tranches, en fonction du montant de vos revenus. Chaque tranche correspond à un taux d'imposition (de 0 à 45 %).",
+          "description2": "Si votre revenu annuel dépasse celui de la tranche 1 (11 497 €), il sera concerné par plusieurs tranches successives, comme expliqué dans l'exemple.",
+          "image": "/images/I6644.jpg",
+          "imageAlt": "Barème de l'impôt sur le revenu 2025 - Tranches et taux d'imposition"
+        },
+        "infographie": {
+          "title": "Impôt sur le revenu",
+          "subtitle": "Tranches et taux d'imposition 2025",
+          "description": [
+            "L'impôt sur vos revenus de 2024, déclarés en 2025, est calculé par tranches, en fonction du montant de vos revenus. Chaque tranche correspond à un taux d'imposition (de 0 à 45 %).",
+            "Si votre revenu annuel dépasse celui de la tranche 1 (11 497 €), il sera concerné par plusieurs tranches successives, comme expliqué dans l'exemple."
+          ],
+          "image": "/images/I6644.jpg",
+          "imageAlt": "Barème de l'impôt sur le revenu 2025 - Tranches et taux d'imposition"
+        }
+      },
+      "declarer": {
+        "h2": "Déclarer efficacement ses revenus",
+        "intro": "Déclarer ses revenus de manière rigoureuse est une étape clé pour éviter tout redressement fiscal et optimiser le montant de son impôt.",
+        "h3": "Quand et comment déclarer ?",
+        "boxes": [
+          {
+            "title": "Période de déclaration"
+          },
+          {
+            "title": "www.impots.gouv.fr"
+          }
+        ],
+        "externalLink": {
+          "text": "Lien externe vers le site des impôts :",
+          "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F359",
+          "label": "Quelle est la date limite pour faire sa déclaration de revenus pour les impôts ? | Service Public"
+        },
+        "lienExterne": {
+          "label": "Lien externe vers le site des impôts :",
+          "text": "Quelle est la date limite pour faire sa déclaration de revenus pour les impôts ? | Service Public",
+          "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F359"
+        }
+      },
+      "dispositifs": {
+        "h2": "Profiter des dispositifs fiscaux",
+        "intro": "La fiscalité française regorge de \"niches\" permettant de réduire son impôt tout en investissant dans des actifs porteurs.",
+        "ctaButton": "Faites le point sur vos déductions possibles avec un conseiller",
+        "ctaLink": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "defiscalisation": {
+        "h2": "Les dispositifs de défiscalisation immobilière",
+        "dispositifs": [
+          {
+            "name": "Loi Pinel",
+            "link": "/fiscalite/loi-pinel",
+            "description": "Investissement dans le neuf avec engagement locatif de 6, 9 ou 12 ans. Réduction d'impôt progressive : 12% pour 6 ans, 18% pour 9 ans, jusqu'à 21% pour 12 ans. Plafonds de loyers et ressources locataires à respecter."
+          },
+          {
+            "name": "Loi Girardin",
+            "link": "/fiscalite/loi-girardin",
+            "description": "Soutien aux investissements dans les DOM-TOM via l'immobilier ou l'industrie locale : en échange, réduction d'impôt immédiate l'année suivante. Dispositifs industriels ou logement social offrant des taux attractifs mais nécessitant une analyse rigoureuse des risques."
+          },
+          {
+            "name": "Loi Denormandie",
+            "link": "/fiscalite/loi-denormandie",
+            "description": "Encourager la rénovation dans certains centres-villes : l'achat et la rénovation d'un bien ancien à louer ouvre droit à une réduction d'impôt proche du Pinel. Travaux représentant au moins 25% du prix d'acquisition, favorisant la revitalisation des centres urbains."
+          },
+          {
+            "name": "Loi Malraux",
+            "link": "/fiscalite/loi-malraux",
+            "description": "Réservé à la restauration complète d'immeubles en secteur sauvegardé : 22 à 30% de réduction d'impôt sur le montant des travaux engagés, plafond annuel élevé. Investissement patrimonial et fiscal combinant plaisir et optimisation."
+          },
+          {
+            "name": "Loi Cosse",
+            "link": "/fiscalite/loi-cosse",
+            "description": "Conventionnement \"Louer abordable\" permettant une déduction majorée des revenus fonciers : 15% à 85% selon l'engagement pris et la zone géographique, en contrepartie d'un engagement social."
+          },
+          {
+            "name": "Monuments Historiques",
+            "link": "/fiscalite/monument-historique",
+            "description": "Les propriétaires d'immeubles classés peuvent déduire la quasi-totalité des travaux de restauration de leur revenu global, sans plafond, en échange de fortes contraintes de conservation. Investissement patrimonial d'exception pour contribuables fortement imposés."
+          }
+        ],
+        "ctas": [
+          {
+            "text": "Télécharger le guide 2025 des lois de défiscalisation",
+            "link": "#"
+          },
+          {
+            "text": "Découvrir nos solutions d'investissement immobilier",
+            "link": "/immobilier"
+          }
+        ]
+      },
+      "erreurs": {
+        "h2": "Les erreurs fréquentes à éviter",
+        "errors": [
+          "Oublier de mentionner certains revenus : revenus fonciers, plus-values, dividendes...",
+          "Se tromper dans le nombre de parts fiscales (quotient familial)",
+          "Ignorer la possibilité d'opter pour les frais réels au lieu de l'abattement forfaitaire pour frais professionnels",
+          "Ne pas saisir tous les crédits ou déductions auxquels on a droit (emploi à domicile, dons, investissements...)"
+        ],
+        "astuce": {
+          "title": "Astuce :",
+          "text": "Relisez toujours votre déclaration et recoupez vos justificatifs ; conservez toutes vos pièces en cas de contrôle."
+        }
+      },
+      "profils": {
+        "h2": "Optimiser sa fiscalité selon son profil",
+        "intro": "Adopter les bons réflexes et dispositifs en fonction de votre situation permet de transformer l'impôt en véritable levier patrimonial.",
+        "profils": [
+          {
+            "type": "investisseur",
+            "title": "Investisseur immobilier",
+            "points": [
+              "Priorisez les dispositifs adaptés à vos objectifs : Pinel et Denormandie si vous ciblez la réduction d'impôt ; Malraux ou Monuments Historiques pour les amateurs de rénovation de prestige.",
+              "Optimisez vos revenus fonciers : analysez l'intérêt du régime réel pour déduire au maximum vos charges."
+            ]
+          },
+          {
+            "type": "retraite",
+            "title": "Retraité avec revenus passifs",
+            "points": [
+              "Choisissez le bon mode d'imposition de vos rentes, revenus locatifs et placements : arbitrage entre flat tax et barème progressif, adaptation de votre portefeuille pour réduire la fiscalité sur les dividendes.",
+              "Pensez à la transmission : donations graduelles, souscription de contrats d'assurance-vie optimisés pour la succession."
+            ]
+          },
+          {
+            "type": "professionnel",
+            "title": "Profession libérale / chef d'entreprise",
+            "points": [
+              "Profitez des dispositifs de retraite complémentaire (PER, Madelin) pour déduire des versements tout en capitalisant pour l'avenir.",
+              "Valorisez la cession progressive de votre entreprise pour bénéficier d'abattements spécifiques, ou réorganisez la détention de vos actifs via des sociétés civiles."
+            ]
+          },
+          {
+            "type": "heritier",
+            "title": "Héritier d'un patrimoine",
+            "points": [
+              "Anticipez les droits de succession : donations échelonnées, démembrement de propriété, utilisation des abattements familiaux, investissement dans des actifs défiscalisés.",
+              "Optimisez la gestion des biens transmis : Favorisez les outils juridiques permettant d'adapter la détention du patrimoine à votre situation personnelle et fiscale."
+            ]
+          }
+        ],
+        "conclusion": "Chaque profil a ses leviers d'optimisation : s'informer, se faire accompagner et ajuster régulièrement sa stratégie restent la clé pour valoriser durablement son patrimoine."
+      },
+      "conseilsExpert": {
+        "h2": "Conseils de l'expert Azalée Patrimoine",
+        "h3": "Pourquoi travailler avec un Conseiller en Gestion de Patrimoine (CGP) ?",
+        "intro": [
+          "Faire appel à un CGP permet de transformer la complexité fiscale et patrimoniale en véritables leviers pour atteindre vos objectifs de vie.",
+          "Un CGP ne se limite pas à vous vendre des solutions : il vous accompagne dans la durée, en toute indépendance, avec une vue globale sur votre situation et en tenant compte de l'évolution permanente des dispositifs fiscaux."
+        ],
+        "avantages": {
+          "title": "Les avantages d'un accompagnement par un CGP :",
+          "items": [
+            "Diagnostic précis de votre situation fiscale et patrimoniale ;",
+            "Accès à des stratégies sur-mesure, souvent inaccessibles au grand public ;",
+            "Veille réglementaire et anticipation des évolutions fiscales ;",
+            "Vision transversale : immobilier, placements, retraite, succession, transmission."
+          ]
+        },
+        "inconvenients": {
+          "title": "Inconvénients à considérer",
+          "items": [
+            "Trouver le bon profil : privilégier un professionnel pluridisciplinaire et équilibré (pas \"mono-produit\"), transparent sur son univers d'investissement.",
+            "Coût de l'accompagnement : honoraires de conseil et/ou intégration de la rémunération dans les rétro-commissions si un investissement est mis en place ; demander une lettre de mission claire.",
+            "Transparence & conflits d'intérêts : exiger le détail des frais (entrée, gestion, arbitrages) et un rapport d'adéquation justifiant chaque recommandation.",
+            "Suivi dans le temps : sans revue annuelle et reporting, la stratégie peut devenir obsolète (évolutions de vie, fiscalité, marchés)."
+          ]
+        },
+        "astuce": {
+          "title": "Astuce :",
+          "items": [
+            "Comparez au moins 2 CGP",
+            "Vérifiez statuts et agréments (CIF, IAS...)",
+            "L'assurance RCP",
+            "Demandez des références."
+          ]
+        },
+        "audit": {
+          "title": "Audit fiscal personnalisé",
+          "description": "Un audit fiscal est la première étape pour optimiser votre impôt et structurer votre patrimoine de façon cohérente."
+        },
+        "diagnostic": {
+          "h2": "Le CGP réalise un diagnostic complet :",
+          "items": [
+            "Une analyse approfondie de vos revenus, investissements, dettes et charges ;",
+            "L'identification des dispositifs fiscaux réellement adaptés à votre profil (optimisation Pinel, Girardin, Denormandie, PER, etc.) ;",
+            "Un calcul précis des économies potentielles ou des risques de surimposition ;",
+            "Un rapport de synthèse clair, accompagné de préconisations concrètes et chiffrées."
+          ]
+        },
+        "accompagnement": {
+          "title": "Accompagnement sur mesure",
+          "intro": "Votre situation patrimoniale évolue : revenus, famille, projets, fiscalité... Un accompagnement sur mesure avec Azalée Patrimoine vous offre :",
+          "items": [
+            "Des solutions choisies et ajustées chaque année en fonction des évolutions législatives et de vos priorités.",
+            "Un interlocuteur unique pour piloter vos déclarations, investissements, donations, successions.",
+            "Le suivi opérationnel : la mise en place de solutions, l'aide à la collecte des pièces, la prise en charge administrative.",
+            "Une réactivité pour saisir les opportunités (nouveaux dispositifs, arbitrages...) ou anticiper les contraintes (réformes, transmission, expatriation)."
+          ],
+          "conclusion": "En résumé, s'entourer d'un CGP Azalée Patrimoine, c'est s'assurer la tranquillité et l'efficacité d'une gestion patrimoniale et fiscale sur-mesure, tournée vers la valorisation durable de votre patrimoine et la réalisation de vos objectifs personnels."
+        },
+        "paragraphs": [
+          "Faire appel à un CGP permet de transformer la complexité fiscale et patrimoniale en véritables leviers pour atteindre vos objectifs de vie.",
+          "Un CGP ne se limite pas à vous vendre des solutions : il vous accompagne dans la durée, en toute indépendance, avec une vue globale sur votre situation et en tenant compte de l'évolution permanente des dispositifs fiscaux."
+        ],
+        "auditFiscal": {
+          "title": "Audit fiscal personnalisé",
+          "description": "Un audit fiscal est la première étape pour optimiser votre impôt et structurer votre patrimoine de façon cohérente."
+        }
+      },
+      "expertise": {
+        "h2": "L'expertise Azalée Patrimoine à votre service",
+        "intro": "Faire appel à un Conseiller en Gestion de Patrimoine (CGP) indépendant représente un investissement stratégique pour optimiser durablement votre situation fiscale et patrimoniale. Notre approche holistique dépasse la simple recherche de réduction d'impôt pour construire une véritable stratégie patrimoniale cohérente.",
+        "donutChart": {
+          "segments": [
+            {
+              "id": "diagnostic",
+              "title": "Diagnostic complet",
+              "description": "Analyse approfondie de votre situation fiscale, patrimoniale, professionnelle et familiale pour identifier tous les leviers d'optimisation disponibles."
+            },
+            {
+              "id": "strategie",
+              "title": "Stratégie personnalisée",
+              "description": "Élaboration d'un plan d'action sur-mesure intégrant vos objectifs, contraintes et aversion au risque, avec priorisation des actions selon leur impact."
+            },
+            {
+              "id": "mise-en-oeuvre",
+              "title": "Mise en œuvre",
+              "description": "Accompagnement opérationnel pour la concrétisation des recommandations : sélection des investissements, formalités administratives, suivi des échéances."
+            },
+            {
+              "id": "suivi",
+              "title": "Suivi et ajustement",
+              "description": "Veille réglementaire continue, adaptation de la stratégie aux évolutions législatives, optimisation permanente selon l'évolution de votre situation."
+            }
+          ]
+        },
+        "boxes": [
+          {
+            "title": "Audit fiscal personnalisé",
+            "paragraphs": [
+              "Notre audit fiscal approfondi examine l'ensemble de vos revenus, placements et charges pour identifier les optimisations possibles. Cette analyse produit un rapport chiffré détaillant les économies potentielles et les risques associés à chaque préconisation.",
+              "Nous analysons votre déclaration fiscale sur les 3 dernières années, identifions les erreurs ou omissions, et proposons des rectificatives si nécessaire. L'audit intègre également une projection sur 5 à 10 ans pour anticiper l'évolution de votre situation."
+            ]
+          },
+          {
+            "title": "Accompagnement sur-mesure",
+            "paragraphs": [
+              "Au-delà du conseil, nous assurons le pilotage opérationnel de vos déclarations et investissements. Notre équipe vous accompagne dans tous les arbitrages patrimoniaux, la gestion des échéances fiscales et le suivi de la performance de vos placements.",
+              "Notre réactivité face aux évolutions législatives et aux opportunités de marché vous garantit une optimisation continue de votre stratégie patrimoniale."
+            ]
+          }
+        ],
+        "diagramme": {
+          "segments": [
+            {
+              "name": "diagnostic",
+              "title": "Diagnostic complet",
+              "description": "Analyse approfondie de votre situation fiscale, patrimoniale, professionnelle et familiale pour identifier tous les leviers d'optimisation disponibles."
+            },
+            {
+              "name": "strategie",
+              "title": "Stratégie personnalisée",
+              "description": "Élaboration d'un plan d'action sur-mesure intégrant vos objectifs, contraintes et aversion au risque, avec priorisation des actions selon leur impact."
+            },
+            {
+              "name": "mise-en-oeuvre",
+              "title": "Mise en œuvre",
+              "description": "Accompagnement opérationnel pour la concrétisation des recommandations : sélection des investissements, formalités administratives, suivi des échéances."
+            },
+            {
+              "name": "suivi",
+              "title": "Suivi et ajustement",
+              "description": "Veille réglementaire continue, adaptation de la stratégie aux évolutions législatives, optimisation permanente selon l'évolution de votre situation."
+            }
+          ]
+        },
+        "services": [
+          {
+            "title": "Audit fiscal personnalisé",
+            "paragraphs": [
+              "Notre audit fiscal approfondi examine l'ensemble de vos revenus, placements et charges pour identifier les optimisations possibles. Cette analyse produit un rapport chiffré détaillant les économies potentielles et les risques associés à chaque préconisation.",
+              "Nous analysons votre déclaration fiscale sur les 3 dernières années, identifions les erreurs ou omissions, et proposons des rectificatives si nécessaire. L'audit intègre également une projection sur 5 à 10 ans pour anticiper l'évolution de votre situation."
+            ]
+          },
+          {
+            "title": "Accompagnement sur-mesure",
+            "paragraphs": [
+              "Au-delà du conseil, nous assurons le pilotage opérationnel de vos déclarations et investissements. Notre équipe vous accompagne dans tous les arbitrages patrimoniaux, la gestion des échéances fiscales et le suivi de la performance de vos placements.",
+              "Notre réactivité face aux évolutions législatives et aux opportunités de marché vous garantit une optimisation continue de votre stratégie patrimoniale."
+            ]
+          }
+        ]
+      },
+      "banner": {
+        "text": "Bilan fiscal offert pour toute souscription d'un placement de 25 000€ avec Azalée Patrimoine"
+      },
+      "faq": {
+        "h2": "FAQ Fiscalité",
+        "questions": [
+          {
+            "question": "Quelle est la meilleure loi de défiscalisation en 2025 ?",
+            "answer": "Selon votre profil : Pinel/Denormandie (neuf/ancien), Girardin (réduction ponctuelle), Malraux/MH (rénovation patrimoniale)."
+          },
+          {
+            "question": "Comment réduire son impôt sans risque ?",
+            "answer": "En combinant dispositifs légaux, diversification des placements et accompagnement par un conseiller agréé."
+          },
+          {
+            "question": "Pourquoi confier sa fiscalité à un CGP ?",
+            "answer": "Pour bénéficier d'une approche globale (fiscalité, placements, retraite, transmission) intégrée dans une stratégie cohérente et évolutive."
+          }
+        ]
+      },
+      "enSavoirPlus": {
+        "h2": "En savoir plus sur Azalée Patrimoine",
+        "links": [
+          {
+            "text": "Qui sommes-nous ?",
+            "href": "/patrimoine"
+          },
+          {
+            "text": "Gestion de patrimoine",
+            "href": "/patrimoine"
+          },
+          {
+            "text": "Placement financier",
+            "href": "/placements"
+          },
+          {
+            "text": "Investissement immobilier",
+            "href": "/immobilier"
+          },
+          {
+            "text": "Retraite",
+            "href": "/retraite"
+          },
+          {
+            "text": "Simulateurs",
+            "href": "/retraite/simulation"
+          }
+        ]
+      },
+      "banniere": {
+        "text": "Bilan fiscal offert pour toute souscription d'un placement de 25 000€ avec Azalée Patrimoine"
+      },
+      "seo": {
+        "title": "Fiscalité et Optimisation Fiscale | Azalée Patrimoine",
+        "description": "Optimisez votre fiscalité avec Azalée Patrimoine : défiscalisation immobilière, réduction d'impôts, dispositifs Pinel, Malraux, Girardin, et conseil fiscal personnalisé.",
+        "keywords": "fiscalité, défiscalisation, réduction d'impôts, loi Pinel, loi Malraux, loi Girardin, optimisation fiscale, Azalée Patrimoine",
+        "openGraph": {
+          "title": "Fiscalité et Optimisation Fiscale | Azalée Patrimoine",
+          "description": "Optimisez votre fiscalité avec Azalée Patrimoine : défiscalisation immobilière, réduction d'impôts, dispositifs Pinel, Malraux, Girardin, et conseil fiscal personnalisé.",
+          "url": "https://azalee-patrimoine.fr/fiscalite"
+        },
+        "twitter": {
+          "title": "Fiscalité et Optimisation Fiscale | Azalée Patrimoine",
+          "description": "Optimisez votre fiscalité avec Azalée Patrimoine : défiscalisation immobilière, réduction d'impôts, dispositifs Pinel, Malraux, Girardin, et conseil fiscal personnalisé."
+        }
+      }
+    },
+    "published": true,
+    "modifiedBy": "admin",
+    "lastModified": "2025-11-29T00:48:43.935Z",
+    "createdAt": "2025-11-28T23:23:41.919Z",
+    "updatedAt": "2025-11-28T23:34:02.751Z",
+    "__v": 0
+  },
+  {
+    "_id": "692a358d9e716e1d48e3ad6f",
+    "path": "retraite",
+    "title": "Retraite - Préparer sa retraite sereinement",
+    "content": {
+      "hero": {
+        "h1": "Préparer sa retraite sereinement avec Azalée Patrimoine",
+        "description1": "Anticiper sa retraite, c'est protéger son niveau de vie futur tout en optimisant la gestion de son patrimoine. Dans un contexte de réformes successives et d'allongement des carrières, bien préparer sa retraite ne relève plus du confort, mais d'une véritable stratégie patrimoniale.",
+        "description2": "Chez <strong className=\"font-semibold\">Azalée Patrimoine</strong>, nous accompagnons nos clients — salariés, dirigeants, indépendants ou professions libérales — pour qu'ils puissent <strong className=\"font-semibold\">transformer leur épargne en revenus durables</strong>, tout en bénéficiant d'une <strong className=\"font-semibold\">optimisation fiscale</strong> et d'une <strong className=\"font-semibold\">vision globale</strong> de leur patrimoine.",
+        "ctaButton": "Demander un diagnostic gratuit",
+        "ctaLink": "https://calendly.com/rdv-azalee-patrimoine/30min"
+      },
+      "section1": {
+        "h2": "Pourquoi anticiper sa retraite dès aujourd'hui ?",
+        "evolution": {
+          "h3": "L'évolution du système de retraite français",
+          "description": "Le système français, historiquement fondé sur la répartition, fait face à des défis majeurs : vieillissement de la population, déséquilibre entre actifs et retraités, et allongement de la durée de cotisation. La réforme de 2023, repoussant l'âge légal à 64 ans, n'a fait qu'accentuer le besoin d'anticipation. L'État assure un socle minimal ; à chacun désormais de <strong>bâtir ses revenus complémentaires</strong>."
+        },
+        "stats": {
+          "pensionMoyenne": "1666€",
+          "pensionLabel": "net/mois",
+          "message": "N'attendez pas qu'il soit trop tard"
+        },
+        "ctaSimulateur": {
+          "text": "SIMULER VOTRE PENSION RETRAITE",
+          "link": "https://calendly.com/rdv-azalee-patrimoine/30min"
+        },
+        "liberteFinanciere": {
+          "h3": "Préparer la liberté financière en anticipant l'impact du taux de remplacement",
+          "salaire": "4 000 €",
+          "salaireLabel": "Net de salaire par mois",
+          "pension": "MOINS DE 2000 €",
+          "pensionLabel": "De pension de retraite",
+          "description1": "Le taux de remplacement correspond au rapport entre votre dernière rémunération et votre pension retraite. Le taux de remplacement se situe aujourd'hui entre 40% et 60% pour la plupart des cadres.",
+          "description2": "Anticiper, c'est combler cet écart dès aujourd'hui en constituant des revenus futurs de complément."
+        },
+        "calcul": {
+          "h3": "Avec un capital initial de 1000 €, en plaçant 200€ par mois pendant 30 ans à un taux de rendement net de 6,01%.",
+          "epargneMensuelle": "200 €",
+          "capitalFinal": "208 336 €",
+          "versementsCumules": "72 000 €",
+          "interetsCumules": "135 336 €"
+        },
+        "avantage": {
+          "h3": "L'avantage de la préparation progressive",
+          "paragraphs": [
+            "Plus on commence tôt, plus l'effort d'épargne est faible.",
+            "Grâce à l'effet de capitalisation, un effort régulier dès 35 ou 40 ans permet de sécuriser un capital solide pour l'avenir.",
+            "Azalée Patrimoine vous aide à définir le bon rythme d'investissement, en fonction de votre horizon, de vos revenus et de vos objectifs de vie."
+          ]
+        },
+        "bonASavoir": {
+          "h3": "Bon à savoir",
+          "paragraphs": [
+            "Un cadre salarié perd en moyenne 30 à 40% de ses revenus à la retraite pour maintenir le même niveau de vie.",
+            "Prenons un exemple concret : si vous percevez 100 000 € de revenus annuels au moment de votre départ, votre pension représentera environ 60 000 € par an."
+          ]
+        },
+        "focusAzalee": {
+          "title": "Focus Azalée",
+          "h4": "Le choc de revenus à la retraite",
+          "leSaviezVous": {
+            "title": "Le saviez-vous ?",
+            "text": "Un cadre salarié perd en moyenne 30 à 40% de son revenu au moment du passage à la retraite."
+          },
+          "exemple": {
+            "title": "Exemple concret",
+            "revenuAvant": "Revenu avant retraite : 100 000 €/an",
+            "pensionEstimee": "Pension estimée : 60 000 €/an",
+            "perteAnnuelle": "Perte annuelle : 40 000 €",
+            "details": [
+              "Sur une espérance de vie moyenne de 25 ans, cela représente : près d'1 million d'euros de pouvoir d'achat en moins sur la durée de la retraite.",
+              "Et en tenant compte d'une fiscalité à 30%, la perte réelle s'élève à environ 28 000 € nets par an."
+            ]
+          },
+          "pourquoiAnticiper": {
+            "title": "Pourquoi anticiper :",
+            "items": [
+              "Travaux d'amélioration du logement",
+              "Voyages, loisirs, activités associatives",
+              "Séjours en famille ou avec les petits-enfants"
+            ],
+            "conclusion": "Préparer votre indépendance financière, c'est vous assurer de conserver votre confort de vie et votre liberté de choix à la retraite."
+          }
+        },
+        "perteRevenus": {
+          "text": "Cela signifie une baisse de 40 000 € de revenus chaque année.",
+          "paragraphs": [
+            "Sur une espérance de vie moyenne de 23 ans à la retraite, cette perte de pouvoir d'achat atteint près d'un million d'euros cumulés.",
+            "Et si l'on tient compte d'une <span className=\"font-semibold text-pink-600\">tranche marginale d'imposition</span> à 30%, la perte réelle de revenu disponible s'élève encore à environ 28 000 € nets par an.",
+            "Certes, la retraite s'accompagne souvent d'une réduction des charges courantes — moins de crédits ou d'enfants à charge —, mais de nouvelles dépenses apparaissent :"
+          ],
+          "depenses": [
+            "travaux d'amélioration du logement",
+            "voyages, loisirs",
+            "remplacement du véhicule de fonction",
+            "séjours en famille ou avec les petits-enfants"
+          ],
+          "conclusion": "Anticiper cette transition patrimoniale est donc essentiel pour préserver votre qualité de vie et transformer vos revenus d'activité en revenus de liberté."
+        }
+      },
+      "section2": {
+        "h2": "Évaluer vos besoins futurs",
+        "simuler": {
+          "h3": "Simuler sa pension de retraite",
+          "paragraphs": [
+            "Avant toute stratégie, il est essentiel de connaître le montant prévisionnel de sa pension.",
+            "Azalée Patrimoine accompagne ses clients dans la lecture de leurs relevés de carrière et la simulation personnalisée de leur retraite.",
+            "Vous pouvez également consulter les portails officiels tels que info-retraite.fr."
+          ],
+          "link": {
+            "text": "Pour aller plus loin : découvrez notre outil de simulation retraite pour estimer votre future pension.",
+            "url": "/retraite/simulation"
+          }
+        }
+      },
+      "section3": {
+        "h2": "S'organiser pour partir à la retraite à 50 ans : un objectif atteignable avec une stratégie patrimoniale solide",
+        "intro": {
+          "title": "Partir à la retraite à 50 ans, c'est possible.",
+          "paragraphs": [
+            "En construisant une stratégie patrimoniale bien structurée — placements, fiscalité, revenus passifs — il est envisageable d'atteindre la liberté financière avant l'âge légal.",
+            "Prendre sa retraite à 50 ans : un rêve pour beaucoup, une réalité pour certains.",
+            "Atteindre la liberté financière à mi-parcours de sa vie professionnelle nécessite plus qu'une simple épargne. C'est une stratégie globale, structurée, et adaptée à chaque étape de votre parcours.",
+            "Chez Azalée Patrimoine, nous accompagnons depuis plus de 20 ans les dirigeants, professions libérales et cadres supérieurs dans la construction d'une indépendance financière durable."
+          ]
+        },
+        "comprendre": {
+          "h3": "Comprendre la différence entre retraite légale et indépendance financière",
+          "paragraphs": [
+            "Partir à la retraite à 50 ans, c'est avant tout atteindre son indépendance financière : générer suffisamment de revenus pour maintenir son niveau de vie sans dépendre d'un emploi.",
+            "Là où la retraite légale repose sur un âge et un nombre de trimestres, l'indépendance financière repose sur une stratégie patrimoniale intelligente et proactive.",
+            "<span className=\"font-semibold text-[#253F60]\">Retirement gap</span> : l'écart entre 50 ans et l'âge légal de la retraite.",
+            "Le combler, c'est l'enjeu central d'une stratégie de liberté financière."
+          ]
+        },
+        "pourquoi": {
+          "h3": "Pourquoi vouloir partir à 50 ans ?",
+          "paragraphs": [
+            "Après 25 ou 30 ans d'activité, nombreux sont ceux qui ressentent le besoin de ralentir, transmettre, ou se réinventer.",
+            "Partir à 50 ans ne signifie pas ne plus rien faire, mais choisir comment et avec qui on veut travailler.",
+            "Chez Azalée Patrimoine, nous aidons nos clients à transformer leurs revenus en liberté — en construisant un patrimoine capable de soutenir leurs projets personnels et familiaux."
+          ]
+        },
+        "combien": {
+          "h3": "Combien faut-il pour partir à la retraite à 50 ans ?",
+          "intro": "Le montant nécessaire pour prendre sa retraite à 50 ans dépend de votre train de vie, de votre capacité d'épargne et du rendement de vos placements.",
+          "estimation": "Voici une estimation simple pour visualiser votre objectif, à 4% net de rendement :",
+          "tableau": [
+            {
+              "niveau": "3 000 €/mois",
+              "capital": "900 000 €",
+              "rendement": "4%"
+            },
+            {
+              "niveau": "5 000 €/mois",
+              "capital": "1 500 000 €",
+              "rendement": "4%"
+            },
+            {
+              "niveau": "8 000 €/mois",
+              "capital": "2 400 000 €",
+              "rendement": "4%"
+            }
+          ],
+          "note": "Estimation indicative pour une retraite anticipée jusqu'à 67 ans, sans revenus d'activité.",
+          "cta": {
+            "text": "Simulez votre indépendance financière avec un conseiller Azalée Patrimoine",
+            "link": "https://calendly.com/rdv-azalee-patrimoine/30min"
+          }
+        },
+        "calculer": {
+          "h3": "Calculez votre plan d'indépendance financière",
+          "description": "Découvrez combien vous devez épargner et comment structurer vos placements pour atteindre la liberté financière à 50 ans.",
+          "cta": {
+            "text": "Prendre rendez-vous avec un conseiller Azalée",
+            "link": "https://calendly.com/rdv-azalee-patrimoine/30min"
+          }
+        },
+        "construire": {
+          "h3": "Construire son plan d'indépendance financière",
+          "intro": "Une stratégie de retraite anticipée s'appuie sur la structuration de ses revenus, la diversification des placements et l'optimisation fiscale.",
+          "description": "Une retraite anticipée se prépare comme un projet d'entreprise. Voici les étapes clés :",
+          "etapes": [
+            {
+              "h4": "1. Optimiser la structure de revenus professionnels",
+              "text": "Passer en société (SELARL, SASU, holding...) permet de piloter la fiscalité et les revenus, tout en constituant un capital logé dans une structure patrimoniale."
+            },
+            {
+              "h4": "2. Créer des revenus passifs",
+              "text": "Immobilier locatif, SCPI, ou produits structurés à coupons permettent de stabiliser des revenus réguliers indépendants de l'activité professionnelle."
+            },
+            {
+              "h4": "3. Capitaliser dans des enveloppes fiscales adaptées",
+              "items": [
+                "<strong className=\"text-[#253F60]\">PER Individuel</strong> : pour déduire ses versements et préparer le long terme.",
+                "<strong className=\"text-[#253F60]\">Assurance Vie</strong> : pour diversifier et transmettre.",
+                "<strong className=\"text-[#253F60]\">Contrat de capitalisation</strong> : pour capitaliser sans contrainte successorale."
+              ]
+            },
+            {
+              "h4": "4. Planifier la fiscalité et la transmission",
+              "text": "L'arbitrage entre capitalisation et distribution, la protection du conjoint, et la transmission progressive sont des piliers d'une stratégie patrimoniale aboutie."
+            },
+            {
+              "h4": "5. Diversifier et sécuriser",
+              "text": "Une indépendance financière solide repose sur la diversification entre actifs financiers et immobiliers, entre revenus immédiats et croissance future."
+            }
+          ]
+        }
+      },
+      "section4": {
+        "h2": "Cas pratique : Philippe, kinésithérapeute accompagné par Azalée Patrimoine",
+        "intro": "Exemple concret : comment une stratégie patrimoniale bien construite permet à un professionnel libéral de ralentir à 50 ans tout en conservant son confort de vie.",
+        "contexte": "Philippe, kinésithérapeute libéral, a confié la gestion de sa stratégie patrimoniale à Azalée Patrimoine il y a 20 ans. Son objectif : se concentrer sur son métier, tout en construisant un patrimoine à long terme.",
+        "accompagnement": {
+          "h3": "Notre accompagnement :",
+          "items": [
+            "Création d'une SELARL pour optimiser la fiscalité et la rémunération.",
+            "Mise en place d'une SCI pour acquérir ses murs professionnels.",
+            "Accompagnement dans l'achat des locaux de son cabinet.",
+            "Suivi patrimonial continu sur ses placements financiers et immobiliers."
+          ]
+        },
+        "resultats": {
+          "h3": "Résultats 20 ans plus tard :",
+          "items": [
+            "Cabinet valorisé à <strong>300 000 €</strong> (cession ou gestion déléguée possible).",
+            "Local professionnel estimé à <strong>750 000 €</strong> (revenus locatifs potentiels).",
+            "Deux investissements locatifs dédiés au financement des études des enfants.",
+            "Un patrimoine net de plus d'<strong>1 M€</strong>, en plus de sa résidence principale."
+          ],
+          "conclusion": "Aujourd'hui, Philippe peut ralentir son activité à 50 ans, tout en conservant son niveau de vie.",
+          "secret": "Son secret : une stratégie patrimoniale construite dans la durée."
+        }
+      },
+      "section5": {
+        "h2": "Les erreurs à éviter",
+        "errors": [
+          "<strong className=\"text-[#253F60]\">Attendre trop longtemps</strong> avant de structurer son activité.",
+          "<strong className=\"text-[#253F60]\">Négliger la fiscalité</strong> des plus-values lors de la cession.",
+          "<strong className=\"text-[#253F60]\">Sous-estimer le besoin</strong> de revenus réguliers avant la retraite légale.",
+          "<strong className=\"text-[#253F60]\">Ignorer la protection</strong> du conjoint et la transmission du patrimoine."
+        ],
+        "conclusion": "Azalée Patrimoine vous aide à anticiper ces enjeux, pour que votre liberté ne soit pas compromise par un détail mal anticipé."
+      },
+      "section6": {
+        "h2": "L'accompagnement Azalée Patrimoine",
+        "intro": "Azalée Patrimoine, cabinet indépendant de gestion de patrimoine, accompagne depuis plus de 20 ans les dirigeants et professions libérales dans leur stratégie de retraite et d'indépendance financière.",
+        "engagements": {
+          "h3": "Nos engagements",
+          "items": [
+            {
+              "number": "1",
+              "title": "Vision globale",
+              "description": "Chaque décision patrimoniale s'inscrit dans une stratégie long terme."
+            },
+            {
+              "number": "2",
+              "title": "Approche sur mesure",
+              "description": "Adaptée à votre profil, vos objectifs et votre fiscalité."
+            },
+            {
+              "number": "3",
+              "title": "Suivi continu",
+              "description": "Car la réussite patrimoniale se mesure dans la durée."
+            }
+          ]
+        },
+        "mission": {
+          "title": "Notre mission",
+          "text": "Transformer vos revenus en patrimoine, et votre patrimoine en liberté."
+        },
+        "pret": {
+          "h2": "Prêt à planifier votre retraite à 50 ans ?",
+          "question": "Prêt à construire votre indépendance financière ?",
+          "link": {
+            "text": "Échangez avec un conseiller Azalée Patrimoine dès aujourd'hui.",
+            "url": "https://calendly.com/rdv-azalee-patrimoine/30min"
+          },
+          "contact": {
+            "rendezVous": {
+              "label": "Prendre rendez-vous",
+              "url": "https://calendly.com/rdv-azalee-patrimoine/30min"
+            },
+            "email": {
+              "label": "contact@azalee-patrimoine.fr",
+              "url": "mailto:contact@azalee-patrimoine.fr"
+            }
+          }
+        }
+      },
+      "section7": {
+        "h2": "Rachat de trimestres ou versement déductible dans le PER ?",
+        "intro": "Lorsqu'il s'agit de préparer sa retraite, deux leviers fiscaux majeurs se présentent :",
+        "leviers": [
+          "le rachat de trimestres auprès du régime de base,",
+          "et les versements déductibles dans un Plan d'Épargne Retraite (PER)."
+        ],
+        "description": "Tous deux permettent de réduire son impôt sur le revenu tout en améliorant sa retraite future — mais leur impact financier n'est pas du même ordre.",
+        "rachatTrimestres": {
+          "h3": "Le rachat de trimestres : optimiser la retraite de base",
+          "description": "Le rachat de trimestres consiste à verser une somme à l'administration pour compléter des années incomplètes et atteindre le taux plein plus tôt.",
+          "permet": [
+            "D'éviter une décote sur la pension de base.",
+            "De potentiellement améliorer légèrement le montant de la pension perçue."
+          ],
+          "important": "La pension de base du régime général reste plafonnée à 50% du plafond annuel de la Sécurité sociale (PASS). En 2025, le PASS est fixé à 47 100 €. La pension maximale de base est donc de 23 550 € par an, soit 1 962 € brut par mois.",
+          "exemple": {
+            "h4": "Exemple concret",
+            "contexte": "Un cadre ayant cotisé au plafond de la Sécurité sociale toute sa carrière, mais manquant de 8 trimestres (2 ans) pour atteindre le taux plein.",
+            "sansRachat": {
+              "title": "Sans rachat de trimestres",
+              "decote": "Décote d'environ 10%",
+              "montant": "1 766 €/mois brut"
+            },
+            "avecRachat": {
+              "title": "Avec rachat de 8 trimestres",
+              "cout": "Coût estimé : 35 000 € (à 50 ans)",
+              "montant": "1 962 €/mois brut",
+              "gain": "Gain mensuel : +196 €"
+            },
+            "calcul": {
+              "gainAnnuel": "Gain annuel : 2 352 €",
+              "amortissement": "Amortissement : ~15 ans (hors avantage fiscal)",
+              "profilFort": "Pour un profil à fort revenu (taux marginal 41%) : Gain fiscal immédiat de 14 000 €. Coût net réduit à 21 000 €. Rendement implicite d'environ 4 à 5% par an sur 15 ans."
+            }
+          },
+          "inconvenients": "Aucune flexibilité, aucun effet de levier patrimonial, aucun gain de capitalisation."
+        },
+        "versementPER": {
+          "h3": "Le versement déductible dans le PER : capitaliser pour soi",
+          "description": "À l'inverse du rachat de trimestres, le PER individuel permet de déduire ses versements tout en investissant dans des supports dynamiques : fonds en euros, unités de compte, SCPI, produits structurés, etc.",
+          "exemple": {
+            "h4": "Exemple (même contribuable à 50 ans, imposé à 41%, versant 35 000 € en PER)",
+            "economie": {
+              "label": "Économie d'impôt immédiate",
+              "montant": "14 350 €",
+              "note": "Même effet fiscal que le rachat de trimestres"
+            },
+            "capital": {
+              "label": "Capital investi",
+              "montant": "35 000 €",
+              "note": "Entièrement valorisable"
+            },
+            "hypothese": {
+              "label": "Hypothèse de rendement : 4% net par an sur 15 ans",
+              "montant": "63 000 €",
+              "note": "À 65 ans, récupérable en rente ou en capital"
+            }
+          },
+          "avantages": [
+            "Le PER permet de faire croître un patrimoine personnel.",
+            "Les plus-values ne sont pas plafonnées.",
+            "La transmission est avantageuse (bénéficiaires désignés, exonération partielle selon l'âge et le mode de sortie).",
+            "Les revenus futurs peuvent être modulés selon les besoins."
+          ]
+        },
+        "strategie": {
+          "h3": "Quelle stratégie privilégier ?",
+          "points": [
+            "Le rachat de trimestres vise à sécuriser la retraite légale ; son rendement est borné par le plafond du régime de base.",
+            "Le PER, lui, permet de faire travailler l'épargne sur la durée tout en profitant d'un levier fiscal équivalent, mais avec un potentiel de capitalisation beaucoup plus fort."
+          ],
+          "astuce": "Pour les profils patrimoniaux, il est souvent plus judicieux de maximiser d'abord les versements PER, puis de racheter seulement les trimestres manquants si cela permet un départ anticipé sans décote."
+        },
+        "tableauComparatif": {
+          "h3": "En résumé",
+          "criteres": [
+            {
+              "critere": "Objectif",
+              "rachat": "Taux plein sur retraite de base",
+              "per": "Constitution d'un capital retraite"
+            },
+            {
+              "critere": "Déductibilité",
+              "rachat": "Oui, intégrale",
+              "per": "Oui, dans la limite du plafond fiscal retraite"
+            },
+            {
+              "critere": "Rendement maximal",
+              "rachat": "50% du PASS (≈ 1 962 €/mois)",
+              "per": "Illimité selon performances"
+            },
+            {
+              "critere": "Liquidité",
+              "rachat": "Nulle",
+              "per": "Partielle (projets immobiliers, sortie en capital)"
+            },
+            {
+              "critere": "Transmission",
+              "rachat": "Aucune",
+              "per": "Avantageuse (bénéficiaires désignés)"
+            },
+            {
+              "critere": "Horizon",
+              "rachat": "Court/moyen terme",
+              "per": "Moyen/long terme"
+            }
+          ],
+          "liens": [
+            {
+              "text": "Découvrir le PER individuel",
+              "url": "/placements/per"
+            },
+            {
+              "text": "Échanger avec un conseiller Azalée Patrimoine",
+              "url": "https://calendly.com/rdv-azalee-patrimoine/30min"
+            }
+          ]
+        }
+      },
+      "section8": {
+        "h2": "Racheter des trimestres : est-ce rentable ?",
+        "paragraphs": [
+          "Le rachat de trimestres peut être avantageux pour réduire la décote appliquée en cas de carrière incomplète.",
+          "Mais attention : il doit être évalué avec précision, car son intérêt dépend de votre âge, de votre taux marginal d'imposition et de votre durée d'activité restante.",
+          "Nos conseillers vous aident à déterminer si un rachat de trimestres est fiscalement et financièrement pertinent."
+        ],
+        "enSavoirPlus": {
+          "label": "En savoir plus",
+          "text": "Rachat de trimestres - optimiser sa fin de carrière",
+          "url": "/retraite/rachat-trimestres"
+        },
+        "determiner": {
+          "h3": "Déterminer le capital nécessaire",
+          "paragraphs": [
+            "Azalée Patrimoine vous aide à calculer le capital cible pour maintenir votre confort de vie : montant de pension, dépenses futures, voyages, projets ou aides aux enfants.",
+            "C'est sur cette base que nous construisons votre stratégie d'épargne retraite personnalisée."
+          ]
+        }
+      },
+      "section9": {
+        "h2": "Les solutions d'épargne retraite",
+        "cta": {
+          "text": "Simulez votre retraite avec un conseiller Azalée Patrimoine :",
+          "link": {
+            "text": "Réaliser mon diagnostic retraite personnalisé",
+            "url": "https://calendly.com/rdv-azalee-patrimoine/30min"
+          }
+        },
+        "per": {
+          "h3": "Le Plan Épargne Retraite (PER)",
+          "description": "Le PER individuel est aujourd'hui la solution la plus complète pour préparer sa retraite.",
+          "permet": [
+            "de déduire fiscalement vos versements (jusqu'à 10% de vos revenus professionnels) ;",
+            "d'investir sur des supports diversifiés (fonds euros, unités de compte, produits structurés) ;",
+            "de choisir la sortie (rente ou capital) à la retraite."
+          ],
+          "lien": {
+            "text": "À lire aussi : Fiscalité du PER - optimiser ses déductions d'impôt",
+            "url": "/fiscalite/per"
+          }
+        },
+        "assuranceVie": {
+          "h3": "L'assurance-vie à long terme",
+          "description": "Souple et accessible, l'assurance-vie permet d'allier capitalisation et transmission. Elle constitue un complément idéal du PER, notamment pour les épargnants souhaitant garder une certaine liquidité avant la retraite.",
+          "lien": {
+            "text": "En savoir plus sur l'assurance-vie dans une stratégie patrimoniale",
+            "url": "/placements/assurance-vie"
+          }
+        },
+        "immobilier": {
+          "h3": "L'investissement immobilier locatif",
+          "paragraphs": [
+            "L'immobilier reste un pilier incontournable de la retraite.",
+            "Investir en <strong className=\"text-pink-600\">SCPI</strong>, en <strong className=\"text-pink-600\">LMNP</strong> ou via un dispositif fiscal comme <strong className=\"text-pink-600\">Pinel</strong> permet de générer des revenus réguliers tout en profitant d'avantages fiscaux."
+          ],
+          "lien": {
+            "text": "Consultez notre page Investissement immobilier pour découvrir nos stratégies locatives durables.",
+            "url": "/immobilier"
+          }
+        },
+        "placements": {
+          "h3": "Les placements financiers complémentaires",
+          "paragraphs": [
+            "<strong className=\"text-yellow-600\">Produits structurés</strong>, obligations ou fonds thématiques peuvent compléter une stratégie d'épargne retraite diversifiée.",
+            "Chez Azalée Patrimoine, nous sélectionnons des solutions adaptées à votre profil de risque et à votre horizon de placement.",
+            "Découvrez nos <strong className=\"text-yellow-600\">placements financiers</strong> pour la retraite."
+          ]
+        }
+      },
+      "section10": {
+        "h2": "Comment défiscaliser en préparant sa retraite",
+        "levierPER": {
+          "h3": "Le levier fiscal du PER",
+          "description": "Le PER permet une déduction fiscale immédiate des versements, souvent supérieure au rendement financier espéré.",
+          "exemple": "Par exemple, pour un taux marginal d'imposition de 41%, un versement de 10 000 € ne coûte réellement que <strong className=\"text-[#253F60]\">5 900 €</strong>.",
+          "conclusion": "Un avantage considérable pour les contribuables fortement imposés."
+        },
+        "dispositifsImmo": {
+          "h3": "Les dispositifs immobiliers adaptés",
+          "description": "Certains investissements immobiliers permettent d'allier rendement et réduction d'impôt, tout en constituant un capital pour la retraite.",
+          "intro": "Les plus pertinents selon votre situation patrimoniale sont :",
+          "dispositifs": [
+            {
+              "h4": "Le dispositif Pinel (ou Pinel +)",
+              "description": "Pour investir dans le neuf et obtenir une réduction d'impôt jusqu'à 21% du montant investi."
+            },
+            {
+              "h4": "Le déficit foncier",
+              "description": "Pour déduire les travaux réalisés dans un bien ancien de vos revenus fonciers imposables."
+            },
+            {
+              "h4": "Le statut LMNP (Loueur en Meublé Non Professionnel)",
+              "description": "Qui permet d'amortir fiscalement la valeur du bien et d'optimiser la rentabilité nette."
+            }
+          ],
+          "lien": {
+            "text": "Découvrez nos stratégies combinant immobilier et retraite sur la page Investissement immobilier.",
+            "url": "/immobilier"
+          }
+        },
+        "arbitrer": {
+          "h3": "Arbitrer entre économie d'impôt et liquidité",
+          "paragraphs": [
+            "Réduire ses impôts ne doit pas se faire au détriment de la flexibilité.",
+            "Azalée Patrimoine vous aide à trouver l'équilibre entre optimisation fiscale et disponibilité des capitaux, selon votre horizon de retraite."
+          ],
+          "approche": "Notre approche vise à diversifier entre :",
+          "produits": [
+            "produits de capitalisation (assurance-vie, contrat de capitalisation) ;",
+            "produits de rente (PER, immobilier locatif) ;",
+            "produits de performance (fonds structurés, actions à dividendes)."
+          ],
+          "lien": {
+            "text": "Pour aller plus loin : découvrez notre pilier Fiscalité pour comprendre comment les solutions retraite s'intègrent à votre stratégie globale.",
+            "url": "/fiscalite"
+          }
+        }
+      },
+      "section11": {
+        "h2": "Retraite, transmission et prévoyance : penser globalement",
+        "transmission": {
+          "h3": "Anticiper la transmission de son patrimoine retraite",
+          "paragraphs": [
+            "La retraite ne marque pas la fin de la gestion patrimoniale, mais le début d'une phase nouvelle : la <strong className=\"text-[#253F60]\">transmission</strong>.",
+            "Bien anticiper permet d'assurer la continuité financière de vos proches tout en optimisant la fiscalité successorale."
+          ],
+          "intro": "Les contrats multi-détention (PER, assurance-vie) sont particulièrement adaptés pour :",
+          "items": [
+            "transmettre un capital à vos héritiers dans un cadre fiscal privilégié ;",
+            "répartir le patrimoine entre conjoint et enfants ;",
+            "prévoir la protection du conjoint survivant grâce à des clauses bénéficiaires sur mesure."
+          ],
+          "astuce": "Pensez à revoir régulièrement la rédaction de vos clauses bénéficiaires avec votre conseiller Azalée Patrimoine."
+        },
+        "prevoyance": {
+          "h3": "Protéger sa famille avec la prévoyance",
+          "paragraphs": [
+            "L'un des piliers essentiels d'une retraite réussie, c'est la <strong className=\"text-[#253F60]\">protection de la famille</strong> face aux aléas de la vie.",
+            "Les contrats de prévoyance individuelle couvrent le décès, l'invalidité ou la perte de revenus, garantissant à vos proches une stabilité financière.",
+            "Azalée Patrimoine vous accompagne dans la mise en place de solutions de prévoyance personnalisées selon votre statut (salarié, TNS, dirigeant)."
+          ],
+          "lien": {
+            "text": "En savoir plus : Prévoyance et protection familiale.",
+            "url": "/retraite/prevoyance-protection"
+          }
+        },
+        "adapter": {
+          "h3": "Adapter sa stratégie au moment du départ",
+          "intro": "Le passage à la retraite nécessite des ajustements :",
+          "items": [
+            "rééquilibrage du portefeuille vers des actifs plus sécurisés ;",
+            "transformation du capital en rente ;",
+            "ajustement fiscal pour limiter l'imposition des retraits."
+          ],
+          "conclusion": "Nos conseillers vous aident à piloter cette transition sans rupture de revenus et à préserver votre capital sur le long terme."
+        }
+      },
+      "section12": {
+        "h2": "L'expertise Azalée Patrimoine",
+        "accompagnement": {
+          "h3": "Un accompagnement humain, pédagogique et durable",
+          "intro": "Préparer sa retraite avec Azalée Patrimoine, c'est bénéficier d'un accompagnement global :",
+          "items": [
+            "diagnostic retraite complet (carrière, patrimoine, fiscalité) ;",
+            "projection de revenus futurs et simulation de besoins ;",
+            "stratégie sur mesure intégrant épargne, immobilier et placements financiers."
+          ],
+          "conclusion": "Nous nous engageons à une approche indépendante, <strong className=\"text-[#253F60]\">pédagogique et durable</strong>, centrée sur vos objectifs de vie et la sécurité de vos proches."
+        },
+        "diagnostic": {
+          "h3": "Un diagnostic retraite sur mesure",
+          "description": "Chaque client Azalée bénéficie d'un audit retraite personnalisé, combinant analyse fiscale, budgétaire et patrimoniale.",
+          "permet": [
+            "visualiser votre future pension ;",
+            "identifier les écarts à combler ;",
+            "définir les solutions adaptées à votre profil et à votre horizon."
+          ],
+          "cta": {
+            "text": "Réalisez votre audit retraite offert :",
+            "link": {
+              "text": "Prendre rendez-vous avec un conseiller Azalée Patrimoine",
+              "url": "https://calendly.com/rdv-azalee-patrimoine/30min"
+            }
+          }
+        },
+        "strategies": {
+          "h3": "Des stratégies concrètes selon votre profil",
+          "salaries": {
+            "h4": "Pour les salariés",
+            "paragraphs": [
+              "Misez sur le PER individuel et l'assurance-vie long terme, tout en profitant de la déduction fiscale annuelle.",
+              "Les versements réguliers permettent de lisser l'effort d'épargne dans le temps."
+            ]
+          },
+          "independants": {
+            "h4": "Pour les indépendants et professions libérales",
+            "text": "Optimisez vos revenus grâce au <strong className=\"text-[#253F60]\">PERIN</strong>, au contrat <strong className=\"text-[#253F60]\">Madelin</strong> ou à des investissements immobiliers ciblés (LMNP, SCPI). Vous combinez ainsi rentabilité, fiscalité avantageuse et capital transmissible."
+          },
+          "dirigeants": {
+            "h4": "Pour les dirigeants d'entreprise",
+            "text": "Profitez des dispositifs de retraite supplémentaire et de capitalisation en société pour transformer la trésorerie dormante en actifs productifs. Azalée Patrimoine vous accompagne dans la structuration juridique et patrimoniale de ces stratégies."
+          }
+        }
+      },
+      "section13": {
+        "h2": "Questions fréquentes sur la retraite",
+        "questions": [
+          {
+            "question": "À quel âge faut-il commencer à préparer sa retraite ?",
+            "answer": "Idéalement entre 35 et 45 ans pour profiter pleinement de l'effet de capitalisation. Mais il n'est jamais trop tard : chaque situation se planifie."
+          },
+          {
+            "question": "Comment fonctionne la déduction fiscale du PER ?",
+            "answer": "Les versements sur un PER individuel sont <strong className=\"text-[#253F60]\">déductibles du revenu imposable</strong>, dans la limite de 10 % des revenus professionnels nets. Le gain fiscal dépend de votre tranche marginale d'imposition."
+          },
+          {
+            "question": "Quelle différence entre PER individuel et PER d'entreprise ?",
+            "answer": "Le PER individuel est souscrit à titre personnel. Le PER d'entreprise collectif (<strong className=\"text-[#253F60]\">PERECO</strong>) ou obligatoire (<strong className=\"text-[#253F60]\">PERO</strong>) est proposé via votre employeur, avec des abondements possibles."
+          },
+          {
+            "question": "Comment optimiser sa retraite quand on est travailleur indépendant ?",
+            "answer": "Les indépendants peuvent combiner plusieurs dispositifs : PERIN, contrat Madelin, capitalisation en société ou immobilier professionnel. Chaque solution répond à un besoin spécifique de revenu, protection ou transmission."
+          },
+          {
+            "question": "Que faire si je pars vivre à l'étranger ?",
+            "answer": "Les expatriés peuvent continuer à détenir un PER en France, mais la fiscalité dépendra de la convention bilatérale. Azalée Patrimoine vous aide à adapter votre stratégie retraite à votre résidence fiscale."
+          }
+        ]
+      },
+      "section14": {
+        "h2": "En résumé",
+        "intro": "Bien préparer sa retraite, c'est construire aujourd'hui les fondations de votre sérénité future. Avec Azalée Patrimoine, vous bénéficiez d'un accompagnement global :",
+        "points": [
+          "une stratégie patrimoniale personnalisée,",
+          "une expertise financière et fiscale reconnue,",
+          "et un suivi humain, indépendant et durable."
+        ],
+        "contact": {
+          "email": {
+            "label": "Être rappelé par un conseiller",
+            "email": "contact@azalee-patrimoine.fr",
+            "url": "mailto:contact@azalee-patrimoine.fr"
+          },
+          "rendezVous": {
+            "label": "Prendre rendez-vous en ligne",
+            "url": "https://calendly.com/rdv-azalee-patrimoine/30min"
+          }
+        }
+      },
+      "section15": {
+        "h2": "En savoir plus",
+        "categories": [
+          {
+            "title": "Placements financiers",
+            "description": "Construire un portefeuille long terme",
+            "link": "/placements"
+          },
+          {
+            "title": "Investissement immobilier",
+            "description": "SCPI et immobilier retraite",
+            "link": "/immobilier"
+          },
+          {
+            "title": "Gestion de patrimoine",
+            "description": "Structurer son épargne pour la retraite",
+            "link": "/patrimoine"
+          }
+        ],
+        "articles": [
+          {
+            "title": "Le rachat de trimestres en 2025",
+            "description": "Lien vers sous page Rachat de trimestres",
+            "link": "/retraite/rachat-trimestres"
+          },
+          {
+            "title": "Quelles différences entre le PERP, le PERCO, le PER ?",
+            "description": "Lien vers sous page : les produits retraite : PER/PERP...",
+            "link": "/retraite/plan-retraite"
+          },
+          {
+            "title": "Prévoyance et Protection Familiale",
+            "description": "Lien vers sous page",
+            "link": "/retraite/prevoyance-protection"
+          },
+          {
+            "title": "Autres solutions retraites",
+            "description": "Lien vers sous page",
+            "link": "/retraite/autre"
+          },
+          {
+            "title": "La retraite progressive",
+            "description": "Lien vers sous page",
+            "link": "/retraite/retraite-progressive"
+          },
+          {
+            "title": "Le cumul emploi-retraite",
+            "description": "Article"
+          }
+        ]
+      },
+      "ctaFinal": {
+        "h2": "Prêt à préparer votre retraite sereinement ?",
+        "description": "Nos experts Azalée Patrimoine vous accompagnent dans la construction d'une stratégie retraite personnalisée, adaptée à votre situation et vos objectifs.",
+        "buttons": [
+          {
+            "text": "Demander un diagnostic gratuit",
+            "link": "https://calendly.com/rdv-azalee-patrimoine/30min",
+            "style": "primary"
+          },
+          {
+            "text": "Nous contacter",
+            "link": "/contact",
+            "style": "secondary"
+          }
+        ]
+      },
+      "chartData": {
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30"
+        ],
+        "datasets": [
+          {
+            "label": "Versements cumulés bruts",
+            "data": [
+              2400,
+              4800,
+              7200,
+              9600,
+              12000,
+              14400,
+              16800,
+              19200,
+              21600,
+              24000,
+              26400,
+              28800,
+              31200,
+              33600,
+              36000,
+              38400,
+              40800,
+              43200,
+              45600,
+              48000,
+              50400,
+              52800,
+              55200,
+              57600,
+              60000,
+              62400,
+              64800,
+              67200,
+              69600,
+              72000
+            ]
+          },
+          {
+            "label": "Intérêts cumulés",
+            "data": [
+              0,
+              120,
+              360,
+              720,
+              1200,
+              1800,
+              2520,
+              3360,
+              4320,
+              5400,
+              6600,
+              7920,
+              9360,
+              10920,
+              12600,
+              14400,
+              16320,
+              18360,
+              20520,
+              22800,
+              25200,
+              27720,
+              30360,
+              33120,
+              36000,
+              39000,
+              42120,
+              45360,
+              48720,
+              52200
+            ]
+          }
+        ]
+      },
+      "seo": {
+        "title": "Retraite et Préparation de l'Avenir | Azalée Patrimoine",
+        "description": "Préparez votre retraite avec Azalée Patrimoine : PER, PERP, rachat de trimestres, simulation retraite, prévoyance et protection familiale. Anticipez sereinement votre avenir.",
+        "keywords": "retraite, PER, PERP, rachat de trimestres, simulation retraite, prévoyance, Azalée Patrimoine",
+        "openGraph": {
+          "title": "Retraite et Préparation de l'Avenir | Azalée Patrimoine",
+          "description": "Préparez votre retraite avec Azalée Patrimoine : PER, PERP, rachat de trimestres, simulation retraite, prévoyance et protection familiale. Anticipez sereinement votre avenir.",
+          "url": "https://azalee-patrimoine.fr/retraite"
+        },
+        "twitter": {
+          "title": "Retraite et Préparation de l'Avenir | Azalée Patrimoine",
+          "description": "Préparez votre retraite avec Azalée Patrimoine : PER, PERP, rachat de trimestres, simulation retraite, prévoyance et protection familiale. Anticipez sereinement votre avenir."
+        }
+      }
+    },
+    "published": true,
+    "modifiedBy": "admin",
+    "lastModified": "2025-11-29T00:48:43.959Z",
+    "createdAt": "2025-11-28T23:51:41.086Z",
+    "updatedAt": "2025-11-29T00:25:34.100Z",
+    "__v": 0
+  },
+  {
+    "_id": "692a3ee0985008511e450cc4",
+    "path": "header",
+    "title": "Header / Navigation",
+    "content": {
+      "logo": {
+        "src": "/images/azalee-patrimoine3.png",
+        "alt": "Azalee Wealth Logo"
+      },
+      "menuItems": {
+        "fiscalite": {
+          "title": "Fiscalité",
+          "path": "/fiscalite",
+          "items": [
+            {
+              "title": "Impôt sur le revenu",
+              "path": "/fiscalite/impot-sur-le-revenu",
+              "subItems": [
+                {
+                  "title": "Déclaration d'impôts",
+                  "path": "/fiscalite/declaration-impots"
+                },
+                {
+                  "title": "Tranches, barèmes, plafonds",
+                  "path": "/fiscalite/tranches-baremes-plafonds"
+                },
+                {
+                  "title": "Lois fiscales",
+                  "path": "/fiscalite/lois-fiscales"
+                }
+              ]
+            },
+            {
+              "title": "Réductions d'impôt / déficit foncier",
+              "path": "/fiscalite/reductions-impot-deficit-foncier"
+            },
+            {
+              "title": "Fiscalité des placements",
+              "path": "/fiscalite/fiscalite-placements",
+              "subItems": [
+                {
+                  "title": "PFU",
+                  "path": "/fiscalite/pfu"
+                },
+                {
+                  "title": "TMI et prélèvements sociaux",
+                  "path": "/fiscalite/tmi-prelevements-sociaux"
+                }
+              ]
+            }
+          ]
+        },
+        "immobilier": {
+          "title": "Immobilier",
+          "path": "/immobilier",
+          "items": [
+            {
+              "title": "Immobilier neuf",
+              "path": "/immobilier/immobilier-neuf"
+            },
+            {
+              "title": "VEFA",
+              "path": "/immobilier/vefa"
+            },
+            {
+              "title": "Investissement locatif",
+              "path": "/immobilier/investissement-locatif"
+            },
+            {
+              "title": "SCI",
+              "path": "/immobilier/sci"
+            }
+          ]
+        },
+        "placements": {
+          "title": "Placements",
+          "path": "/placements",
+          "items": [
+            {
+              "title": "Assurance-vie",
+              "path": "/placements/assurance-vie"
+            },
+            {
+              "title": "Compte titres ordinaires",
+              "path": "/placements/compte-titres"
+            },
+            {
+              "title": "SCPI / OPCI",
+              "path": "/placements/scpi-opci"
+            },
+            {
+              "title": "PEA / PER",
+              "path": "/placements/pea-per"
+            }
+          ]
+        },
+        "retraite": {
+          "title": "Retraite",
+          "path": "/retraite",
+          "items": [
+            {
+              "title": "Plans retraite PER/PERP/PEE etc.",
+              "path": "/retraite/plan-retraite"
+            },
+            {
+              "title": "Rachat de trimestres",
+              "path": "/retraite/rachat-trimestres"
+            },
+            {
+              "title": "Simulation retraite",
+              "path": "/retraite/simulation"
+            }
+          ]
+        },
+        "patrimoine": {
+          "title": "Patrimoine",
+          "path": "/patrimoine",
+          "items": [
+            {
+              "title": "Succession, héritage",
+              "path": "/patrimoine/succession-heritage"
+            },
+            {
+              "title": "Donation à titre gratuit",
+              "path": "/patrimoine/donation-gratuite"
+            },
+            {
+              "title": "Bilan patrimonial",
+              "path": "/patrimoine/bilan"
+            }
+          ]
+        },
+        "outils": {
+          "title": "Outils",
+          "path": "/outils",
+          "items": [
+            {
+              "title": "Guide de défiscalisation",
+              "path": "/outils-financiers/guide-defiscalisation"
+            },
+            {
+              "title": "Calculatrice d'impôts",
+              "path": "/outils/calculatrice-impots"
+            },
+            {
+              "title": "Calculs financiers divers",
+              "path": "/outils/calculs-financiers"
+            }
+          ]
+        }
+      },
+      "contactButton": {
+        "text": "Contact",
+        "path": "/contact"
+      },
+      "topBar": {
+        "contact": {
+          "phone": {
+            "number": "01 53 45 85 00",
+            "link": "tel:+33153458500",
+            "icon": "/images/img_component_1.svg"
+          },
+          "email": {
+            "address": "contact@azalee-patrimoine.fr",
+            "link": "mailto:contact@azalee-patrimoine.fr",
+            "icon": "/images/img_component_1_light_green_400.svg"
+          }
+        },
+        "social": {
+          "linkedin": {
+            "url": "https://www.linkedin.com/company/azalee-patrimoine",
+            "text": "Suivez-nous"
+          }
+        },
+        "espaceClient": {
+          "text": "Espace client",
+          "path": "/espace-client"
+        }
+      }
+    },
+    "published": true,
+    "lastModified": "2025-11-29T00:38:11.836Z",
+    "__v": 0,
+    "updatedAt": "2025-11-29T00:38:11.837Z"
+  },
+  {
+    "_id": "692a3eed4f81bba2a5134a9d",
+    "path": "footer",
+    "title": "Footer",
+    "content": {
+      "contact": {
+        "title": "Contactez-nous",
+        "address": {
+          "street": "106 Rue de Richelieu",
+          "city": "75002 Paris"
+        },
+        "email": "contact@azalee-patrimoine.fr",
+        "phone": "01 53 45 85 00",
+        "ctaButton": {
+          "text": "Prendre rendez-vous",
+          "url": "https://calendly.com/rdv-azalee-patrimoine/30min"
+        }
+      },
+      "services": {
+        "title": "Nos services",
+        "items": [
+          "Conseil en gestion de patrimoine",
+          "Optimisation fiscale",
+          "Investissement immobilier",
+          "Placements financiers",
+          "Transmission de patrimoine"
+        ]
+      },
+      "outils": {
+        "title": "Outils",
+        "items": [
+          {
+            "text": "Calculateur d'impôts",
+            "path": "/outils/calculatrice-impots"
+          },
+          {
+            "text": "Calculs financiers",
+            "path": "/outils/calculs-financiers"
+          },
+          {
+            "text": "Assurance-vie vs PER",
+            "path": "/outils-financiers/assurance-vie-vs-per"
+          }
+        ]
+      },
+      "mentionsLegales": {
+        "title": "Mentions légales",
+        "companyName": "Azalée Patrimoine",
+        "legalInfo": {
+          "capital": "SASU au capital de 8 000 €",
+          "address": "106 rue de Richelieu, 75002 Paris",
+          "siren": "SIREN 790 419 949 – RCS Paris",
+          "tva": "TVA intracommunautaire : FR90790419949",
+          "orias": {
+            "text": "Inscrite à l'ORIAS n° 13001775",
+            "url": "https://www.orias.fr",
+            "description": "en qualité d'intermédiaire en assurance, banque et finance."
+          },
+          "anacofi": "Adhérente à l'ANACOFI-CIF (92 rue d'Amsterdam, 75009 Paris) et à l'ANACOFI-Courtage (90 rue d'Amsterdam, 75009 Paris).",
+          "acpr": "Soumise au contrôle de l'ACPR (4 place de Budapest, 75436 Paris Cedex 09)."
+        }
+      },
+      "bottom": {
+        "copyright": "© 2025 AZALEE PATRIMOINE. Tous droits réservés.",
+        "links": [
+          {
+            "text": "Politique de confidentialité",
+            "path": "#"
+          },
+          {
+            "text": "Conditions d'utilisation",
+            "path": "/conditions-generales"
+          },
+          {
+            "text": "Mentions légales 12",
+            "path": "/mentions-legales"
+          },
+          {
+            "text": "test",
+            "path": "test"
+          }
+        ]
+      }
+    },
+    "published": true,
+    "lastModified": "2025-11-29T00:35:14.927Z",
+    "__v": 0,
+    "updatedAt": "2025-11-29T00:35:14.930Z"
+  }
+]
