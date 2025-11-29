@@ -1,0 +1,8 @@
+{
+  "email": "admin@azalee.com",
+  "password": "$2b$10$5j0G4UwizAxElzTDbOtxT.OY0a2muya9TwX6lqeah9FUQ8AG10lda",
+  "name": "Administrator",
+  "role": "admin"
+}
+
+

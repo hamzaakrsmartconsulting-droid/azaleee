@@ -3,9 +3,6 @@ const nextConfig = {
   productionBrowserSourceMaps: true,
   distDir: process.env.DIST_DIR || '.next',
   
-  // Enable standalone output for Docker
-  output: 'standalone',
-  
   // Performance optimizations
   experimental: {
     optimizeCss: true,
@@ -35,25 +32,6 @@ const nextConfig = {
         loader: '@dhiwise/component-tagger/nextLoader',
       }],
     });
-
-    // Configuration pour mysql2 côté serveur uniquement
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        net: false,
-        tls: false,
-        fs: false,
-        crypto: false,
-        stream: false,
-        url: false,
-        zlib: false,
-        http: false,
-        https: false,
-        assert: false,
-        os: false,
-        path: false,
-      };
-    }
 
     // Performance optimizations
     if (isServer) {

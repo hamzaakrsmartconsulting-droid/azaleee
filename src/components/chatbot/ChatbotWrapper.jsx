@@ -1,15 +1,16 @@
-"use client";
-import { usePathname } from "next/navigation";
-import SaraChatbot from "./SaraChatbot";
+'use client';
+import { usePathname } from 'next/navigation';
+import SaraChatbot from './SaraChatbot';
 
 export default function ChatbotWrapper() {
   const pathname = usePathname();
-  const isCmsPage = pathname?.startsWith('/cms');
+  const isAdminPage = pathname?.startsWith('/admin');
 
-  // Don't render the chatbot on CMS pages
-  if (isCmsPage) {
+  // Ne pas afficher le chatbot sur les pages admin
+  if (isAdminPage) {
     return null;
   }
 
   return <SaraChatbot />;
 }
+

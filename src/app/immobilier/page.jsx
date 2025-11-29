@@ -59,105 +59,33 @@ export default function ImmobilierPage() {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        // Load CMS content first
-        const cmsResponse = await fetch('/api/cms/content/immobilier');
-        let cmsSections = [];
-        if (cmsResponse.ok) {
-          cmsSections = await cmsResponse.json();
+        // Fetch content from CMS API
+        const response = await fetch('/api/cms/content?path=immobilier');
+        if (response.ok) {
+          const data = await response.json();
+          // API returns { success: true, data: page.content }
+          if (data.data) {
+            setContent(data.data);
+          } else if (data.content) {
+            setContent(data.content);
+          } else {
+            console.warn('No content found in response, using empty object');
+            setContent({});
+          }
+        } else {
+          console.error('Failed to fetch content');
+          setContent({});
         }
-
-        // Default content that matches the CMS structure
-        const defaultContent = {
-          hero: {
-            title: "Investissement Immobilier",
-            subtitle: "Construisez votre patrimoine avec l'immobilier",
-            description: "Découvrez nos solutions d'investissement immobilier pour faire fructifier votre patrimoine et réduire vos impôts.",
-            backgroundImage: "/images/immobilier-hero.webp",
-            ctaButton: "Découvrir nos solutions"
-          },
-          intro: {
-            introTitle: "Pourquoi investir dans l'immobilier ?",
-            introText: "L'immobilier reste l'un des investissements les plus sûrs et rentables. Avec nos conseils d'experts, optimisez votre stratégie patrimoniale.",
-            introImage: "/images/immobilier-intro.webp"
-          },
-          services: {
-            servicesTitle: "Nos Services Immobilier",
-            servicesList: [
-              { name: "Investissement Locatif", description: "Générez des revenus réguliers", icon: "" },
-              { name: "Défiscalisation", description: "Réduisez vos impôts légalement", icon: "" },
-              { name: "Conseil en Acquisition", description: "Trouvez le bien idéal", icon: "" },
-              { name: "Gestion Locative", description: "Gérez vos biens sans contraintes", icon: "" }
-            ]
-          },
-          advantages: {
-            advantagesTitle: "Les Avantages de l'Immobilier",
-            advantagesList: [
-              { title: "Rendement Stable", description: "Revenus locatifs réguliers et prévisibles" },
-              { title: "Plus-value", description: "Appréciation de la valeur du bien dans le temps" },
-              { title: "Défiscalisation", description: "Réduction d'impôts grâce aux dispositifs fiscaux" },
-              { title: "Diversification", description: "Équilibrage de votre portefeuille d'investissements" }
-            ]
-          },
-          process: {
-            processTitle: "Notre Processus d'Accompagnement",
-            processSteps: [
-              { step: "1", title: "Analyse", description: "Étude de votre situation et de vos objectifs" },
-              { step: "2", title: "Recherche", description: "Identification des opportunités d'investissement" },
-              { step: "3", title: "Acquisition", description: "Négociation et acquisition du bien" },
-              { step: "4", title: "Gestion", description: "Suivi et optimisation de votre investissement" }
-            ]
-          },
-          testimonials: {
-            testimonialsTitle: "Nos Clients Témoignent",
-            testimonialsList: [
-              { name: "Marie L.", text: "Grâce à Azalée, j'ai pu diversifier mon patrimoine avec des investissements immobiliers rentables.", rating: 5 },
-              { name: "Pierre M.", text: "Un accompagnement professionnel qui m'a permis d'optimiser ma fiscalité immobilière.", rating: 5 }
-            ]
-          },
-          cta: {
-            ctaTitle: "Prêt à Investir dans l'Immobilier ?",
-            ctaText: "Contactez nos experts pour une consultation personnalisée et découvrez comment optimiser votre patrimoine immobilier.",
-            ctaButton: "Demander une consultation"
-          }
-        };
-
-        // Merge CMS content with default content
-        const mergedContent = { ...defaultContent };
-        
-        cmsSections.forEach(section => {
-          try {
-            const sectionData = JSON.parse(section.content_data);
-            mergedContent[section.section_name] = {
-              ...mergedContent[section.section_name],
-              ...sectionData
-            };
-          } catch (error) {
-            console.error(`Error parsing section ${section.section_name}:`, error);
-          }
-        });
-
-        console.log('Immobilier Page - Loaded content:', mergedContent);
-        setContent(mergedContent);
       } catch (e) {
         console.error("Failed to fetch immobilier page content:", e);
         setError(e.message);
+        setContent({});
       } finally {
         setLoading(false);
       }
     };
 
     fetchContent();
-
-    // Listen for content updates
-    const handleContentUpdate = () => {
-      console.log('Immobilier Page - Content update detected, reloading...');
-      fetchContent();
-    };
-
-    window.addEventListener('contentUpdated', handleContentUpdate);
-    return () => {
-      window.removeEventListener('contentUpdated', handleContentUpdate);
-    };
   }, []);
 
   // Initialiser la carte Mapbox quand les données sont disponibles
@@ -273,8 +201,21 @@ export default function ImmobilierPage() {
     };
   }, [marketData, selectedCity]);
 
-  if (loading) return <div className="text-center py-10">Chargement du contenu...</div>;
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#253F60]"></div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
   if (error) return <div className="text-center py-10 text-red-500">Erreur: {error}</div>;
+  
+  // Use CMS content with fallback
+  const pageContent = content || {};
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -307,20 +248,20 @@ export default function ImmobilierPage() {
               {/* Contenu */}
               <div className="relative z-10">
                 <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-4">
-                  Investir dans l'immobilier avec Azalée Patrimoine
+                  {pageContent.hero?.h1 || "Investir dans l'immobilier avec Azalée Patrimoine"}
                 </h1>
                 <p className="text-[#686868] text-base sm:text-lg font-inter leading-relaxed mb-6">
-                  L'immobilier, pilier de votre indépendance financière et de la transmission familiale. Chez Azalée Patrimoine, nous considérons l'immobilier comme un socle fondamental d'un patrimoine équilibré : tangible, résilient et porteur de sens. Notre rôle est de transformer vos projets immobiliers — qu'ils soient locatifs, neufs ou patrimoniaux — en véritables stratégies d'enrichissement à long terme, intégrant rendement, fiscalité et transmission.
+                  {pageContent.hero?.description || "L'immobilier, pilier de votre indépendance financière et de la transmission familiale. Chez Azalée Patrimoine, nous considérons l'immobilier comme un socle fondamental d'un patrimoine équilibré : tangible, résilient et porteur de sens. Notre rôle est de transformer vos projets immobiliers — qu'ils soient locatifs, neufs ou patrimoniaux — en véritables stratégies d'enrichissement à long terme, intégrant rendement, fiscalité et transmission."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <button 
-                    onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                    onClick={() => window.open(pageContent.hero?.ctaButton1Link || 'https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
                     className="inline-flex items-center justify-center bg-[#B99066] text-white px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#A67A5A] transition-colors"
                   >
-                    Demandez votre audit patrimonial personnalisé
-          </button>
-                  <a href="#pourquoi-investir" className="inline-flex items-center justify-center bg-transparent border-2 border-[#253F60] text-[#253F60] px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#253F60] hover:text-white transition-colors">
-                    Découvrir nos solutions
+                    {pageContent.hero?.ctaButton1 || "Demandez votre audit patrimonial personnalisé"}
+                  </button>
+                  <a href={pageContent.hero?.ctaButton2Link || "#pourquoi-investir"} className="inline-flex items-center justify-center bg-transparent border-2 border-[#253F60] text-[#253F60] px-5 py-3 rounded-lg font-inter font-medium hover:bg-[#253F60] hover:text-white transition-colors">
+                    {pageContent.hero?.ctaButton2 || "Découvrir nos solutions"}
                   </a>
                 </div>
               </div>
@@ -333,10 +274,10 @@ export default function ImmobilierPage() {
                 <div className="w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center">
                   <div className="text-center px-2">
                     <div className="text-3xl sm:text-4xl font-cairo font-bold text-white mb-1">
-                      61,2%
+                      {pageContent.hero?.rightCard?.percentage || "61,2%"}
                     </div>
                     <p className="text-[9px] sm:text-[11px] font-inter font-semibold text-white leading-tight">
-                      des français
+                      {pageContent.hero?.rightCard?.text || "des français"}
                     </p>
                   </div>
                 </div>
@@ -345,14 +286,14 @@ export default function ImmobilierPage() {
               {/* Contenu principal */}
               <div className="relative z-10 pt-2">
                 <p className="text-base sm:text-lg font-inter font-medium mb-8 leading-relaxed pr-24 sm:pr-32">
-                  61.2% des français possèdent un ou plusieurs biens immobiliers.
+                  {pageContent.hero?.rightCard?.description || "61.2% des français possèdent un ou plusieurs biens immobiliers."}
                 </p>
                 
                 <button 
                   onClick={() => alert('Téléchargement du guide')}
                   className="w-full bg-white text-[#253F60] px-5 py-3 rounded-lg font-inter font-semibold hover:bg-[#F9FAFB] transition-colors text-center text-sm sm:text-base shadow-md"
                 >
-                  Téléchargez le guide complet pour bâtir et optimiser votre patrimoine
+                  {pageContent.hero?.rightCard?.buttonText || "Téléchargez le guide complet pour bâtir et optimiser votre patrimoine"}
                 </button>
               </div>
             </div>
@@ -365,25 +306,25 @@ export default function ImmobilierPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold text-[#253F60] mb-6">
-              Pourquoi investir dans l'immobilier aujourd'hui ?
+              {pageContent.section2?.h2 || "Pourquoi investir dans l'immobilier aujourd'hui ?"}
             </h2>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-8 mb-12">
             <p className="text-lg sm:text-xl lg:text-2xl font-inter text-[#374151] leading-relaxed text-center">
-              L'immobilier reste l'actif préféré des Français, et ce n'est pas un hasard :
+              {pageContent.section2?.intro || "L'immobilier reste l'actif préféré des Français, et ce n'est pas un hasard :"}
             </p>
 
             {/* Statistique principale */}
             <div className="bg-gradient-to-br from-[#253F60] to-[#2d4a6b] rounded-xl p-8 sm:p-10 lg:p-12 text-white text-center shadow-xl">
               <div className="text-5xl sm:text-6xl lg:text-7xl font-bold font-cairo mb-4 text-[#B99066]">
-                61,2%
+                {pageContent.section2?.statistic?.value || "61,2%"}
           </div>
               <p className="text-xl sm:text-2xl font-inter font-semibold mb-2">
-                des ménages possèdent un bien immobilier
+                {pageContent.section2?.statistic?.text || "des ménages possèdent un bien immobilier"}
               </p>
               <p className="text-sm sm:text-base text-white/80 font-inter">
-                INSEE 2024
+                {pageContent.section2?.statistic?.source || "INSEE 2024"}
               </p>
             </div>
 
@@ -443,35 +384,36 @@ export default function ImmobilierPage() {
             </div>
 
             {/* Mention SCPI */}
-            <div className="bg-gradient-to-r from-[#F9FAFB] to-white rounded-xl p-8 border-2 border-[#E5E7EB] mt-10">
-              <p className="text-lg sm:text-xl font-inter text-[#374151] leading-relaxed italic text-center">
-                "Mais il n'est pas toujours nécessaire d'acheter un bien en direct pour profiter du dynamisme immobilier : <strong className="text-[#253F60] font-semibold not-italic">les SCPI permettent d'accéder à la pierre autrement.</strong>"
-              </p>
-            </div>
+            {pageContent.section2?.scpiMention && (
+              <div className="bg-gradient-to-r from-[#F9FAFB] to-white rounded-xl p-8 border-2 border-[#E5E7EB] mt-10">
+                <p className="text-lg sm:text-xl font-inter text-[#374151] leading-relaxed italic text-center" dangerouslySetInnerHTML={{ __html: `"${pageContent.section2.scpiMention}"` }} />
+              </div>
+            )}
 
             {/* Message Azalée */}
-            <div className="text-center mt-10">
-              <p className="text-lg sm:text-xl lg:text-2xl font-inter text-[#253F60] leading-relaxed font-medium">
-                💬 Chez Azalée Patrimoine, nous intégrons chaque actif immobilier dans une vision globale — <strong className="font-semibold">financière, fiscale et humaine</strong> — pour bâtir la liberté patrimoniale de demain.
-              </p>
-            </div>
+            {pageContent.section2?.azaleeMessage && (
+              <div className="text-center mt-10">
+                <p className="text-lg sm:text-xl lg:text-2xl font-inter text-[#253F60] leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: pageContent.section2.azaleeMessage }} />
+              </div>
+            )}
           </div>
 
           {/* CTA Formulaire Tally */}
-          <div className="text-center mt-12">
-            <p className="text-xl sm:text-2xl font-cairo font-semibold text-[#253F60] mb-6">
-              Découvrez quelle stratégie immobilière correspond à votre profil
-            </p>
-            <button 
-              onClick={() => {
-                // TODO: Remplacer par le lien du formulaire Tally une fois créé
-                window.open('https://tally.so', '_blank');
-              }}
-              className="bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold text-lg px-10 py-4 rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
-            >
-              Faire le test de profil
-            </button>
-          </div>
+          {pageContent.section2?.ctaTitle && (
+            <div className="text-center mt-12">
+              <p className="text-xl sm:text-2xl font-cairo font-semibold text-[#253F60] mb-6">
+                {pageContent.section2.ctaTitle}
+              </p>
+              <button 
+                onClick={() => {
+                  window.open(pageContent.section2?.ctaLink || 'https://tally.so', '_blank');
+                }}
+                className="bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold text-lg px-10 py-4 rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+              >
+                {pageContent.section2?.ctaButton || "Faire le test de profil"}
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -480,110 +422,74 @@ export default function ImmobilierPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold text-[#253F60] mb-6">
-              Investir dans les SCPI : la pierre sans les contraintes
+              {pageContent.section3?.h2 || "Investir dans les SCPI : la pierre sans les contraintes"}
             </h2>
                 </div>
 
           <div className="max-w-4xl mx-auto space-y-10 mb-12">
             {/* Introduction */}
-            <div className="text-center space-y-4">
-              <p className="text-lg sm:text-xl lg:text-2xl font-inter text-[#374151] leading-relaxed">
-                Les <strong className="text-[#253F60] font-semibold">SCPI (Sociétés Civiles de Placement Immobilier)</strong> offrent la possibilité d'investir dans un portefeuille d'immeubles géré par des professionnels, <strong className="text-[#253F60] font-semibold">sans contrainte de gestion locative</strong>.
-              </p>
-              <p className="text-lg sm:text-xl font-inter text-[#374151] leading-relaxed">
-                Elles constituent une <strong className="text-[#253F60] font-semibold">porte d'entrée idéale</strong> pour diversifier son patrimoine et générer des revenus réguliers.
-              </p>
-            </div>
+            {pageContent.section3?.intro && (
+              <div className="text-center space-y-4">
+                {Array.isArray(pageContent.section3.intro) ? (
+                  pageContent.section3.intro.map((paragraph, index) => (
+                    <p key={index} className="text-lg sm:text-xl lg:text-2xl font-inter text-[#374151] leading-relaxed" dangerouslySetInnerHTML={{ __html: paragraph }} />
+                  ))
+                ) : (
+                  <p className="text-lg sm:text-xl lg:text-2xl font-inter text-[#374151] leading-relaxed" dangerouslySetInnerHTML={{ __html: pageContent.section3.intro }} />
+                )}
+              </div>
+            )}
 
             {/* Avantages clés en grille */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-              <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md">
+            {pageContent.section3?.advantages && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                {pageContent.section3.advantages.map((advantage, index) => (
+                  <div key={index} className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md">
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
+                          {advantage.title}
+                        </h3>
+                        <p className="text-[#374151] font-inter leading-relaxed" dangerouslySetInnerHTML={{ __html: advantage.description }} />
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
-                      Accessibilité
-                    </h3>
-                    <p className="text-[#374151] font-inter leading-relaxed">
-                      Ticket d'entrée dès <strong className="text-[#253F60]">quelques centaines d'euros</strong>.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
-
-              <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md">
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
-                      Diversification
-                    </h3>
-                    <p className="text-[#374151] font-inter leading-relaxed">
-                      <strong className="text-[#253F60]">Bureaux, commerces, santé, logistique</strong>.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md">
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
-                      Rendement attractif
-                    </h3>
-                    <p className="text-[#374151] font-inter leading-relaxed">
-                      Entre <strong className="text-[#253F60]">4 % et 6 % net</strong> selon les SCPI en 2024.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#B99066]">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-md">
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
-                      Gestion déléguée
-                    </h3>
-                    <p className="text-[#374151] font-inter leading-relaxed">
-                      Vous percevez les loyers <strong className="text-[#253F60]">sans gérer les locataires</strong>.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            )}
 
             {/* Exemples de SCPI */}
-            <div className="bg-gradient-to-br from-[#253F60] to-[#2d4a6b] rounded-xl p-8 sm:p-10 text-white shadow-xl mt-10">
-              <h3 className="text-2xl font-cairo font-bold mb-6 text-center">
-                Exemples de SCPI performantes
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {['Amundi Immobilier', 'Corum Origin', 'Épargne Pierre', 'Primovie'].map((scpi, index) => (
-                  <div 
-                    key={index}
-                    className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer border border-white/20"
-                  >
-                    <p className="font-inter font-semibold text-sm sm:text-base">{scpi}</p>
+            {pageContent.section3?.scpiExamples && (
+              <div className="bg-gradient-to-br from-[#253F60] to-[#2d4a6b] rounded-xl p-8 sm:p-10 text-white shadow-xl mt-10">
+                <h3 className="text-2xl font-cairo font-bold mb-6 text-center">
+                  {pageContent.section3.scpiExamples.title}
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {(pageContent.section3.scpiExamples.scpis || []).map((scpi, index) => (
+                    <div 
+                      key={index}
+                      className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer border border-white/20"
+                    >
+                      <p className="font-inter font-semibold text-sm sm:text-base">{scpi}</p>
+                    </div>
+                  ))}
+                </div>
+                {pageContent.section3.scpiExamples.note && (
+                  <p className="text-center mt-6 text-white/80 text-sm font-inter italic">
+                    {pageContent.section3.scpiExamples.note}
+                  </p>
+                )}
               </div>
-            ))}
-              </div>
-              <p className="text-center mt-6 text-white/80 text-sm font-inter italic">
-                (liens vers la bibliothèque de partenaires où l'on pourrait avoir 1 fiche par partenaire)
-              </p>
-            </div>
+            )}
 
             {/* Citation */}
-            <div className="bg-gradient-to-r from-[#F9FAFB] to-white rounded-xl p-8 border-l-4 border-[#B99066] shadow-md mt-10">
-              <p className="text-lg sm:text-xl font-inter text-[#374151] leading-relaxed italic text-center">
-                💬 "Avec les SCPI, vous profitez du potentiel de l'immobilier professionnel, <strong className="text-[#253F60] font-semibold not-italic">sans les soucis de la location</strong>."
-              </p>
-            </div>
+            {pageContent.section3?.quote && (
+              <div className="bg-gradient-to-r from-[#F9FAFB] to-white rounded-xl p-8 border-l-4 border-[#B99066] shadow-md mt-10">
+                <p className="text-lg sm:text-xl font-inter text-[#374151] leading-relaxed italic text-center" dangerouslySetInnerHTML={{ __html: pageContent.section3.quote }} />
+              </div>
+            )}
 
             {/* Graphique comparatif Chart.js */}
             <div className="bg-white rounded-xl p-8 border-2 border-[#E5E7EB] shadow-lg mt-10">
@@ -708,14 +614,16 @@ export default function ImmobilierPage() {
           </div>
 
           {/* CTA */}
-          <div className="text-center mt-12">
-            <button 
-              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
-              className="bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold text-lg px-10 py-4 rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
-            >
-              👉 Comparez les meilleures SCPI du moment avec un conseiller Azalée
-            </button>
-          </div>
+          {pageContent.section3?.ctaButton && (
+            <div className="text-center mt-12">
+              <button 
+                onClick={() => window.open(pageContent.section3?.ctaLink || 'https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                className="bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold text-lg px-10 py-4 rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+              >
+                {pageContent.section3.ctaButton}
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -2843,13 +2751,13 @@ export default function ImmobilierPage() {
       {/* Call to Action Section */}
       <section className="py-16 bg-gradient-to-r from-[#253F60] to-[#B99066] text-white text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold mb-4">{content.cta?.ctaTitle || "Prêt à Investir dans l'Immobilier ?"}</h2>
-          <p className="text-xl mb-8">{content.cta?.ctaText || "Contactez nos experts pour une consultation personnalisée et découvrez comment optimiser votre patrimoine immobilier."}</p>
+          <h2 className="text-4xl font-bold mb-4">{pageContent.cta?.ctaTitle || "Prêt à Investir dans l'Immobilier ?"}</h2>
+          <p className="text-xl mb-8">{pageContent.cta?.ctaText || "Contactez nos experts pour une consultation personnalisée et découvrez comment optimiser votre patrimoine immobilier."}</p>
           <button 
-            onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+            onClick={() => window.open(pageContent.cta?.ctaLink || 'https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
             className="bg-[#B99066] text-white hover:bg-[#A67A5A] font-bold py-3 px-8 rounded-full transition duration-300 shadow-lg"
           >
-            {content.cta?.ctaButton || "Demander une consultation"}
+            {pageContent.cta?.ctaButton || "Demander une consultation"}
           </button>
         </div>
       </section>

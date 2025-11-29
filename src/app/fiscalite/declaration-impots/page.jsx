@@ -6,8 +6,6 @@ import Footer from "../../../components/common/Footer";
 export default function DeclarationImpotsPage() {
   const [activeTab, setActiveTab] = useState("general");
   const [content, setContent] = useState({});
-  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(true);
-  const [contentSource, setContentSource] = useState('default');
 
   // Default content structure
   const defaultContent = {
@@ -46,96 +44,9 @@ export default function DeclarationImpotsPage() {
     }
   };
 
-  // Load content from CMS database
-  const loadContentFromCMS = async () => {
-    try {
-      console.log('Déclaration - Loading content from CMS database...');
-      const response = await fetch('/api/pages/declaration-impots');
-      
-      if (response.ok) {
-        const cmsContent = await response.json();
-        console.log('Déclaration - CMS content loaded:', cmsContent);
-        
-        if (Object.keys(cmsContent).length > 0) {
-          const mergedContent = {
-            ...defaultContent,
-            ...cmsContent
-          };
-          
-          setContent({});
-          setTimeout(() => {
-            setContent(mergedContent);
-            setContentSource('database');
-          }, 100);
-        } else {
-          setContent(defaultContent);
-          setContentSource('default');
-        }
-      } else {
-        setContent(defaultContent);
-        setContentSource('default');
-      }
-    } catch (error) {
-      console.error('Déclaration - Error loading CMS content:', error);
-      setContent(defaultContent);
-      setContentSource('default');
-    } finally {
-      setIsLoadingFromDatabase(false);
-    }
-  };
-
   useEffect(() => {
-    // Always set default content first
+    // Set static content
     setContent(defaultContent);
-    setContentSource('default');
-    
-    // Then load from database and merge
-    loadContentFromCMS();
-    
-    // Listen for content update events
-    const handleContentUpdate = async () => {
-      console.log('Déclaration - Content update event received - reloading from CMS');
-      await loadContentFromCMS();
-    };
-
-    // Use polling for real-time updates
-    let pollingInterval = null;
-    
-    const startPolling = () => {
-      pollingInterval = setInterval(async () => {
-        try {
-          if (document.visibilityState === 'visible') {
-            await loadContentFromCMS();
-          }
-        } catch (error) {
-          console.error('Déclaration - Polling error:', error);
-        }
-      }, 5000);
-    };
-    
-    setTimeout(() => {
-      if (!isLoadingFromDatabase) {
-        startPolling();
-      }
-    }, 2000);
-    
-    window.addEventListener('contentUpdated', handleContentUpdate);
-    
-    const handleStorageChange = (e) => {
-      if (e.key === 'cms_content_updated') {
-        console.log('Déclaration - localStorage change detected - reloading content');
-        loadContentFromCMS();
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    
-    return () => {
-      if (pollingInterval) {
-        clearInterval(pollingInterval);
-      }
-      window.removeEventListener('contentUpdated', handleContentUpdate);
-      window.removeEventListener('storage', handleStorageChange);
-    };
   }, []);
 
   // Use dynamic tabs from CMS or default
@@ -208,12 +119,6 @@ export default function DeclarationImpotsPage() {
   return (
     <>
       {/* Loading indicator */}
-      {isLoadingFromDatabase && (
-        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
-          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
-          Loading Déclaration from Database...
-        </div>
-      )}
       
       <Header />
 

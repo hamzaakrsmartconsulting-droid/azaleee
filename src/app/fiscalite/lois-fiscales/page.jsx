@@ -40,9 +40,6 @@ export default function LoisFiscalesPage() {
   };
   const [selectedCategory, setSelectedCategory] = useState("immobilier");
   const [content, setContent] = useState({});
-  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(false);
-  const [contentSource, setContentSource] = useState('Default');
-  const [pollingInterval, setPollingInterval] = useState(null);
 
   // Default content structure
   const defaultContent = {
@@ -77,40 +74,10 @@ export default function LoisFiscalesPage() {
     }
   };
 
-  // Load content from CMS
-  const loadContentFromCMS = async () => {
-    try {
-      setIsLoadingFromDatabase(true);
-      const response = await fetch('/api/pages/lois-fiscales');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.content && Object.keys(data.content).length > 0) {
-          setContent(data.content);
-          setContentSource('Database');
-          console.log('✅ Lois-fiscales content loaded from database');
-        } else {
-          setContent(defaultContent);
-          setContentSource('Default');
-          console.log('⚠️ No database content found, using default');
-        }
-      } else {
-        setContent(defaultContent);
-        setContentSource('Default');
-        console.log('❌ Failed to load from database, using default');
-      }
-    } catch (error) {
-      console.error('Error loading lois-fiscales content:', error);
-      setContent(defaultContent);
-      setContentSource('Default');
-    } finally {
-      setIsLoadingFromDatabase(false);
-    }
-  };
-
-  // Reload content manually
-  const reloadContent = async () => {
-    await loadContentFromCMS();
-  };
+  useEffect(() => {
+    // Set static content
+    setContent(defaultContent);
+  }, []);
 
   return (
     <>

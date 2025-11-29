@@ -110,32 +110,48 @@ const defaultContent = {
 export default function AssuranceViePage() {
   const [content, setContent] = useState(defaultContent);
   const [activeTab, setActiveTab] = useState("enveloppe");
+  const [loading, setLoading] = useState(true);
 
-  // Load content from localStorage
+  // Load content from MongoDB via API
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setContent((prev) => ({ ...prev, ...parsed }));
-      }
-    } catch (e) {
-      console.error("Failed to load content", e);
-    }
-  }, []);
-
-  // Live update on CustomEvent from CMS
-  useEffect(() => {
-    const handler = () => {
+    const loadContent = async () => {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) setContent((prev) => ({ ...prev, ...JSON.parse(saved) }));
-      } catch {}
+        const response = await fetch('/api/cms/content?path=placements/assurance-vie');
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+          // Merge with default content to ensure all fields exist
+          setContent((prev) => ({ ...prev, ...data.data }));
+        } else {
+          // If not found in DB, use default content
+          console.log('Content not found in database, using default content');
+        }
+      } catch (error) {
+        console.error("Failed to load content from API:", error);
+        // Fallback to default content on error
+      } finally {
+        setLoading(false);
+      }
     };
-    window.addEventListener("contentUpdated", handler);
-    return () => window.removeEventListener("contentUpdated", handler);
+
+    loadContent();
   }, []);
+
+  // Show loading state if content is being fetched
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#253F60] mx-auto mb-4"></div>
+            <p className="text-gray-600">Chargement du contenu...</p>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>

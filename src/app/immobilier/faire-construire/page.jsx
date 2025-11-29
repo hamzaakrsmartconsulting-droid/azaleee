@@ -92,60 +92,14 @@ const defaultContent = {
 };
 
 export default function FaireConstruirePage() {
-  const [cmsContent, setCmsContent] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [cmsContent, setCmsContent] = useState(defaultContent);
 
   useEffect(() => {
-    const loadCmsContent = async () => {
-      try {
-        // Essayer d'abord la base de données
-        const response = await fetch('/api/pages/content?path=/immobilier/faire-construire&type=cms');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.content) {
-            const parsed = result.content.content;
-            setCmsContent({ ...defaultContent, ...parsed });
-            return;
-          }
-        }
-      } catch (error) {
-        console.log('Base de données non disponible, utilisation du localStorage');
-      }
-
-      // Fallback vers localStorage
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setCmsContent({ ...defaultContent, ...parsed });
-      } else {
-        setCmsContent(defaultContent);
-      }
-      setIsLoading(false);
-    };
-
-    loadCmsContent();
-
-    // Listen for custom content update events
-    const handleContentUpdate = async () => {
-      await loadCmsContent();
-    };
-
-    window.addEventListener('contentUpdated', handleContentUpdate);
-    return () => window.removeEventListener('contentUpdated', handleContentUpdate);
+    // Set static content
+    setCmsContent(defaultContent);
   }, []);
 
   const content = cmsContent || defaultContent;
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#4EBBBD] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Chargement...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
