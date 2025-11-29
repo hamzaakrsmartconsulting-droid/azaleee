@@ -3,6 +3,9 @@ const nextConfig = {
   productionBrowserSourceMaps: true,
   distDir: process.env.DIST_DIR || '.next',
   
+  // Enable standalone output for Docker
+  output: 'standalone',
+  
   // Performance optimizations
   experimental: {
     optimizeCss: true,
