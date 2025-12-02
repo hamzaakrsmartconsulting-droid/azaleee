@@ -171,18 +171,6 @@ export default function AdminLoginPage() {
               </button>
             </div>
           </form>
-          
-          {/* Footer Info */}
-          <div className="mt-8 pt-6 border-t-2 border-gray-100">
-            <div className="text-center">
-              <p className="text-xs font-inter text-gray-500 mb-2">Identifiants par défaut :</p>
-              <div className="inline-flex items-center gap-2 bg-gray-50 rounded-lg px-4 py-2 border border-gray-200">
-                <code className="text-xs font-mono text-[#253F60] font-semibold">admin@azalee.com</code>
-                <span className="text-gray-300">/</span>
-                <code className="text-xs font-mono text-[#253F60] font-semibold">admin123</code>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
