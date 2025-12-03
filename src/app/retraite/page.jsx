@@ -171,26 +171,76 @@ export default function RetraitePage() {
       {/* Hero Section - Pilier Retraite */}
       <section className="relative w-full min-h-[650px] bg-gradient-to-r from-[#253F60] to-[#B99066] py-20 sm:py-24 lg:py-32">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 lg:gap-10">
+          {/* Breadcrumb */}
+          <nav className="flex items-center text-white/80 text-sm mb-6">
+            <Link href="/" className="hover:text-white transition-colors underline">Accueil</Link>
+            <span className="mx-2">{'>'}</span>
+            <span className="text-[#B99066]">Retraite</span>
+          </nav>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
             {/* Carte gauche */}
-            <div className="bg-white rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 border border-gray-100 hover:shadow-3xl transition-shadow duration-300 max-w-4xl mx-auto">
+            <div className="bg-white rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 border border-gray-100 hover:shadow-3xl transition-shadow duration-300">
               <h1 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight mb-8 tracking-tight">
                 {pageContent.hero?.h1 || "Préparer sa retraite sereinement avec Azalée Patrimoine"}
               </h1>
-              <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-6">
-                {pageContent.hero?.description1 || "Anticiper sa retraite, c'est protéger son niveau de vie futur tout en optimisant la gestion de son patrimoine. Dans un contexte de réformes successives et d'allongement des carrières, bien préparer sa retraite ne relève plus du confort, mais d'une véritable stratégie patrimoniale."}
-              </p>
-              <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8" dangerouslySetInnerHTML={{ __html: pageContent.hero?.description2 || "Chez <strong className=\"font-semibold\">Azalée Patrimoine</strong>, nous accompagnons nos clients — salariés, dirigeants, indépendants ou professions libérales — pour qu'ils puissent <strong className=\"font-semibold\">transformer leur épargne en revenus durables</strong>, tout en bénéficiant d'une <strong className=\"font-semibold\">optimisation fiscale</strong> et d'une <strong className=\"font-semibold\">vision globale</strong> de leur patrimoine." }} />
-              <a
-                href={pageContent.hero?.ctaLink || "https://calendly.com/rdv-azalee-patrimoine/30min"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-gradient-to-r from-[#253F60] to-[#1a2d47] hover:from-[#1a2d47] hover:to-[#253F60] text-white px-8 py-4 rounded-lg shadow-xl font-inter font-bold text-base sm:text-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl"
-              >
-                {pageContent.hero?.ctaButton || "Demander un diagnostic gratuit"}
-              </a>
+              
+              <div className="space-y-5 mb-10">
+                <p className="text-[#4B5563] text-base sm:text-lg lg:text-xl font-inter leading-relaxed">
+                  {pageContent.hero?.description1 || "Anticiper sa retraite, c'est protéger son niveau de vie futur tout en optimisant la gestion de son patrimoine. Dans un contexte de réformes successives et d'allongement des carrières, bien préparer sa retraite ne relève plus du confort, mais d'une véritable stratégie patrimoniale."}
+                </p>
+                
+                <p className="text-[#4B5563] text-base sm:text-lg lg:text-xl font-inter leading-relaxed" dangerouslySetInnerHTML={{ __html: pageContent.hero?.description2 || "<strong className=\"text-[#253F60] font-semibold\">Azalée Patrimoine</strong> vous accompagne pour bâtir une stratégie fiscale cohérente, durable et adaptée à votre profil." }} />
+              </div>
+              
+              <div className="mt-10">
+                <a
+                  href={pageContent.hero?.ctaLink || "https://calendly.com/rdv-azalee-patrimoine/30min"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-[#253F60] text-white px-10 py-4 rounded-lg shadow-lg font-inter font-semibold text-base lg:text-lg hover:bg-[#1a2d47] hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
+                >
+                  {pageContent.hero?.ctaButton || "Demander un diagnostic gratuit"}
+                </a>
+              </div>
             </div>
             
+            {/* Carte droite */}
+            <div className="relative bg-white rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 border border-gray-100 hover:shadow-3xl transition-shadow duration-300">
+              {/* Bulle statistique 1666€ - Positionnée en haut à droite */}
+              <div className="absolute -top-6 -right-6 w-48 h-32 sm:w-56 sm:h-36 z-20">
+                <div className="bg-white rounded-2xl shadow-xl border-2 border-[#B99066] flex items-center justify-center h-full">
+                  <div className="text-center px-4">
+                    <p className="text-[#253F60] font-cairo font-bold text-lg sm:text-xl">
+                      <span className="text-[#B99066] text-2xl sm:text-3xl">{pageContent.section1?.stats?.pensionMoyenne || "1666€"}</span>
+                    </p>
+                    <p className="text-[#4B5563] font-inter text-sm sm:text-base">{pageContent.section1?.stats?.pensionLabel || "net/mois"}</p>
+                  </div>
+                  {/* Flèche pointant vers le bas */}
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
+                    <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-[#B99066]"></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bloc carré - L'évolution du système de retraite français */}
+              <div className="bg-white rounded-lg p-6 border border-black mt-8 sm:mt-12">
+                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-4">
+                  {pageContent.section1?.evolution?.h3 || "L'évolution du système de retraite français"}
+                </h3>
+                <div className="space-y-4">
+                  <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+                    Le système français, historiquement fondé sur la répartition, fait face à des défis majeurs : vieillissement de la population, déséquilibre entre actifs et retraités, et allongement de la durée de cotisation.
+                  </p>
+                  <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+                    La réforme de 2023, repoussant l'âge légal à 64 ans, n'a fait qu'accentuer le besoin d'anticipation.
+                  </p>
+                  <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+                    L'État assure un socle minimal ; à chacun désormais de <strong>bâtir ses revenus complémentaires</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -202,75 +252,23 @@ export default function RetraitePage() {
             {pageContent.section1?.h2 || "Pourquoi anticiper sa retraite dès aujourd'hui ?"}
           </h2>
 
-          {/* H3.1: L'évolution du système de retraite français */}
-          <div className="mb-16">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-              <div className="lg:col-span-2">
-                <div className="border-2 border-black rounded-lg p-6 mb-6">
-                  <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-4">
-                    {pageContent.section1?.evolution?.h3 || "L'évolution du système de retraite français"}
-                  </h3>
-                  <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed" dangerouslySetInnerHTML={{ __html: pageContent.section1?.evolution?.description || "Le système français, historiquement fondé sur la répartition, fait face à des défis majeurs : vieillissement de la population, déséquilibre entre actifs et retraités, et allongement de la durée de cotisation. La réforme de 2023, repoussant l'âge légal à 64 ans, n'a fait qu'accentuer le besoin d'anticipation. L'État assure un socle minimal ; à chacun désormais de <strong>bâtir ses revenus complémentaires</strong>." }} />
-                </div>
-              </div>
-              
-              {/* Carte statistique rotée */}
-              <div className="lg:col-span-1 flex justify-center lg:justify-end">
-                <div className="relative w-72 h-56 sm:w-80 sm:h-64 group">
-                  {/* Carte principale droite - rotée */}
-                  <div className="relative w-full h-full bg-gradient-to-br from-[#253F60] via-[#1a2d47] to-[#253F60] rounded-2xl shadow-2xl p-8 flex flex-col items-center justify-center transition-all duration-500 overflow-hidden transform rotate-90 origin-center">
-                    {/* Contenu roté */}
-                    <div className="relative z-10 text-white text-center space-y-4 transform -rotate-90">
-                      {/* Texte principal */}
-                      <div className="space-y-2">
-                        <p className="font-inter text-xs sm:text-sm text-white/90 leading-relaxed">
-                          La pension de retraite moyenne des français est de
-                        </p>
-                        <div className="py-2">
-                          <span className="font-cairo font-bold text-3xl sm:text-4xl text-[#B99066] drop-shadow-lg">
-                            {pageContent.section1?.stats?.pensionMoyenne || "1666€"}
-                          </span>
-                          <span className="font-inter text-sm text-white/80 ml-1">{pageContent.section1?.stats?.pensionLabel || "net/mois"}</span>
-                        </div>
-                      </div>
-                      
-                      {/* Séparateur */}
-                      <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-[#B99066] to-transparent mx-auto my-3"></div>
-                      
-                      {/* Message d'alerte */}
-                      <p className="font-inter text-xs sm:text-sm italic text-white/80 leading-relaxed">
-                        {pageContent.section1?.stats?.message || "N'attendez pas qu'il soit trop tard"}
-                      </p>
-                    </div>
-                    
-                    {/* Bordure décorative au survol */}
-                    <div className="absolute inset-0 rounded-2xl border-2 border-[#B99066]/0 group-hover:border-[#B99066]/30 transition-all duration-500"></div>
-                  </div>
-                  
-                  {/* Ombre portée améliorée */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#253F60]/20 to-transparent rounded-2xl blur-xl -z-10 transform translate-y-4 group-hover:translate-y-6 transition-transform duration-500"></div>
-                </div>
-              </div>
+          {/* CTA Simulateur */}
+          {pageContent.section1?.ctaSimulateur && (
+            <div className="mb-12 flex justify-center">
+              <a
+                href={pageContent.section1.ctaSimulateur.link || "https://calendly.com/rdv-azalee-patrimoine/30min"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative bg-gradient-to-r from-[#B99066] to-[#A67C52] hover:from-[#A67C52] hover:to-[#B99066] text-white px-10 py-5 rounded-xl shadow-2xl font-cairo font-bold text-base sm:text-lg transition-all duration-300 transform hover:-translate-y-2 hover:shadow-3xl uppercase overflow-hidden w-full lg:w-auto"
+              >
+                {/* Effet de brillance au survol */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <span className="relative flex items-center justify-center gap-3">
+                  {pageContent.section1.ctaSimulateur.text || "SIMULER VOTRE PENSION RETRAITE"}
+                </span>
+              </a>
             </div>
-
-            {/* CTA Simulateur */}
-            {pageContent.section1?.ctaSimulateur && (
-              <div className="mt-10 flex justify-center lg:justify-start">
-                <a
-                  href={pageContent.section1.ctaSimulateur.link || "https://calendly.com/rdv-azalee-patrimoine/30min"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative bg-gradient-to-r from-[#B99066] to-[#A67C52] hover:from-[#A67C52] hover:to-[#B99066] text-white px-10 py-5 rounded-xl shadow-2xl font-cairo font-bold text-base sm:text-lg transition-all duration-300 transform hover:-translate-y-2 hover:shadow-3xl uppercase overflow-hidden w-full lg:w-auto"
-                >
-                  {/* Effet de brillance au survol */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                  <span className="relative flex items-center justify-center gap-3">
-                    {pageContent.section1.ctaSimulateur.text || "SIMULER VOTRE PENSION RETRAITE"}
-                  </span>
-                </a>
-              </div>
-            )}
-            </div>
+          )}
             
           {/* H3.2: Préparer la liberté financière */}
           {pageContent.section1?.liberteFinanciere && (

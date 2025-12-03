@@ -1,3 +1,0 @@
-mongodb+srv://azalee2020:hamza2020@cluster0.9xrt1pn.mongodb.net/azalee_db?retryWrites=true&w=majority
-
-

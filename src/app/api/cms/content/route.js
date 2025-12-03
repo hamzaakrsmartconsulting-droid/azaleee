@@ -44,3 +44,62 @@ export async function GET(request) {
   }
 }
 
+// POST - Save content for a specific page and section
+export async function POST(request) {
+  try {
+    await connectDB();
+
+    const body = await request.json();
+    const { page, section, data } = body;
+
+    // Validation
+    if (!page || !section || !data) {
+      return NextResponse.json(
+        { success: false, message: 'Page, section, and data are required' },
+        { status: 400 }
+      );
+    }
+
+    const path = page.toLowerCase();
+
+    // Find or create the page
+    let pageContent = await PageContent.findOne({ path });
+
+    if (!pageContent) {
+      // Create new page if it doesn't exist
+      pageContent = new PageContent({
+        path,
+        title: page.split('/').pop().replace(/-/g, ' '), // Extract title from path
+        content: {},
+        published: true,
+        lastModified: new Date()
+      });
+    }
+
+    // Update the specific section in content
+    pageContent.content = {
+      ...(pageContent.content || {}),
+      [section]: data
+    };
+
+    pageContent.lastModified = new Date();
+    await pageContent.save();
+
+    return NextResponse.json({
+      success: true,
+      message: 'Content saved successfully',
+      data: {
+        path: pageContent.path,
+        section,
+        content: pageContent.content[section]
+      }
+    });
+  } catch (error) {
+    console.error('Error saving page content:', error);
+    return NextResponse.json(
+      { success: false, message: error.message || 'Server error' },
+      { status: 500 }
+    );
+  }
+}
+

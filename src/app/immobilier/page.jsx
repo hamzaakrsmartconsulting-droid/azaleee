@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
@@ -226,27 +225,9 @@ export default function ImmobilierPage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
             {/* Left card */}
-            <div className="lg:col-span-2 bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-              {/* Image d'arrière-plan */}
-              <div className="absolute inset-0 z-0">
-                <Image
-                  src="/images/architecte.webp"
-                  alt="Architecte"
-                  fill
-                  className="object-cover"
-                  style={{
-                    transform: 'scale(1.15)',
-                    opacity: 0.4
-                  }}
-                  priority
-                />
-              </div>
-              
-              {/* Overlay pour améliorer la lisibilité */}
-              <div className="absolute inset-0 bg-white/50 z-0"></div>
-              
+            <div className="lg:col-span-2 bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10">
               {/* Contenu */}
-              <div className="relative z-10">
+              <div>
                 <h1 className="text-[#112033] text-3xl sm:text-4xl lg:text-5xl font-cairo font-semibold leading-tight mb-4">
                   {pageContent.hero?.h1 || "Investir dans l'immobilier avec Azalée Patrimoine"}
                 </h1>
@@ -289,12 +270,12 @@ export default function ImmobilierPage() {
                   {pageContent.hero?.rightCard?.description || "61.2% des français possèdent un ou plusieurs biens immobiliers."}
                 </p>
                 
-                <button 
-                  onClick={() => alert('Téléchargement du guide')}
-                  className="w-full bg-white text-[#253F60] px-5 py-3 rounded-lg font-inter font-semibold hover:bg-[#F9FAFB] transition-colors text-center text-sm sm:text-base shadow-md"
+                <a 
+                  href={pageContent.hero?.rightCard?.buttonLink || '/outils-financiers/guide-defiscalisation'}
+                  className="w-full bg-white text-[#253F60] px-5 py-3 rounded-lg font-inter font-semibold hover:bg-[#F9FAFB] transition-colors text-center text-sm sm:text-base shadow-md block"
                 >
                   {pageContent.hero?.rightCard?.buttonText || "Téléchargez le guide complet pour bâtir et optimiser votre patrimoine"}
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -390,12 +371,33 @@ export default function ImmobilierPage() {
               </div>
             )}
 
-            {/* Message Azalée */}
-            {pageContent.section2?.azaleeMessage && (
-              <div className="text-center mt-10">
-                <p className="text-lg sm:text-xl lg:text-2xl font-inter text-[#253F60] leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: pageContent.section2.azaleeMessage }} />
+            {/* Message Azalée avec SVG dégradé */}
+            <div className="text-center mt-10 mb-8">
+              <div className="inline-flex items-start gap-3 max-w-4xl mx-auto">
+                <div className="flex-shrink-0 mt-2">
+                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="azaleeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#253F60" />
+                        <stop offset="100%" stopColor="#B99066" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2-2V4h16v12z" fill="url(#azaleeGradient)"/>
+                    <circle cx="9" cy="10" r="1" fill="white"/>
+                    <circle cx="12" cy="10" r="1" fill="white"/>
+                    <circle cx="15" cy="10" r="1" fill="white"/>
+                  </svg>
+                </div>
+                <p className="text-lg sm:text-xl lg:text-2xl font-inter text-[#253F60] leading-relaxed font-medium text-left" dangerouslySetInnerHTML={{ __html: pageContent.section2?.azaleeMessage || "Chez Azalée Patrimoine, nous intégrons chaque actif immobilier dans une vision globale — financière, fiscale et humaine — pour bâtir la liberté patrimoniale de demain." }} />
               </div>
-            )}
+            </div>
+
+            {/* Texte CTA */}
+            <div className="text-center mt-6 mb-8">
+              <p className="text-lg sm:text-xl font-inter text-[#4B5563] leading-relaxed">
+                {pageContent.section2?.ctaSubtitle || "Découvrez quelle stratégie immobilière correspond à votre profil"}
+              </p>
+            </div>
           </div>
 
           {/* CTA Formulaire Tally */}
@@ -406,7 +408,7 @@ export default function ImmobilierPage() {
               </p>
               <button 
                 onClick={() => {
-                  window.open(pageContent.section2?.ctaLink || 'https://tally.so', '_blank');
+                  window.open(pageContent.section2?.ctaLink || 'https://calendly.com/rdv-azalee-patrimoine/30min', '_blank');
                 }}
                 className="bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold text-lg px-10 py-4 rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
               >
@@ -1498,15 +1500,12 @@ export default function ImmobilierPage() {
                 <p className="text-base font-inter text-[#374151] leading-relaxed mb-6">
                   Comprendre, comparer, investir intelligemment
                 </p>
-                <button 
-                  onClick={() => {
-                    // TODO: Lien vers téléchargement du guide
-                    alert('Téléchargement du guide SCPI 2025');
-                  }}
-                  className="w-full bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold py-3 px-6 rounded-lg transition-all duration-300"
+                <a 
+                  href="/outils-financiers/guide-defiscalisation"
+                  className="w-full bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold py-3 px-6 rounded-lg transition-all duration-300 text-center block"
                 >
                   Télécharger
-                </button>
+                </a>
               </div>
 
               {/* Simulateur de rentabilité */}
@@ -2316,15 +2315,12 @@ export default function ImmobilierPage() {
 
             {/* CTA */}
             <div className="text-center space-y-4">
-              <button 
-                onClick={() => {
-                  // TODO: Lien vers téléchargement du guide
-                  alert('Téléchargement du guide');
-                }}
-                className="bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold text-lg px-10 py-4 rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 mr-4"
+              <a 
+                href="/outils-financiers/guide-defiscalisation"
+                className="inline-block bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold text-lg px-10 py-4 rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 mr-4"
               >
                 Télécharger le guide
-              </button>
+              </a>
               <button 
                 onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
                 className="bg-[#B99066] hover:bg-[#A67A5A] text-white font-inter font-semibold text-lg px-10 py-4 rounded-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"

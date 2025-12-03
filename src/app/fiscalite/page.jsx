@@ -314,8 +314,42 @@ export default function FiscalitePage() {
                 ]).map((paragraph, index) => (
                   <p key={index} className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed" dangerouslySetInnerHTML={{ __html: paragraph }} />
                 ))}
-                        </div>
+              </div>
+
+              {/* Section Déclarer efficacement ses revenus - Dans la colonne gauche */}
+              <div className="mt-12">
+                <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-6">
+                  {pageContent.declarer?.h2 || "Déclarer efficacement ses revenus"}
+                </h2>
+                
+                <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8">
+                  {pageContent.declarer?.intro || "Déclarer ses revenus de manière rigoureuse est une étape clé pour éviter tout redressement fiscal et optimiser le montant de son impôt."}
+                </p>
+                
+                {/* Ligne de séparation */}
+                <div className="w-full h-px bg-gray-300 mb-10"></div>
+                
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-8">
+                  {pageContent.declarer?.h3 || "Quand et comment déclarer ?"}
+                </h3>
+                
+                {/* Deux boîtes côte à côte */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                  {(pageContent.declarer?.boxes || [
+                    { title: "Période de déclaration" },
+                    { title: "www.impots.gouv.fr" }
+                  ]).map((box, index) => (
+                    <div key={index} className="bg-white rounded-xl shadow-lg p-8 border-2 border-gray-200 hover:border-[#B99066] hover:shadow-xl transition-all duration-300 flex items-center justify-center min-h-[120px]">
+                      <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] text-white rounded-lg px-6 py-4 text-center w-full shadow-md">
+                        <p className="text-lg sm:text-xl font-cairo font-bold">
+                          {box.title}
+                        </p>
                       </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
 
             {/* Colonne droite - Infographie */}
             <div className="lg:sticky lg:top-8">
@@ -328,7 +362,7 @@ export default function FiscalitePage() {
                       <rect x="6.67" y="0" width="6.67" height="20" fill="#FFFFFF"/>
                       <rect x="13.33" y="0" width="6.67" height="20" fill="#ED2939"/>
                     </svg>
-                    </div>
+                  </div>
                   <h4 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-2">
                     {pageContent.bareme?.infographie?.title || "Impôt sur le revenu"}
                   </h4>
@@ -354,65 +388,10 @@ export default function FiscalitePage() {
                     src={pageContent.bareme?.infographie?.image || "/images/I6644.jpg"} 
                     alt={pageContent.bareme?.infographie?.imageAlt || "Barème de l'impôt sur le revenu 2025 - Tranches et taux d'imposition"} 
                     className="w-full h-auto"
-            />
-          </div>
-              </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      {/* Section Déclarer efficacement ses revenus */}
-      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl">
-            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-6">
-              {pageContent.declarer?.h2 || "Déclarer efficacement ses revenus"}
-            </h2>
-            
-            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8">
-              {pageContent.declarer?.intro || "Déclarer ses revenus de manière rigoureuse est une étape clé pour éviter tout redressement fiscal et optimiser le montant de son impôt."}
-            </p>
-            
-            {/* Ligne de séparation */}
-            <div className="w-full h-px bg-gray-300 mb-10"></div>
-            
-            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-8">
-              {pageContent.declarer?.h3 || "Quand et comment déclarer ?"}
-            </h3>
-            
-            {/* Deux boîtes côte à côte */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-              {(pageContent.declarer?.boxes || [
-                { title: "Période de déclaration" },
-                { title: "www.impots.gouv.fr" }
-              ]).map((box, index) => (
-                <div key={index} className="bg-white rounded-xl shadow-lg p-8 border-2 border-gray-200 hover:border-[#B99066] hover:shadow-xl transition-all duration-300 flex items-center justify-center min-h-[120px]">
-                  <div className="bg-gradient-to-r from-[#253F60] to-[#B99066] text-white rounded-lg px-6 py-4 text-center w-full shadow-md">
-                    <p className="text-lg sm:text-xl font-cairo font-bold">
-                      {box.title}
-                    </p>
-                  </div>
+                  />
                 </div>
-              ))}
-            </div>
-            
-            {/* Lien externe */}
-            {pageContent.declarer?.lienExterne && (
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <p className="text-[#4B5563] text-sm font-inter mb-2">
-                  {pageContent.declarer.lienExterne.label}
-                </p>
-                <a 
-                  href={pageContent.declarer.lienExterne.url || "https://www.service-public.gouv.fr/particuliers/vosdroits/F359"} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-[#B99066] hover:text-[#A67C52] font-inter underline text-base sm:text-lg transition-colors"
-                >
-                  {pageContent.declarer.lienExterne.text}
-                </a>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </section>

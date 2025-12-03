@@ -266,7 +266,12 @@ export default function PatrimoinePage() {
             </ul>
             
             <p className="pt-6 text-xl sm:text-2xl font-medium">
-              {content.enQuelquesMots?.conclusion || "Notre approche repose sur la clarté, la pédagogie et l'indépendance. L'objectif : transformer le patrimoine en levier de sérénité et de performance sur le long terme."}
+              {content.enQuelquesMots?.conclusion || (
+                <>
+                  Notre approche repose sur la clarté, la pédagogie et l'indépendance. <br className="hidden sm:block" />
+                  <span className="block mt-2">L'objectif : transformer le patrimoine en levier de sérénité et de performance sur le long terme.</span>
+                </>
+              )}
             </p>
           </div>
         </div>
@@ -497,20 +502,20 @@ export default function PatrimoinePage() {
           </div>
         </section>
 
-      {/* Section : L'audit patrimonial */}
-      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
+      {/* Section : L'inventaire patrimonial */}
+      <section id="bilan-patrimonial" className="w-full bg-white py-16 sm:py-20 lg:py-24">
           <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-8 sm:mb-12 text-center tracking-tight">
-            {content.auditPatrimonial?.title || "L'audit patrimonial : la base de toute stratégie"}
+            {content.auditPatrimonial?.title || "L'inventaire patrimonial : la base de toute stratégie"}
           </h2>
           
           <div className="max-w-5xl mx-auto">
             <p className="text-[#4B5563] text-lg sm:text-xl lg:text-2xl font-inter leading-relaxed mb-12 text-center">
-              {content.auditPatrimonial?.intro || "Notre accompagnement commence par un audit patrimonial gratuit. Ce diagnostic complet permet de dresser une cartographie de vos actifs et passifs, d'analyser votre situation juridique et fiscale, puis de construire un plan d'action réaliste et optimisé."}
+              {content.auditPatrimonial?.intro || "Notre accompagnement commence par un inventaire patrimonial gratuit. Ce diagnostic complet permet de dresser une cartographie de vos actifs et passifs, d'analyser votre situation juridique et fiscale, puis de construire un plan d'action réaliste et optimisé."}
             </p>
             
             <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-8 text-center">
-              {content.auditPatrimonial?.stepsTitle || "Étapes de l'audit patrimonial"}
+              {content.auditPatrimonial?.stepsTitle || "Étapes de l'inventaire patrimonial"}
             </h3>
             
             {/* Stepper - 6 étapes */}
@@ -542,7 +547,7 @@ export default function PatrimoinePage() {
               onClick={() => window.open(content.auditPatrimonial?.buttonUrl || 'https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
                 className="bg-[#253F60] text-white px-10 py-4 rounded-lg shadow-lg font-inter font-bold text-lg hover:bg-[#1a2d47] hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
             >
-                {content.auditPatrimonial?.buttonText || "Audit patrimonial gratuit"}
+                {content.auditPatrimonial?.buttonText || "Inventaire patrimonial gratuit"}
             </button>
             </div>
             </div>
@@ -1132,7 +1137,7 @@ export default function PatrimoinePage() {
                 </span>
               </a>
               
-              <a href="/simulateurs" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#B99066] hover:border-[#A67C52] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
+              <a href="https://calendly.com/rdv-azalee-patrimoine/30min" target="_blank" rel="noopener noreferrer" className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#B99066] hover:border-[#A67C52] hover:shadow-xl transition-all duration-300 flex items-center gap-4 group">
                 <svg className="w-8 h-8 text-[#B99066] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
