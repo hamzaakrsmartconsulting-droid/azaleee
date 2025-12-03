@@ -40,9 +40,6 @@ export default function LoisFiscalesPage() {
   };
   const [selectedCategory, setSelectedCategory] = useState("immobilier");
   const [content, setContent] = useState({});
-  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(false);
-  const [contentSource, setContentSource] = useState('Default');
-  const [pollingInterval, setPollingInterval] = useState(null);
 
   // Default content structure
   const defaultContent = {
@@ -77,68 +74,14 @@ export default function LoisFiscalesPage() {
     }
   };
 
-  // Load content from CMS
-  const loadContentFromCMS = async () => {
-    try {
-      setIsLoadingFromDatabase(true);
-      const response = await fetch('/api/pages/lois-fiscales');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.content && Object.keys(data.content).length > 0) {
-          setContent(data.content);
-          setContentSource('Database');
-          console.log('✅ Lois-fiscales content loaded from database');
-        } else {
-          setContent(defaultContent);
-          setContentSource('Default');
-          console.log('⚠️ No database content found, using default');
-        }
-      } else {
-        setContent(defaultContent);
-        setContentSource('Default');
-        console.log('❌ Failed to load from database, using default');
-      }
-    } catch (error) {
-      console.error('Error loading lois-fiscales content:', error);
-      setContent(defaultContent);
-      setContentSource('Default');
-    } finally {
-      setIsLoadingFromDatabase(false);
-    }
-  };
-
-  // Reload content manually
-  const reloadContent = async () => {
-    await loadContentFromCMS();
-  };
+  useEffect(() => {
+    // Set static content
+    setContent(defaultContent);
+  }, []);
 
   return (
     <>
       <Header />
-
-      {/* Debug Indicators */}
-      <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
-        <div className="bg-white rounded-lg shadow-lg p-3 text-xs">
-          <div className="flex items-center gap-2 mb-1">
-            <span className={`w-2 h-2 rounded-full ${contentSource === 'Database' ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
-            <span className="font-medium">Lois-fiscales Content: {contentSource}</span>
-          </div>
-          {isLoadingFromDatabase && (
-            <div className="flex items-center gap-1 text-blue-600">
-              <div className="animate-spin w-3 h-3 border border-blue-600 border-t-transparent rounded-full"></div>
-              <span>Loading...</span>
-            </div>
-          )}
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={reloadContent}
-            className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
-          >
-            Reload
-          </button>
-        </div>
-      </div>
 
       {/* Hero Section with Law Icons */}
       <section className="relative w-full bg-gradient-to-r from-[#253F60] to-[#B99066] py-12 sm:py-16 lg:py-20">

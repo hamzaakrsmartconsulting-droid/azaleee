@@ -5,9 +5,6 @@ import Footer from "../../../components/common/Footer";
 
 export default function DefiscalisationCasSpecifiquesPage() {
   const [content, setContent] = useState({});
-  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(false);
-  const [contentSource, setContentSource] = useState('Default');
-  const [pollingInterval, setPollingInterval] = useState(null);
 
   // Default content structure
   const defaultContent = {
@@ -68,70 +65,13 @@ export default function DefiscalisationCasSpecifiquesPage() {
     }
   };
 
-  // Load content from CMS
-  const loadContentFromCMS = async () => {
-    try {
-      setIsLoadingFromDatabase(true);
-      const response = await fetch('/api/pages/defiscalisation-cas-specifiques');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.content && Object.keys(data.content).length > 0) {
-          setContent(data.content);
-          setContentSource('Database');
-          console.log('✅ Defiscalisation-cas-specifiques content loaded from database');
-        } else {
-          setContent(defaultContent);
-          setContentSource('Default');
-          console.log('⚠️ No database content found, using default');
-        }
-      } else {
-        setContent(defaultContent);
-        setContentSource('Default');
-        console.log('❌ Failed to load from database, using default');
-      }
-    } catch (error) {
-      console.error('Error loading defiscalisation-cas-specifiques content:', error);
-      setContent(defaultContent);
-      setContentSource('Default');
-    } finally {
-      setIsLoadingFromDatabase(false);
-    }
-  };
-
-  // Reload content manually
-  const reloadContent = async () => {
-    await loadContentFromCMS();
-  };
+  useEffect(() => {
+    // Set static content
+    setContent(defaultContent);
+  }, []);
 
   return (
     <>
-      <div className="fixed top-4 left-4 z-50 flex items-center gap-2">
-        <div className="flex items-center gap-1">
-          {isLoadingFromDatabase && (
-            <div className="flex items-center gap-1 text-blue-600">
-              <div className="animate-spin w-3 h-3 border border-blue-600 border-t-transparent rounded-full"></div>
-              <span>Loading...</span>
-            </div>
-          )}
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={reloadContent}
-            className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600"
-          >
-            Reload
-          </button>
-          <button
-            onClick={() => {
-              console.log('Current content:', content);
-              console.log('Content source:', contentSource);
-            }}
-            className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
-          >
-            Debug
-          </button>
-        </div>
-      </div>
 
       <Header />
 

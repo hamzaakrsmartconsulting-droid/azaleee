@@ -10,12 +10,8 @@ export default function InvestissementImmobilierPage() {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        // Load CMS content first
-        const cmsResponse = await fetch('/api/cms/content/immobilier');
+        // Use static content - no API calls
         let cmsSections = [];
-        if (cmsResponse.ok) {
-          cmsSections = await cmsResponse.json();
-        }
 
         // Default content that matches ALL CMS sections
         const defaultContent = {

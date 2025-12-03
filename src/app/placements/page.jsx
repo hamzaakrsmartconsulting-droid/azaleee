@@ -1,10 +1,45 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
 
 export default function PlacementsPage() {
+  const [content, setContent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch content from CMS
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const response = await fetch('/api/cms/content?path=placements');
+        if (response.ok) {
+          const data = await response.json();
+          // API returns { success: true, data: page.content }
+          if (data && data.success && data.data) {
+            setContent(data.data);
+          } else if (data && data.content) {
+            // Fallback for different API format
+            setContent(data.content);
+          } else {
+            console.warn('No content found in response, using default');
+            setContent(null);
+          }
+        } else {
+          console.error('Failed to fetch content');
+          setContent(null);
+        }
+      } catch (error) {
+        console.error('Error fetching content:', error);
+        setContent(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContent();
+  }, []);
+
   // Smooth scroll for anchor links
   useEffect(() => {
     const handleAnchorClick = (e) => {
@@ -30,11 +65,24 @@ export default function PlacementsPage() {
       });
     };
   }, []);
-  // Content structure - ready for your new content
-  const content = {
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#253F60]"></div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  // Use CMS content with fallback to default
+  const pageContent = content || {
     hero: {
       h1: "Construire son patrimoine",
-      introText: "Construire son patrimoine, c'est bien plus qu'investir. C'est donner du sens à son argent, structurer ses actifs avec méthode et préparer l'avenir de sa famille. Chez Azalée Patrimoine, nous vous accompagnons à chaque étape, en alliant performance, fiscalité optimisée et indépendance de conseil.",
+      introText: "Construire son patrimoine, c'est bien plus qu'investir. C'est donner du sens à son argent, structurer ses actifs avec méthode et préparer l'avenir de sa famille. Chez Azalée Patrimoine, nous vous accompagnons à chaque étape, en alliant performance, fiscalité optimisée et indépendance pour transformer votre patrimoine en levier de sérénité et de performance sur le long terme.",
       question: "Que souhaitez-vous faire ?",
       objectives: [
         "Faire fructifier votre épargne",
@@ -78,7 +126,7 @@ export default function PlacementsPage() {
           "et les placements adaptés à votre horizon de temps."
         ],
         ctas: [
-          { text: "Évaluer mes connaissances financières", link: "#" },
+          { text: "Évaluer mes connaissances financières", link: "https://calendly.com/contact-azalee-patrimoine" },
           { text: "Découvrir mon profil investisseur avec un conseiller Azalée", link: "https://calendly.com/contact-azalee-patrimoine" }
         ]
       }
@@ -98,12 +146,16 @@ export default function PlacementsPage() {
             <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-6">
               {/* H1 */}
               <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-cairo font-bold leading-tight">
-                {content.hero?.h1 || "Construire son patrimoine"}
+                {pageContent.hero?.h1 || "Construire son patrimoine"}
               </h1>
               
               {/* Introductory Text */}
               <p className="text-white/90 text-base sm:text-lg lg:text-xl font-inter leading-relaxed max-w-2xl">
-                {content.hero?.introText || "Construire son patrimoine, c'est bien plus qu'investir. C'est donner du sens à son argent, structurer ses actifs avec méthode et préparer l'avenir de sa famille. Chez Azalée Patrimoine, nous vous accompagnons à chaque étape, en alliant performance, fiscalité optimisée et indépendance de conseil."}
+                {pageContent.hero?.introText || (
+                  <>
+                    Construire son patrimoine, c'est bien plus qu'investir. C'est donner du sens à son argent, structurer ses actifs avec méthode et préparer l'avenir de sa famille. Chez Azalée Patrimoine, nous vous accompagnons à chaque étape, en alliant performance, fiscalité optimisée et indépendance pour transformer votre patrimoine en levier de sérénité et de performance sur le long terme.
+                  </>
+                )}
               </p>
             </div>
 
@@ -112,23 +164,35 @@ export default function PlacementsPage() {
               {/* Or Azalée Question Bubble */}
               <div className="flex justify-center lg:justify-end">
                 <div className="bg-[#B99066] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-full shadow-xl font-inter font-semibold text-base sm:text-lg lg:text-xl whitespace-nowrap">
-                  {content.hero?.question || "Que souhaitez-vous faire ?"}
+                  {pageContent.hero?.question || "Que souhaitez-vous faire ?"}
               </div>
             </div>
             
               {/* Objectives Grid with Azalée colors */}
               <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl border-2 border-white/30">
                 <div className="grid grid-cols-2 gap-4 sm:gap-5">
-                  {(content.hero?.objectives || []).map((objective, index) => (
-                    <button
+                  {(pageContent.hero?.objectives || []).map((objective, index) => (
+                    <div
                       key={index}
-                      className="bg-white rounded-xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-left hover:scale-105 border-2 border-transparent hover:border-[#B99066] group"
+                      className="bg-white rounded-xl p-5 sm:p-6 shadow-lg transition-all duration-300 text-left border-2 border-transparent"
                     >
-                      <p className="text-[#253F60] text-sm sm:text-base lg:text-lg font-inter font-semibold leading-tight group-hover:text-[#B99066] transition-colors duration-300">
+                      <p className="text-[#253F60] text-sm sm:text-base lg:text-lg font-inter font-semibold leading-tight">
                         {objective}
                       </p>
-                    </button>
+                    </div>
                   ))}
+                </div>
+                
+                {/* Bouton Contactez-nous */}
+                <div className="mt-6 text-center">
+                  <a
+                    href="https://calendly.com/contact-azalee-patrimoine"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-[#B99066] hover:bg-[#A67A5A] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-bold text-base lg:text-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5"
+                  >
+                    Contactez-nous, on s'occupe de tout
+                  </a>
                 </div>
               </div>
             </div>
@@ -142,14 +206,14 @@ export default function PlacementsPage() {
           {/* H2 Title */}
           <div className="mb-12 sm:mb-16">
             <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-8 sm:mb-12 text-center tracking-tight">
-              {content.section1?.h2 || "Comprendre les placements patrimoniaux"}
+              {pageContent.section1?.h2 || "Comprendre les placements patrimoniaux"}
             </h2>
           </div>
 
           {/* Introductory Text */}
           <div className="max-w-5xl mx-auto mb-12 sm:mb-16">
             <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed text-center">
-              {content.section1?.introText || "Avant de parler de produits, parlons de stratégie. La réussite patrimoniale repose d'abord sur la bonne compréhension des outils disponibles et de leur articulation. Nous distinguons deux notions essentielles : les enveloppes et les supports d'investissement."}
+              {pageContent.section1?.introText || "Avant de parler de produits, parlons de stratégie. La réussite patrimoniale repose d'abord sur la bonne compréhension des outils disponibles et de leur articulation. Nous distinguons deux notions essentielles : les enveloppes et les supports d'investissement."}
             </p>
               </div>
               
@@ -202,36 +266,36 @@ export default function PlacementsPage() {
           {/* H2 Title */}
           <div className="mb-12 sm:mb-16">
             <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-8 sm:mb-12 text-center tracking-tight">
-              {content.section2?.h2 || "Les placements sans risques sont-ils vraiment les meilleurs placements ?"}
+              {pageContent.section2?.h2 || "Les placements sans risques sont-ils vraiment les meilleurs placements ?"}
             </h2>
             </div>
             
           {/* H3 - Inflation */}
           <div className="mb-12 sm:mb-16">
             <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 sm:mb-8">
-              {content.section2?.h3_inflation?.title || "Quel rôle joue l'inflation dans le choix d'un placement ?"}
+              {pageContent.section2?.h3_inflation?.title || "Quel rôle joue l'inflation dans le choix d'un placement ?"}
             </h3>
             
             <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>{content.section2?.h3_inflation?.content}</p>
+              <p>{pageContent.section2?.h3_inflation?.content}</p>
               
               {/* Inflation Explanation Box */}
               <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
-                <p className="font-semibold text-[#253F60] mb-2">💬 {content.section2?.h3_inflation?.inflation_explanation}</p>
+                <p className="font-semibold text-[#253F60] mb-2">💬 {pageContent.section2?.h3_inflation?.inflation_explanation}</p>
               </div>
               
               {/* Example Box */}
               <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#253F60] shadow-md hover:shadow-lg transition-shadow duration-300">
-                <p className="font-semibold text-[#253F60] mb-2">🥖 {content.section2?.h3_inflation?.example}</p>
+                <p className="font-semibold text-[#253F60] mb-2">🥖 {pageContent.section2?.h3_inflation?.example}</p>
             </div>
               
-              <p className="font-semibold text-[#253F60]">{content.section2?.h3_inflation?.conclusion}</p>
-              <p>{content.section2?.h3_inflation?.strategy}</p>
-              <p>{content.section2?.h3_inflation?.balanced_strategy}</p>
+              <p className="font-semibold text-[#253F60]">{pageContent.section2?.h3_inflation?.conclusion}</p>
+              <p>{pageContent.section2?.h3_inflation?.strategy}</p>
+              <p>{pageContent.section2?.h3_inflation?.balanced_strategy}</p>
               
               {/* Tip Box */}
               <div className="bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-50 border-l-4 border-[#B99066] p-8 rounded-xl shadow-lg">
-                <p className="font-semibold text-[#253F60]">💡 {content.section2?.h3_inflation?.tip}</p>
+                <p className="font-semibold text-[#253F60]">💡 {pageContent.section2?.h3_inflation?.tip}</p>
           </div>
         </div>
           </div>
@@ -239,29 +303,41 @@ export default function PlacementsPage() {
           {/* H3 - Risk Zero */}
           <div className="mb-12 sm:mb-16">
             <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 sm:mb-8">
-              {content.section2?.h3_risk_zero?.title || "Pourquoi le risque zéro n'existe pas en matière de placement ?"}
+              {pageContent.section2?.h3_risk_zero?.title || "Pourquoi le risque zéro n'existe pas en matière de placement ?"}
             </h3>
             
             <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>{content.section2?.h3_risk_zero?.content}</p>
-              <p>{content.section2?.h3_risk_zero?.graph_explanation}</p>
-              <p className="font-semibold text-[#253F60]">{content.section2?.h3_risk_zero?.compromise}</p>
-              <p>{content.section2?.h3_risk_zero?.azalee_help}</p>
+              <p>{pageContent.section2?.h3_risk_zero?.content}</p>
+              <p>{pageContent.section2?.h3_risk_zero?.graph_explanation}</p>
+              
+              {/* Graphique des 7 scénarios de rendement */}
+              <div className="my-8 bg-white rounded-xl p-6 shadow-lg border-2 border-gray-200">
+                <div className="text-center text-[#4B5563] text-sm italic">
+                  {/* TODO: Ajouter le graphique des 7 profils investisseur ici */}
+                  <p className="mb-4">Graphique des 7 scénarios de rendement sur cinq ans</p>
+                  <div className="bg-gray-100 rounded-lg p-12 flex items-center justify-center">
+                    <p className="text-gray-500">Graphique à ajouter : 7 profils investisseur</p>
+                  </div>
+                </div>
+              </div>
+              
+              <p className="font-semibold text-[#253F60]">{pageContent.section2?.h3_risk_zero?.compromise}</p>
+              <p>{pageContent.section2?.h3_risk_zero?.azalee_help}</p>
                 </div>
           </div>
 
           {/* H3 - Test */}
           <div className="mb-12 sm:mb-16">
             <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 sm:mb-8">
-              {content.section2?.h3_test?.title || "Testez vos connaissances et découvrez votre profil investisseur"}
+              {pageContent.section2?.h3_test?.title || "Testez vos connaissances et découvrez votre profil investisseur"}
             </h3>
             
             <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>{content.section2?.h3_test?.content}</p>
+              <p>{pageContent.section2?.h3_test?.content}</p>
               
               <p className="font-semibold text-[#253F60]">Nos conseillers vous accompagnent pour identifier :</p>
               <ul className="list-none space-y-4 ml-2">
-                {(content.section2?.h3_test?.help_list || []).map((item, index) => (
+                {(pageContent.section2?.h3_test?.help_list || []).map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="text-[#B99066] font-bold mt-1">•</span>
                     <span>{item}</span>
@@ -271,7 +347,7 @@ export default function PlacementsPage() {
               
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                {(content.section2?.h3_test?.ctas || []).map((cta, index) => (
+                {(pageContent.section2?.h3_test?.ctas || []).map((cta, index) => (
                   <a
                     key={index}
                     href={cta.link}
@@ -293,176 +369,151 @@ export default function PlacementsPage() {
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Intro */}
           <div className="max-w-5xl mx-auto mb-12 sm:mb-16">
-            <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed text-center">
-              Parmi les placements les plus évoqués en 2025, le private equity — ou capital-investissement — attire de plus en plus d'épargnants en quête de sens et de performance.
-            </p>
-            <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed text-center mt-4">
-              Après les placements dits "sans risques", ce type d'investissement promet une diversification vers l'économie réelle, avec des rendements potentiels bien supérieurs à ceux des marchés traditionnels.
-            </p>
-            <p className="text-[#253F60] text-lg sm:text-xl font-inter leading-relaxed text-center mt-4 font-bold">
-              Mais attention : plus le potentiel est élevé, plus la compréhension et l'accompagnement sont indispensables.
-            </p>
+            {(pageContent.section3?.intro || []).map((paragraph, index) => {
+              // Mettre en italique les paragraphes d'intro qui parlent du private equity
+              const shouldBeItalic = typeof paragraph === 'string' && (
+                paragraph.includes('private equity') || 
+                paragraph.includes('capital-investissement') ||
+                paragraph.includes('Parmi les placements')
+              );
+              return (
+                <p key={index} className={`text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed text-center ${shouldBeItalic ? 'italic' : ''} ${index > 0 ? 'mt-4' : ''} ${index === 2 ? 'text-[#253F60] font-bold' : ''}`}>
+                  {paragraph}
+                </p>
+              );
+            })}
           </div>
 
           {/* H2 */}
           <div className="mb-12 sm:mb-16">
             <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-8 sm:mb-12 text-center tracking-tight">
-              Private equity : effet de mode ou réelle opportunité ?
+              {pageContent.section3?.h2 || "Private equity : effet de mode ou réelle opportunité ?"}
             </h2>
           </div>
           
           <div className="max-w-5xl mx-auto space-y-8 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-            <p>
-              Le private equity séduit de plus en plus d'épargnants attirés par des rendements élevés et des histoires d'entreprises inspirantes.
-            </p>
-            <p>
-              Mais derrière cette tendance, il est essentiel de rappeler une vérité : investir dans le non coté n'est pas anodin.
-            </p>
-            <p>
-              Chaque projet est unique, et la réussite des uns ne garantit en rien celle des autres.
-            </p>
-            <p>
-              En tant qu'ancien banquier, nous savons à quel point les entreprises peuvent être exposées à des risques d'endettement, de marché ou de gestion que le grand public mesure rarement dans leur globalité.
-            </p>
-            <p className="font-semibold text-[#253F60]">
-              Le private equity reste un univers réservé aux investisseurs capables d'en comprendre les rouages financiers, les horizons longs et les risques structurels.
-            </p>
+            {(pageContent.section3?.paragraphs || []).map((paragraph, index) => {
+              // Mettre en italique les 3 premiers paragraphes (le bloc sur le private equity)
+              const shouldBeItalic = index < 3;
+              return (
+                <p key={index} className={`${shouldBeItalic ? "italic" : ""} ${index === 4 ? "font-semibold text-[#253F60]" : ""}`}>
+                  {paragraph}
+                </p>
+              );
+            })}
 
             {/* Azalée Quote */}
-            <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
-              <p className="font-semibold text-[#253F60] mb-2">💬 Chez Azalée Patrimoine, nous ne cédons pas à l'effet de mode : nous privilégions la compréhension avant l'action.</p>
-              <p className="mt-2">Un bon investissement n'est pas celui que tout le monde fait, mais celui que vous comprenez vraiment.</p>
-            </div>
+            {pageContent.section3?.quote && (
+              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
+                <p className="font-semibold text-[#253F60] mb-2">💬 {pageContent.section3.quote.text}</p>
+                <p className="mt-2">{pageContent.section3.quote.conclusion}</p>
+              </div>
+            )}
             
-            <p>
-              Nous étudions avec attention les projets qui tiennent à cœur à nos clients.
-            </p>
-            <p>
-              Notre rôle est d'en analyser la structure financière, le niveau de risque, la durée d'immobilisation et les perspectives de sortie.
-            </p>
-            <p>
-              Nous mettons en lumière les avantages (diversification, potentiel de rendement, fiscalité avantageuse) autant que les inconvénients (illiquidité, risque de perte totale, complexité des valorisations).
-            </p>
-            <p className="font-semibold text-[#253F60]">
-              Le private equity peut être une opportunité réelle pour un patrimoine bien construit, mais il doit s'intégrer dans une stratégie globale et raisonnée.
-            </p>
-            <p className="font-bold text-[#253F60] text-xl">
-              Comprendre avant d'investir, c'est déjà protéger son capital.
-            </p>
+            {(pageContent.section3?.more_paragraphs || []).map((paragraph, index) => (
+              <p key={index} className={index === 3 ? "font-semibold text-[#253F60]" : index === 4 ? "font-bold text-[#253F60] text-xl" : ""}>
+                {paragraph}
+              </p>
+            ))}
           </div>
 
           {/* H3 - 4 questions */}
-          <div className="mt-12 sm:mt-16 max-w-5xl mx-auto">
-            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-8 text-center">
-              Les 4 questions à se poser avant d'investir dans le private equity
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Question 1 */}
-              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
-                <h4 className="text-[#253F60] font-bold text-lg mb-4">🟢 1. Est-ce que je comprends réellement le modèle économique de l'entreprise ?</h4>
-                <p className="text-[#4B5563]">Avant tout, il faut savoir comment l'entreprise gagne de l'argent, quels sont ses leviers de croissance et quels risques elle affronte.</p>
-                <p className="mt-2 font-semibold text-[#253F60]">Si vous ne pouvez pas expliquer son activité simplement, mieux vaut attendre avant d'investir.</p>
-        </div>
-
-              {/* Question 2 */}
-              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
-                <h4 className="text-[#253F60] font-bold text-lg mb-4">🟡 2. Puis-je immobiliser mon argent plusieurs années ?</h4>
-                <p className="text-[#4B5563]">Le private equity implique souvent une durée d'investissement longue (5 à 10 ans) sans possibilité de revente.</p>
-                <p className="mt-2 font-semibold text-[#253F60]">Il ne doit donc jamais concerner votre épargne de précaution.</p>
-              </div>
-
-              {/* Question 3 */}
-              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
-                <h4 className="text-[#253F60] font-bold text-lg mb-4">🔵 3. Suis-je conscient du risque de perte en capital ?</h4>
-                <p className="text-[#4B5563]">Investir dans le non coté, c'est accepter la possibilité de perdre tout ou partie du capital.</p>
-                <p className="mt-2 font-semibold text-[#253F60]">Ce risque doit être compensé par une diversification de vos placements.</p>
-          </div>
-          
-              {/* Question 4 */}
-              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
-                <h4 className="text-[#253F60] font-bold text-lg mb-4">🟣 4. Ai-je un conseil objectif pour m'accompagner ?</h4>
-                <p className="text-[#4B5563]">Les intermédiaires en private equity ne sont pas tous indépendants.</p>
-                <p className="mt-2 font-semibold text-[#253F60]">Chez Azalée Patrimoine, nous analysons les projets sans parti pris commercial, en nous concentrant sur votre intérêt patrimonial.</p>
+          {pageContent.section3?.questions && (
+            <div className="mt-12 sm:mt-16 max-w-5xl mx-auto">
+              <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-8 text-center">
+                {pageContent.section3.questions.title}
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {(pageContent.section3.questions.items || []).map((item, index) => (
+                  <div key={index} className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
+                    <h4 className="text-[#253F60] font-bold text-lg mb-4">{item.emoji} {item.number}. {item.question}</h4>
+                    <p className="text-[#4B5563]">{item.content}</p>
+                    <p className="mt-2 font-semibold text-[#253F60]">{item.conclusion}</p>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          )}
           
           {/* Encadré pédagogique */}
-          <div className="mt-12 sm:mt-16 max-w-5xl mx-auto">
-            <div className="bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-2xl p-10 text-white shadow-2xl">
-              <h3 className="text-2xl sm:text-3xl font-cairo font-bold mb-6">💡 À retenir :</h3>
-              <p className="text-xl sm:text-2xl leading-relaxed font-light mb-4">
-                Le private equity n'est ni un effet de mode, ni une solution miracle.
-              </p>
-              <p className="text-xl sm:text-2xl leading-relaxed font-light mb-4">
-                C'est un investissement de conviction, réservé à ceux qui prennent le temps de comprendre ce dans quoi ils s'engagent.
-              </p>
-            <p className="text-lg font-semibold">
-              🔍 Azalée Patrimoine vous accompagne pour analyser la solidité des projets, mesurer le risque et bâtir une stratégie d'investissement cohérente avec vos objectifs.
-              </p>
+          {pageContent.section3?.remember && (
+            <div className="mt-12 sm:mt-16 max-w-5xl mx-auto">
+              <div className="bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-2xl p-10 text-white shadow-2xl">
+                <h3 className="text-2xl sm:text-3xl font-cairo font-bold mb-6">💡 {pageContent.section3.remember.title}</h3>
+                {(pageContent.section3.remember.points || []).map((point, index) => (
+                  <p key={index} className={`${index < 2 ? 'text-xl sm:text-2xl leading-relaxed font-light mb-4' : 'text-lg font-semibold'}`}>
+                    {point}
+                  </p>
+                ))}
+              </div>
             </div>
-            </div>
+          )}
             
           {/* CTAs */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <a
-              href="https://calendly.com/contact-azalee-patrimoine"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
-            >
-              👉 Échanger sur un projet de private equity
-            </a>
-            <a
-              href="https://calendly.com/contact-azalee-patrimoine"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#B99066] hover:bg-[#A67A5A] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
-            >
-              👉 Comprendre les risques avant d'investir
-            </a>
+          {pageContent.section3?.ctas && (
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+              {(pageContent.section3.ctas || []).map((cta, index) => (
+                <a
+                  key={index}
+                  href={cta.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
+                >
+                  {cta.text}
+                </a>
+              ))}
             </div>
+          )}
             
           {/* Conclusion */}
-          <div className="mt-12 space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-            <p>
-              Chaque investissement a son rôle, ses avantages et ses risques.
-            </p>
-            <p>
-              Ce qui compte, ce n'est pas de suivre une tendance, mais de bâtir une stratégie cohérente avec votre profil, vos projets et votre horizon de vie.
-            </p>
-            <p>
-              Chez Azalée Patrimoine, nous réalisons un diagnostic patrimonial complet pour identifier les forces et les zones d'amélioration de votre portefeuille.
-            </p>
-            <p className="font-semibold">
-              L'objectif : vous aider à faire les bons choix d'investissement, en toute transparence et avec une vision à long terme.
-            </p>
-            
-            <div className="bg-gradient-to-r from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#B99066] mt-6">
-              <p className="font-semibold text-[#253F60]">💬 Notre approche : comprendre avant d'agir, conseiller avant de placer.</p>
-            </div>
-          </div>
-          
-          {/* CTAs finaux */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <a
-              href="https://calendly.com/contact-azalee-patrimoine"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
-            >
-              👉 Réaliser mon diagnostic patrimonial gratuit
-            </a>
-            <a
-              href="https://calendly.com/contact-azalee-patrimoine"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#B99066] hover:bg-[#A67A5A] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
-            >
-              👉 Prendre rendez-vous avec un conseiller Azalée
-            </a>
-          </div>
+          {pageContent.section3?.conclusion && (
+            <>
+              <div className="mt-12 space-y-4 text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+                {(pageContent.section3.conclusion.paragraphs || []).map((paragraph, index) => {
+                  // Détecter si le paragraphe contient "L'objectif :" pour ajouter un retour à la ligne
+                  const hasObjectif = typeof paragraph === 'string' && paragraph.includes("L'objectif :");
+                  return (
+                    <p key={index} className={index === 3 ? "font-semibold" : ""}>
+                      {hasObjectif ? (
+                        <>
+                          {paragraph.split("L'objectif :")[0]}
+                          <br className="hidden sm:block" />
+                          <span className="block mt-2">L'objectif :{paragraph.split("L'objectif :")[1]}</span>
+                        </>
+                      ) : (
+                        paragraph
+                      )}
+                    </p>
+                  );
+                })}
+                
+                {pageContent.section3.conclusion.quote && (
+                  <div className="bg-gradient-to-r from-[#253F60]/10 to-[#B99066]/10 rounded-lg p-6 border-l-4 border-[#B99066] mt-6">
+                    <p className="font-semibold text-[#253F60]">💬 {pageContent.section3.conclusion.quote}</p>
+                  </div>
+                )}
+              </div>
+              
+              {/* CTAs finaux */}
+              {pageContent.section3.conclusion.ctas && (
+                <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                  {(pageContent.section3.conclusion.ctas || []).map((cta, index) => (
+                    <a
+                      key={index}
+                      href={cta.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${index === 0 ? 'bg-[#253F60] hover:bg-[#1a2d47]' : 'bg-[#B99066] hover:bg-[#A67A5A]'} text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300`}
+                    >
+                      {cta.text}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
 
@@ -640,7 +691,7 @@ export default function PlacementsPage() {
       </section>
 
       {/* Section 5: Assurance-vie luxembourgeoise */}
-      <section className="w-full bg-gradient-to-b from-white to-gray-50 py-16 sm:py-20 lg:py-24">
+      <section id="assurance-vie-lux" className="w-full bg-gradient-to-b from-white to-gray-50 py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* H2 */}
           <div className="mb-8 sm:mb-12">
@@ -763,7 +814,7 @@ export default function PlacementsPage() {
       </section>
 
       {/* Section 6: Or et métaux précieux */}
-      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
+      <section id="or-metaux" className="w-full bg-white py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* H2 */}
           <div className="mb-8 sm:mb-12">
@@ -1596,24 +1647,80 @@ export default function PlacementsPage() {
               </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* Section Vignettes - Sujets Principaux */}
+      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
+        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight mb-12 text-center">
+            Découvrez nos guides détaillés
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-16">
+            {/* Assurance-vie luxembourgeoise */}
+            <a href="#assurance-vie-lux" className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-8 shadow-lg border-2 border-gray-200 hover:border-[#B99066] hover:shadow-xl transition-all duration-300 group aspect-square flex flex-col justify-between">
+              <div>
+                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-4 group-hover:text-[#B99066] transition-colors">
+                  Assurance-vie luxembourgeoise
+                </h3>
+                <p className="text-[#4B5563] text-sm sm:text-base leading-relaxed line-clamp-3">
+                  Découvrez si l'AV Lux est adaptée à votre profil et comment elle peut optimiser votre patrimoine international.
+                </p>
+              </div>
+              <span className="text-[#B99066] font-semibold text-sm mt-4 group-hover:underline inline-flex items-center">
+                En savoir plus →
+              </span>
+            </a>
+            
+            {/* Produits structurés */}
+            <a href="/placements/produits-structures" className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-8 shadow-lg border-2 border-gray-200 hover:border-[#B99066] hover:shadow-xl transition-all duration-300 group aspect-square flex flex-col justify-between">
+              <div>
+                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-4 group-hover:text-[#B99066] transition-colors">
+                  Produits structurés
+                </h3>
+                <p className="text-[#4B5563] text-sm sm:text-base leading-relaxed line-clamp-3">
+                  Comprenez les mécanismes, les risques et les opportunités des produits structurés pour votre portefeuille.
+                </p>
+              </div>
+              <span className="text-[#B99066] font-semibold text-sm mt-4 group-hover:underline inline-flex items-center">
+                En savoir plus →
+              </span>
+            </a>
+            
+            {/* Or et métaux précieux */}
+            <a href="#or-metaux" className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-8 shadow-lg border-2 border-gray-200 hover:border-[#B99066] hover:shadow-xl transition-all duration-300 group aspect-square flex flex-col justify-between md:col-span-2 max-w-md mx-auto">
+              <div>
+                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-4 group-hover:text-[#B99066] transition-colors">
+                  Or et métaux précieux
+                </h3>
+                <p className="text-[#4B5563] text-sm sm:text-base leading-relaxed line-clamp-3">
+                  Analysez si l'or reste une opportunité après +50% en 2025 et comment l'intégrer dans votre stratégie.
+                </p>
+              </div>
+              <span className="text-[#B99066] font-semibold text-sm mt-4 group-hover:underline inline-flex items-center">
+                En savoir plus →
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section - Format Vignettes */}
       <section className="w-full bg-gradient-to-b from-white to-gray-50 py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold leading-tight mb-12 text-center">
             FAQ - Construire son patrimoine
           </h2>
 
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {[
               {
                 question: "Quelle différence entre support et enveloppe d'investissement ?",
-                answer: "Les enveloppes (assurance-vie, PEA, PER...) sont le cadre juridique et fiscal de vos placements. Les supports (actions, obligations, SCPI...) sont les actifs dans lesquels vous investissez à l'intérieur de ces enveloppes. Pour en savoir plus, consultez la Section 1 et la Section 8.",
+                answer: "Les enveloppes (assurance-vie, PEA, PER...) sont le cadre juridique et fiscal de vos placements. Les supports (actions, obligations, SCPI...) sont les actifs dans lesquels vous investissez à l'intérieur de ces enveloppes.",
                 link: "#section8"
               },
               {
                 question: "Quels placements offrent le meilleur rendement net en 2025 ?",
                 answer: "Le rendement dépend de votre profil de risque et de votre horizon. Les ETF crypto dans l'assurance-vie peuvent offrir des rendements élevés mais avec un risque important. Consultez un conseiller Azalée pour une analyse personnalisée.",
-                link: "#"
+                link: "https://calendly.com/contact-azalee-patrimoine"
               },
               {
                 question: "Comment investir dans le Private Equity ?",
@@ -1637,18 +1744,18 @@ export default function PlacementsPage() {
               },
               {
                 question: "Le fond Défense vaut-il vraiment le coût ?",
-                answer: "Consultez l'article de blog de Medhy sur le fond Défense pour une analyse détaillée.",
-                link: "#"
+                answer: "Consultez un conseiller Azalée pour une analyse détaillée du fond Défense et de son adéquation avec votre profil.",
+                link: "https://calendly.com/contact-azalee-patrimoine"
               },
               {
                 question: "Le livret A va-t-il baisser en 2026 ?",
-                answer: "Le taux du livret A est corrélé à la baisse des taux directeurs. Consultez notre article sur la baisse du taux du livret A.",
-                link: "#"
+                answer: "Le taux du livret A est corrélé à la baisse des taux directeurs. Consultez un conseiller Azalée pour comprendre l'impact sur votre stratégie d'épargne.",
+                link: "https://calendly.com/contact-azalee-patrimoine"
               },
               {
                 question: "Que peut-on attendre d'un placement ESG ?",
-                answer: "Les placements ESG (Environnement, Social, Gouvernance) permettent d'allier performance financière et impact positif. Ils participent à la transition économique tout en offrant des opportunités de rendement.",
-                link: "#"
+                answer: "Les placements ESG (Environnement, Social, Gouvernance) permettent d'allier performance financière et impact positif. Ils participent à la transition économique tout en offrant des opportunités de rendement. Consultez un conseiller Azalée pour identifier les meilleures opportunités ESG.",
+                link: "https://calendly.com/contact-azalee-patrimoine"
               },
               {
                 question: "C'est quoi la loi industrie verte ?",
@@ -1661,11 +1768,11 @@ export default function PlacementsPage() {
                 link: "https://calendly.com/contact-azalee-patrimoine"
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-white rounded-lg p-6 shadow-lg border-l-4 border-[#B99066]">
-                <h3 className="text-[#253F60] text-lg sm:text-xl font-cairo font-bold mb-3">
+              <div key={index} className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-200 hover:border-[#B99066] hover:shadow-xl transition-all duration-300 group">
+                <h3 className="text-[#253F60] text-lg sm:text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors">
                   {faq.question}
                 </h3>
-                <p className="text-[#4B5563] text-sm sm:text-base leading-relaxed mb-3">
+                <p className="text-[#4B5563] text-sm sm:text-base leading-relaxed mb-4 line-clamp-3">
                   {faq.answer}
                 </p>
                 {faq.link && (
@@ -1674,14 +1781,14 @@ export default function PlacementsPage() {
                       href={faq.link}
                       target={faq.link.startsWith('http') ? '_blank' : undefined}
                       rel={faq.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="text-[#B99066] hover:text-[#A67A5A] font-semibold text-sm underline"
+                      className="inline-flex items-center text-[#B99066] hover:text-[#A67A5A] font-semibold text-sm transition-colors group-hover:underline"
                     >
                       En savoir plus →
                     </a>
                   ) : (
                     <Link
                       href={faq.link}
-                      className="text-[#B99066] hover:text-[#A67A5A] font-semibold text-sm underline"
+                      className="inline-flex items-center text-[#B99066] hover:text-[#A67A5A] font-semibold text-sm transition-colors group-hover:underline"
                     >
                       En savoir plus →
                     </Link>
@@ -1692,6 +1799,66 @@ export default function PlacementsPage() {
             </div>
           </div>
         </section>
+
+      {/* Section Articles et guides placements */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-white to-[#F9FAFB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold text-[#253F60] mb-6">
+              {pageContent.articles?.h2 || "Articles et guides placements"}
+            </h2>
+            <p className="text-lg sm:text-xl font-inter text-[#374151] max-w-3xl mx-auto leading-relaxed">
+              {pageContent.articles?.description || "Découvrez nos articles détaillés pour approfondir vos connaissances sur les placements et l'investissement"}
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Article 1 */}
+            {(pageContent.articles?.items || [
+              {
+                title: "Assurance-vie : optimiser votre épargne en 2025",
+                description: "Découvrez comment optimiser votre assurance-vie avec Azalée Patrimoine : fiscalité, supports, arbitrages et stratégies pour maximiser votre rendement net.",
+                link: "/placements/assurance-vie",
+                badge: "Guide complet",
+                gradient: "from-[#253F60] to-[#2d4a6b]"
+              },
+              {
+                title: "Private Equity 2025 : opportunités et risques",
+                description: "Le capital-investissement offre des rendements attractifs mais nécessite une compréhension approfondie. Découvrez comment investir intelligemment en Private Equity malgré les risques.",
+                link: "#section3",
+                badge: "Analyse 2025",
+                gradient: "from-[#253F60] to-[#B99066]"
+              }
+            ]).map((article, index) => (
+              <Link 
+                key={index}
+                href={article.link}
+                className="group bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl hover:border-[#B99066] transition-all duration-300"
+              >
+                <div className={`relative h-48 bg-gradient-to-br ${article.gradient || "from-[#253F60] to-[#2d4a6b]"} overflow-hidden`}>
+                  <div className={`absolute top-4 left-4 ${index === 0 ? "bg-[#B99066]" : "bg-[#253F60]"} text-white px-3 py-1 rounded-full text-sm font-inter font-semibold`}>
+                    {article.badge || "Guide complet"}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-cairo font-bold text-[#253F60] mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                    {article.title}
+                  </h3>
+                  <p className="text-base font-inter text-[#374151] leading-relaxed mb-4">
+                    {article.description}
+                  </p>
+                  <div className="flex items-center text-[#B99066] font-inter font-semibold">
+                    <span>Lire l'article complet</span>
+                    <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </>

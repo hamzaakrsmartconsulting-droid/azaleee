@@ -42,4 +42,33 @@ turbo/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
 .env*.local
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# MongoDB data
+mongo-data/
+mongo-init/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

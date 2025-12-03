@@ -1,0 +1,76 @@
+services:
+  # MongoDB Service
+  mongo:
+    image: mongo:7.0
+    container_name: azalee-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: azalee_db
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+    networks:
+      - azalee-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/azalee_db --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend Service (Next.js API Routes)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: azalee-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongo:27017/azalee_db
+      - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+      - STOCK_API_PROVIDER=${STOCK_API_PROVIDER:-RAPIDAPI_YH_FINANCE}
+      - STOCK_API_KEY=${STOCK_API_KEY:-}
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - azalee-network
+
+  # Frontend Service (Next.js Frontend - serves both frontend and API routes)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: azalee-frontend
+    restart: unless-stopped
+    ports:
+      - "80:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongo:27017/azalee_db
+      - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-http://localhost}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost/api}
+      - STOCK_API_PROVIDER=${STOCK_API_PROVIDER:-RAPIDAPI_YH_FINANCE}
+      - STOCK_API_KEY=${STOCK_API_KEY:-}
+    depends_on:
+      mongo:
+        condition: service_healthy
+      backend:
+        condition: service_started
+    networks:
+      - azalee-network
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  azalee-network:
+    driver: bridge
+

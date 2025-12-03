@@ -8,32 +8,9 @@ export default function SimulationsGeneralesPage() {
   const [cmsContent, setCmsContent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load CMS content from database
   useEffect(() => {
-    const loadCmsContent = async () => {
-      try {
-        const response = await fetch(`/api/pages/content?path=/outils/simulations-generales&type=cms`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success && data.content) {
-            console.log('CMS Content loaded:', data.content);
-            const parsedContent = JSON.parse(data.content.content);
-            console.log('Parsed CMS Content:', parsedContent);
-            setCmsContent(parsedContent);
-          } else {
-            console.log('No CMS content found in response:', data);
-          }
-        } else {
-          console.log('CMS API response not ok:', response.status);
-        }
-      } catch (error) {
-        console.log('Error loading CMS content:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadCmsContent();
+    // Set static content
+    setIsLoading(false);
   }, []);
 
   // Default content if CMS content is not available

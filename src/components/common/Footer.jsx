@@ -1,91 +1,227 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const Footer = () => {
+  const [content, setContent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchFooterContent();
+  }, []);
+
+  const fetchFooterContent = async () => {
+    try {
+      const response = await fetch('/api/cms/content?path=footer');
+      const data = await response.json();
+      if (data.success) {
+        setContent(data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching footer content:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Default content fallback
+  const defaultContent = {
+    contact: {
+      title: "Contactez-nous",
+      address: {
+        street: "106 Rue de Richelieu",
+        city: "75002 Paris"
+      },
+      email: "contact@azalee-patrimoine.fr",
+      phone: "01 53 45 85 00",
+      ctaButton: {
+        text: "Prendre rendez-vous",
+        url: "https://calendly.com/rdv-azalee-patrimoine/30min"
+      }
+    },
+    services: {
+      title: "Nos services",
+      items: [
+        "Conseil en gestion de patrimoine",
+        "Optimisation fiscale",
+        "Investissement immobilier",
+        "Placements financiers",
+        "Transmission de patrimoine"
+      ]
+    },
+    outils: {
+      title: "Outils",
+      items: [
+        { text: "Calculateur d'impôts", path: "/outils/calculatrice-impots" },
+        { text: "Calculs financiers", path: "/outils/calculs-financiers" },
+        { text: "Assurance-vie vs PER", path: "/outils-financiers/assurance-vie-vs-per" }
+      ]
+    },
+    mentionsLegales: {
+      title: "Mentions légales",
+      companyName: "Azalée Patrimoine",
+      legalInfo: {
+        capital: "SASU au capital de 8 000 €",
+        address: "106 rue de Richelieu, 75002 Paris",
+        siren: "SIREN 790 419 949 – RCS Paris",
+        tva: "TVA intracommunautaire : FR90790419949",
+        orias: {
+          text: "Inscrite à l'ORIAS n° 13001775",
+          url: "https://www.orias.fr",
+          description: "en qualité d'intermédiaire en assurance, banque et finance."
+        },
+        anacofi: "Adhérente à l'ANACOFI-CIF (92 rue d'Amsterdam, 75009 Paris) et à l'ANACOFI-Courtage (90 rue d'Amsterdam, 75009 Paris).",
+        acpr: "Soumise au contrôle de l'ACPR (4 place de Budapest, 75436 Paris Cedex 09)."
+      }
+    },
+    bottom: {
+      copyright: "© 2025 AZALEE PATRIMOINE. Tous droits réservés.",
+      links: [
+        { text: "Politique de confidentialité", path: "#" },
+        { text: "Conditions d'utilisation", path: "/conditions-generales" },
+        { text: "Mentions légales", path: "/mentions-legales" }
+      ]
+    }
+  };
+
+  const footerContent = content || defaultContent;
+
+  if (loading) {
+    return (
+      <footer className="w-full bg-[#253F60] px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="w-full bg-[#253F60] px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Contact */}
-          <div className="text-white">
-            <h3 className="text-lg font-semibold mb-4">Contactez-nous</h3>
-            <div className="space-y-2 text-sm">
-              <p>106 Rue de Richelieu</p>
-              <p>75002 Paris</p>
-              <p>contact@azalee-patrimoine.fr</p>
-              <p>01 53 45 85 00</p>
+          {footerContent.contact && (
+            <div className="text-white">
+              <h3 className="text-lg font-semibold mb-4">{footerContent.contact.title || "Contactez-nous"}</h3>
+              <div className="space-y-2 text-sm">
+                {footerContent.contact.address && (
+                  <>
+                    <p>{footerContent.contact.address.street}</p>
+                    <p>{footerContent.contact.address.city}</p>
+                  </>
+                )}
+                {footerContent.contact.email && <p>{footerContent.contact.email}</p>}
+                {footerContent.contact.phone && <p>{footerContent.contact.phone}</p>}
+              </div>
+              {footerContent.contact.ctaButton && (
+                <button
+                  onClick={() => window.open(footerContent.contact.ctaButton.url, '_blank')}
+                  className="mt-4 bg-[#B99066] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#A67A5A] transition-colors duration-200"
+                >
+                  {footerContent.contact.ctaButton.text}
+                </button>
+              )}
             </div>
-            <button
-              onClick={() => window.open('https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
-              className="mt-4 bg-[#B99066] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#A67A5A] transition-colors duration-200"
-            >
-              Prendre rendez-vous
-            </button>
-          </div>
+          )}
 
           {/* Services */}
-          <div className="text-white">
-            <h3 className="text-lg font-semibold mb-4">Nos services</h3>
-            <div className="space-y-2 text-sm">
-              <p>Conseil en gestion de patrimoine</p>
-              <p>Optimisation fiscale</p>
-              <p>Investissement immobilier</p>
-              <p>Placements financiers</p>
-              <p>Transmission de patrimoine</p>
+          {footerContent.services && (
+            <div className="text-white">
+              <h3 className="text-lg font-semibold mb-4">{footerContent.services.title || "Nos services"}</h3>
+              <div className="space-y-2 text-sm">
+                {footerContent.services.items && footerContent.services.items.map((item, index) => (
+                  <p key={index}>{item}</p>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Outils */}
-          <div className="text-white">
-            <h3 className="text-lg font-semibold mb-4">Outils</h3>
-            <div className="space-y-2 text-sm">
-              <a href="/outils/calculatrice-impots" className="hover:text-[#B99066] transition-colors">
-                Calculateur d'impôts
-              </a>
-              <a href="/outils/calculs-financiers" className="hover:text-[#B99066] transition-colors">
-                Calculs financiers
-              </a>
-              <a href="/outils-financiers/assurance-vie-vs-per" className="hover:text-[#B99066] transition-colors">
-                Assurance-vie vs PER
-              </a>
+          {footerContent.outils && (
+            <div className="text-white">
+              <h3 className="text-lg font-semibold mb-4">{footerContent.outils.title || "Outils"}</h3>
+              <div className="space-y-2 text-sm">
+                {footerContent.outils.items && footerContent.outils.items.map((item, index) => (
+                  typeof item === 'string' ? (
+                    <p key={index}>{item}</p>
+                  ) : (
+                    <Link key={index} href={item.path || "#"} className="hover:text-[#B99066] transition-colors block">
+                      {item.text || item}
+                    </Link>
+                  )
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Mentions légales */}
-          <div className="text-white">
-              <h3 className="text-lg font-semibold mb-4">Mentions légales</h3>
+          {footerContent.mentionsLegales && (
+            <div className="text-white">
+              <h3 className="text-lg font-semibold mb-4">{footerContent.mentionsLegales.title || "Mentions légales"}</h3>
               <div className="space-y-2 text-sm">
-                <p className="text-lg font-bold mb-2"><strong>Azalée Patrimoine</strong></p>
-                <p className="text-sm mb-2">SASU au capital de 8 000 €</p>
-              <p>106 rue de Richelieu, 75002 Paris</p>
-              <p>SIREN 790 419 949 – RCS Paris</p>
-              <p>TVA intracommunautaire : FR90790419949</p>
-              <p>Inscrite à l'ORIAS n° 13001775 (<a href="https://www.orias.fr" className="hover:text-[#B99066] transition-colors">www.orias.fr</a>) en qualité d'intermédiaire en assurance, banque et finance.</p>
-              <p>Adhérente à l'ANACOFI-CIF (92 rue d'Amsterdam, 75009 Paris) et à l'ANACOFI-Courtage (90 rue d'Amsterdam, 75009 Paris).</p>
-              <p>Soumise au contrôle de l'ACPR (4 place de Budapest, 75436 Paris Cedex 09).</p>
+                {footerContent.mentionsLegales.companyName && (
+                  <p className="text-lg font-bold mb-2"><strong>{footerContent.mentionsLegales.companyName}</strong></p>
+                )}
+                {footerContent.mentionsLegales.legalInfo && (
+                  <>
+                    {footerContent.mentionsLegales.legalInfo.capital && (
+                      <p className="text-sm mb-2">{footerContent.mentionsLegales.legalInfo.capital}</p>
+                    )}
+                    {footerContent.mentionsLegales.legalInfo.address && (
+                      <p>{footerContent.mentionsLegales.legalInfo.address}</p>
+                    )}
+                    {footerContent.mentionsLegales.legalInfo.siren && (
+                      <p>{footerContent.mentionsLegales.legalInfo.siren}</p>
+                    )}
+                    {footerContent.mentionsLegales.legalInfo.tva && (
+                      <p>{footerContent.mentionsLegales.legalInfo.tva}</p>
+                    )}
+                    {footerContent.mentionsLegales.legalInfo.orias && (
+                      <p>
+                        {footerContent.mentionsLegales.legalInfo.orias.text}{' '}
+                        (<a href={footerContent.mentionsLegales.legalInfo.orias.url} className="hover:text-[#B99066] transition-colors" target="_blank" rel="noopener noreferrer">
+                          {footerContent.mentionsLegales.legalInfo.orias.url.replace('https://', '')}
+                        </a>){' '}
+                        {footerContent.mentionsLegales.legalInfo.orias.description}
+                      </p>
+                    )}
+                    {footerContent.mentionsLegales.legalInfo.anacofi && (
+                      <p>{footerContent.mentionsLegales.legalInfo.anacofi}</p>
+                    )}
+                    {footerContent.mentionsLegales.legalInfo.acpr && (
+                      <p>{footerContent.mentionsLegales.legalInfo.acpr}</p>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Bottom section */}
-        <div className="border-t border-white/20 mt-8 pt-6">
-          <div className="flex flex-col md:flex-row justify-between items-center text-white text-sm">
-            <div className="mb-4 md:mb-0">
-              <p>© 2025 AZALEE PATRIMOINE. Tous droits réservés.</p>
-            </div>
-            <div className="flex space-x-6">
-              <a href="#" className="hover:text-[#B99066] transition-colors">
-                Politique de confidentialité
-              </a>
-              <a href="/conditions-generales" className="hover:text-[#B99066] transition-colors">
-                Conditions d'utilisation
-              </a>
-              <a href="/mentions-legales" className="hover:text-[#B99066] transition-colors">
-                Mentions légales
-              </a>
+        {footerContent.bottom && (
+          <div className="border-t border-white/20 mt-8 pt-6">
+            <div className="flex flex-col md:flex-row justify-between items-center text-white text-sm">
+              {footerContent.bottom.copyright && (
+                <div className="mb-4 md:mb-0">
+                  <p>{footerContent.bottom.copyright}</p>
+                </div>
+              )}
+              {footerContent.bottom.links && footerContent.bottom.links.length > 0 && (
+                <div className="flex space-x-6">
+                  {footerContent.bottom.links.map((link, index) => (
+                    <Link key={index} href={link.path || "#"} className="hover:text-[#B99066] transition-colors">
+                      {link.text || link}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
-        </div>
+        )}
       </div>
     </footer>
   );

@@ -1,11 +1,59 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@/components/ui/Button';
 import dynamic from "next/dynamic";
 const LanguageSwitcher = dynamic(() => import("./LanguageSwitcher"), { ssr: false });
 import Link from "next/link";
 
 const Header = () => {
+  const [headerContent, setHeaderContent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchHeaderContent();
+  }, []);
+
+  const fetchHeaderContent = async () => {
+    try {
+      const response = await fetch('/api/cms/content?path=header');
+      const data = await response.json();
+      if (data.success) {
+        setHeaderContent(data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching header content:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Default content fallback
+  const defaultTopBar = {
+    contact: {
+      phone: {
+        number: "01 53 45 85 00",
+        link: "tel:+33153458500",
+        icon: "/images/img_component_1.svg"
+      },
+      email: {
+        address: "contact@azalee-patrimoine.fr",
+        link: "mailto:contact@azalee-patrimoine.fr",
+        icon: "/images/img_component_1_light_green_400.svg"
+      }
+    },
+    social: {
+      linkedin: {
+        url: "https://www.linkedin.com/company/azalee-patrimoine",
+        text: "Suivez-nous"
+      }
+    },
+    espaceClient: {
+      text: "Espace client",
+      path: "/espace-client"
+    }
+  };
+
+  const topBar = headerContent?.topBar || defaultTopBar;
   const [menuOpen, setMenuOpen] = useState(false);
   const [fiscaliteDropdownOpen, setFiscaliteDropdownOpen] = useState(false);
   const [fiscaliteTimeoutId, setFiscaliteTimeoutId] = useState(null);
@@ -254,46 +302,54 @@ const Header = () => {
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-2 lg:gap-8 py-2">
         {/* Contact Info */}
         <div className="hidden lg:flex flex-col sm:flex-row gap-4 sm:gap-8 w-full lg:w-auto">
-          <div className="flex items-center gap-2">
-            <div className="bg-white p-1 rounded">
-            <img src="/images/img_component_1.svg" className="w-4 h-4" alt="phone" />
+          {topBar.contact?.phone && (
+            <div className="flex items-center gap-2">
+              <div className="bg-white p-1 rounded">
+                <img src={topBar.contact.phone.icon || "/images/img_component_1.svg"} className="w-4 h-4" alt="phone" />
+              </div>
+              <a href={topBar.contact.phone.link || `tel:${topBar.contact.phone.number}`} className="text-sm font-segoe text-white hover:text-gray-300 transition-colors duration-200">
+                {topBar.contact.phone.number}
+              </a>
             </div>
-            <a href="tel:+33153458500" className="text-sm font-segoe text-white hover:text-gray-300 transition-colors duration-200">
-              01 53 45 85 00
-            </a>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="bg-white p-1 rounded">
-            <img src="/images/img_component_1_light_green_400.svg" className="w-4 h-4" alt="email" />
+          )}
+          {topBar.contact?.email && (
+            <div className="flex items-center gap-2">
+              <div className="bg-white p-1 rounded">
+                <img src={topBar.contact.email.icon || "/images/img_component_1_light_green_400.svg"} className="w-4 h-4" alt="email" />
+              </div>
+              <a href={topBar.contact.email.link || `mailto:${topBar.contact.email.address}`} className="text-sm font-inter text-white hover:text-gray-300 transition-colors duration-200">
+                {topBar.contact.email.address}
+              </a>
             </div>
-            <a href="mailto:contact@azalee-patrimoine.fr" className="text-sm font-inter text-white hover:text-gray-300 transition-colors duration-200">
-              contact@azalee-patrimoine.fr
-            </a>
-          </div>
-          <div className="flex items-center gap-2">
-            <a 
-              href="https://www.linkedin.com/company/azalee-patrimoine" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-white p-1 rounded hover:bg-gray-100 transition-colors duration-200"
-              aria-label="LinkedIn Azalée Patrimoine"
-            >
-              <svg className="w-4 h-4 text-[#253F60]" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-              </svg>
-            </a>
-            <span className="text-sm font-inter text-white">Suivez-nous</span>
-          </div>
+          )}
+          {topBar.social?.linkedin && (
+            <div className="flex items-center gap-2">
+              <a 
+                href={topBar.social.linkedin.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-white p-1 rounded hover:bg-gray-100 transition-colors duration-200"
+                aria-label="LinkedIn Azalée Patrimoine"
+              >
+                <svg className="w-4 h-4 text-[#253F60]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <span className="text-sm font-inter text-white">{topBar.social.linkedin.text || "Suivez-nous"}</span>
+            </div>
+          )}
         </div>
 
         {/* Right Section */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full lg:w-auto">
           {/* Espace Client */}
-          <div className="ml-2">
-            <Link href="/espace-client" className="bg-[#B99066] lg:bg-[#253F60] text-white px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm font-medium hover:bg-[#A67C52] lg:hover:bg-[#1A2A4A] transition-colors duration-200">
-              Espace client
-            </Link>
-          </div>
+          {topBar.espaceClient && (
+            <div className="ml-2">
+              <Link href={topBar.espaceClient.path || "/espace-client"} className="bg-[#B99066] lg:bg-[#253F60] text-white px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm font-medium hover:bg-[#A67C52] lg:hover:bg-[#1A2A4A] transition-colors duration-200">
+                {topBar.espaceClient.text || "Espace client"}
+              </Link>
+            </div>
+          )}
           {/* Language Switcher */}
           <div className="ml-auto sm:ml-2">
             <LanguageSwitcher />
@@ -316,9 +372,9 @@ const Header = () => {
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 block lg:hidden flex-shrink-0">
           <Link href="/">
             <img 
-                src="/images/azalee-patrimoine3.png" 
+                src={headerContent?.logo?.src || "/images/azalee-patrimoine3.png"} 
                 className="w-[100px] h-[98px] sm:w-[120px] sm:h-[118px] mx-auto cursor-pointer hover:opacity-80 transition-opacity relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000" 
-              alt="Azalee Wealth Logo" 
+              alt={headerContent?.logo?.alt || "Azalee Wealth Logo"} 
             />
           </Link>
         </div>
@@ -326,9 +382,9 @@ const Header = () => {
         <div className="hidden lg:flex flex-shrink-0">
           <Link href="/">
             <img 
-                src="/images/azalee-patrimoine3.png" 
+                src={headerContent?.logo?.src || "/images/azalee-patrimoine3.png"} 
                 className="w-[140px] h-[138px] cursor-pointer hover:opacity-80 transition-opacity relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000" 
-              alt="Azalee Wealth Logo" 
+              alt={headerContent?.logo?.alt || "Azalee Wealth Logo"} 
             />
           </Link>
         </div>

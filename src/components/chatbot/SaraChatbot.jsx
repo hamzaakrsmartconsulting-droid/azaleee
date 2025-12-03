@@ -1,657 +1,593 @@
-"use client";
-import React, { useState, useEffect, useRef } from 'react';
+'use client';
+import { useState, useEffect, useRef } from 'react';
 
-// SCRIPT CONVERSATIONNEL SARAH - AZALÉE PATRIMOINE
-// Objectif final : prise de rendez-vous qualifié à fort taux de conversion
-
-const SARAH_SCRIPT = {
-  // ACCUEIL — Créer un climat de confiance et d'ouverture
-  welcome: {
-    message: "Bonjour et bienvenue sur azalee-patrimoine.fr ! Je suis votre conseiller patrimonial virtuel. Vous souhaitez optimiser vos finances, investir, ou anticiper l'avenir ? Je peux vous aider à y voir clair.",
-    options: [
-      { text: "💡 Obtenir une réponse rapide à une question patrimoniale", value: "question_rapide" },
-      { text: "📞 Être rappelé(e) par un conseiller", value: "rappel" },
-      { text: "📅 Prendre un rendez-vous directement", value: "rdv" }
-    ]
-  },
-  
-  // INTENTION UTILISATEUR — Comprendre l'objectif sans alourdir le dialogue
-  intention: {
-    message: "Pour vous orienter efficacement, que souhaitez-vous explorer aujourd'hui ?",
-    options: [
-      { text: "Optimiser mes placements financiers", value: "placements" },
-      { text: "Réduire mes impôts", value: "fiscalite" },
-      { text: "Préparer ma retraite", value: "retraite" },
-      { text: "Transmettre mon patrimoine", value: "transmission" },
-      { text: "Investir dans l'immobilier", value: "immobilier" },
-      { text: "Diversifier mon patrimoine", value: "diversification" },
-      { text: "Gérer une situation spécifique (divorce, succession, expatriation…)", value: "situation_specifique" }
-    ]
-  },
-  
-  // PROFIL UTILISATEUR — Établir un profil fiable sans décourager
-  profile: {
-    message: "Pour mieux comprendre votre situation, j'aurais besoin de quelques informations confidentielles :",
-    questions: [
-      { id: "nom", text: "Quel est votre nom ?", type: "text", required: true },
-      { id: "prenom", text: "Et votre prénom ?", type: "text", required: true },
-      { id: "age", text: "Quel est votre âge ?", type: "number", required: true },
-      { id: "situation_matrimoniale", text: "Êtes-vous marié(e), pacsé(e) ou célibataire ?", type: "select", options: ["Marié(e)", "Pacsé(e)", "Célibataire"], required: true },
-      { id: "enfants", text: "Avez-vous des enfants ?", type: "select", options: ["Oui", "Non"], required: true },
-      { id: "situation_professionnelle", text: "Quelle est votre situation professionnelle ? (Salarié, entrepreneur, retraité, etc.)", type: "select", options: ["Salarié", "Entrepreneur", "Retraité", "Autre"], required: true },
-      { id: "tmi", text: "Connaissez-vous votre TMI ? (Aide contextuelle si besoin)", type: "select", options: ["Oui, je le connais", "Non", "Je ne sais pas"], required: false },
-      { id: "placements_actuels", text: "Disposez-vous de placements financiers ou immobiliers ? Lesquels ?", type: "select", options: ["Oui, financiers", "Oui, immobiliers", "Oui, les deux", "Non"], required: false },
-      { id: "budget_projet", text: "Quel montant envisagez-vous pour un futur projet ?", type: "select", options: ["Moins de 50 000 €", "50 000 € à 100 000 €", "100 000 € à 500 000 €", "Plus de 500 000 €"], required: false }
-    ]
-  },
-  
-  // ENGAGEMENT FINAL — Transformer la réflexion en action
-  engagement: {
-    message: "Je dispose maintenant des éléments essentiels pour vous apporter une préconisation personnalisée. Souhaitez-vous :",
-    options: [
-      { text: "📄 Recevoir un mini-bilan PDF gratuit", value: "pdf" },
-      { text: "📅 Fixer un rendez-vous avec un conseiller patrimonial agréé Azalée", value: "rdv_final" },
-      { text: "📞 Être recontacté(e) ultérieurement", value: "rappel_final" }
-    ]
-  },
-  
-  // PRISE DE RENDEZ-VOUS — Finaliser l'acquisition de lead qualifié
-  rdv: {
-    message: "Merci pour votre confiance. Quel moment vous conviendrait le mieux ?",
-    options: [
-      { text: "Téléphone", value: "telephone" },
-      { text: "Visio", value: "visio" },
-      { text: "Agence", value: "agence" }
-    ]
-  }
-};
-
-// SCÉNARISATION INTELLIGENTE PAR OBJECTIF — Créer une conversation experte et orientée résultat
-const THEMATIQUES = {
-  placements: {
-    explication: "Les placements financiers peuvent être optimisés selon votre profil de risque et vos objectifs.",
-    question: "Souhaitez-vous comparer des placements selon vos objectifs (rendement, fiscalité, capitalisation) ?"
-  },
-  retraite: {
-    explication: "La préparation de la retraite nécessite une stratégie adaptée à votre situation.",
-    question: "À quel âge envisagez-vous de partir à la retraite ?"
-  },
-  transmission: {
-    explication: "La transmission du patrimoine peut être optimisée fiscalement.",
-    question: "Souhaitez-vous protéger un enfant ou conjoint en particulier ?"
-  },
-  immobilier: {
-    explication: "L'investissement immobilier offre des avantages fiscaux et patrimoniaux.",
-    question: "Quel type d'investissement immobilier vous intéresse ?"
-  },
-  fiscalite: {
-    explication: "La fiscalité peut être optimisée selon votre situation personnelle.",
-    question: "Dans quel domaine souhaitez-vous réduire vos impôts ?"
-  },
-  diversification: {
-    explication: "La diversification permet de sécuriser votre patrimoine.",
-    question: "Quelle part de votre patrimoine souhaitez-vous diversifier ?"
-  },
-  situation_specifique: {
-    explication: "Chaque situation personnelle nécessite une approche adaptée et des solutions sur-mesure.",
-    question: "Pouvez-vous me décrire brièvement votre situation spécifique ?"
-  }
+// Générer un ID de session unique
+const generateSessionId = () => {
+  return `sara_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };
 
 export default function SaraChatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentStep, setCurrentStep] = useState('welcome');
   const [messages, setMessages] = useState([]);
-  const [userProfile, setUserProfile] = useState({
-    nom: '',
-    prenom: '',
-    age: '',
-    situation_matrimoniale: '',
-    enfants: '',
-    situation_professionnelle: '',
-    tmi: '',
-    placements_actuels: '',
-    budget_projet: '',
-    intention: '',
-    thematique_reponse: '',
-    canal_preference: '',
-    telephone: '',
-    email: ''
-  });
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
+  const [currentStep, setCurrentStep] = useState('welcome');
   const [sessionId, setSessionId] = useState(null);
+  const [profile, setProfile] = useState({});
+  const [intention, setIntention] = useState(null);
+  const [thematique, setThematique] = useState(null);
+  const [rdvData, setRdvData] = useState({ date: '', heure: '', canal: '' });
+  const [rdvStep, setRdvStep] = useState('date'); // date, heure, canal
+  const [rappelData, setRappelData] = useState({ nom: '', prenom: '', telephone: '', email: '' });
+  const [rappelStep, setRappelStep] = useState('nom'); // nom, prenom, telephone, email
   const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  useEffect(() => {
+    // Générer un sessionId au montage
+    const newSessionId = generateSessionId();
+    setSessionId(newSessionId);
+    
+    // Initialiser avec le message d'accueil
+    if (messages.length === 0) {
+      addMessage('sara', getWelcomeMessage());
+    }
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      initializeSession();
-    }
-  }, [isOpen]);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-  const initializeSession = async () => {
+  const addMessage = (role, content) => {
+    const newMessage = { role, content, timestamp: new Date() };
+    setMessages(prev => [...prev, newMessage]);
+    
+    // Sauvegarder le message
+    if (sessionId) {
+      saveSession({ message: newMessage });
+    }
+  };
+
+  const saveSession = async (data) => {
     try {
-      const newSessionId = `sara_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      setSessionId(newSessionId);
-      
-      // Create session in database
-      await fetch('/api/sara/sessions', {
+      await fetch('/api/chatbot/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          sessionId: newSessionId,
-          ipAddress: 'unknown',
-          userAgent: navigator.userAgent
+          sessionId,
+          currentStep,
+          profile,
+          intention,
+          thematique,
+          ...data
         })
       });
-
-      // Initialiser avec le message d'accueil
-      addMessage({
-        type: 'bot',
-        content: SARAH_SCRIPT.welcome.message,
-        options: SARAH_SCRIPT.welcome.options
-      });
     } catch (error) {
-      console.error('Error initializing session:', error);
+      console.error('Error saving session:', error);
     }
   };
 
-  const addMessage = async (message) => {
-    setMessages(prev => [...prev, message]);
-    
-    // Save message to database
-    if (sessionId) {
-      try {
-        await fetch('/api/sara/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sessionId,
-            messageType: message.type,
-            content: message.content,
-            step: currentStep,
-            options: message.options
-          })
-        });
-      } catch (error) {
-        console.error('Error saving message:', error);
+  const getWelcomeMessage = () => {
+    return {
+      type: 'message',
+      text: "Bonjour et bienvenue sur azalee-patrimoine.fr ! Je suis votre conseiller patrimonial virtuel. Vous souhaitez optimiser vos finances, investir, ou anticiper l'avenir ? Je peux vous aider à y voir clair.",
+      options: [
+        { text: '💬 Obtenir une réponse rapide à une question patrimoniale', value: 'question' },
+        { text: '📞 Être rappelé(e) par un conseiller', value: 'rappel' },
+        { text: '📅 Prendre un rendez-vous directement', value: 'rdv_direct' }
+      ]
+    };
+  };
+
+  const getIntentionMessage = () => {
+    return {
+      type: 'message',
+      text: "Pour vous orienter efficacement, que souhaitez-vous explorer aujourd'hui ?",
+      options: [
+        { text: 'Optimiser mes placements financiers', value: 'placements' },
+        { text: 'Réduire mes impôts', value: 'fiscalite' },
+        { text: 'Préparer ma retraite', value: 'retraite' },
+        { text: 'Transmettre mon patrimoine', value: 'transmission' },
+        { text: 'Investir dans l\'immobilier', value: 'immobilier' },
+        { text: 'Diversifier mon patrimoine', value: 'diversification' },
+        { text: 'Gérer une situation spécifique (divorce, succession, expatriation…)', value: 'situation_specifique' }
+      ]
+    };
+  };
+
+  const getThematiqueMessage = (intentionValue) => {
+    const thematiques = {
+      placements: {
+        text: "Il existe plusieurs dispositifs et plusieurs spécificités fiscales ou comptables qui permettent d'optimiser vos placements financiers. Pour vous faire une préconisation, j'ai besoin d'éléments sur votre situation patrimoniale actuelle.",
+        questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
+      },
+      fiscalite: {
+        text: "Il existe de multiples moyens de réduire ses impôts mais cela dépend de combien de réduction on parle car les niches fiscales sont plafonnées. Toutefois, il existe des dispositifs malins à mettre en place mais qui dépendent de votre situation personnelle.",
+        questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
+      },
+      retraite: {
+        text: "Il existe plusieurs dispositifs à mettre en œuvre pour optimiser votre retraite. Pour vous faire une préconisation, j'ai besoin d'éléments sur votre situation patrimoniale actuelle.",
+        questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
+      },
+      transmission: {
+        text: "L'optimisation de votre transmission dépend de multiples critères. Pour vous faire une préconisation, j'ai besoin d'éléments sur votre situation patrimoniale actuelle.",
+        questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
+      },
+      immobilier: {
+        text: "Il existe plusieurs dispositifs et plusieurs spécificités fiscales ou comptables qui permettent de rentabiliser un investissement immobilier. Souhaitez-vous bénéficier d'un entretien avec notre expert afin d'évaluer la solution idéale par rapport à votre situation personnelle ?",
+        questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
+      },
+      diversification: {
+        text: "Votre question est pertinente car un patrimoine bien géré est un patrimoine bien diversifié. Pour répondre à votre question, j'ai besoin d'éléments sur votre portefeuille actuel.",
+        questions: ['taillePortefeuille', 'secteursInvestissement', 'objectifRendement', 'profilRisque', 'nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'patrimoineImmo']
+      },
+      situation_specifique: {
+        text: "Pour vous faire une préconisation adaptée à votre situation spécifique, j'ai besoin d'éléments sur votre situation patrimoniale actuelle.",
+        questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
       }
-    }
+    };
+
+    return thematiques[intentionValue] || thematiques.placements;
   };
 
-  const saveUserProfile = async () => {
-    if (sessionId) {
-      try {
-        await fetch('/api/sara/profile', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sessionId,
-            profileData: userProfile
-          })
-        });
-      } catch (error) {
-        console.error('Error saving profile:', error);
-      }
-    }
-  };
+  const handleOptionClick = async (value, optionText) => {
+    // Ajouter le message utilisateur
+    addMessage('user', optionText);
 
-  const saveAppointment = async (type, data) => {
-    if (sessionId) {
-      try {
-        await fetch('/api/sara/appointments', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sessionId,
-            type,
-            data
-          })
-        });
-      } catch (error) {
-        console.error('Error saving appointment:', error);
-      }
-    }
-  };
-
-  const handleOptionClick = async (option, step) => {
-    setIsTyping(true);
-    
-    // Ajouter le message de l'utilisateur
-    await addMessage({
-      type: 'user',
-      content: option.text
-    });
-
-    // Traiter la réponse selon l'étape
-    switch (step) {
-      case 'welcome':
-        if (option.value === 'question_rapide') {
-          setCurrentStep('intention');
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-            content: SARAH_SCRIPT.intention.message,
-            options: SARAH_SCRIPT.intention.options
-            });
-            setIsTyping(false);
-          }, 1000);
-        } else if (option.value === 'rappel') {
-          setCurrentStep('phone_input');
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-              content: "Parfait ! Un conseiller vous rappellera dans les plus brefs délais. Pouvez-vous me donner votre numéro de téléphone ?",
-              inputType: 'tel'
-            });
-            setIsTyping(false);
-          }, 1000);
-        } else if (option.value === 'rdv') {
-          setCurrentStep('rdv');
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-            content: SARAH_SCRIPT.rdv.message,
-            options: SARAH_SCRIPT.rdv.options
-            });
-            setIsTyping(false);
-          }, 1000);
-        }
-        break;
-
-      case 'intention':
-        const thematique = THEMATIQUES[option.value];
-        if (thematique) {
-          setUserProfile(prev => ({ ...prev, intention: option.text }));
-          
-          // Afficher l'explication thématique
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-              content: thematique.explication
-            });
-          }, 1000);
-          
-          // Puis poser la question ciblée
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-              content: thematique.question,
-              inputType: 'text'
-            });
-            setCurrentStep('thematique_question');
-            setIsTyping(false);
-          }, 2000);
-        }
-        break;
-
-      case 'profile':
-        const questions = SARAH_SCRIPT.profile.questions;
-        const currentQuestion = questions[currentQuestionIndex];
-        
-        // Sauvegarder la réponse
-        setUserProfile(prev => ({
-          ...prev,
-          [currentQuestion.id]: option.text
-        }));
-        
-        if (currentQuestionIndex < questions.length - 1) {
-          // Passer à la question suivante
-          const nextQuestion = questions[currentQuestionIndex + 1];
-          setCurrentQuestionIndex(prev => prev + 1);
-          
-          setTimeout(() => {
-            const nextOptions = nextQuestion.type === 'select' && nextQuestion.options 
-              ? nextQuestion.options.map(opt => ({ text: opt, value: opt }))
-              : [];
-            
-            addMessage({
-              type: 'bot',
-              content: nextQuestion.text,
-              options: nextOptions,
-              inputType: nextQuestion.type === 'text' ? 'text' : nextQuestion.type === 'number' ? 'number' : null
-            });
-            setIsTyping(false);
-          }, 1000);
-        } else {
-          // Toutes les questions sont terminées
-          setCurrentStep('engagement');
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-            content: SARAH_SCRIPT.engagement.message,
-            options: SARAH_SCRIPT.engagement.options
-            });
-            setIsTyping(false);
-          }, 1000);
-        }
-        break;
-
-      case 'engagement':
-        if (option.value === 'pdf') {
-          setCurrentStep('email_input');
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-              content: "Parfait ! Votre mini-bilan PDF sera généré et envoyé par email. Pouvez-vous me donner votre adresse email ?",
-              inputType: 'email'
-            });
-            setIsTyping(false);
-          }, 1000);
-        } else if (option.value === 'rdv_final') {
-          setCurrentStep('rdv');
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-            content: SARAH_SCRIPT.rdv.message,
-            options: SARAH_SCRIPT.rdv.options
-            });
-            setIsTyping(false);
-          }, 1000);
-        } else if (option.value === 'rappel_final') {
-          setCurrentStep('phone_input');
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-              content: "Parfait ! Un conseiller vous rappellera dans les plus brefs délais. Pouvez-vous me donner votre numéro de téléphone ?",
-              inputType: 'tel'
-            });
-            setIsTyping(false);
-          }, 1000);
-        }
-        break;
-
-      case 'rdv':
-        setUserProfile(prev => ({ ...prev, canal_preference: option.text }));
-        await saveUserProfile();
-        await saveAppointment('rdv', { canal_preference: option.text });
-        
+    // Traiter selon l'étape
+    if (currentStep === 'welcome') {
+      if (value === 'question') {
+        setCurrentStep('intention');
         setTimeout(() => {
-          addMessage({
-            type: 'bot',
-            content: "Parfait, c'est noté. Un conseiller Azalée vous contactera au moment prévu. À très bientôt !"
+          addMessage('sara', getIntentionMessage());
+        }, 500);
+      } else if (value === 'rappel') {
+        setCurrentStep('rappel');
+        setRappelStep('nom');
+        addMessage('sara', {
+          type: 'message',
+          text: "Parfait ! Un conseiller Azalée vous contactera prochainement. Pourriez-vous me donner vos coordonnées ?",
+          options: null
+        });
+        setTimeout(() => {
+          addMessage('sara', {
+            type: 'message',
+            text: "Quel est votre nom ?",
+            inputType: 'text'
           });
-          setIsTyping(false);
-          
-          // Fermer la conversation après 3 secondes
-          setTimeout(() => {
-            setIsOpen(false);
-          }, 3000);
-        }, 1000);
-        break;
-    }
-  };
-
-  const handleUserInput = async (input) => {
-    if (!input.trim()) return;
-    
-    setIsTyping(true);
-    
-    // Ajouter le message de l'utilisateur
-    await addMessage({
-      type: 'user',
-      content: input
-    });
-
-    switch (currentStep) {
-      case 'thematique_question':
-        setUserProfile(prev => ({ ...prev, thematique_reponse: input }));
+        }, 500);
+        await saveSession({ actionFinale: 'rappel' });
+      } else if (value === 'rdv_direct') {
+        setCurrentStep('rdv');
+        setRdvStep('date');
+        addMessage('sara', {
+          type: 'message',
+          text: "Excellent ! Pour fixer votre rendez-vous, j'ai besoin de quelques informations. Quelle date vous conviendrait le mieux ?",
+          inputType: 'date'
+        });
+        await saveSession({ actionFinale: 'rdv' });
+      }
+    } else if (currentStep === 'intention') {
+      setIntention(value);
+      setThematique(value);
+      setCurrentStep('thematique');
+      const thematiqueData = getThematiqueMessage(value);
+      
+      setTimeout(() => {
+        addMessage('sara', {
+          type: 'message',
+          text: `${thematiqueData.text} Êtes-vous d'accord pour répondre à quelques questions sous couvert de la confidentialité ?`,
+          options: [
+            { text: 'Oui', value: 'oui_questions' },
+            { text: 'Non', value: 'non_questions' }
+          ]
+        });
+      }, 500);
+    } else if (currentStep === 'rdv' && rdvStep === 'canal') {
+      await handleRdvCanal(value);
+    } else if (currentStep === 'thematique') {
+      if (value === 'oui_questions') {
         setCurrentStep('profile');
-        
+        const thematiqueData = getThematiqueMessage(thematique);
+        startProfileCollection(thematiqueData.questions);
+      } else if (value === 'non_questions') {
+        setCurrentStep('engagement');
+        addMessage('sara', {
+          type: 'message',
+          text: "Souhaitez-vous être contacté(e) par un conseiller ou prendre un rendez-vous directement ?",
+          options: [
+            { text: 'Être contacté(e) par un conseiller', value: 'rappel' },
+            { text: 'Prendre un rendez-vous', value: 'rdv' }
+          ]
+        });
+      }
+    } else if (currentStep === 'profile') {
+      await handleProfileAnswer(value);
+    } else if (currentStep === 'engagement') {
+      if (value === 'pdf') {
+        await saveSession({ actionFinale: 'pdf' });
+        addMessage('sara', {
+          type: 'message',
+          text: "Parfait ! Votre mini-bilan PDF sera généré et vous sera envoyé par email. Merci pour votre confiance !",
+          options: null
+        });
+        setCurrentStep('completed');
+      } else if (value === 'rdv') {
+        setCurrentStep('rdv');
+        setRdvStep('date');
+        addMessage('sara', {
+          type: 'message',
+          text: "Parfait ! Pour fixer votre rendez-vous, j'ai besoin de quelques informations. Quelle date vous conviendrait le mieux ?",
+          inputType: 'date'
+        });
+        await saveSession({ actionFinale: 'rdv' });
+      } else if (value === 'rappel') {
+        setCurrentStep('rappel');
+        setRappelStep('nom');
+        addMessage('sara', {
+          type: 'message',
+          text: "Parfait ! Un conseiller Azalée vous contactera prochainement. Pourriez-vous me donner vos coordonnées ?",
+          options: null
+        });
         setTimeout(() => {
-          addMessage({
-            type: 'bot',
-            content: SARAH_SCRIPT.profile.message
+          addMessage('sara', {
+            type: 'message',
+            text: "Quel est votre nom ?",
+            inputType: 'text'
           });
-        }, 1000);
-        
-        setTimeout(() => {
-          const firstQuestion = SARAH_SCRIPT.profile.questions[0];
-          const firstOptions = firstQuestion.type === 'select' && firstQuestion.options 
-            ? firstQuestion.options.map(opt => ({ text: opt, value: opt }))
-            : [];
-          
-          addMessage({
-            type: 'bot',
-            content: firstQuestion.text,
-            options: firstOptions,
-            inputType: firstQuestion.type === 'text' ? 'text' : firstQuestion.type === 'number' ? 'number' : null
-          });
-          setCurrentQuestionIndex(0);
-          setIsTyping(false);
-        }, 2000);
-        break;
-
-      case 'profile':
-        const questions = SARAH_SCRIPT.profile.questions;
-        const currentQuestion = questions[currentQuestionIndex];
-        
-        // Sauvegarder la réponse
-        setUserProfile(prev => ({
-          ...prev,
-          [currentQuestion.id]: input
-        }));
-        
-        if (currentQuestionIndex < questions.length - 1) {
-          // Passer à la question suivante
-          const nextQuestion = questions[currentQuestionIndex + 1];
-          setCurrentQuestionIndex(prev => prev + 1);
-          
-          setTimeout(() => {
-            const nextOptions = nextQuestion.type === 'select' && nextQuestion.options 
-              ? nextQuestion.options.map(opt => ({ text: opt, value: opt }))
-              : [];
-            
-            addMessage({
-              type: 'bot',
-              content: nextQuestion.text,
-              options: nextOptions,
-              inputType: nextQuestion.type === 'text' ? 'text' : nextQuestion.type === 'number' ? 'number' : null
-            });
-            setIsTyping(false);
-          }, 1000);
-        } else {
-          // Toutes les questions sont terminées
-          await saveUserProfile();
-          setCurrentStep('engagement');
-          setTimeout(() => {
-            addMessage({
-              type: 'bot',
-            content: SARAH_SCRIPT.engagement.message,
-            options: SARAH_SCRIPT.engagement.options
-            });
-            setIsTyping(false);
-          }, 1000);
-        }
-        break;
-
-      case 'email_input':
-        setUserProfile(prev => ({ ...prev, email: input }));
-        await saveUserProfile();
-        await saveAppointment('pdf', { email: input, pdf_type: 'mini-bilan' });
-        
-        setTimeout(() => {
-          addMessage({
-            type: 'bot',
-            content: "Merci ! Votre mini-bilan PDF sera envoyé à cette adresse. À très bientôt !"
-          });
-          setIsTyping(false);
-          
-          setTimeout(() => {
-            setIsOpen(false);
-          }, 3000);
-        }, 1000);
-        break;
-
-      case 'phone_input':
-        setUserProfile(prev => ({ ...prev, telephone: input }));
-        await saveUserProfile();
-        await saveAppointment('rappel', { telephone: input });
-        
-        setTimeout(() => {
-          addMessage({
-            type: 'bot',
-            content: "Parfait ! Un conseiller vous rappellera bientôt. À très bientôt !"
-          });
-          setIsTyping(false);
-          
-          setTimeout(() => {
-            setIsOpen(false);
-          }, 3000);
-        }, 1000);
-        break;
+        }, 500);
+        await saveSession({ actionFinale: 'rappel' });
+      }
     }
   };
 
-  const toggleChatbot = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen) {
-      // Reset when opening
-      setCurrentStep('welcome');
-      setMessages([]);
-      setCurrentQuestionIndex(0);
-      setUserProfile({
-        nom: '',
-        prenom: '',
-        age: '',
-        situation_matrimoniale: '',
-        enfants: '',
-        situation_professionnelle: '',
-        tmi: '',
-        placements_actuels: '',
-        budget_projet: '',
-        intention: '',
-        thematique_reponse: '',
-        canal_preference: '',
-        telephone: '',
-        email: ''
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [profileQuestions, setProfileQuestions] = useState([]);
+
+  const startProfileCollection = (questions) => {
+    setProfileQuestions(questions);
+    setCurrentQuestionIndex(0);
+    askNextProfileQuestion(questions, 0);
+  };
+
+  const askNextProfileQuestion = (questions, index) => {
+    if (index >= questions.length) {
+      // Toutes les questions sont posées
+      setCurrentStep('engagement');
+      addMessage('sara', {
+        type: 'message',
+        text: "Merci pour ces informations ! Je dispose maintenant des éléments essentiels pour vous apporter une préconisation personnalisée. Souhaitez-vous :",
+        options: [
+          { text: '📄 Recevoir un mini-bilan PDF gratuit', value: 'pdf' },
+          { text: '📅 Fixer un rendez-vous avec un conseiller patrimonial agréé Azalée', value: 'rdv' },
+          { text: '📞 Être recontacté(e) ultérieurement', value: 'rappel' }
+        ]
       });
-      setSessionId(null);
+      return;
+    }
+
+    const question = questions[index];
+    const questionText = getProfileQuestionText(question);
+    
+    setTimeout(() => {
+      addMessage('sara', {
+        type: 'message',
+        text: questionText,
+        options: question === 'enfants' ? [
+          { text: 'Oui', value: 'enfants_oui' },
+          { text: 'Non', value: 'enfants_non' }
+        ] : null,
+        inputType: question === 'enfants' ? null : (question === 'age' || question === 'nombreEnfants' ? 'number' : 'text')
+      });
+    }, 500);
+  };
+
+  const getProfileQuestionText = (question) => {
+    const questions = {
+      nom: "Quel est votre nom ?",
+      prenom: "Quel est votre prénom ?",
+      age: "Quel est votre âge ?",
+      situationMatrimoniale: "Êtes-vous marié(e), pacsé(e) ou célibataire ?",
+      enfants: "Avez-vous des enfants ?",
+      nombreEnfants: "Combien d'enfants avez-vous ?",
+      situationProfessionnelle: "Quelle est votre situation professionnelle ? (Salarié, entrepreneur, retraité, etc.)",
+      tmi: "Connaissez-vous votre TMI (Tranche Marginale d'Imposition) ?",
+      placementsFinanciers: "Disposez-vous de placements financiers ? Lesquels ?",
+      placementsImmobiliers: "Disposez-vous de placements immobiliers ? Lesquels ?",
+      montantProjet: "Quel montant envisagez-vous pour un futur projet ?",
+      taillePortefeuille: "Quelle est la taille de votre portefeuille ?",
+      secteursInvestissement: "Dans quels secteurs investissez-vous ?",
+      objectifRendement: "Quel est votre objectif de rendement ?",
+      profilRisque: "Quel est votre profil de risque ?",
+      patrimoineImmo: "Quel est votre patrimoine immobilier ?"
+    };
+    return questions[question] || question;
+  };
+
+  const handleProfileAnswer = async (value) => {
+    const currentQuestion = profileQuestions[currentQuestionIndex];
+    
+    if (currentQuestion === 'enfants') {
+      if (value === 'enfants_oui') {
+        setProfile(prev => ({ ...prev, enfants: true }));
+        setCurrentQuestionIndex(prev => prev + 1);
+        askNextProfileQuestion(profileQuestions, currentQuestionIndex + 1);
+      } else {
+        setProfile(prev => ({ ...prev, enfants: false }));
+        // Passer à la question suivante (sauter nombreEnfants)
+        const nextIndex = currentQuestionIndex + 1;
+        if (profileQuestions[nextIndex] === 'nombreEnfants') {
+          setCurrentQuestionIndex(prev => prev + 2);
+          askNextProfileQuestion(profileQuestions, currentQuestionIndex + 2);
+        } else {
+          setCurrentQuestionIndex(prev => prev + 1);
+          askNextProfileQuestion(profileQuestions, currentQuestionIndex + 1);
+        }
+      }
+    } else {
+      // Stocker la réponse dans le profil
+      setProfile(prev => ({ ...prev, [currentQuestion]: value }));
+      
+      // Passer à la question suivante
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
+      askNextProfileQuestion(profileQuestions, nextIndex);
+    }
+
+    // Sauvegarder le profil
+    await saveSession({ profile: { ...profile, [currentQuestion]: value } });
+  };
+
+  const handleTextInput = async (text) => {
+    if (currentStep === 'profile') {
+      await handleProfileAnswer(text);
+    } else if (currentStep === 'rdv') {
+      await handleRdvInput(text);
+    } else if (currentStep === 'rappel') {
+      await handleRappelInput(text);
     }
   };
 
-  return (
-    <>
-      {/* Bouton flottant */}
-      <button
-        onClick={toggleChatbot}
-        className="fixed bottom-6 right-6 bg-[#B99066] text-white p-4 rounded-full shadow-lg hover:bg-[#A67C52] transition-colors z-50"
-      >
-        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
-        </svg>
-      </button>
+  const handleRappelInput = async (value) => {
+    if (rappelStep === 'nom') {
+      setRappelData(prev => ({ ...prev, nom: value }));
+      setRappelStep('prenom');
+      addMessage('user', `Nom: ${value}`);
+      setTimeout(() => {
+        addMessage('sara', {
+          type: 'message',
+          text: "Quel est votre prénom ?",
+          inputType: 'text'
+        });
+      }, 500);
+    } else if (rappelStep === 'prenom') {
+      setRappelData(prev => ({ ...prev, prenom: value }));
+      setRappelStep('telephone');
+      addMessage('user', `Prénom: ${value}`);
+      setTimeout(() => {
+        addMessage('sara', {
+          type: 'message',
+          text: "Quel est votre numéro de téléphone ?",
+          inputType: 'tel'
+        });
+      }, 500);
+    } else if (rappelStep === 'telephone') {
+      setRappelData(prev => ({ ...prev, telephone: value }));
+      setRappelStep('email');
+      addMessage('user', `Téléphone: ${value}`);
+      setTimeout(() => {
+        addMessage('sara', {
+          type: 'message',
+          text: "Quel est votre adresse email ?",
+          inputType: 'email'
+        });
+      }, 500);
+    } else if (rappelStep === 'email') {
+      setRappelData(prev => ({ ...prev, email: value }));
+      addMessage('user', `Email: ${value}`);
+      
+      // Sauvegarder les coordonnées dans le profil
+      await saveSession({ 
+        profile: {
+          ...profile,
+          nom: rappelData.nom,
+          prenom: rappelData.prenom,
+          telephone: rappelData.telephone,
+          email: value
+        },
+        actionFinale: 'rappel',
+        status: 'completed'
+      });
+      
+      setTimeout(() => {
+        addMessage('sara', {
+          type: 'message',
+          text: "Parfait ! Un conseiller Azalée vous contactera prochainement au numéro que vous avez indiqué. Merci pour votre confiance !",
+          options: null
+        });
+        setCurrentStep('completed');
+      }, 500);
+    }
+  };
 
-      {/* Chatbot */}
-      {isOpen && (
-        <div className="fixed bottom-24 right-6 w-96 h-[600px] bg-white border border-gray-200 rounded-lg shadow-xl z-50 flex flex-col">
-          {/* Header */}
-          <div className="bg-[#1A2A4A] text-white p-4 rounded-t-lg flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <img 
-                  src="/images/azalee-patrimoine.png" 
-                  alt="AZALEE Logo" 
-                  className="w-8 h-8 object-contain"
-                  style={{ filter: 'invert(1)' }}
-                />
-              </div>
-              <div>
-                <h3 className="font-semibold">SARAH - Conseiller Patrimonial</h3>
-                <p className="text-sm opacity-90">Azalée Patrimoine</p>
-              </div>
-            </div>
-            <button
-              onClick={toggleChatbot}
-              className="text-white hover:text-gray-200"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
+  const handleRdvInput = async (value) => {
+    if (rdvStep === 'date') {
+      setRdvData(prev => ({ ...prev, date: value }));
+      setRdvStep('heure');
+      addMessage('user', `Date: ${value}`);
+      setTimeout(() => {
+        addMessage('sara', {
+          type: 'message',
+          text: "Parfait ! À quelle heure souhaitez-vous ce rendez-vous ?",
+          inputType: 'time'
+        });
+      }, 500);
+    } else if (rdvStep === 'heure') {
+      setRdvData(prev => ({ ...prev, heure: value }));
+      setRdvStep('canal');
+      addMessage('user', `Heure: ${value}`);
+      setTimeout(() => {
+        addMessage('sara', {
+          type: 'message',
+          text: "Excellent ! Quel canal préférez-vous pour ce rendez-vous ?",
+          options: [
+            { text: '📞 Téléphone', value: 'telephone' },
+            { text: '💻 Visio', value: 'visio' },
+            { text: '🏢 Agence', value: 'agence' }
+          ]
+        });
+      }, 500);
+    }
+  };
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message, index) => (
-              <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] ${message.type === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'} rounded-lg p-3`}>
-                  <p className="text-sm">{message.content}</p>
-                  
-                  {/* Options pour les messages du bot */}
-                  {message.type === 'bot' && message.options && (
-                    <div className="mt-3 space-y-2">
-                      {message.options.map((option, optionIndex) => (
-                        <button
-                          key={optionIndex}
-                          onClick={() => handleOptionClick(option, currentStep)}
-                          className="block w-full text-left p-2 bg-white border border-gray-300 rounded text-sm hover:bg-gray-50 transition-colors"
-                        >
-                          {option.text}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-            
-            {isTyping && (
-              <div className="flex justify-start">
-                <div className="bg-gray-100 text-gray-800 rounded-lg p-3">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                  </div>
-                </div>
+  const handleRdvCanal = async (canal) => {
+    const canalText = {
+      telephone: 'Téléphone',
+      visio: 'Visio',
+      agence: 'Agence'
+    };
+    
+    setRdvData(prev => ({ ...prev, canal }));
+    addMessage('user', `Canal: ${canalText[canal]}`);
+    
+    // Sauvegarder le rendez-vous complet
+    const rendezVous = {
+      date: new Date(rdvData.date),
+      heure: rdvData.heure,
+      canal
+    };
+    
+    await saveSession({ 
+      rendezVous,
+      actionFinale: 'rdv',
+      status: 'completed'
+    });
+    
+    setTimeout(() => {
+      addMessage('sara', {
+        type: 'message',
+        text: "Parfait, c'est noté ! Un conseiller Azalée vous contactera pour confirmer votre rendez-vous. Merci pour votre confiance !",
+        options: null
+      });
+      setCurrentStep('completed');
+    }, 500);
+  };
+
+  const renderMessage = (message, index) => {
+    if (typeof message.content === 'object' && message.content.type === 'message') {
+      const content = message.content;
+      return (
+        <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}>
+          <div className={`max-w-[80%] ${message.role === 'user' ? 'bg-[#253F60] text-white' : 'bg-white text-gray-800'} rounded-lg p-4 shadow-md`}>
+            <p className="mb-2">{content.text}</p>
+            {content.options && (
+              <div className="space-y-2 mt-3">
+                {content.options.map((option, optIndex) => (
+                  <button
+                    key={optIndex}
+                    onClick={() => handleOptionClick(option.value, option.text)}
+                    className="w-full text-left px-4 py-2 bg-[#B99066] hover:bg-[#A67C52] text-white rounded-lg transition-colors text-sm"
+                  >
+                    {option.text}
+                  </button>
+                ))}
               </div>
             )}
-            
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input */}
-          <div className="p-4 border-t border-gray-200">
-            <div className="flex space-x-2">
-              <input
-                ref={inputRef}
-                type="text"
-                placeholder="Tapez votre message..."
-                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    handleUserInput(e.target.value);
-                    e.target.value = '';
-                  }
-                }}
-              />
-              <button
-                onClick={() => {
-                  if (inputRef.current) {
-                    handleUserInput(inputRef.current.value);
-                    inputRef.current.value = '';
-                  }
-                }}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
-              </button>
-            </div>
+            {content.inputType && (
+              <div className="mt-2">
+                {content.inputType === 'date' || content.inputType === 'time' ? (
+                  <input
+                    type={content.inputType}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        handleTextInput(e.target.value);
+                      }
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B99066] focus:border-[#B99066]"
+                  />
+                ) : (
+                  <input
+                    type={content.inputType}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter' && e.target.value) {
+                        handleTextInput(e.target.value);
+                        e.target.value = '';
+                      }
+                    }}
+                    onChange={(e) => {
+                      // Pour les champs email et tel, on peut aussi valider au blur
+                      if (content.inputType === 'email' || content.inputType === 'tel') {
+                        // Optionnel: validation en temps réel
+                      }
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B99066] focus:border-[#B99066]"
+                    placeholder={
+                      content.inputType === 'email' ? 'votre@email.com' :
+                      content.inputType === 'tel' ? '06 12 34 56 78' :
+                      'Tapez votre réponse...'
+                    }
+                  />
+                )}
+              </div>
+            )}
           </div>
         </div>
-      )}
-    </>
+      );
+    } else {
+      return (
+        <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}>
+          <div className={`max-w-[80%] ${message.role === 'user' ? 'bg-[#253F60] text-white' : 'bg-white text-gray-800'} rounded-lg p-4 shadow-md`}>
+            <p>{message.content}</p>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  if (!isOpen) {
+    return (
+      <button
+        onClick={() => setIsOpen(true)}
+        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center z-50"
+        aria-label="Ouvrir le chatbot SARA"
+      >
+        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      </button>
+    );
+  }
+
+  return (
+    <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-xl shadow-2xl flex flex-col z-50 border-2 border-[#253F60]/20">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-[#253F60] to-[#1a2d47] text-white p-4 rounded-t-xl flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-[#B99066] rounded-full flex items-center justify-center">
+            <span className="text-lg font-bold">S</span>
+          </div>
+          <div>
+            <h3 className="font-cairo font-bold">SARA</h3>
+            <p className="text-xs text-gray-200">Conseiller virtuel</p>
+          </div>
+        </div>
+        <button
+          onClick={() => setIsOpen(false)}
+          className="text-white hover:text-gray-200 transition-colors"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
+        {messages.map((message, index) => renderMessage(message, index))}
+        <div ref={messagesEndRef} />
+      </div>
+    </div>
   );
 }
+

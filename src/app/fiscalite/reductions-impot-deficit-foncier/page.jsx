@@ -5,9 +5,6 @@ import Footer from "../../../components/common/Footer";
 
 export default function ReductionsImpotDeficitFoncierPage() {
   const [content, setContent] = useState({});
-  const [isLoadingFromDatabase, setIsLoadingFromDatabase] = useState(false);
-  const [contentSource, setContentSource] = useState('Default');
-  const [pollingInterval, setPollingInterval] = useState(null);
 
   // Default content structure
   const defaultContent = {
@@ -72,69 +69,13 @@ export default function ReductionsImpotDeficitFoncierPage() {
   };
 
   // Load content from CMS
-  const loadContentFromCMS = async () => {
-    try {
-      setIsLoadingFromDatabase(true);
-      const response = await fetch('/api/pages/reductions-impot-deficit-foncier');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.content && Object.keys(data.content).length > 0) {
-          setContent(data.content);
-          setContentSource('Database');
-          console.log('✅ Réductions d\'impôt content loaded from database');
-        } else {
-          setContent(defaultContent);
-          setContentSource('Default');
-          console.log('⚠️ No database content found, using default');
-        }
-      } else {
-        setContent(defaultContent);
-        setContentSource('Default');
-        console.log('❌ Failed to load from database, using default');
-      }
-    } catch (error) {
-      console.error('Error loading reductions-impot-deficit-foncier content:', error);
-      setContent(defaultContent);
-      setContentSource('Default');
-    } finally {
-      setIsLoadingFromDatabase(false);
-    }
-  };
-
   useEffect(() => {
-    // Set default content first
+    // Set static content
     setContent(defaultContent);
-    
-    // Load content from CMS
-    loadContentFromCMS();
-    
-    // Start polling after initial load
-    const interval = setInterval(() => {
-      loadContentFromCMS();
-    }, 30000); // Poll every 30 seconds
-    
-    setPollingInterval(interval);
-    
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
   }, []);
-
-  const handleManualReload = () => {
-    loadContentFromCMS();
-  };
 
   return (
     <>
-      {/* Loading indicator */}
-      {isLoadingFromDatabase && (
-        <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow-lg">
-          <div className="w-2 h-2 bg-white rounded-full animate-spin"></div>
-          Loading from Database...
-        </div>
-      )}
       
       <Header />
 
