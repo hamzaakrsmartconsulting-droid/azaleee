@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useMemo, useEffect } from 'react';
 import Header from '../../../components/common/Header';
+import Footer from '../../../components/common/Footer';
 
 // Utility functions
 const formatCurrency = (amount) => {
@@ -471,6 +472,7 @@ export default function SimulateurInvestissementPage() {
           </div>
         </section>
       )}
+      <Footer />
     </div>
   );
 }

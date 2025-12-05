@@ -16,9 +16,7 @@ import {
   Legend as ChartLegend,
   Filler
 } from 'chart.js';
-import { Line, Bar as ChartBar } from 'react-chartjs-2';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { Bar as ChartBar } from 'react-chartjs-2';
 
 // Enregistrer les composants Chart.js
 ChartJS.register(
@@ -33,12 +31,6 @@ ChartJS.register(
   Filler
 );
 
-// Token Mapbox (à remplacer par votre token dans les variables d'environnement)
-// Pour les tests, vous devez obtenir un token gratuit sur https://account.mapbox.com/
-// Créez un fichier .env.local avec: NEXT_PUBLIC_MAPBOX_TOKEN=votre_token_ici
-if (typeof window !== 'undefined') {
-  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
-}
 
 
 export default function ImmobilierPage() {
@@ -46,14 +38,7 @@ export default function ImmobilierPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openProfile, setOpenProfile] = useState(null);
-  const [selectedCity, setSelectedCity] = useState('');
-  const [propertyType, setPropertyType] = useState('appartement');
-  const [marketData, setMarketData] = useState(null);
-  const [loadingMarketData, setLoadingMarketData] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
-  const [mapError, setMapError] = useState(null);
-  const mapContainer = useRef(null);
-  const map = useRef(null);
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -87,118 +72,6 @@ export default function ImmobilierPage() {
     fetchContent();
   }, []);
 
-  // Initialiser la carte Mapbox quand les données sont disponibles
-  useEffect(() => {
-    if (!mapContainer.current || !marketData || !selectedCity) {
-      return;
-    }
-
-    // Réinitialiser l'erreur
-    setMapError(null);
-
-    // Coordonnées approximatives pour quelques villes françaises
-    const cityCoordinates = {
-      'lyon': [4.8357, 45.7640],
-      'paris': [2.3522, 48.8566],
-      'marseille': [5.3698, 43.2965],
-      'toulouse': [1.4442, 43.6047],
-      'nice': [7.2619, 43.7102],
-      'nantes': [-1.5536, 47.2184],
-      'strasbourg': [7.7521, 48.5734],
-      'montpellier': [3.8772, 43.6108],
-      'bordeaux': [-0.5792, 44.8378],
-      'lille': [3.0573, 50.6292]
-    };
-
-    // Trouver les coordonnées de la ville (approximation simple)
-    const cityLower = selectedCity.toLowerCase();
-    let coordinates = [2.3522, 48.8566]; // Paris par défaut
-    
-    for (const [city, coords] of Object.entries(cityCoordinates)) {
-      if (cityLower.includes(city) || cityLower.includes(city.substring(0, 3))) {
-        coordinates = coords;
-        break;
-      }
-    }
-
-    // Nettoyer la carte existante si elle existe
-    if (map.current) {
-      map.current.remove();
-      map.current = null;
-    }
-
-    // Attendre un peu pour s'assurer que le conteneur est prêt
-    const initMap = () => {
-      if (!mapContainer.current) {
-        console.log('Map container not ready');
-        return;
-      }
-
-      // Vérifier si le token est configuré
-      if (!mapboxgl.accessToken || mapboxgl.accessToken.includes('eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ')) {
-        console.warn('Mapbox token may be invalid. Please configure NEXT_PUBLIC_MAPBOX_TOKEN');
-        setMapError('Token Mapbox non configuré. Obtenez un token gratuit sur https://account.mapbox.com/');
-        return;
-      }
-
-      try {
-        console.log('Initializing Mapbox with coordinates:', coordinates);
-        
-        // Initialiser la carte
-        map.current = new mapboxgl.Map({
-          container: mapContainer.current,
-          style: 'mapbox://styles/mapbox/light-v11',
-          center: coordinates,
-          zoom: 12,
-          attributionControl: false
-        });
-
-        // Attendre que la carte soit chargée
-        map.current.on('load', () => {
-          console.log('Map loaded successfully');
-          // Ajouter un marqueur
-          new mapboxgl.Marker({ color: '#B99066' })
-            .setLngLat(coordinates)
-            .setPopup(
-              new mapboxgl.Popup({ offset: 25 })
-                .setHTML(`
-                  <div style="padding: 8px; font-family: Inter, sans-serif;">
-                    <h3 style="font-weight: bold; color: #253F60; margin-bottom: 4px; font-size: 14px;">${selectedCity}</h3>
-                    <p style="font-size: 12px; color: #374151; margin: 2px 0;">Prix moyen: ${marketData.prixMoyen.toLocaleString('fr-FR')} €/m²</p>
-                    <p style="font-size: 12px; color: #374151; margin: 2px 0;">Évolution: +${marketData.evolution12mois}%</p>
-                  </div>
-                `)
-            )
-            .addTo(map.current);
-        });
-
-        // Gérer les erreurs
-        map.current.on('error', (e) => {
-          console.error('Mapbox error:', e);
-          if (e.error && e.error.message) {
-            setMapError(`Erreur Mapbox: ${e.error.message}`);
-          } else {
-            setMapError('Erreur lors du chargement de la carte. Vérifiez votre token Mapbox.');
-          }
-        });
-      } catch (error) {
-        console.error('Error initializing Mapbox:', error);
-        setMapError(`Impossible d'initialiser la carte: ${error.message}`);
-      }
-    };
-
-    // Petit délai pour s'assurer que le DOM est prêt
-    const timeoutId = setTimeout(initMap, 200);
-
-    // Nettoyer à la destruction
-    return () => {
-      clearTimeout(timeoutId);
-      if (map.current) {
-        map.current.remove();
-        map.current = null;
-      }
-    };
-  }, [marketData, selectedCity]);
 
   if (loading) {
     return (
@@ -391,13 +264,6 @@ export default function ImmobilierPage() {
                 <p className="text-lg sm:text-xl lg:text-2xl font-inter text-[#253F60] leading-relaxed font-medium text-left" dangerouslySetInnerHTML={{ __html: pageContent.section2?.azaleeMessage || "Chez Azalée Patrimoine, nous intégrons chaque actif immobilier dans une vision globale — financière, fiscale et humaine — pour bâtir la liberté patrimoniale de demain." }} />
               </div>
             </div>
-
-            {/* Texte CTA */}
-            <div className="text-center mt-6 mb-8">
-              <p className="text-lg sm:text-xl font-inter text-[#4B5563] leading-relaxed">
-                {pageContent.section2?.ctaSubtitle || "Découvrez quelle stratégie immobilière correspond à votre profil"}
-              </p>
-            </div>
           </div>
 
           {/* CTA Formulaire Tally */}
@@ -469,14 +335,24 @@ export default function ImmobilierPage() {
                   {pageContent.section3.scpiExamples.title}
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {(pageContent.section3.scpiExamples.scpis || []).map((scpi, index) => (
-                    <div 
-                      key={index}
-                      className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer border border-white/20"
-                    >
-                      <p className="font-inter font-semibold text-sm sm:text-base">{scpi}</p>
-                    </div>
-                  ))}
+                  {(pageContent.section3.scpiExamples.scpis || []).map((scpi, index) => {
+                    // Mapping des noms de SCPI
+                    const scpiMapping = {
+                      'Amundi Immobilier': 'Transition Europe',
+                      'Corum Origin': 'Comète',
+                      'Épargne Pierre': 'Sofidynamic',
+                      'Primovie': 'Wemo One'
+                    };
+                    const displayName = scpiMapping[scpi] || scpi;
+                    return (
+                      <div 
+                        key={index}
+                        className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center hover:bg-white/20 transition-all duration-300 cursor-pointer border border-white/20"
+                      >
+                        <p className="font-inter font-semibold text-sm sm:text-base">{displayName}</p>
+                      </div>
+                    );
+                  })}
                 </div>
                 {pageContent.section3.scpiExamples.note && (
                   <p className="text-center mt-6 text-white/80 text-sm font-inter italic">
@@ -755,9 +631,6 @@ export default function ImmobilierPage() {
                 className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
               >
                 <div className="flex items-center gap-4 flex-1">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center text-[#B99066] font-bold text-xl">
-                    1
-                  </div>
                   <h3 className="text-xl sm:text-2xl font-cairo font-bold text-[#253F60]">
                     "Je veux créer un capital sans contraintes"
                   </h3>
@@ -799,9 +672,6 @@ export default function ImmobilierPage() {
                 className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
               >
                 <div className="flex items-center gap-4 flex-1">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center text-[#B99066] font-bold text-xl">
-                    2
-                  </div>
                   <h3 className="text-xl sm:text-2xl font-cairo font-bold text-[#253F60]">
                     "Je veux réduire mes impôts"
                   </h3>
@@ -846,9 +716,6 @@ export default function ImmobilierPage() {
                 className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
               >
                 <div className="flex items-center gap-4 flex-1">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center text-[#B99066] font-bold text-xl">
-                    3
-                  </div>
                   <h3 className="text-xl sm:text-2xl font-cairo font-bold text-[#253F60]">
                     "Je veux transmettre et structurer"
                   </h3>
@@ -959,22 +826,12 @@ export default function ImmobilierPage() {
 
               {/* Zone visuelle */}
               <div className="relative">
-                <div className="bg-gradient-to-br from-[#F9FAFB] to-white rounded-xl p-8 sm:p-10 border-2 border-[#E5E7EB] shadow-xl">
-                  <div className="aspect-square flex items-center justify-center">
-                    <div className="text-center space-y-4">
-                      <div className="w-24 h-24 mx-auto bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                        <svg className="w-12 h-12 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                      </div>
-                      <p className="text-sm sm:text-base font-inter text-[#6B7280] italic">
-                        Illustration : main signant un dossier de prêt
-                      </p>
-                      <p className="text-xs font-inter text-[#9CA3AF]">
-                        (Visuel à intégrer : photo ou illustration moderne)
-                      </p>
-                    </div>
-                  </div>
+                <div className="bg-gradient-to-br from-[#F9FAFB] to-white rounded-xl p-4 sm:p-6 border-2 border-[#E5E7EB] shadow-xl overflow-hidden">
+                  <img 
+                    src="/images/signat.png" 
+                    alt="Main signant un dossier de prêt" 
+                    className="w-full h-auto rounded-lg object-cover"
+                  />
                 </div>
               </div>
             </div>
@@ -1337,38 +1194,6 @@ export default function ImmobilierPage() {
         </div>
       </section>
 
-      {/* Advantages Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-[#112033] mb-8">{content.advantages?.advantagesTitle || "Les Avantages de l'Immobilier"}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {(content.advantages?.advantagesList || []).map((advantage, index) => (
-              <div key={index} className="bg-gradient-to-br from-[#253F60] to-[#3A5A7A] p-6 rounded-lg shadow-md text-white">
-                <h3 className="text-xl font-semibold mb-2">{advantage.title}</h3>
-                <p className="text-white">{advantage.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section className="py-16 bg-[#F2F2F2]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-[#112033] mb-8">{content.process?.processTitle || "Notre Processus d'Accompagnement"}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {(content.process?.processSteps || []).map((step, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-md flex flex-col items-center">
-                <div className="w-12 h-12 bg-[#B99066] text-[#253F60] rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                  {step.step}
-                </div>
-                <h3 className="text-xl font-semibold text-[#112033] mb-2">{step.title}</h3>
-                <p className="text-[#686868]">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Section 10 : Avis et retours d'expérience */}
       <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-white to-[#F9FAFB]">
@@ -1393,7 +1218,7 @@ export default function ImmobilierPage() {
                   ))}
                 </div>
                   <p className="text-base sm:text-lg font-inter text-[#374151] leading-relaxed italic mb-6">
-                    "J'ai investi avec Azalée dans une SCPI Corum : <strong className="text-[#253F60] font-semibold not-italic">transparence, rendement au rendez-vous</strong>, et un accompagnement complet sur la fiscalité."
+                    "J'ai investi avec Azalée dans une SCPI Comète : <strong className="text-[#253F60] font-semibold not-italic">transparence, rendement au rendez-vous</strong>, et un accompagnement complet sur la fiscalité."
                   </p>
               </div>
                 <div className="border-t border-[#E5E7EB] pt-4">
@@ -1567,280 +1392,6 @@ export default function ImmobilierPage() {
         </div>
       </section>
 
-      {/* Section 12 : Les prix de l'immobilier en temps réel */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-[#F9FAFB] to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold text-[#253F60] mb-6">
-              Les prix de l'immobilier en temps réel dans votre région
-            </h2>
-            <p className="text-lg sm:text-xl font-inter text-[#374151] max-w-3xl mx-auto leading-relaxed">
-              Suivez l'évolution du marché immobilier en direct grâce à nos données partenaires PAPERS.immo.
-            </p>
-          </div>
-
-          <div className="max-w-6xl mx-auto">
-            {/* Sélecteurs */}
-            <div className="bg-white rounded-xl p-6 sm:p-8 shadow-lg border-2 border-[#E5E7EB] mb-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Sélecteur de ville */}
-                <div>
-                  <label className="block text-sm font-inter font-semibold text-[#253F60] mb-2">
-                    📍 Sélecteur de ville / code postal
-                  </label>
-                  <input
-                    type="text"
-                    value={selectedCity}
-                    onChange={(e) => setSelectedCity(e.target.value)}
-                    placeholder="Ex: Lyon, 69001, Paris..."
-                    className="w-full px-4 py-3 border-2 border-[#E5E7EB] rounded-lg focus:border-[#B99066] focus:outline-none font-inter text-[#374151]"
-                  />
-                </div>
-
-                {/* Sélecteur de type de bien */}
-                <div>
-                  <label className="block text-sm font-inter font-semibold text-[#253F60] mb-2">
-                    Type de bien
-                  </label>
-                  <select
-                    value={propertyType}
-                    onChange={(e) => setPropertyType(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-[#E5E7EB] rounded-lg focus:border-[#B99066] focus:outline-none font-inter text-[#374151] bg-white"
-                  >
-                    <option value="appartement">Appartement</option>
-                    <option value="maison">Maison</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Bouton de recherche */}
-              <div className="mt-6">
-                <button
-                  onClick={async () => {
-                    if (!selectedCity) {
-                      alert('Veuillez sélectionner une ville');
-                      return;
-                    }
-                    setLoadingMarketData(true);
-                    // TODO: Intégration API PAPERS.immo
-                    // const response = await fetch(`/api/papers-immo?city=${selectedCity}&type=${propertyType}`);
-                    // const data = await response.json();
-                    // setMarketData(data);
-                    
-                    // Données de démonstration
-                    setTimeout(() => {
-                      setMarketData({
-                        prixMoyen: 6250,
-                        evolution12mois: 3.4,
-                        tempsMoyenVente: 62,
-                        rentabiliteBrute: 5.8
-                      });
-                      setLoadingMarketData(false);
-                    }, 1000);
-                  }}
-                  className="w-full bg-[#253F60] hover:bg-[#1a2d47] text-white font-inter font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  {loadingMarketData ? 'Chargement...' : 'Rechercher'}
-                </button>
-              </div>
-            </div>
-
-            {/* Graphique Chart.js */}
-            {selectedCity && marketData && (
-              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-lg border-2 border-[#E5E7EB] mb-8">
-                <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-6 text-center">
-                  Évolution des prix au m² sur 12 mois - {selectedCity}
-                </h3>
-                <div className="h-64 sm:h-80">
-                  <Line
-                    data={{
-                      labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
-                      datasets: [
-                        {
-                          label: 'Prix au m² (€)',
-                          data: [
-                            marketData.prixMoyen * 0.95,
-                            marketData.prixMoyen * 0.96,
-                            marketData.prixMoyen * 0.97,
-                            marketData.prixMoyen * 0.98,
-                            marketData.prixMoyen * 0.99,
-                            marketData.prixMoyen,
-                            marketData.prixMoyen * 1.01,
-                            marketData.prixMoyen * 1.02,
-                            marketData.prixMoyen * 1.025,
-                            marketData.prixMoyen * 1.03,
-                            marketData.prixMoyen * 1.032,
-                            marketData.prixMoyen * (1 + marketData.evolution12mois / 100)
-                          ],
-                          borderColor: '#B99066',
-                          backgroundColor: 'rgba(185, 144, 102, 0.1)',
-                          fill: true,
-                          tension: 0.4,
-                          pointRadius: 4,
-                          pointHoverRadius: 6,
-                          pointBackgroundColor: '#B99066',
-                          pointBorderColor: '#fff',
-                          pointBorderWidth: 2
-                        }
-                      ]
-                    }}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: {
-                          display: true,
-                          position: 'top',
-                          labels: {
-                            font: {
-                              family: 'Inter',
-                              size: 12
-                            },
-                            color: '#374151'
-                          }
-                        },
-                        tooltip: {
-                          backgroundColor: '#F9FAFB',
-                          titleColor: '#253F60',
-                          bodyColor: '#374151',
-                          borderColor: '#E5E7EB',
-                          borderWidth: 1,
-                          padding: 12,
-                          displayColors: true
-                        }
-                      },
-                      scales: {
-                        y: {
-                          beginAtZero: false,
-                          ticks: {
-                            callback: function(value) {
-                              return value.toLocaleString('fr-FR') + ' €';
-                            },
-                            color: '#6B7280',
-                            font: {
-                              family: 'Inter',
-                              size: 11
-                            }
-                          },
-                          grid: {
-                            color: '#E5E7EB'
-                          }
-                        },
-                        x: {
-                          ticks: {
-                            color: '#6B7280',
-                            font: {
-                              family: 'Inter',
-                              size: 11
-                            }
-                          },
-                          grid: {
-                            color: '#E5E7EB'
-                          }
-                        }
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Carte Mapbox */}
-            {selectedCity && marketData && (
-              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-lg border-2 border-[#E5E7EB] mb-8">
-                <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-6 text-center">
-                  🗺️ Carte interactive - {selectedCity}
-                </h3>
-                {mapError ? (
-                  <div className="h-64 sm:h-80 bg-gradient-to-br from-red-50 to-red-100 rounded-lg flex items-center justify-center border-2 border-red-200">
-                    <div className="text-center p-4">
-                      <p className="text-red-600 font-inter font-semibold mb-2">⚠️ {mapError}</p>
-                      <p className="text-sm text-red-500 font-inter">
-                        Configurez NEXT_PUBLIC_MAPBOX_TOKEN dans votre fichier .env.local
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div 
-                    ref={mapContainer}
-                    className="h-64 sm:h-80 w-full rounded-lg overflow-hidden border-2 border-[#E5E7EB] bg-gray-100"
-                    style={{ minHeight: '256px' }}
-                  />
-                )}
-              </div>
-            )}
-
-            {/* Placeholder si pas de données */}
-            {!selectedCity && (
-              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-lg border-2 border-[#E5E7EB] mb-8">
-                <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-6 text-center">
-                  Graphique et carte interactive
-                </h3>
-                <div className="h-64 sm:h-80 bg-gradient-to-br from-white to-[#F9FAFB] rounded-lg flex items-center justify-center border-2 border-dashed border-[#D1D5DB]">
-                  <p className="text-[#6B7280] font-inter text-center">
-                    Sélectionnez une ville et cliquez sur "Rechercher" pour afficher le graphique et la carte
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* Données affichées */}
-            {marketData && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {/* Prix moyen au m² */}
-                <div className="bg-gradient-to-br from-[#253F60] to-[#2d4a6b] rounded-xl p-6 text-white shadow-lg">
-                  <div className="text-sm font-inter text-white/80 mb-2">Prix moyen au m²</div>
-                  <div className="text-3xl font-cairo font-bold text-[#B99066] mb-1">
-                    {marketData.prixMoyen.toLocaleString('fr-FR')} €
-                  </div>
-                  <div className="text-xs font-inter text-white/70">Calculé selon PAPERS.immo</div>
-                </div>
-
-                {/* Évolution 12 mois */}
-                <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-xl p-6 text-white shadow-lg">
-                  <div className="text-sm font-inter text-white/90 mb-2">Évolution 12 mois</div>
-                  <div className="text-3xl font-cairo font-bold mb-1">
-                    +{marketData.evolution12mois} %
-                  </div>
-                  <div className="text-xs font-inter text-white/80">Variation annuelle</div>
-                </div>
-
-                {/* Temps moyen de vente */}
-                <div className="bg-gradient-to-br from-[#253F60] to-[#2d4a6b] rounded-xl p-6 text-white shadow-lg">
-                  <div className="text-sm font-inter text-white/80 mb-2">Temps moyen de vente</div>
-                  <div className="text-3xl font-cairo font-bold text-[#B99066] mb-1">
-                    {marketData.tempsMoyenVente}
-                  </div>
-                  <div className="text-xs font-inter text-white/70">jours (délai médian)</div>
-                </div>
-
-                {/* Rentabilité brute moyenne */}
-                <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-xl p-6 text-white shadow-lg">
-                  <div className="text-sm font-inter text-white/90 mb-2">Rentabilité brute moyenne</div>
-                  <div className="text-3xl font-cairo font-bold mb-1">
-                    {marketData.rentabiliteBrute} %
-                  </div>
-                  <div className="text-xs font-inter text-white/80">Calculée sur loyers moyens</div>
-                </div>
-              </div>
-            )}
-
-            {/* Message explicatif */}
-            <div className="bg-gradient-to-r from-[#F9FAFB] to-white rounded-xl p-6 sm:p-8 border-l-4 border-[#B99066] shadow-md">
-              <p className="text-base sm:text-lg font-inter text-[#374151] leading-relaxed">
-                Les données sont issues de <strong className="text-[#253F60] font-semibold">PAPERS.immo</strong> et mises à jour automatiquement. Elles vous permettent de situer votre projet immobilier dans un contexte de marché fiable et transparent.
-              </p>
-            </div>
-
-            {/* Note technique */}
-            <div className="mt-6 text-center">
-              <p className="text-sm font-inter text-[#6B7280] italic">
-                ⚙️ Intégration technique : API PAPERS.immo - Niveau 3 – Dashboard interactif (API + Chart.js / Mapbox)
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Section 13 : Les trois leviers de la stratégie immobilière Azalée */}
       <section className="py-16 sm:py-20 lg:py-24 bg-white">
@@ -1861,8 +1412,6 @@ export default function ImmobilierPage() {
                 <a href="/immobilier/immobilier-neuf" className="block">
                   <div className="relative h-48 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                     <div className="absolute inset-0 bg-[url('/images/construction-building.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
-                    <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                    </div>
                   </div>
                   <div className="p-6">
                     <div className="mb-4">
@@ -1888,8 +1437,6 @@ export default function ImmobilierPage() {
                 <a href="/immobilier/investissement-locatif" className="block">
                   <div className="relative h-48 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                     <div className="absolute inset-0 bg-[url('/images/apartment-keys.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
-                    <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                    </div>
                   </div>
                   <div className="p-6">
                     <div className="mb-4">
@@ -1915,8 +1462,6 @@ export default function ImmobilierPage() {
                 <a href="/immobilier/sci" className="block">
                   <div className="relative h-48 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                     <div className="absolute inset-0 bg-[url('/images/family-house.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
-                    <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                    </div>
                   </div>
                   <div className="p-6">
                     <div className="mb-4">
@@ -1953,22 +1498,19 @@ export default function ImmobilierPage() {
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto">
-            {/* Ligne du temps avec 5 étapes */}
+          <div className="max-w-6xl mx-auto">
+            {/* Processus avec flèches */}
             <div className="relative">
-              {/* Ligne de connexion */}
-              <div className="hidden md:block absolute top-24 left-0 right-0 h-1 bg-gradient-to-r from-[#B99066] via-[#253F60] to-[#B99066]"></div>
-
-              {/* Étapes */}
-              <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-5 md:gap-4 relative">
+              {/* Étapes avec flèches */}
+              <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2 relative">
                 {/* Étape 1 */}
-                <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="bg-white rounded-xl p-8 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-2xl hover:border-[#B99066] transition-all duration-300 transform hover:-translate-y-2 w-full md:w-auto">
+                  <div className="w-20 h-20 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
                   </div>
-                  <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
-                    1
-                  </div>
-                  <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2">
+                  <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                     Diagnostic patrimonial
                   </h3>
                   <p className="text-sm font-inter text-[#374151] leading-relaxed">
@@ -1976,14 +1518,21 @@ export default function ImmobilierPage() {
                   </p>
                 </div>
 
+                {/* Flèche 1 */}
+                <div className="hidden md:flex items-center justify-center z-20">
+                  <svg className="w-8 h-8 text-[#B99066]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+
                 {/* Étape 2 */}
-                <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="bg-white rounded-xl p-8 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-2xl hover:border-[#B99066] transition-all duration-300 transform hover:-translate-y-2 w-full md:w-auto">
+                  <div className="w-20 h-20 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
                   </div>
-                  <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
-                    2
-                  </div>
-                  <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2">
+                  <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                     Élaboration d'une stratégie sur mesure
                   </h3>
                   <p className="text-sm font-inter text-[#374151] leading-relaxed">
@@ -1991,14 +1540,21 @@ export default function ImmobilierPage() {
                   </p>
                 </div>
 
+                {/* Flèche 2 */}
+                <div className="hidden md:flex items-center justify-center z-20">
+                  <svg className="w-8 h-8 text-[#B99066]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+
                 {/* Étape 3 */}
-                <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="bg-white rounded-xl p-8 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-2xl hover:border-[#B99066] transition-all duration-300 transform hover:-translate-y-2 w-full md:w-auto">
+                  <div className="w-20 h-20 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
                   </div>
-                  <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
-                    3
-                  </div>
-                  <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2">
+                  <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                     Sélection des supports adaptés
                   </h3>
                   <p className="text-sm font-inter text-[#374151] leading-relaxed">
@@ -2006,14 +1562,21 @@ export default function ImmobilierPage() {
                   </p>
                 </div>
 
+                {/* Flèche 3 */}
+                <div className="hidden md:flex items-center justify-center z-20">
+                  <svg className="w-8 h-8 text-[#B99066]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+
                 {/* Étape 4 */}
-                <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="bg-white rounded-xl p-8 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-2xl hover:border-[#B99066] transition-all duration-300 transform hover:-translate-y-2 w-full md:w-auto">
+                  <div className="w-20 h-20 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
                   </div>
-                  <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
-                    4
-                  </div>
-                  <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2">
+                  <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                     Accompagnement juridique et fiscal
                   </h3>
                   <p className="text-sm font-inter text-[#374151] leading-relaxed">
@@ -2021,14 +1584,21 @@ export default function ImmobilierPage() {
                   </p>
                 </div>
 
+                {/* Flèche 4 */}
+                <div className="hidden md:flex items-center justify-center z-20">
+                  <svg className="w-8 h-8 text-[#B99066]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+
                 {/* Étape 5 */}
-                <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="bg-white rounded-xl p-8 shadow-lg border-2 border-[#E5E7EB] text-center relative z-10 hover:shadow-2xl hover:border-[#B99066] transition-all duration-300 transform hover:-translate-y-2 w-full md:w-auto">
+                  <div className="w-20 h-20 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
                   </div>
-                  <div className="w-8 h-8 bg-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 text-[#253F60] font-cairo font-bold text-lg">
-                    5
-                  </div>
-                  <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2">
+                  <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                     Suivi continu et reporting
                   </h3>
                   <p className="text-sm font-inter text-[#374151] leading-relaxed">
@@ -2137,13 +1707,12 @@ export default function ImmobilierPage() {
           </div>
 
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* 3 premières cartes */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
               {/* Immobilier neuf & VEFA */}
               <a href="/immobilier/immobilier-neuf" className="group bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl hover:border-[#B99066] transition-all duration-300">
                 <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                   <div className="absolute inset-0 bg-[url('/images/construction-site.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2 group-hover:text-[#B99066] transition-colors duration-300">
@@ -2165,8 +1734,6 @@ export default function ImmobilierPage() {
               <a href="/immobilier/investissement-locatif" className="group bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl hover:border-[#B99066] transition-all duration-300">
                 <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                   <div className="absolute inset-0 bg-[url('/images/modern-apartment.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2 group-hover:text-[#B99066] transition-colors duration-300">
@@ -2188,8 +1755,6 @@ export default function ImmobilierPage() {
               <a href="/immobilier/sci" className="group bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl hover:border-[#B99066] transition-all duration-300">
                 <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
                   <div className="absolute inset-0 bg-[url('/images/notary-signing.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
-                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2 group-hover:text-[#B99066] transition-colors duration-300">
@@ -2206,52 +1771,53 @@ export default function ImmobilierPage() {
                   </div>
                 </div>
               </a>
+            </div>
 
-              {/* Crédit immobilier & PTZ */}
-              <a href="/immobilier/credit-immobilier-ptz" className="group bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl hover:border-[#B99066] transition-all duration-300">
-                <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
-                  <div className="absolute inset-0 bg-[url('/images/mortgage-documents.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
+            {/* 2 dernières cartes centrées */}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+                {/* Crédit immobilier & PTZ */}
+                <a href="/immobilier/credit-immobilier-ptz" className="group bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl hover:border-[#B99066] transition-all duration-300">
+                  <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
+                    <div className="absolute inset-0 bg-[url('/images/mortgage-documents.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2 group-hover:text-[#B99066] transition-colors duration-300">
-                    Crédit immobilier & PTZ
-                  </h3>
-                  <p className="text-sm font-inter text-[#374151] leading-relaxed mb-4">
-                    Profitez du levier de l'endettement pour accélérer la constitution de patrimoine.
-                  </p>
-                  <div className="flex items-center text-[#B99066] font-inter font-semibold text-sm">
-                    <span>En savoir plus</span>
-                    <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                  <div className="p-6">
+                    <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2 group-hover:text-[#B99066] transition-colors duration-300">
+                      Crédit immobilier & PTZ
+                    </h3>
+                    <p className="text-sm font-inter text-[#374151] leading-relaxed mb-4">
+                      Profitez du levier de l'endettement pour accélérer la constitution de patrimoine.
+                    </p>
+                    <div className="flex items-center text-[#B99066] font-inter font-semibold text-sm">
+                      <span>En savoir plus</span>
+                      <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
 
-              {/* Immeubles de rapport & plus-value */}
-              <a href="/immobilier/immeubles-de-rapport" className="group bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl hover:border-[#B99066] transition-all duration-300">
-                <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
-                  <div className="absolute inset-0 bg-[url('/images/paris-building-facade.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  <div className="absolute top-3 right-3 w-12 h-12 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center shadow-lg">
+                {/* Immeubles de rapport & plus-value */}
+                <a href="/immobilier/immeubles-de-rapport" className="group bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl hover:border-[#B99066] transition-all duration-300">
+                  <div className="relative h-40 bg-gradient-to-br from-[#F9FAFB] to-white overflow-hidden">
+                    <div className="absolute inset-0 bg-[url('/images/paris-building-facade.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2 group-hover:text-[#B99066] transition-colors duration-300">
-                    Immeubles de rapport & plus-value immobilière
-                  </h3>
-                  <p className="text-sm font-inter text-[#374151] leading-relaxed mb-4">
-                    Accédez à des actifs à haut potentiel et maîtrisez la fiscalité sur les plus-values.
-                  </p>
-                  <div className="flex items-center text-[#B99066] font-inter font-semibold text-sm">
-                    <span>En savoir plus</span>
-                    <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                  <div className="p-6">
+                    <h3 className="text-lg font-cairo font-bold text-[#253F60] mb-2 group-hover:text-[#B99066] transition-colors duration-300">
+                      Immeubles de rapport & plus-value immobilière
+                    </h3>
+                    <p className="text-sm font-inter text-[#374151] leading-relaxed mb-4">
+                      Accédez à des actifs à haut potentiel et maîtrisez la fiscalité sur les plus-values.
+                    </p>
+                    <div className="flex items-center text-[#B99066] font-inter font-semibold text-sm">
+                      <span>En savoir plus</span>
+                      <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -2348,8 +1914,6 @@ export default function ImmobilierPage() {
             {/* 3 valeurs */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                </div>
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                   Indépendance
                 </h3>
@@ -2359,9 +1923,6 @@ export default function ImmobilierPage() {
               </div>
 
               <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <span className="text-[#253F60] text-3xl">🌿</span>
-                </div>
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                   Transparence
                 </h3>
@@ -2371,8 +1932,6 @@ export default function ImmobilierPage() {
               </div>
 
               <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-[#E5E7EB] text-center hover:shadow-xl hover:border-[#B99066] transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                </div>
                 <h3 className="text-xl font-cairo font-bold text-[#253F60] mb-3">
                   Accompagnement humain
                 </h3>
@@ -2422,7 +1981,7 @@ export default function ImmobilierPage() {
                 className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
               >
                 <h3 className="text-lg sm:text-xl font-cairo font-bold text-[#253F60] pr-4">
-                  ❓ Qu'est-ce qu'une SCPI ?
+                  Qu'est-ce qu'une SCPI ?
                 </h3>
                 <svg
                   className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
@@ -2451,7 +2010,7 @@ export default function ImmobilierPage() {
                 className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
               >
                 <h3 className="text-lg sm:text-xl font-cairo font-bold text-[#253F60] pr-4">
-                  ❓ Quel rendement peut-on espérer d'une SCPI ?
+                  Quel rendement peut-on espérer d'une SCPI ?
                 </h3>
                 <svg
                   className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
@@ -2467,7 +2026,7 @@ export default function ImmobilierPage() {
               {openFaq === 2 && (
                 <div className="px-6 pb-6 border-t border-[#E5E7EB] pt-6">
                   <p className="text-base sm:text-lg font-inter text-[#374151] leading-relaxed">
-                    Le rendement moyen des SCPI de rendement se situe entre <strong className="text-[#253F60] font-semibold">4 % et 6 % par an</strong> (source AMF 2024). Certaines SCPI thématiques comme Corum Origin ou Épargne Pierre affichent de meilleures performances grâce à une diversification européenne ou sectorielle.
+                    Le rendement moyen des SCPI de rendement se situe entre <strong className="text-[#253F60] font-semibold">4 % et 6 % par an</strong> (source AMF 2024). Certaines SCPI thématiques comme Comète ou Sofidynamic affichent de meilleures performances grâce à une diversification européenne ou sectorielle.
                   </p>
                 </div>
               )}
@@ -2480,7 +2039,7 @@ export default function ImmobilierPage() {
                 className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
               >
                 <h3 className="text-lg sm:text-xl font-cairo font-bold text-[#253F60] pr-4">
-                  ❓ Quels sont les risques d'un investissement en SCPI ?
+                  Quels sont les risques d'un investissement en SCPI ?
                 </h3>
                 <svg
                   className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
@@ -2512,7 +2071,7 @@ export default function ImmobilierPage() {
                 className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
               >
                 <h3 className="text-lg sm:text-xl font-cairo font-bold text-[#253F60] pr-4">
-                  ❓ SCPI, LMNP, Pinel… que choisir ?
+                  SCPI, LMNP, Pinel… que choisir ?
                 </h3>
                 <svg
                   className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
@@ -2549,7 +2108,7 @@ export default function ImmobilierPage() {
                 className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
               >
                 <h3 className="text-lg sm:text-xl font-cairo font-bold text-[#253F60] pr-4">
-                  ❓ Peut-on financer un investissement en SCPI à crédit ?
+                  Peut-on financer un investissement en SCPI à crédit ?
                 </h3>
                 <svg
                   className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
@@ -2578,7 +2137,7 @@ export default function ImmobilierPage() {
                 className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
               >
                 <h3 className="text-lg sm:text-xl font-cairo font-bold text-[#253F60] pr-4">
-                  ❓ Quelle différence entre SCPI et OPCI ?
+                  Quelle différence entre SCPI et OPCI ?
                 </h3>
                 <svg
                   className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
@@ -2607,7 +2166,7 @@ export default function ImmobilierPage() {
                 className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
               >
                 <h3 className="text-lg sm:text-xl font-cairo font-bold text-[#253F60] pr-4">
-                  ❓ Les revenus d'une SCPI sont-ils imposables ?
+                  Les revenus d'une SCPI sont-ils imposables ?
                 </h3>
                 <svg
                   className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
@@ -2636,7 +2195,7 @@ export default function ImmobilierPage() {
                 className="w-full p-6 flex items-center justify-between text-left focus:outline-none"
               >
                 <h3 className="text-lg sm:text-xl font-cairo font-bold text-[#253F60] pr-4">
-                  ❓ Est-ce le bon moment pour investir dans l'immobilier ?
+                  Est-ce le bon moment pour investir dans l'immobilier ?
                 </h3>
                 <svg
                   className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function DonationGratuitePage() {
@@ -124,7 +125,7 @@ export default function DonationGratuitePage() {
             <PlacementChart 
               title="Caractéristiques des donations à titre gratuit"
               data={chartData}
-              chartImage="/images/variation-chart-image-944f04.png"
+              chartImage="/images/donation.png"
             />
           </div>
         </div>
@@ -636,6 +637,8 @@ export default function DonationGratuitePage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }

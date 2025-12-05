@@ -53,3 +53,5 @@ docker-compose ps
 echo ""
 echo -e "${YELLOW}📝 View logs:${NC} docker-compose logs -f frontend"
 
+
+

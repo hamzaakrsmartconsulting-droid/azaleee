@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 
 export default function ScellierPage() {
   return (
@@ -322,6 +323,8 @@ export default function ScellierPage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }

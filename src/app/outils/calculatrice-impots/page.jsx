@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Header from '../../../components/common/Header';
+import Footer from '../../../components/common/Footer';
 
 export default function CalculatriceImpotsPage() {
   const [activeTab, setActiveTab] = useState('revenus');
@@ -782,6 +783,7 @@ export default function CalculatriceImpotsPage() {
         </div>
       )}
 
+      <Footer />
     </div>
   );
 } 

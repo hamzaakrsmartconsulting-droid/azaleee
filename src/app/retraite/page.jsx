@@ -29,6 +29,15 @@ export default function RetraitePage() {
   const [openQuestion, setOpenQuestion] = useState(null);
   const [content, setContent] = useState({});
   const [loading, setLoading] = useState(true);
+  
+  // Fonction pour remplacer "gratuit" par "offert" dans les textes (même depuis la base de données)
+  const replaceGratuit = (text) => {
+    if (!text) return text;
+    if (typeof text === 'string') {
+      return text.replace(/gratuit/gi, 'offert');
+    }
+    return text;
+  };
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -200,13 +209,13 @@ export default function RetraitePage() {
                   rel="noopener noreferrer"
                   className="inline-block bg-[#253F60] text-white px-10 py-4 rounded-lg shadow-lg font-inter font-semibold text-base lg:text-lg hover:bg-[#1a2d47] hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
                 >
-                  {pageContent.hero?.ctaButton || "Demander un diagnostic gratuit"}
+                  {replaceGratuit(pageContent.hero?.ctaButton) || "Demander un diagnostic offert"}
                 </a>
               </div>
             </div>
             
             {/* Carte droite */}
-            <div className="relative bg-white rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 border border-gray-100 hover:shadow-3xl transition-shadow duration-300">
+            <div className="relative bg-[#253F60] rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 border border-gray-100 hover:shadow-3xl transition-shadow duration-300">
               {/* Bulle statistique 1666€ - Positionnée en haut à droite */}
               <div className="absolute -top-6 -right-6 w-48 h-32 sm:w-56 sm:h-36 z-20">
                 <div className="bg-white rounded-2xl shadow-xl border-2 border-[#B99066] flex items-center justify-center h-full">
@@ -1790,53 +1799,6 @@ export default function RetraitePage() {
         </div>
       </section>
 
-      {/* Section 14: En résumé */}
-      {pageContent.section14 && (
-        <section className="w-full bg-[#F2F2F2] py-16 sm:py-20 lg:py-24">
-          <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-12 text-center">
-              {pageContent.section14.h2 || "En résumé"}
-            </h2>
-            {pageContent.section14.intro && (
-              <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8 text-center max-w-3xl mx-auto">
-                {pageContent.section14.intro}
-              </p>
-            )}
-            {pageContent.section14.points && pageContent.section14.points.length > 0 && (
-              <ul className="space-y-3 text-[#4B5563] text-base font-inter mb-8 max-w-2xl mx-auto">
-                {pageContent.section14.points.map((point, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="text-[#B99066] mt-1 font-bold">•</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {pageContent.section14.contact && (
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                {pageContent.section14.contact.email && (
-                  <a
-                    href={pageContent.section14.contact.email.url || "mailto:contact@azalee-patrimoine.fr"}
-                    className="text-[#B99066] hover:text-[#D4A574] font-inter underline"
-                  >
-                    {pageContent.section14.contact.email.label || "Être rappelé par un conseiller"}
-                  </a>
-                )}
-                {pageContent.section14.contact.rendezVous && (
-                  <a
-                    href={pageContent.section14.contact.rendezVous.url || "https://calendly.com/rdv-azalee-patrimoine/30min"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#B99066] hover:text-[#D4A574] font-inter underline"
-                  >
-                    {pageContent.section14.contact.rendezVous.label || "Prendre rendez-vous en ligne"}
-                  </a>
-                )}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
 
       {/* Section 15: En savoir plus */}
       {pageContent.section15 && (
@@ -1914,7 +1876,7 @@ export default function RetraitePage() {
                         rel={button.link?.startsWith("http") ? "noopener noreferrer" : undefined}
                         className="bg-gradient-to-r from-[#253F60] to-[#1a2d47] hover:from-[#1a2d47] hover:to-[#253F60] text-white px-8 py-4 rounded-lg shadow-xl font-inter font-bold text-base sm:text-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl w-full sm:w-auto"
                       >
-                        {button.text || "Demander un diagnostic gratuit"}
+                        {replaceGratuit(button?.text) || "Demander un diagnostic offert"}
                       </a>
                     ) : (
                       <Link
@@ -1922,7 +1884,7 @@ export default function RetraitePage() {
                         href={button.link || "/contact"}
                         className="bg-gradient-to-r from-[#B99066] to-[#A67C52] hover:from-[#A67C52] hover:to-[#B99066] text-white px-8 py-4 rounded-lg shadow-xl font-inter font-bold text-base sm:text-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl w-full sm:w-auto"
                       >
-                        {button.text || "Nous contacter"}
+                        {replaceGratuit(button?.text) || "Nous contacter"}
                       </Link>
                     )
                   ))}

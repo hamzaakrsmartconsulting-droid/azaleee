@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function SuccessionHeritagePage() {
@@ -69,7 +70,7 @@ export default function SuccessionHeritagePage() {
       <PlacementChart 
         title="Indicateurs de succession"
         data={chartData}
-        chartImage="/images/variation-chart-image-944f04.png"
+        chartImage="/images/succesion.png"
       />
 
       {/* Réserve héréditaire et quotité disponible Section */}
@@ -530,6 +531,8 @@ export default function SuccessionHeritagePage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }

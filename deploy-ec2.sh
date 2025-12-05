@@ -115,3 +115,5 @@ echo -e "   ${YELLOW}Restart:${NC} docker-compose restart"
 echo -e "   ${YELLOW}Update:${NC} cd $APP_DIR && git pull && docker-compose up -d --build"
 echo ""
 
+
+

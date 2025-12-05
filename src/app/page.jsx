@@ -143,35 +143,35 @@ const PartnersCarousel = ({ content }) => {
       <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 rounded-full mx-auto"></div>
-          <h2 className="text-2xl lg:text-3xl font-cairo font-semibold text-[#112033] mb-2">Nos partenaires de confiance</h2>
-          <p className="text-[#4A5568] font-inter">Des partenaires reconnus pour vous accompagner dans vos projets</p>
+          <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#253F60] mb-4 rounded-full mx-auto"></div>
+          <h2 className="text-2xl lg:text-3xl font-cairo font-semibold text-[#253F60] mb-2">Nos partenaires de confiance</h2>
+          <p className="text-[#4B5563] font-inter">Des partenaires reconnus pour vous accompagner dans vos projets</p>
         </div>
         
         {/* Dynamic Carousel */}
         <div className="relative">
           {/* Top Separator */}
-          <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#4EBBBD] to-transparent mb-8"></div>
+          <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#253F60] to-transparent mb-8"></div>
           
           {/* Carousel Container */}
           <div className="relative overflow-hidden rounded-2xl bg-white/50 backdrop-blur-sm p-8">
             {/* Navigation Arrows */}
             <button
               onClick={goToPrevious}
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 disabled:opacity-50"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-[#253F60] hover:text-white transition-all duration-300 disabled:opacity-50"
               disabled={isTransitioning}
             >
-              <svg className="w-5 h-5 text-[#4EBBBD]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-[#253F60] hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             
             <button
               onClick={goToNext}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 disabled:opacity-50"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-[#253F60] hover:text-white transition-all duration-300 disabled:opacity-50"
               disabled={isTransitioning}
             >
-              <svg className="w-5 h-5 text-[#4EBBBD]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-[#253F60] hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -189,7 +189,7 @@ const PartnersCarousel = ({ content }) => {
                   >
                     <div className="flex justify-center">
                       <div className="group">
-                        <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 h-[120px] w-[200px] flex items-center justify-center border border-gray-100 hover:border-[#4EBBBD] hover:scale-105">
+                        <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 h-[120px] w-[200px] flex items-center justify-center border border-gray-100 hover:border-[#B99066] hover:scale-105">
                           <img 
                             src={src} 
                             alt={`Partenaire ${idx + 1}`} 
@@ -219,12 +219,12 @@ const PartnersCarousel = ({ content }) => {
             <div className="flex-1 max-w-xs">
               <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-[#4EBBBD] to-[#B99066] rounded-full transition-all duration-500"
+                  className="h-full bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full transition-all duration-500"
                   style={{ width: `${((currentIndex + 1) / 6) * 100}%` }}
                 ></div>
               </div>
             </div>
-            <span className="text-sm text-[#4A5568] font-inter font-medium">
+            <span className="text-sm text-[#253F60] font-inter font-medium">
               {currentIndex + 1} / 6
             </span>
           </div>
@@ -237,8 +237,8 @@ const PartnersCarousel = ({ content }) => {
                 onClick={() => goToSlide(idx)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   idx === currentIndex 
-                    ? 'bg-[#4EBBBD] scale-125 shadow-lg' 
-                    : 'bg-gray-300 hover:bg-gray-400'
+                    ? 'bg-[#B99066] scale-125 shadow-lg' 
+                    : 'bg-gray-300 hover:bg-[#253F60]'
                 }`}
                 disabled={isTransitioning}
               />
@@ -246,22 +246,22 @@ const PartnersCarousel = ({ content }) => {
           </div>
           
           {/* Bottom Separator */}
-          <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#4EBBBD] to-transparent mt-8"></div>
+          <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#253F60] to-transparent mt-8"></div>
         </div>
         
         {/* Partner Categories */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
-            <h3 className="font-cairo font-semibold text-[#112033] mb-2">Assurance</h3>
-            <p className="text-sm text-[#4A5568] font-inter">Solutions d'assurance-vie et de capitalisation</p>
+            <h3 className="font-cairo font-semibold text-[#253F60] mb-2">Assurance</h3>
+            <p className="text-sm text-[#4B5563] font-inter">Solutions d'assurance-vie et de capitalisation</p>
           </div>
           <div className="text-center">
-            <h3 className="font-cairo font-semibold text-[#112033] mb-2">Gestion d'actifs</h3>
-            <p className="text-sm text-[#4A5568] font-inter">Expertise en gestion patrimoniale</p>
+            <h3 className="font-cairo font-semibold text-[#253F60] mb-2">Gestion d'actifs</h3>
+            <p className="text-sm text-[#4B5563] font-inter">Expertise en gestion patrimoniale</p>
           </div>
           <div className="text-center">
-            <h3 className="font-cairo font-semibold text-[#112033] mb-2">Services financiers</h3>
-            <p className="text-sm text-[#4A5568] font-inter">Conseil et accompagnement personnalisé</p>
+            <h3 className="font-cairo font-semibold text-[#253F60] mb-2">Services financiers</h3>
+            <p className="text-sm text-[#4B5563] font-inter">Conseil et accompagnement personnalisé</p>
           </div>
         </div>
       </div>
@@ -361,14 +361,10 @@ const defaultSectionOrder = [
   'hero',
   'intro',
   'team',
-  'testimonials',
-  'processSteps',
   'stats',
   'investment',
-  'tax',
   'partners',
   'finalCta',
-  'footer',
 ];
 
 export default function HomePage() {
@@ -451,18 +447,18 @@ export default function HomePage() {
             {/* Background Image */}
             <div className="absolute inset-0">
               <img
-                src="/images/image4.webp"
+                src="/images/quiss.jpg"
                 alt="Équipe Azalée Patrimoine - Vision d'ensemble équipe diversifiée (4 personnes)"
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   console.log('Team image failed to load:', e.target.src);
-                  console.log('Trying fallback to vision.webp');
-                  e.target.src = "/images/vision.webp";
+                  console.log('Trying fallback to image4.webp');
+                  e.target.src = "/images/image4.webp";
                 }}
-                onLoad={() => console.log('Team image loaded successfully:', '/images/image4.webp')}
+                onLoad={() => console.log('Team image loaded successfully:', '/images/quiss.jpg')}
                 style={{ 
                   minHeight: '400px',
-                  backgroundColor: '#f0f0f0' // Temporary background to see if container is there
+                  backgroundColor: '#f0f0f0'
                 }}
               />
             </div>
@@ -643,200 +639,6 @@ export default function HomePage() {
             </div>
           </section>
         );
-      case 'testimonials':
-        return (
-          <section key="testimonials" className="w-full px-4 sm:px-8 lg:px-24 py-16 lg:py-32">
-          <div className="max-w-[1368px] mx-auto">
-            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-              {/* Left - Testimonial */}
-              <div className="w-full lg:w-1/2 flex flex-col items-center justify-center">
-                <div className="bg-slider-1 p-8 rounded-2xl shadow-lg w-full flex flex-col items-center">
-                  <img src="/images/img_svg.svg" className="w-8 h-6 mb-6" alt="quote" />
-                  <h2 className="text-2xl sm:text-3xl font-cairo font-semibold uppercase text-global-2 text-center leading-tight mb-4 tracking-wide">
-                    {content.testimonialsTitle}
-                  </h2>
-                  <p className="text-base sm:text-lg font-source-sans text-global-4 text-center leading-7 mb-6 max-w-xl">
-                      {content.testimonialText}
-                        </p>
-                  <span className="text-sm font-source-sans font-semibold uppercase text-global-4 text-right mb-4">
-                      {content.testimonialAuthor}
-                        </span>
-                  <div className="flex justify-center items-center gap-2 mt-2">
-                      {[...Array(5)].map((_, index) => (
-                        <div 
-                          key={index}
-                        className="w-3 h-3 bg-global-8 border border-global-7 rounded-full shadow-sm"
-                        ></div>
-                      ))}
-                  </div>
-                </div>
-              </div>
-              {/* Right - Statistics */}
-              <div className="w-full lg:w-1/2 flex flex-col items-center justify-center">
-                <div className="bg-global-4 p-12 lg:p-20 rounded-2xl shadow-lg flex flex-col items-center w-full">
-                  <div className="flex flex-col items-center mb-6">
-                    <span className="text-4xl sm:text-5xl font-source-sans text-global-2 text-center font-bold">
-                    90%*
-                    </span>
-                  </div>
-                  <p className="text-base sm:text-lg font-source-sans text-global-7 text-center leading-7 mb-2 max-w-xs">
-                    90% de nos clients nous confient la gestion de patrimoine de leurs enfants
-                  </p>
-                  <span className="text-xs font-source-sans text-global-6 leading-3 mt-1 text-center">
-                    Enquête de satisfaction — 2019
-                  </span>
-                </div>
-              </div>
-            </div>
-            
-            {/* Client Testimonial Images Section */}
-            <div className="mt-16">
-              {/* Section Title */}
-              <div className="text-center mb-12">
-                <div className="w-[60px] h-[2px] bg-gradient-to-r from-[#B99066] to-[#4EBBBD] mb-4 rounded-full mx-auto"></div>
-                <h3 className="text-2xl font-cairo font-semibold text-[#112033] mb-2">Nos clients témoignent</h3>
-                <p className="text-[#4A5568] font-inter">Des parcours authentiques, des résultats concrets</p>
-              </div>
-              
-              {/* Client Images Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                {/* Thomas - Young Professional */}
-                <div className="relative">
-                  <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-                    <img 
-                      src="/images/client1.webp" 
-                      alt="Thomas - Client témoignage authentique" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  
-                  {/* Overlay with testimonial text */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                    <div className="text-white">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-2 h-2 bg-[#4EBBBD] rounded-full"></div>
-                        <span className="text-sm font-semibold">Témoignage authentique</span>
-                      </div>
-                      <h3 className="text-lg font-cairo font-semibold mb-2">Thomas, 35 ans</h3>
-                      <p className="text-sm font-inter leading-relaxed">
-                        "Azalée Patrimoine m'a accompagné dans mon premier investissement immobilier. 
-                        Leur expertise et leur proximité ont fait toute la différence."
-                      </p>
-                    </div>
-                  </div>
-                  
-                </div>
-
-                {/* Marie-Claire - Professional Woman */}
-                <div className="relative">
-                  <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-                    <img 
-                      src="/images/client2.webp" 
-                      alt="Marie-Claire - Client témoignage authentique" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  
-                  {/* Overlay with testimonial text */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                    <div className="text-white">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-2 h-2 bg-[#B99066] rounded-full"></div>
-                        <span className="text-sm font-semibold">Étude de cas</span>
-                      </div>
-                      <h3 className="text-lg font-cairo font-semibold mb-2">Marie-Claire, 48 ans</h3>
-                      <p className="text-sm font-inter leading-relaxed">
-                        "Grâce à Azalée Patrimoine, j'ai optimisé ma stratégie de transmission. 
-                        Un accompagnement professionnel qui a transformé ma vision du patrimoine."
-                      </p>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-              
-              {/* Bottom CTA */}
-              <div className="text-center mt-12">
-                <button 
-                  className="bg-gradient-to-r from-[#B99066] to-[#A67A5A] text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                  onClick={() => window.location.href = '/contact'}
-                >
-                  Rejoignez nos clients satisfaits
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-        );
-      case 'processSteps':
-        return (
-          <section key="processSteps" className="w-full bg-[#F5F5F5] py-8 sm:py-12">
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-            {/* Section Title & Divider */}
-            <div className="flex flex-col items-center mb-6 sm:mb-8">
-              <div className="w-16 h-1 bg-[#4EBBBD] mb-2 rounded-full"></div>
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-cairo font-normal uppercase text-[#1A2530] text-center tracking-wide">
-                  Azalee Patrimoine vous accompagne à chaque étape
-                </h2>
-              </div>
-            {/* Stepper Tabs - Hidden on mobile, visible on desktop */}
-            <div className="hidden lg:flex flex-row justify-center items-end gap-0 mb-8">
-                {(content.processSteps || []).map((step, idx) => (
-                <div
-                  key={idx}
-                  className={`flex flex-col px-10 py-6 border-b-2 ${idx === 0 ? 'bg-white shadow font-bold border-[#4EBBBD] text-[#1A2530]' : 'bg-[#F5F5F5] border-[#E0E0E0] text-[#1A2530]'} transition-all`}
-                  style={{ minWidth: 200, alignItems: 'flex-start', justifyContent: 'center', cursor: 'pointer' }}
-                >
-                  <span className={`text-lg font-bold mb-1 ${idx === 0 ? 'text-[#1A2530]' : 'text-[#1A2530]'}`}>{step.label}</span>
-                  <span className="text-sm font-normal uppercase tracking-wide text-[#757575]">{step.desc}</span>
-                </div>
-              ))}
-              </div>
-            
-            {/* Mobile Stepper - Simple list */}
-            <div className="block lg:hidden mb-6">
-              <div className="space-y-3">
-                {(content.processSteps || []).map((step, idx) => (
-                  <div key={idx} className="bg-white rounded-lg p-4 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${idx === 0 ? 'bg-[#253F60] text-white' : 'bg-[#253F60] text-white'}`}>
-                        {idx + 1}
-                      </div>
-                      <div>
-                        <span className="text-sm font-bold text-[#1A2530]">{step.label}</span>
-                        <p className="text-xs text-[#757575]">{step.desc}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Content Area */}
-            <div className="flex flex-col lg:flex-row justify-between items-center bg-white rounded shadow p-6 sm:p-8 lg:p-12 mt-2">
-              {/* Left: Text */}
-              <div className="flex-1 lg:pr-12 mb-6 lg:mb-0">
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-normal text-[#1A2530] mb-4 sm:mb-6">
-                    {content.processSteps?.[0]?.contentTitle || 'Titre par défaut'}
-                  </h3>
-                <p className="text-sm sm:text-base text-[#757575] mb-6 sm:mb-8 max-w-xl">
-                    {content.processSteps?.[0]?.contentText || 'Texte par défaut'}
-                      </p>
-                <button 
-                  className="bg-[#B99066] text-white px-6 py-3 sm:px-8 sm:py-3 rounded shadow font-semibold text-sm sm:text-base hover:bg-[#A67A5A] transition-colors duration-200 w-full sm:w-auto"
-                  onClick={() => window.location.href = '/nos-courtiers'}
-                >
-                    {content.processSteps?.[0]?.button || 'Bouton par défaut'}
-                </button>
-                    </div>
-              {/* Right: Image */}
-              <div className="flex-shrink-0 flex items-center justify-center">
-                <img src={content.processSteps?.[0]?.image || '/images/placeholder.webp'} alt="Step illustration" className="w-[200px] h-[200px] sm:w-[280px] sm:h-[280px] lg:w-[320px] lg:h-[320px] object-contain" />
-              </div>
-            </div>
-          </div>
-        </section>
-        );
       case 'stats':
         return (
           <section key="stats" className="w-full bg-white py-16">
@@ -849,26 +651,13 @@ export default function HomePage() {
                 </h2>
             </div>
             {/* Stats Grid */}
-            <div className="flex flex-col lg:flex-row gap-8">
-              {/* Vertical dates - First 3 stats */}
-              <div className="flex flex-col gap-8 text-center max-w-md mx-auto lg:mx-0">
-                {(content.stats || []).slice(0, 3).map((stat, index) => (
-                  <div key={index}>
-                    <div className="text-[40px] font-source-sans font-normal text-[#B99066] leading-[58px]">{stat.value}</div>
-                    <div className="text-[11.7px] font-source-sans font-semibold text-[#000] leading-[18px] mt-2">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-              
-              {/* Horizontal stats - Remaining stats */}
-              <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 text-center">
-                {(content.stats || []).slice(3).map((stat, index) => (
-                  <div key={index + 3}>
-                    <div className="text-[40px] font-source-sans font-normal text-[#B99066] leading-[58px]">{stat.value}</div>
-                    <div className="text-[11.7px] font-source-sans font-semibold text-[#000] leading-[18px] mt-2">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-8 text-center">
+              {(content.stats || []).map((stat, index) => (
+                <div key={index}>
+                  <div className="text-[40px] font-source-sans font-normal text-[#B99066] leading-[58px]">{stat.value}</div>
+                  <div className="text-[11.7px] font-source-sans font-semibold text-[#000] leading-[18px] mt-2">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -955,62 +744,6 @@ export default function HomePage() {
           </div>
         </section>
         );
-      case 'tax':
-        return (
-          <section key="tax" className="w-full py-16 bg-[#F5F5F5]">
-          <div className="max-w-[1368px] mx-auto flex flex-col lg:flex-row gap-8 items-stretch">
-            {/* Left Card - Figma node 183-12701 */}
-            <div className="w-full lg:w-[28%] bg-[#253F60] rounded-2xl p-10 flex flex-col justify-between shadow-lg">
-              <div>
-                <div className="w-[40.28px] h-[1.34px] bg-[#4EBBBD] mb-4 rounded-full"></div>
-                <h2 className="text-[22.15px] font-cairo font-normal uppercase text-white mb-6 leading-[1.2] tracking-wide text-left">
-                    {content.taxTitle}
-                </h2>
-                <p className="text-[12.08px] font-source-sans text-white mb-8 text-left">
-                    {content.taxText}
-                </p>
-              </div>
-                        </div>
-            {/* Right: Tax Solution Cards (unchanged) */}
-            <div className="flex-1 flex flex-col justify-between">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                  {(content.taxCards || []).map((card, index) => (
-                    <div key={index} className="bg-white rounded-2xl shadow-lg flex flex-col h-full">
-                      <img src={card.image} alt={card.title} className="w-full h-[120px] object-cover rounded-t-2xl" />
-                  <div className="p-6 flex flex-col flex-1">
-                        <h3 className="text-lg font-cairo font-semibold uppercase text-[#253F60] mb-2">{card.title}</h3>
-                        <p className="text-sm text-[#1A2530] mb-4 flex-1">{card.text}</p>
-                        {card.link && (
-                          <a 
-                            href="#" 
-                            className="text-[#4EBBBD] text-sm font-semibold hover:underline mt-auto"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              if (index === 0) {
-                                window.location.href = '/immobilier/lmnp';
-                              }
-                            }}
-                          >
-                            {card.link}
-                          </a>
-                        )}
-                          </div>
-                        </div>
-                  ))}
-              </div>
-              {/* Navigation Arrows */}
-              <div className="flex justify-end gap-4">
-                <button className="w-10 h-10 flex items-center justify-center rounded-full border border-[#4EBBBD] bg-white shadow hover:bg-[#4EBBBD] hover:text-white transition">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <button className="w-10 h-10 flex items-center justify-center rounded-full border border-[#4EBBBD] bg-white shadow hover:bg-[#4EBBBD] hover:text-white transition">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-        );
       case 'partners':
         return <PartnersCarousel key="partners" content={content} />;
       case 'finalCta':
@@ -1036,26 +769,6 @@ export default function HomePage() {
           </div>
         </section>
         );
-      case 'footer':
-        return (
-          <footer key="footer" className="w-full relative pt-16 pb-6 text-white" style={{background: 'linear-gradient(90deg, #253F60 0%, #B99066 100%)'}}>
-        {/* Overlay for contrast */}
-        <div className="absolute inset-0 bg-black opacity-50 pointer-events-none"></div>
-        <div className="relative max-w-[1368px] mx-auto px-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-12 mb-8">
-          {/* Contactez */}
-          <div>
-            <h3 className="text-lg font-inter font-semibold mb-4 text-[#FFFFFF]">Contactez-nous</h3>
-            <ul className="space-y-2 text-[#D1D5DB] text-base">
-                  <li>{content.footerContact?.address || 'Adresse par défaut'}</li>
-                  <li>{content.footerContact?.city || 'Ville par défaut'}</li>
-                  <li>{content.footerContact?.country || 'Pays par défaut'}</li>
-                  <li>Téléphone : {content.footerContact?.phone || 'Téléphone par défaut'}</li>
-                  <li>Courriel : <span className="underline">{content.footerContact?.email || 'email@exemple.com'}</span></li>
-            </ul>
-          </div>
-        </div>
-      </footer>
-        );
       default:
         return null;
     }
@@ -1078,6 +791,8 @@ export default function HomePage() {
           className="w-full max-w-xs sm:max-w-md md:max-w-lg rounded-lg object-cover mx-auto"
         />
       </div>
+      
+      <Footer />
     </div>
   );
 }

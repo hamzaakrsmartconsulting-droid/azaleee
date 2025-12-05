@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Header from '../../../components/common/Header';
+import Footer from '../../../components/common/Footer';
 
 export default function AutresPage() {
   const [cmsContent, setCmsContent] = useState(null);
@@ -429,6 +430,7 @@ export default function AutresPage() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

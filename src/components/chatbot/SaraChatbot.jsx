@@ -18,18 +18,25 @@ export default function SaraChatbot() {
   const [rdvStep, setRdvStep] = useState('date'); // date, heure, canal
   const [rappelData, setRappelData] = useState({ nom: '', prenom: '', telephone: '', email: '' });
   const [rappelStep, setRappelStep] = useState('nom'); // nom, prenom, telephone, email
+  const [pdfData, setPdfData] = useState({ email: '' });
+  const [pdfStep, setPdfStep] = useState('email'); // email
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     // Générer un sessionId au montage
     const newSessionId = generateSessionId();
     setSessionId(newSessionId);
-    
-    // Initialiser avec le message d'accueil
-    if (messages.length === 0) {
-      addMessage('sara', getWelcomeMessage());
-    }
   }, []);
+
+  // Initialiser les messages quand le chatbot s'ouvre
+  useEffect(() => {
+    if (isOpen && messages.length === 0 && sessionId) {
+      const welcomeMsg = getWelcomeMessage();
+      const welcomeMessage = { role: 'sara', content: welcomeMsg, timestamp: new Date() };
+      setMessages([welcomeMessage]);
+      saveSession({ message: welcomeMessage });
+    }
+  }, [isOpen, sessionId]);
 
   useEffect(() => {
     scrollToBottom();
@@ -99,31 +106,31 @@ export default function SaraChatbot() {
   const getThematiqueMessage = (intentionValue) => {
     const thematiques = {
       placements: {
-        text: "Il existe plusieurs dispositifs et plusieurs spécificités fiscales ou comptables qui permettent d'optimiser vos placements financiers. Pour vous faire une préconisation, j'ai besoin d'éléments sur votre situation patrimoniale actuelle.",
+        text: "Pour vous faire une préconisation, j'ai besoin d'éléments sur votre situation patrimoniale actuelle. Êtes-vous d'accord pour répondre à quelques questions sous couvert de la confidentialité ?",
         questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
       },
       fiscalite: {
-        text: "Il existe de multiples moyens de réduire ses impôts mais cela dépend de combien de réduction on parle car les niches fiscales sont plafonnées. Toutefois, il existe des dispositifs malins à mettre en place mais qui dépendent de votre situation personnelle.",
+        text: "Il existe de multiples moyens de réduire ses impôts mais cela dépend de combien de réduction on parle car les niches fiscales sont plafonnées. Toutefois, il existe des dispositifs malins à mettre en place mais qui dépendent de votre situation personnelle. Êtes-vous d'accord pour répondre à quelques questions sous couvert de la confidentialité ?",
         questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
       },
       retraite: {
-        text: "Il existe plusieurs dispositifs à mettre en œuvre pour optimiser votre retraite. Pour vous faire une préconisation, j'ai besoin d'éléments sur votre situation patrimoniale actuelle.",
+        text: "Il existe plusieurs dispositifs à mettre en œuvre pour optimiser votre retraite. Pour vous faire une préconisation, j'ai besoin d'éléments sur votre situation patrimoniale actuelle. Êtes-vous d'accord pour répondre à quelques questions sous couvert de la confidentialité ?",
         questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
       },
       transmission: {
-        text: "L'optimisation de votre transmission dépend de multiples critères. Pour vous faire une préconisation, j'ai besoin d'éléments sur votre situation patrimoniale actuelle.",
+        text: "L'optimisation de votre transmission dépend de multiples critères. Êtes-vous d'accord pour répondre à quelques questions sous couvert de la confidentialité ?",
         questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
       },
       immobilier: {
-        text: "Il existe plusieurs dispositifs et plusieurs spécificités fiscales ou comptables qui permettent de rentabiliser un investissement immobilier. Souhaitez-vous bénéficier d'un entretien avec notre expert afin d'évaluer la solution idéale par rapport à votre situation personnelle ?",
+        text: "Il existe plusieurs dispositifs et plusieurs spécificités fiscales ou comptables qui permettent de rentabiliser un investissement immobilier. Souhaitez-vous bénéficier d'un entretien avec notre expert afin d'évaluer la solution idéale par rapport à votre situation personnelle ? Pour vous faire une préconisation, j'ai besoin d'éléments sur votre situation patrimoniale actuelle. Êtes-vous d'accord pour répondre à quelques questions sous couvert de la confidentialité ?",
         questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
       },
       diversification: {
-        text: "Votre question est pertinente car un patrimoine bien géré est un patrimoine bien diversifié. Pour répondre à votre question, j'ai besoin d'éléments sur votre portefeuille actuel.",
+        text: "Votre question est pertinente car un patrimoine bien géré est un patrimoine bien diversifié. Pour répondre à votre question, j'ai besoin d'éléments sur votre portefeuille actuel. Êtes-vous d'accord pour répondre à quelques questions sous couvert de la confidentialité ?",
         questions: ['taillePortefeuille', 'secteursInvestissement', 'objectifRendement', 'profilRisque', 'nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'patrimoineImmo']
       },
       situation_specifique: {
-        text: "Pour vous faire une préconisation adaptée à votre situation spécifique, j'ai besoin d'éléments sur votre situation patrimoniale actuelle.",
+        text: "Pour vous faire une préconisation adaptée à votre situation spécifique, j'ai besoin d'éléments sur votre situation patrimoniale actuelle. Êtes-vous d'accord pour répondre à quelques questions sous couvert de la confidentialité ?",
         questions: ['nom', 'prenom', 'age', 'situationMatrimoniale', 'enfants', 'tmi', 'placementsFinanciers', 'placementsImmobiliers']
       }
     };
@@ -132,8 +139,11 @@ export default function SaraChatbot() {
   };
 
   const handleOptionClick = async (value, optionText) => {
-    // Ajouter le message utilisateur
-    addMessage('user', optionText);
+    // Ajouter le message utilisateur seulement si ce n'est pas une question de profil
+    // (car handleProfileAnswer le fera pour les questions de profil)
+    if (currentStep !== 'profile') {
+      addMessage('user', optionText);
+    }
 
     // Traiter selon l'étape
     if (currentStep === 'welcome') {
@@ -163,9 +173,16 @@ export default function SaraChatbot() {
         setRdvStep('date');
         addMessage('sara', {
           type: 'message',
-          text: "Excellent ! Pour fixer votre rendez-vous, j'ai besoin de quelques informations. Quelle date vous conviendrait le mieux ?",
-          inputType: 'date'
+          text: "Merci pour votre confiance. Quel moment vous conviendrait le mieux ?",
+          options: null
         });
+        setTimeout(() => {
+          addMessage('sara', {
+            type: 'message',
+            text: "Quelle date vous conviendrait le mieux ?",
+            inputType: 'date'
+          });
+        }, 500);
         await saveSession({ actionFinale: 'rdv' });
       }
     } else if (currentStep === 'intention') {
@@ -177,7 +194,7 @@ export default function SaraChatbot() {
       setTimeout(() => {
         addMessage('sara', {
           type: 'message',
-          text: `${thematiqueData.text} Êtes-vous d'accord pour répondre à quelques questions sous couvert de la confidentialité ?`,
+          text: thematiqueData.text,
           options: [
             { text: 'Oui', value: 'oui_questions' },
             { text: 'Non', value: 'non_questions' }
@@ -185,7 +202,8 @@ export default function SaraChatbot() {
         });
       }, 500);
     } else if (currentStep === 'rdv' && rdvStep === 'canal') {
-      await handleRdvCanal(value);
+      // Le message utilisateur a déjà été ajouté dans handleOptionClick
+      await handleRdvCanal(value, optionText);
     } else if (currentStep === 'thematique') {
       if (value === 'oui_questions') {
         setCurrentStep('profile');
@@ -203,16 +221,25 @@ export default function SaraChatbot() {
         });
       }
     } else if (currentStep === 'profile') {
-      await handleProfileAnswer(value);
+      // Pour les boutons, utiliser le texte du bouton comme displayText
+      await handleProfileAnswer(value, optionText);
     } else if (currentStep === 'engagement') {
       if (value === 'pdf') {
-        await saveSession({ actionFinale: 'pdf' });
+        setCurrentStep('pdf');
+        setPdfStep('email');
         addMessage('sara', {
           type: 'message',
-          text: "Parfait ! Votre mini-bilan PDF sera généré et vous sera envoyé par email. Merci pour votre confiance !",
+          text: "Parfait ! Pour vous envoyer votre mini-bilan PDF, j'ai besoin de votre adresse email.",
           options: null
         });
-        setCurrentStep('completed');
+        setTimeout(() => {
+          addMessage('sara', {
+            type: 'message',
+            text: "Quelle est votre adresse email ?",
+            inputType: 'email'
+          });
+        }, 500);
+        await saveSession({ actionFinale: 'pdf' });
       } else if (value === 'rdv') {
         setCurrentStep('rdv');
         setRdvStep('date');
@@ -255,14 +282,25 @@ export default function SaraChatbot() {
     if (index >= questions.length) {
       // Toutes les questions sont posées
       setCurrentStep('engagement');
+      
+      // Message spécial pour la diversification
+      const engagementMessage = thematique === 'diversification' 
+        ? "Merci pour ces réponses, il me faut un moment pour vous proposer une préconisation. À quel moment peut-on se rencontrer pour vous apporter des réponses ?"
+        : "Merci pour ces informations ! Je dispose maintenant des éléments essentiels pour vous apporter une préconisation personnalisée. Souhaitez-vous :";
+      
       addMessage('sara', {
         type: 'message',
-        text: "Merci pour ces informations ! Je dispose maintenant des éléments essentiels pour vous apporter une préconisation personnalisée. Souhaitez-vous :",
-        options: [
-          { text: '📄 Recevoir un mini-bilan PDF gratuit', value: 'pdf' },
-          { text: '📅 Fixer un rendez-vous avec un conseiller patrimonial agréé Azalée', value: 'rdv' },
-          { text: '📞 Être recontacté(e) ultérieurement', value: 'rappel' }
-        ]
+        text: engagementMessage,
+        options: thematique === 'diversification' 
+          ? [
+              { text: '📅 Fixer un rendez-vous avec un conseiller patrimonial agréé Azalée', value: 'rdv' },
+              { text: '📞 Être recontacté(e) ultérieurement', value: 'rappel' }
+            ]
+          : [
+              { text: '📄 Recevoir un mini-bilan PDF gratuit', value: 'pdf' },
+              { text: '📅 Fixer un rendez-vous avec un conseiller patrimonial agréé Azalée', value: 'rdv' },
+              { text: '📞 Être recontacté(e) ultérieurement', value: 'rappel' }
+            ]
       });
       return;
     }
@@ -271,14 +309,49 @@ export default function SaraChatbot() {
     const questionText = getProfileQuestionText(question);
     
     setTimeout(() => {
+      let options = null;
+      let inputType = null;
+      
+      if (question === 'enfants') {
+        options = [
+          { text: 'Oui', value: 'enfants_oui' },
+          { text: 'Non', value: 'enfants_non' }
+        ];
+      } else if (question === 'situationMatrimoniale') {
+        options = [
+          { text: 'Marié(e)', value: 'marie' },
+          { text: 'Pacsé(e)', value: 'pacse' },
+          { text: 'Célibataire', value: 'celibataire' }
+        ];
+      } else if (question === 'situationProfessionnelle') {
+        options = [
+          { text: 'Salarié', value: 'salarie' },
+          { text: 'Entrepreneur', value: 'entrepreneur' },
+          { text: 'Retraité', value: 'retraite' },
+          { text: 'Autre', value: 'autre' }
+        ];
+      } else if (question === 'tmi') {
+        options = [
+          { text: 'Oui, je connais mon TMI', value: 'tmi_oui' },
+          { text: 'Non, j\'ai besoin d\'aide', value: 'tmi_non' }
+        ];
+      } else if (question === 'profilRisque') {
+        options = [
+          { text: 'Conservateur', value: 'conservateur' },
+          { text: 'Équilibré', value: 'equilibre' },
+          { text: 'Dynamique', value: 'dynamique' }
+        ];
+      } else if (question === 'age' || question === 'nombreEnfants' || question === 'montantProjet' || question === 'taillePortefeuille') {
+        inputType = 'number';
+      } else {
+        inputType = 'text';
+      }
+      
       addMessage('sara', {
         type: 'message',
         text: questionText,
-        options: question === 'enfants' ? [
-          { text: 'Oui', value: 'enfants_oui' },
-          { text: 'Non', value: 'enfants_non' }
-        ] : null,
-        inputType: question === 'enfants' ? null : (question === 'age' || question === 'nombreEnfants' ? 'number' : 'text')
+        options: options,
+        inputType: inputType
       });
     }, 500);
   };
@@ -287,26 +360,31 @@ export default function SaraChatbot() {
     const questions = {
       nom: "Quel est votre nom ?",
       prenom: "Quel est votre prénom ?",
-      age: "Quel est votre âge ?",
-      situationMatrimoniale: "Êtes-vous marié(e), pacsé(e) ou célibataire ?",
-      enfants: "Avez-vous des enfants ?",
+      age: "1. Quel est votre âge ?",
+      situationMatrimoniale: "2. Êtes-vous marié(e), pacsé(e) ou célibataire ?",
+      enfants: "3. Avez-vous des enfants ?",
       nombreEnfants: "Combien d'enfants avez-vous ?",
-      situationProfessionnelle: "Quelle est votre situation professionnelle ? (Salarié, entrepreneur, retraité, etc.)",
-      tmi: "Connaissez-vous votre TMI (Tranche Marginale d'Imposition) ?",
-      placementsFinanciers: "Disposez-vous de placements financiers ? Lesquels ?",
+      situationProfessionnelle: "4. Quelle est votre situation professionnelle ? (Salarié, entrepreneur, retraité, etc.)",
+      tmi: "5. Connaissez-vous votre TMI (Tranche Marginale d'Imposition) ? Si vous ne la connaissez pas, je peux vous aider à l'estimer.",
+      placementsFinanciers: "6. Disposez-vous de placements financiers ou immobiliers ? Lesquels ?",
       placementsImmobiliers: "Disposez-vous de placements immobiliers ? Lesquels ?",
-      montantProjet: "Quel montant envisagez-vous pour un futur projet ?",
-      taillePortefeuille: "Quelle est la taille de votre portefeuille ?",
-      secteursInvestissement: "Dans quels secteurs investissez-vous ?",
+      montantProjet: "7. Quel montant envisagez-vous pour un futur projet ?",
+      taillePortefeuille: "Quelle est la taille de votre portefeuille actuel ?",
+      secteursInvestissement: "Dans quels secteurs d'investissement êtes-vous actuellement ?",
       objectifRendement: "Quel est votre objectif de rendement ?",
-      profilRisque: "Quel est votre profil de risque ?",
-      patrimoineImmo: "Quel est votre patrimoine immobilier ?"
+      profilRisque: "Quel est votre profil de risque ? (Conservateur, Équilibré, Dynamique)",
+      patrimoineImmo: "Quel est votre patrimoine immobilier actuel ? (Résidence principale, résidence secondaire, investissement locatif, etc.)"
     };
     return questions[question] || question;
   };
 
-  const handleProfileAnswer = async (value) => {
+  const handleProfileAnswer = async (value, displayText = null) => {
     const currentQuestion = profileQuestions[currentQuestionIndex];
+    
+    // Afficher la réponse de l'utilisateur
+    const questionText = getProfileQuestionText(currentQuestion);
+    const displayValue = displayText || value;
+    addMessage('user', displayValue);
     
     if (currentQuestion === 'enfants') {
       if (value === 'enfants_oui') {
@@ -325,6 +403,63 @@ export default function SaraChatbot() {
           askNextProfileQuestion(profileQuestions, currentQuestionIndex + 1);
         }
       }
+    } else if (currentQuestion === 'situationMatrimoniale') {
+      // Mapper les valeurs des boutons vers les textes
+      const situationMap = {
+        'marie': 'Marié(e)',
+        'pacse': 'Pacsé(e)',
+        'celibataire': 'Célibataire'
+      };
+      const situationText = situationMap[value] || value;
+      setProfile(prev => ({ ...prev, [currentQuestion]: situationText }));
+      
+      // Passer à la question suivante
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
+      askNextProfileQuestion(profileQuestions, nextIndex);
+    } else if (currentQuestion === 'situationProfessionnelle') {
+      const professionMap = {
+        'salarie': 'Salarié',
+        'entrepreneur': 'Entrepreneur',
+        'retraite': 'Retraité',
+        'autre': 'Autre'
+      };
+      const professionText = professionMap[value] || value;
+      setProfile(prev => ({ ...prev, [currentQuestion]: professionText }));
+      
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
+      askNextProfileQuestion(profileQuestions, nextIndex);
+    } else if (currentQuestion === 'tmi') {
+      if (value === 'tmi_oui') {
+        setProfile(prev => ({ ...prev, tmi: 'connu' }));
+        // Demander la valeur du TMI
+        setTimeout(() => {
+          addMessage('sara', {
+            type: 'message',
+            text: "Quelle est votre TMI ? (ex: 14%, 30%, 41%, 45%)",
+            inputType: 'text'
+          });
+        }, 500);
+        // Ne pas passer à la question suivante, attendre la réponse TMI
+      } else {
+        setProfile(prev => ({ ...prev, tmi: 'non_connu' }));
+        const nextIndex = currentQuestionIndex + 1;
+        setCurrentQuestionIndex(nextIndex);
+        askNextProfileQuestion(profileQuestions, nextIndex);
+      }
+    } else if (currentQuestion === 'profilRisque') {
+      const risqueMap = {
+        'conservateur': 'Conservateur',
+        'equilibre': 'Équilibré',
+        'dynamique': 'Dynamique'
+      };
+      const risqueText = risqueMap[value] || value;
+      setProfile(prev => ({ ...prev, [currentQuestion]: risqueText }));
+      
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
+      askNextProfileQuestion(profileQuestions, nextIndex);
     } else {
       // Stocker la réponse dans le profil
       setProfile(prev => ({ ...prev, [currentQuestion]: value }));
@@ -341,11 +476,51 @@ export default function SaraChatbot() {
 
   const handleTextInput = async (text) => {
     if (currentStep === 'profile') {
-      await handleProfileAnswer(text);
+      // Pour les champs texte, afficher directement la valeur
+      await handleProfileAnswer(text, text);
     } else if (currentStep === 'rdv') {
       await handleRdvInput(text);
     } else if (currentStep === 'rappel') {
       await handleRappelInput(text);
+    } else if (currentStep === 'pdf') {
+      await handlePdfInput(text);
+    }
+  };
+
+  const handlePdfInput = async (value) => {
+    if (pdfStep === 'email') {
+      // Validation basique de l'email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(value)) {
+        addMessage('user', value);
+        setTimeout(() => {
+          addMessage('sara', {
+            type: 'message',
+            text: "L'adresse email que vous avez saisie ne semble pas valide. Pouvez-vous la ressaisir ?",
+            inputType: 'email'
+          });
+        }, 500);
+        return;
+      }
+      
+      setPdfData(prev => ({ ...prev, email: value }));
+      addMessage('user', value);
+      
+      // Sauvegarder l'email avec la session
+      await saveSession({ 
+        pdfData: { email: value },
+        actionFinale: 'pdf',
+        status: 'completed'
+      });
+      
+      setTimeout(() => {
+        addMessage('sara', {
+          type: 'message',
+          text: `Parfait ! Votre mini-bilan PDF sera généré et vous sera envoyé par email à ${value}. Merci pour votre confiance !`,
+          options: null
+        });
+        setCurrentStep('completed');
+      }, 500);
     }
   };
 
@@ -441,7 +616,7 @@ export default function SaraChatbot() {
     }
   };
 
-  const handleRdvCanal = async (canal) => {
+  const handleRdvCanal = async (canal, displayText = null) => {
     const canalText = {
       telephone: 'Téléphone',
       visio: 'Visio',
@@ -449,7 +624,9 @@ export default function SaraChatbot() {
     };
     
     setRdvData(prev => ({ ...prev, canal }));
-    addMessage('user', `Canal: ${canalText[canal]}`);
+    
+    // Le message utilisateur a déjà été ajouté dans handleOptionClick avec optionText
+    // Pas besoin de l'ajouter à nouveau ici
     
     // Sauvegarder le rendez-vous complet
     const rendezVous = {
@@ -549,7 +726,7 @@ export default function SaraChatbot() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center z-50"
+        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-[#253F60] to-[#B99066] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center z-[9999]"
         aria-label="Ouvrir le chatbot SARA"
       >
         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -560,7 +737,7 @@ export default function SaraChatbot() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-xl shadow-2xl flex flex-col z-50 border-2 border-[#253F60]/20">
+    <div className="fixed bottom-6 right-6 w-[90vw] sm:w-96 max-w-full h-[80vh] sm:h-[600px] max-h-[600px] bg-white rounded-xl shadow-2xl flex flex-col z-[9999] border-2 border-[#253F60]/20">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#253F60] to-[#1a2d47] text-white p-4 rounded-t-xl flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -573,7 +750,12 @@ export default function SaraChatbot() {
           </div>
         </div>
         <button
-          onClick={() => setIsOpen(false)}
+          onClick={() => {
+            setIsOpen(false);
+            // Réinitialiser l'état quand on ferme (optionnel - garder l'historique)
+            // setMessages([]);
+            // setCurrentStep('welcome');
+          }}
           className="text-white hover:text-gray-200 transition-colors"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

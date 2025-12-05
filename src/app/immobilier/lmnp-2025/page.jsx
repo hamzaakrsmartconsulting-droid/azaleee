@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import Link from 'next/link';
+import Footer from '../../../components/common/Footer';
 
 export default function LMNP2025Page() {
   return (
@@ -321,6 +322,8 @@ export default function LMNP2025Page() {
           </article>
         </div>
       </section>
+      
+      <Footer />
     </div>
   );
 }

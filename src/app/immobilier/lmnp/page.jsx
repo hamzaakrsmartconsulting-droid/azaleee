@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 
 const defaultContent = {
   hero: {
@@ -567,6 +568,8 @@ export default function LMNPPage() {
       
       {/* Map ordered sections */}
       {sections.map((s) => renderSection(s))}
+      
+      <Footer />
     </>
   );
 } 

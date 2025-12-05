@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 import PlacementChart from "../../../components/PlacementChart";
 
 // Default content
@@ -273,6 +274,8 @@ export default function AutrePatrimoinePage() {
           </button>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import Link from 'next/link';
+import Footer from '../../../components/common/Footer';
 
 export default function InvestissementImmobilierRentablePage() {
   return (
@@ -137,7 +138,7 @@ export default function InvestissementImmobilierRentablePage() {
                       <li>• Diversification sectorielle et géographique</li>
                     </ul>
                     <p className="mt-4 text-sm font-inter text-white/90">
-                      Exemple : Amundi Immobilier, Corum Origin ou Épargne Pierre figurent parmi les SCPI les plus performantes et transparentes.
+                      Exemple : Transition Europe, Comète ou Sofidynamic figurent parmi les SCPI les plus performantes et transparentes.
                     </p>
                     <p className="mt-2 text-sm font-inter text-[#B99066] font-semibold">
                       👉 Idéal pour les épargnants souhaitant un investissement immobilier rentable et passif.
@@ -350,6 +351,8 @@ export default function InvestissementImmobilierRentablePage() {
           </article>
         </div>
       </section>
+      
+      <Footer />
     </div>
   );
 }

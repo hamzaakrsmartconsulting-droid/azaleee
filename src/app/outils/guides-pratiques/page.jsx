@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Header from '../../../components/common/Header';
+import Footer from '../../../components/common/Footer';
 
 export default function GuidesPratiquesPage() {
   const [cmsContent, setCmsContent] = useState(null);
@@ -349,6 +350,7 @@ export default function GuidesPratiquesPage() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function TauxInteretsPage() {
@@ -894,6 +895,8 @@ export default function TauxInteretsPage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 } 

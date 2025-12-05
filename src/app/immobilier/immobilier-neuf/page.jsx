@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 
 export default function ImmobilierNeufPage() {
   return (
@@ -241,6 +242,8 @@ export default function ImmobilierNeufPage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 } 

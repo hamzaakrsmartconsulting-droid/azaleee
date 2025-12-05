@@ -7,6 +7,14 @@ import Footer from "../../components/common/Footer";
 export default function PlacementsPage() {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [openSections, setOpenSections] = useState({});
+  
+  const toggleSection = (sectionId) => {
+    setOpenSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
 
   // Fetch content from CMS
   useEffect(() => {
@@ -110,13 +118,6 @@ export default function PlacementsPage() {
         balanced_strategy: "Une stratégie équilibrée doit combiner liquidité, sécurité et rendement, selon votre horizon de placement et votre profil investisseur.",
         tip: "Astuce Azalée Patrimoine : conservez vos placements garantis pour votre épargne de précaution, et explorez des solutions plus performantes pour vos projets à moyen et long terme."
       },
-      h3_risk_zero: {
-        title: "Pourquoi le risque zéro n'existe pas en matière de placement ?",
-        content: "Même un placement dit \"sûr\" comporte un risque : celui de ne pas atteindre vos objectifs financiers.",
-        graph_explanation: "Le graphique ci-dessous illustre sept scénarios de rendement sur cinq ans : plus le rendement moyen augmente, plus la volatilité (les fluctuations à court terme) est forte.",
-        compromise: "Ce compromis entre risque et performance est au cœur de toute stratégie d'investissement.",
-        azalee_help: "Chez Azalée Patrimoine, nous vous aidons à déterminer le niveau de risque optimal pour que votre argent travaille sans compromettre votre sérénité."
-      },
       h3_test: {
         title: "Testez vos connaissances et découvrez votre profil investisseur",
         content: "Avant d'investir, il est essentiel de comprendre votre relation au risque et votre niveau de connaissance financière.",
@@ -126,7 +127,6 @@ export default function PlacementsPage() {
           "et les placements adaptés à votre horizon de temps."
         ],
         ctas: [
-          { text: "Évaluer mes connaissances financières", link: "https://calendly.com/contact-azalee-patrimoine" },
           { text: "Découvrir mon profil investisseur avec un conseiller Azalée", link: "https://calendly.com/contact-azalee-patrimoine" }
         ]
       }
@@ -270,99 +270,115 @@ export default function PlacementsPage() {
             </h2>
             </div>
             
-          {/* H3 - Inflation */}
-          <div className="mb-12 sm:mb-16">
-            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 sm:mb-8">
-              {pageContent.section2?.h3_inflation?.title || "Quel rôle joue l'inflation dans le choix d'un placement ?"}
-            </h3>
-            
-            <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>{pageContent.section2?.h3_inflation?.content}</p>
-              
-              {/* Inflation Explanation Box */}
-              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
-                <p className="font-semibold text-[#253F60] mb-2">💬 {pageContent.section2?.h3_inflation?.inflation_explanation}</p>
-              </div>
-              
-              {/* Example Box */}
-              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#253F60] shadow-md hover:shadow-lg transition-shadow duration-300">
-                <p className="font-semibold text-[#253F60] mb-2">🥖 {pageContent.section2?.h3_inflation?.example}</p>
-            </div>
-              
-              <p className="font-semibold text-[#253F60]">{pageContent.section2?.h3_inflation?.conclusion}</p>
-              <p>{pageContent.section2?.h3_inflation?.strategy}</p>
-              <p>{pageContent.section2?.h3_inflation?.balanced_strategy}</p>
-              
-              {/* Tip Box */}
-              <div className="bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-50 border-l-4 border-[#B99066] p-8 rounded-xl shadow-lg">
-                <p className="font-semibold text-[#253F60]">💡 {pageContent.section2?.h3_inflation?.tip}</p>
-          </div>
-        </div>
-          </div>
-
-          {/* H3 - Risk Zero */}
-          <div className="mb-12 sm:mb-16">
-            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 sm:mb-8">
-              {pageContent.section2?.h3_risk_zero?.title || "Pourquoi le risque zéro n'existe pas en matière de placement ?"}
-            </h3>
-            
-            <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>{pageContent.section2?.h3_risk_zero?.content}</p>
-              <p>{pageContent.section2?.h3_risk_zero?.graph_explanation}</p>
-              
-              {/* Graphique des 7 scénarios de rendement */}
-              <div className="my-8 bg-white rounded-xl p-6 shadow-lg border-2 border-gray-200">
-                <div className="text-center text-[#4B5563] text-sm italic">
-                  {/* TODO: Ajouter le graphique des 7 profils investisseur ici */}
-                  <p className="mb-4">Graphique des 7 scénarios de rendement sur cinq ans</p>
-                  <div className="bg-gray-100 rounded-lg p-12 flex items-center justify-center">
-                    <p className="text-gray-500">Graphique à ajouter : 7 profils investisseur</p>
+          {/* H3 - Inflation - FAQ Style */}
+          <div className="mb-12 sm:mb-16 max-w-5xl mx-auto">
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('inflation')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  {pageContent.section2?.h3_inflation?.title || "Quel rôle joue l'inflation dans le choix d'un placement ?"}
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['inflation'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['inflation'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    <p>{pageContent.section2?.h3_inflation?.content}</p>
+                    
+                    {/* Inflation Explanation Box */}
+                    <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
+                      <p className="font-semibold text-[#253F60] mb-2">💬 {pageContent.section2?.h3_inflation?.inflation_explanation}</p>
+                    </div>
+                    
+                    {/* Example Box */}
+                    <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#253F60] shadow-md hover:shadow-lg transition-shadow duration-300">
+                      <p className="font-semibold text-[#253F60] mb-2">🥖 {pageContent.section2?.h3_inflation?.example}</p>
+                    </div>
+                    
+                    <p className="font-semibold text-[#253F60]">{pageContent.section2?.h3_inflation?.conclusion}</p>
+                    <p>{pageContent.section2?.h3_inflation?.strategy}</p>
+                    <p>{pageContent.section2?.h3_inflation?.balanced_strategy}</p>
+                    
+                    {/* Tip Box */}
+                    <div className="bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-50 border-l-4 border-[#B99066] p-8 rounded-xl shadow-lg">
+                      <p className="font-semibold text-[#253F60]">💡 {pageContent.section2?.h3_inflation?.tip}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <p className="font-semibold text-[#253F60]">{pageContent.section2?.h3_risk_zero?.compromise}</p>
-              <p>{pageContent.section2?.h3_risk_zero?.azalee_help}</p>
-                </div>
+              )}
+            </div>
           </div>
 
-          {/* H3 - Test */}
-          <div className="mb-12 sm:mb-16">
-            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold mb-6 sm:mb-8">
-              {pageContent.section2?.h3_test?.title || "Testez vos connaissances et découvrez votre profil investisseur"}
-            </h3>
-            
-            <div className="max-w-5xl mx-auto space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>{pageContent.section2?.h3_test?.content}</p>
-              
-              <p className="font-semibold text-[#253F60]">Nos conseillers vous accompagnent pour identifier :</p>
-              <ul className="list-none space-y-4 ml-2">
-                {(pageContent.section2?.h3_test?.help_list || []).map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="text-[#B99066] font-bold mt-1">•</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                {(pageContent.section2?.h3_test?.ctas || []).map((cta, index) => (
-                  <a
-                    key={index}
-                    href={cta.link}
-                    target={cta.link.startsWith('http') ? '_blank' : '_self'}
-                    rel={cta.link.startsWith('http') ? 'noopener noreferrer' : ''}
-                    className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5"
-                  >
-                    {cta.text}
-                  </a>
-                ))}
-              </div>
-            </div>
+          {/* H3 - Test - FAQ Style */}
+          <div className="mb-12 sm:mb-16 max-w-5xl mx-auto">
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('test')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  {pageContent.section2?.h3_test?.title || "Testez vos connaissances et découvrez votre profil investisseur"}
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['test'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['test'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    <p>{pageContent.section2?.h3_test?.content}</p>
+                    
+                    <p className="font-semibold text-[#253F60]">Nos conseillers vous accompagnent pour identifier :</p>
+                    <ul className="list-none space-y-4 ml-2">
+                      {(pageContent.section2?.h3_test?.help_list || []).map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-[#B99066] font-bold mt-1">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    {/* CTAs */}
+                    <div className="flex justify-center mt-8">
+                      {(pageContent.section2?.h3_test?.ctas || [])
+                        .filter(cta => !cta.text.includes("Évaluer mes connaissances financières"))
+                        .map((cta, index) => (
+                        <a
+                          key={index}
+                          href={cta.link}
+                          target={cta.link.startsWith('http') ? '_blank' : '_self'}
+                          rel={cta.link.startsWith('http') ? 'noopener noreferrer' : ''}
+                          className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-6 py-3 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5"
+                        >
+                          {cta.text}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
       {/* Section 3: Private equity */}
       <section className="w-full bg-white py-16 sm:py-20 lg:py-24" id="section3">
@@ -391,30 +407,57 @@ export default function PlacementsPage() {
             </h2>
           </div>
           
-          <div className="max-w-5xl mx-auto space-y-8 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-            {(pageContent.section3?.paragraphs || []).map((paragraph, index) => {
-              // Mettre en italique les 3 premiers paragraphes (le bloc sur le private equity)
-              const shouldBeItalic = index < 3;
-              return (
-                <p key={index} className={`${shouldBeItalic ? "italic" : ""} ${index === 4 ? "font-semibold text-[#253F60]" : ""}`}>
-                  {paragraph}
-                </p>
-              );
-            })}
+          {/* FAQ Style pour le contenu principal */}
+          <div className="max-w-5xl mx-auto mb-12">
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('private-equity')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  En savoir plus sur le Private Equity
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['private-equity'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['private-equity'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-8 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    {(pageContent.section3?.paragraphs || []).map((paragraph, index) => {
+                      // Mettre en italique les 3 premiers paragraphes (le bloc sur le private equity)
+                      const shouldBeItalic = index < 3;
+                      return (
+                        <p key={index} className={`${shouldBeItalic ? "italic" : ""} ${index === 4 ? "font-semibold text-[#253F60]" : ""}`}>
+                          {paragraph}
+                        </p>
+                      );
+                    })}
 
-            {/* Azalée Quote */}
-            {pageContent.section3?.quote && (
-              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
-                <p className="font-semibold text-[#253F60] mb-2">💬 {pageContent.section3.quote.text}</p>
-                <p className="mt-2">{pageContent.section3.quote.conclusion}</p>
-              </div>
-            )}
-            
-            {(pageContent.section3?.more_paragraphs || []).map((paragraph, index) => (
-              <p key={index} className={index === 3 ? "font-semibold text-[#253F60]" : index === 4 ? "font-bold text-[#253F60] text-xl" : ""}>
-                {paragraph}
-              </p>
-            ))}
+                    {/* Azalée Quote */}
+                    {pageContent.section3?.quote && (
+                      <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <p className="font-semibold text-[#253F60] mb-2">💬 {pageContent.section3.quote.text}</p>
+                        <p className="mt-2">{pageContent.section3.quote.conclusion}</p>
+                      </div>
+                    )}
+                    
+                    {(pageContent.section3?.more_paragraphs || []).map((paragraph, index) => (
+                      <p key={index} className={index === 3 ? "font-semibold text-[#253F60]" : index === 4 ? "font-bold text-[#253F60] text-xl" : ""}>
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* H3 - 4 questions */}
@@ -425,13 +468,27 @@ export default function PlacementsPage() {
               </h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {(pageContent.section3.questions.items || []).map((item, index) => (
-                  <div key={index} className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
-                    <h4 className="text-[#253F60] font-bold text-lg mb-4">{item.emoji} {item.number}. {item.question}</h4>
-                    <p className="text-[#4B5563]">{item.content}</p>
-                    <p className="mt-2 font-semibold text-[#253F60]">{item.conclusion}</p>
-                  </div>
-                ))}
+                {(pageContent.section3.questions.items || []).map((item, index) => {
+                  // Alternance des couleurs selon la charte graphique : bleu azalée et or azalée
+                  const circleColors = [
+                    'bg-[#253F60]', // Question 1 - Bleu azalée
+                    'bg-[#B99066]', // Question 2 - Or azalée
+                    'bg-[#253F60]', // Question 3 - Bleu azalée
+                    'bg-[#B99066]'  // Question 4 - Or azalée
+                  ];
+                  const circleColor = circleColors[index] || circleColors[0];
+                  
+                  return (
+                    <div key={index} className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#253F60]">
+                      <h4 className="text-[#253F60] font-bold text-lg mb-4 flex items-center gap-3">
+                        <div className={`w-8 h-8 ${circleColor} rounded-full flex-shrink-0`}></div>
+                        <span>{item.question}</span>
+                      </h4>
+                      <p className="text-[#4B5563]">{item.content}</p>
+                      <p className="mt-2 font-semibold text-[#253F60]">{item.conclusion}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -440,7 +497,12 @@ export default function PlacementsPage() {
           {pageContent.section3?.remember && (
             <div className="mt-12 sm:mt-16 max-w-5xl mx-auto">
               <div className="bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-2xl p-10 text-white shadow-2xl">
-                <h3 className="text-2xl sm:text-3xl font-cairo font-bold mb-6">💡 {pageContent.section3.remember.title}</h3>
+                <h3 className="text-2xl sm:text-3xl font-cairo font-bold mb-6 flex items-center gap-3">
+                  <svg className="w-8 h-8 text-[#B99066]" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z" />
+                  </svg>
+                  {pageContent.section3.remember.title}
+                </h3>
                 {(pageContent.section3.remember.points || []).map((point, index) => (
                   <p key={index} className={`${index < 2 ? 'text-xl sm:text-2xl leading-relaxed font-light mb-4' : 'text-lg font-semibold'}`}>
                     {point}
@@ -452,18 +514,31 @@ export default function PlacementsPage() {
             
           {/* CTAs */}
           {pageContent.section3?.ctas && (
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              {(pageContent.section3.ctas || []).map((cta, index) => (
-                <a
-                  key={index}
-                  href={cta.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#253F60] hover:bg-[#1a2d47] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300"
-                >
-                  {cta.text}
-                </a>
-              ))}
+            <div className="mt-8 max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="md:col-span-2 flex flex-col sm:flex-row gap-4 justify-center">
+                  {(pageContent.section3.ctas || []).map((cta, index) => {
+                    // Alternance des couleurs pour les boutons
+                    const buttonColors = [
+                      { bg: 'bg-[#253F60]', hover: 'hover:bg-[#1a2d47]' }, // Bleu
+                      { bg: 'bg-[#B99066]', hover: 'hover:bg-[#A67A5A]' }  // Or
+                    ];
+                    const colors = buttonColors[index % 2];
+                    
+                    return (
+                      <a
+                        key={index}
+                        href={cta.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`${colors.bg} ${colors.hover} text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-center transition-all duration-300`}
+                      >
+                        {cta.text}
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           )}
             
@@ -975,110 +1050,210 @@ export default function PlacementsPage() {
             </p>
           </div>
 
-          {/* H3 - Placement mi-chemin */}
+          {/* H3 - Placement mi-chemin - FAQ Style */}
           <div className="mb-12 max-w-5xl mx-auto">
-            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
-              Un placement à mi-chemin entre prudence et rendement
-            </h3>
-            
-            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>Les produits structurés sont des instruments hybrides :</p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>une partie obligataire pour la protection du capital,</li>
-                <li>une partie dérivée liée à un indice ou un panier d'actions, pour capter de la performance.</li>
-              </ul>
-              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300 mt-4">
-                <p className="font-semibold text-[#253F60]">👉 Résultat : des contrats capables d'offrir un rendement cible défini à l'avance, tout en limitant les pertes grâce à des mécanismes de protection.</p>
-              </div>
-              <p>
-                C'est cette visibilité qui rassure les épargnants, surtout après les chocs boursiers récents : ils savent dans quelles conditions ils gagnent ou perdent.
-              </p>
-              </div>
-            </div>
-
-          {/* H3 - Pourquoi les assureurs */}
-          <div className="mb-12 max-w-5xl mx-auto">
-            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
-              Pourquoi les assureurs aiment les produits structurés
-            </h3>
-            
-            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>Pour les assureurs, ces produits répondent à un double enjeu :</p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>Remplacer progressivement les fonds euros (dont les rendements sont sous pression),</li>
-                <li>tout en maîtrisant leur risque global de bilan grâce à une ingénierie financière encadrée.</li>
-              </ul>
-              <p>
-                Ils permettent donc de maintenir un rendement attractif sans déséquilibrer la gestion financière du contrat d'assurance-vie.
-              </p>
-              <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300 mt-4">
-                <p className="font-semibold text-[#253F60]">💬 "Les produits structurés, c'est le chaînon manquant entre le fonds euro et les marchés actions."</p>
-              </div>
-              </div>
-            </div>
-
-          {/* H3 - Pourquoi les brokers */}
-          <div className="mb-12 max-w-5xl mx-auto">
-            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
-              Pourquoi les brokers et les banques les plébiscitent
-            </h3>
-            
-            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>Les brokers spécialisés conçoivent aujourd'hui des structures sur mesure avec :</p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>des sous-jacents variés (indices, paniers sectoriels, ESG…),</li>
-                <li>des barrières de protection élevées (souvent 50 à 60 % de baisse avant perte en capital),</li>
-                <li>et une transparence accrue sur les frais et les scénarios.</li>
-              </ul>
-              <p>
-                Le marché s'est professionnalisé : les émissions sont mieux calibrées et les distributeurs mieux formés.
-              </p>
-              <p className="font-semibold text-[#253F60]">
-                Résultat : une offre lisible, standardisée et encadrée par l'AMF.
-              </p>
-            </div>
-          </div>
-
-          {/* H3 - Pourquoi les CGP */}
-          <div className="mb-12 max-w-5xl mx-auto">
-            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
-              Pourquoi les CGP s'y retrouvent
-            </h3>
-            
-            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p>Les conseillers en gestion de patrimoine apprécient les produits structurés pour leur souplesse :</p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>Ils s'intègrent dans l'assurance-vie, le PER, ou un compte-titres,</li>
-                <li>Ils permettent d'adapter le profil rendement/risque au client,</li>
-                <li>Ils offrent une communication claire sur les conditions de gain et de protection.</li>
-              </ul>
-              <p>
-                En période d'incertitude, ils servent d'outil d'allocation intelligente : ni trop risqué, ni trop défensif.
-              </p>
-              <p className="font-semibold text-[#253F60]">
-                Et ils valorisent la valeur ajoutée du conseil, car leur compréhension nécessite un accompagnement professionnel.
-              </p>
-            </div>
-          </div>
-
-          {/* H3 - Pourquoi les clients */}
-          <div className="mb-12 max-w-5xl mx-auto">
-            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
-              Pourquoi les clients en redemandent
-            </h3>
-            
-            <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              <p className="font-semibold">Côté clients, trois éléments clés expliquent l'adhésion :</p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li><span className="font-semibold">Lisibilité</span> : le scénario est connu dès le départ (ex. +9 %/an si l'indice ne baisse pas de plus de 40 %).</li>
-                <li><span className="font-semibold">Protection</span> : un filet de sécurité en cas de baisse des marchés.</li>
-                <li><span className="font-semibold">Souplesse</span> : possibilité d'investir dans un produit calibré pour son horizon (3 à 8 ans) et son profil.</li>
-              </ul>
-              <p className="font-semibold text-[#253F60]">
-                Résultat : les performances réelles observées entre 2016 et 2024 sont souvent supérieures à celles des fonds euros, avec une volatilité contenue.
-                  </p>
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('placement-mi-chemin')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  Un placement à mi-chemin entre prudence et rendement
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['placement-mi-chemin'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['placement-mi-chemin'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    <p>Les produits structurés sont des instruments hybrides :</p>
+                    <ul className="list-disc list-inside space-y-2 ml-4">
+                      <li>une partie obligataire pour la protection du capital,</li>
+                      <li>une partie dérivée liée à un indice ou un panier d'actions, pour capter de la performance.</li>
+                    </ul>
+                    <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300 mt-4">
+                      <p className="font-semibold text-[#253F60]">👉 Résultat : des contrats capables d'offrir un rendement cible défini à l'avance, tout en limitant les pertes grâce à des mécanismes de protection.</p>
+                    </div>
+                    <p>
+                      C'est cette visibilité qui rassure les épargnants, surtout après les chocs boursiers récents : ils savent dans quelles conditions ils gagnent ou perdent.
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
+            </div>
+          </div>
+
+          {/* H3 - Pourquoi les assureurs - FAQ Style */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('assureurs')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  Pourquoi les assureurs aiment les produits structurés
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['assureurs'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['assureurs'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    <p>Pour les assureurs, ces produits répondent à un double enjeu :</p>
+                    <ul className="list-disc list-inside space-y-2 ml-4">
+                      <li>Remplacer progressivement les fonds euros (dont les rendements sont sous pression),</li>
+                      <li>tout en maîtrisant leur risque global de bilan grâce à une ingénierie financière encadrée.</li>
+                    </ul>
+                    <p>
+                      Ils permettent donc de maintenir un rendement attractif sans déséquilibrer la gestion financière du contrat d'assurance-vie.
+                    </p>
+                    <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-xl border-l-4 border-[#B99066] shadow-md hover:shadow-lg transition-shadow duration-300 mt-4">
+                      <p className="font-semibold text-[#253F60]">💬 "Les produits structurés, c'est le chaînon manquant entre le fonds euro et les marchés actions."</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* H3 - Pourquoi les brokers - FAQ Style */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('brokers')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  Pourquoi les brokers et les banques les plébiscitent
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['brokers'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['brokers'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    <p>Les brokers spécialisés conçoivent aujourd'hui des structures sur mesure avec :</p>
+                    <ul className="list-disc list-inside space-y-2 ml-4">
+                      <li>des sous-jacents variés (indices, paniers sectoriels, ESG…),</li>
+                      <li>des barrières de protection élevées (souvent 50 à 60 % de baisse avant perte en capital),</li>
+                      <li>et une transparence accrue sur les frais et les scénarios.</li>
+                    </ul>
+                    <p>
+                      Le marché s'est professionnalisé : les émissions sont mieux calibrées et les distributeurs mieux formés.
+                    </p>
+                    <p className="font-semibold text-[#253F60]">
+                      Résultat : une offre lisible, standardisée et encadrée par l'AMF.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* H3 - Pourquoi les CGP - FAQ Style */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('cgp')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  Pourquoi les CGP s'y retrouvent
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['cgp'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['cgp'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    <p>Les conseillers en gestion de patrimoine apprécient les produits structurés pour leur souplesse :</p>
+                    <ul className="list-disc list-inside space-y-2 ml-4">
+                      <li>Ils s'intègrent dans l'assurance-vie, le PER, ou un compte-titres,</li>
+                      <li>Ils permettent d'adapter le profil rendement/risque au client,</li>
+                      <li>Ils offrent une communication claire sur les conditions de gain et de protection.</li>
+                    </ul>
+                    <p>
+                      En période d'incertitude, ils servent d'outil d'allocation intelligente : ni trop risqué, ni trop défensif.
+                    </p>
+                    <p className="font-semibold text-[#253F60]">
+                      Et ils valorisent la valeur ajoutée du conseil, car leur compréhension nécessite un accompagnement professionnel.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* H3 - Pourquoi les clients - FAQ Style */}
+          <div className="mb-12 max-w-5xl mx-auto">
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('clients')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  Pourquoi les clients en redemandent
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['clients'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['clients'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    <p className="font-semibold">Côté clients, trois éléments clés expliquent l'adhésion :</p>
+                    <ul className="list-disc list-inside space-y-2 ml-4">
+                      <li><span className="font-semibold">Lisibilité</span> : le scénario est connu dès le départ (ex. +9 %/an si l'indice ne baisse pas de plus de 40 %).</li>
+                      <li><span className="font-semibold">Protection</span> : un filet de sécurité en cas de baisse des marchés.</li>
+                      <li><span className="font-semibold">Souplesse</span> : possibilité d'investir dans un produit calibré pour son horizon (3 à 8 ans) et son profil.</li>
+                    </ul>
+                    <p className="font-semibold text-[#253F60]">
+                      Résultat : les performances réelles observées entre 2016 et 2024 sont souvent supérieures à celles des fonds euros, avec une volatilité contenue.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
 
           {/* Encadré pédagogique */}
           <div className="mb-12 max-w-5xl mx-auto">
@@ -1099,60 +1274,104 @@ export default function PlacementsPage() {
           </div>
         </div>
 
-          {/* H3 - Consensus */}
+          {/* H3 - Consensus - FAQ Style */}
           <div className="mb-12 max-w-5xl mx-auto">
-            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 text-center">
-              Pourquoi ce consensus n'est pas un hasard
-            </h3>
-            
-            <div className="overflow-x-auto">
-              <table className="w-full bg-white rounded-lg shadow-lg border-collapse">
-                <thead>
-                  <tr className="bg-gradient-to-r from-[#253F60] to-[#B99066] text-white">
-                    <th className="p-4 text-left font-bold">Acteur</th>
-                    <th className="p-4 text-left font-bold">Ce qu'il y gagne</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  <tr>
-                    <td className="p-4 font-semibold text-[#253F60]">Assureur</td>
-                    <td className="p-4">Un rendement attractif sans déséquilibrer son bilan</td>
-                  </tr>
-                  <tr className="bg-gray-50">
-                    <td className="p-4 font-semibold text-[#253F60]">Broker</td>
-                    <td className="p-4">Une ingénierie rentable et transparente</td>
-                  </tr>
-                  <tr>
-                    <td className="p-4 font-semibold text-[#253F60]">CGP</td>
-                    <td className="p-4">Un produit lisible et différenciant pour ses clients</td>
-                  </tr>
-                  <tr className="bg-gray-50">
-                    <td className="p-4 font-semibold text-[#253F60]">Client final</td>
-                    <td className="p-4">Un couple rendement / risque cohérent et encadré</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('consensus')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  Pourquoi ce consensus n'est pas un hasard
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['consensus'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['consensus'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    <div className="overflow-x-auto">
+                      <table className="w-full bg-white rounded-lg shadow-lg border-collapse">
+                        <thead>
+                          <tr className="bg-gradient-to-r from-[#253F60] to-[#B99066] text-white">
+                            <th className="p-4 text-left font-bold">Acteur</th>
+                            <th className="p-4 text-left font-bold">Ce qu'il y gagne</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                          <tr>
+                            <td className="p-4 font-semibold text-[#253F60]">Assureur</td>
+                            <td className="p-4">Un rendement attractif sans déséquilibrer son bilan</td>
+                          </tr>
+                          <tr className="bg-gray-50">
+                            <td className="p-4 font-semibold text-[#253F60]">Broker</td>
+                            <td className="p-4">Une ingénierie rentable et transparente</td>
+                          </tr>
+                          <tr>
+                            <td className="p-4 font-semibold text-[#253F60]">CGP</td>
+                            <td className="p-4">Un produit lisible et différenciant pour ses clients</td>
+                          </tr>
+                          <tr className="bg-gray-50">
+                            <td className="p-4 font-semibold text-[#253F60]">Client final</td>
+                            <td className="p-4">Un couple rendement / risque cohérent et encadré</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p className="mt-6">
+                      Ce cercle vertueux explique leur succès : tout le monde y trouve son équilibre — à condition de les comprendre et de les choisir avec discernement.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
-            <p className="mt-6 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              Ce cercle vertueux explique leur succès : tout le monde y trouve son équilibre — à condition de les comprendre et de les choisir avec discernement.
-            </p>
-          </div>
-
-          {/* Conclusion */}
+          {/* Conclusion - FAQ Style */}
           <div className="mb-8 max-w-5xl mx-auto">
-            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-4 text-center">
-              Conclusion – La clé, c'est la structuration
-            </h3>
-            <p className="text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
-              Les produits structurés ne sont pas des placements miracles, mais des instruments d'ingénierie patrimoniale.
-            </p>
-            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mt-2">
-              Leur succès repose sur la pédagogie et la qualité du conseil.
-            </p>
-            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mt-2">
-              Bien construits, ils permettent de réconcilier performance et prudence, et de rassurer les clients sans brider leur rendement.
-            </p>
+            <div className="bg-white rounded-xl shadow-lg border-2 border-[#E5E7EB] overflow-hidden hover:border-[#B99066] transition-all duration-300">
+              <button
+                onClick={() => toggleSection('conclusion')}
+                className="w-full p-6 sm:p-8 flex items-center justify-between text-left focus:outline-none"
+              >
+                <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-bold pr-4">
+                  Conclusion – La clé, c'est la structuration
+                </h3>
+                <svg
+                  className={`w-6 h-6 text-[#B99066] flex-shrink-0 transform transition-transform duration-300 ${
+                    openSections['conclusion'] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openSections['conclusion'] && (
+                <div className="px-6 sm:px-8 pb-6 sm:pb-8 border-t border-[#E5E7EB] pt-6">
+                  <div className="space-y-4 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
+                    <p>
+                      Les produits structurés ne sont pas des placements miracles, mais des instruments d'ingénierie patrimoniale.
+                    </p>
+                    <p>
+                      Leur succès repose sur la pédagogie et la qualité du conseil.
+                    </p>
+                    <p>
+                      Bien construits, ils permettent de réconcilier performance et prudence, et de rassurer les clients sans brider leur rendement.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* CTAs */}
@@ -1432,8 +1651,8 @@ export default function PlacementsPage() {
                   </p>
                     </div>
 
-          {/* Enveloppes Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {/* Enveloppes Grid - 3 premières cartes */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
             {/* Assurance-vie */}
             <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all relative">
               <Link href="/placements/assurance-vie" className="block mb-4 group">
@@ -1481,23 +1700,28 @@ export default function PlacementsPage() {
                 Faites analyser vos contrats et vérifier vos déclarations de revenus
               </Link>
                     </div>
+          </div>
 
-            {/* Contrat de capitalisation */}
-            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
-              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Le contrat de capitalisation</h3>
-              <p className="text-[#4B5563] text-sm leading-relaxed">
-                Peu connu, le contrat de capitalisation reprend les atouts de l'assurance-vie, mais offre des avantages civils spécifiques en matière de transmission.
-                  </p>
+          {/* 2 dernières cartes centrées */}
+          <div className="flex justify-center mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+              {/* Contrat de capitalisation */}
+              <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Le contrat de capitalisation</h3>
+                <p className="text-[#4B5563] text-sm leading-relaxed">
+                  Peu connu, le contrat de capitalisation reprend les atouts de l'assurance-vie, mais offre des avantages civils spécifiques en matière de transmission.
+                    </p>
+                    </div>
+
+              {/* Livrets */}
+              <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les livrets réglementés et placements court terme</h3>
+                <p className="text-[#4B5563] text-sm leading-relaxed">
+                  Utiles pour sécuriser une épargne de précaution, les livrets (A, LDDS, LEP) offrent sécurité et liquidité, mais leur rendement reste limité.
+                    </p>
                   </div>
-
-            {/* Livrets */}
-            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
-              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les livrets réglementés et placements court terme</h3>
-              <p className="text-[#4B5563] text-sm leading-relaxed">
-                Utiles pour sécuriser une épargne de précaution, les livrets (A, LDDS, LEP) offrent sécurité et liquidité, mais leur rendement reste limité.
-                  </p>
-                </div>
-              </div>
+            </div>
+          </div>
 
           {/* H2 - Supports */}
           <div className="mb-12">
@@ -1509,8 +1733,8 @@ export default function PlacementsPage() {
                   </p>
             </div>
 
-          {/* Supports Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {/* Supports Grid - 6 premières cartes */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
             {/* Fonds en euros */}
             <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
               <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les fonds en euros et unités de compte</h3>
@@ -1564,23 +1788,28 @@ export default function PlacementsPage() {
                 Le Private Equity (capital-investissement) permet d'investir dans des entreprises non cotées. C'est un levier puissant de création de valeur à long terme, avec des rendements potentiels élevés.
               </p>
           </div>
-
-            {/* GFA et GFV */}
-            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
-              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les GFA et GFV</h3>
-              <p className="text-[#4B5563] text-sm leading-relaxed">
-                Les groupements fonciers agricoles ou viticoles offrent la possibilité de détenir une part du patrimoine rural français tout en bénéficiant d'avantages fiscaux attractifs.
-              </p>
           </div>
 
-            {/* Placements atypiques */}
-            <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
-              <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les placements atypiques</h3>
-              <p className="text-[#4B5563] text-sm leading-relaxed">
-                Forêts, vins, art ou métaux précieux : ces actifs réels offrent une diversification tangible et parfois passionnelle. Ils complètent une allocation patrimoniale équilibrée.
-              </p>
-            </div>
+          {/* 2 dernières cartes centrées */}
+          <div className="flex justify-center mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+              {/* GFA et GFV */}
+              <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les GFA et GFV</h3>
+                <p className="text-[#4B5563] text-sm leading-relaxed">
+                  Les groupements fonciers agricoles ou viticoles offrent la possibilité de détenir une part du patrimoine rural français tout en bénéficiant d'avantages fiscaux attractifs.
+                </p>
+          </div>
+
+              {/* Placements atypiques */}
+              <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-[#253F60]/20 hover:border-[#B99066] transition-all">
+                <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4">Les placements atypiques</h3>
+                <p className="text-[#4B5563] text-sm leading-relaxed">
+                  Forêts, vins, art ou métaux précieux : ces actifs réels offrent une diversification tangible et parfois passionnelle. Ils complètent une allocation patrimoniale équilibrée.
+                </p>
               </div>
+            </div>
+          </div>
 
           {/* Expertise Azalée */}
           <div className="mb-12">

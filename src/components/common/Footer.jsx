@@ -132,9 +132,38 @@ const Footer = () => {
             <div className="text-white">
               <h3 className="text-lg font-semibold mb-4">{footerContent.services.title || "Nos services"}</h3>
               <div className="space-y-2 text-sm">
-                {footerContent.services.items && footerContent.services.items.map((item, index) => (
-                  <p key={index}>{item}</p>
-                ))}
+                {footerContent.services.items && footerContent.services.items.map((item, index) => {
+                  // Fonction pour mapper les services aux URLs
+                  const getServiceUrl = (serviceName) => {
+                    const nameLower = serviceName?.toLowerCase() || '';
+                    if (nameLower.includes('conseil') || nameLower.includes('gestion de patrimoine')) {
+                      return '/patrimoine';
+                    } else if (nameLower.includes('optimisation fiscale') || nameLower.includes('fiscal')) {
+                      return '/patrimoine/conseils';
+                    } else if (nameLower.includes('investissement immobilier') || nameLower.includes('immobilier')) {
+                      return '/immobilier';
+                    } else if (nameLower.includes('placements financiers') || nameLower.includes('placements')) {
+                      return '/placements';
+                    } else if (nameLower.includes('transmission')) {
+                      return '/patrimoine/transmission';
+                    } else {
+                      return '/patrimoine';
+                    }
+                  };
+                  
+                  const serviceUrl = typeof item === 'string' ? getServiceUrl(item) : (item.path || '#');
+                  const serviceText = typeof item === 'string' ? item : (item.text || item);
+                  
+                  return (
+                    <Link 
+                      key={index} 
+                      href={serviceUrl} 
+                      className="hover:text-[#B99066] transition-colors block"
+                    >
+                      {serviceText}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           )}

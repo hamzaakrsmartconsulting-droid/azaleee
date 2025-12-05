@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 import PlacementChart from "../../../components/PlacementChart";
 
 // Default content
@@ -173,6 +174,8 @@ export default function AutreRetraitePage() {
           </button>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 
 export default function PlusValueImmobilierePage() {
   return (
@@ -312,6 +313,8 @@ export default function PlusValueImmobilierePage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }

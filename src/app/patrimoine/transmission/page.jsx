@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function TransmissionPage() {
@@ -81,7 +82,7 @@ export default function TransmissionPage() {
       <PlacementChart 
         title="Indicateurs de transmission patrimoniale"
         data={chartData}
-        chartImage="/images/variation-chart-image-944f04.png"
+        chartImage="/images/transmission.png"
       />
 
       {/* Pourquoi anticiper sa transmission Section */}
@@ -486,6 +487,8 @@ export default function TransmissionPage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 } 

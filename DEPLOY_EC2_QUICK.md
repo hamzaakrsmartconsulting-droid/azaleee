@@ -75,3 +75,5 @@ docker-compose up -d
 - Le temps de déploiement est d'environ 2-5 minutes
 - L'application reste accessible pendant la mise à jour (pas de downtime)
 
+
+

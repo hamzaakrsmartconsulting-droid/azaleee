@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Header from "../../components/common/Header";
+import Footer from "../../components/common/Footer";
 
 export default function InvestissementImmobilierPage() {
   const [content, setContent] = useState({});
@@ -1647,80 +1648,7 @@ export default function InvestissementImmobilierPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="w-full relative text-white" style={{background: 'linear-gradient(90deg, #253F60 0%, #B99066 100%)'}}>
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/investissement-immobilier-footer-bg-3bc48d.png"
-            alt="Footer background"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        </div>
-        
-        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-8">
-            {/* Expertise */}
-            <div>
-              <h3 className="text-white text-base sm:text-lg font-inter font-semibold mb-4">Expertise</h3>
-              <ul className="space-y-2 text-[#D1D5DB] text-sm">
-                <li>Imposition fiscale</li>
-                <li>Investissement immobilier</li>
-                <li>Investissements financiers</li>
-                <li>Planification de la retraite</li>
-                <li>Conseil en gestion de patrimoine</li>
-              </ul>
-            </div>
-            
-            {/* Outils */}
-            <div>
-              <h3 className="text-white text-base sm:text-lg font-inter font-semibold mb-4">Outils</h3>
-              <ul className="space-y-2 text-[#D1D5DB] text-sm">
-                <li>Blog</li>
-                <li>Simulateurs financiers</li>
-                <li>Calculatrices d'impôts</li>
-                <li>Ressources</li>
-                <li>FAQs</li>
-              </ul>
-            </div>
-            
-            {/* Contactez */}
-            <div>
-              <h3 className="text-white text-base sm:text-lg font-inter font-semibold mb-4">Contactez</h3>
-              <ul className="space-y-2 text-[#D1D5DB] text-sm">
-                <li>123 Rue Financière</li>
-                <li>New York, NY 10001</li>
-                <li>États-Unis</li>
-                <li>Téléphone : +1 (555) 123-4567</li>
-                <li>Courriel : <span className="underline">info@wealthadvisors.com</span></li>
-              </ul>
-            </div>
-            
-            {/* Entreprise */}
-            <div>
-              <h3 className="text-white text-base sm:text-lg font-inter font-semibold mb-4">Entreprise</h3>
-              <ul className="space-y-2 text-[#D1D5DB] text-sm">
-                <li>À propos de nous</li>
-                <li>Nos services</li>
-                <li>Notre équipe</li>
-                <li>Carrières</li>
-                <li>Contact</li>
-              </ul>
-            </div>
-          </div>
-          
-          {/* Bottom Bar */}
-          <div className="border-t border-[#1F2937] pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <span className="text-[#D1D5DB] text-sm">© 2025 WealthAdvisors. Tous droits réservés.</span>
-            <div className="flex gap-6 text-sm">
-              <a href="#" className="text-[#0C2C5D] hover:underline">Légal</a>
-              <a href="#" className="text-[#0C2C5D] hover:underline">Politique de confidentialité</a>
-              <a href="#" className="text-[#0C2C5D] hover:underline">Conditions d'utilisation</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 } 

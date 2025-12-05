@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
 
@@ -146,6 +147,18 @@ export default function PatrimoinePage() {
 
   return (
     <>
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
       <Header />
       
       {/* Hero Section - Deux cartes */}
@@ -232,7 +245,7 @@ export default function PatrimoinePage() {
           
           <div className="max-w-5xl mx-auto space-y-8 text-[#4B5563] text-lg sm:text-xl font-inter leading-relaxed">
             <p className="text-xl sm:text-2xl">
-              <strong className="text-[#253F60] font-bold">La gestion de patrimoine</strong> = {content.enQuelquesMots?.paragraph1 || "structurer, valoriser et transmettre un ensemble de biens (immobilier, placements financiers, liquidités, entreprise, objets de valeur)."}
+              <strong className="text-[#253F60] font-bold">La gestion de patrimoine</strong> {content.enQuelquesMots?.paragraph1 || "structurer, valoriser et transmettre un ensemble de biens (immobilier, placements financiers, liquidités, entreprise, objets de valeur)."}
             </p>
             
             <p>
@@ -241,7 +254,7 @@ export default function PatrimoinePage() {
             
             <div className="bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-50 border-l-4 border-[#B99066] p-8 rounded-xl shadow-lg">
               <p className="mb-6 text-xl">
-                <strong className="text-[#253F60]"><a href="#bilan-patrimonial" className="text-[#B99066] hover:text-[#A67A5A] underline font-semibold transition-colors">Le bilan patrimonial</a></strong> = {content.enQuelquesMots?.bilanPatrimonial?.title || "point de départ pour une stratégie personnalisée :"}
+                <strong className="text-[#253F60]"><a href="#bilan-patrimonial" className="text-[#B99066] hover:text-[#A67A5A] underline font-semibold transition-colors">Le bilan patrimonial</a></strong> {content.enQuelquesMots?.bilanPatrimonial?.title || "point de départ pour une stratégie personnalisée :"}
               </p>
               <ul className="list-none space-y-3 ml-2 text-[#374151]">
                 {(content.enQuelquesMots?.bilanPatrimonial?.items || []).map((item, index) => (
@@ -346,157 +359,60 @@ export default function PatrimoinePage() {
               {content.pourquoiCGP?.intro || "Un CGP est votre copilote pour prendre les bonnes décisions patrimoniales. Il apporte une vision à 360° sur votre situation, en prenant en compte vos revenus, votre patrimoine immobilier et financier, votre environnement fiscal, familial et professionnel."}
             </p>
             
-            {/* Diagramme circulaire avec les 4 points */}
-            <div className="hidden lg:block relative w-full max-w-3xl mx-auto aspect-square mb-12">
-              {/* Cercle central avec flèches circulaires */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <svg className="w-full h-full" viewBox="0 0 500 500">
-                  {/* Définition de la pointe de flèche */}
-                  <defs>
-                    <marker
-                      id="arrowhead"
-                      markerWidth="10"
-                      markerHeight="10"
-                      refX="8"
-                      refY="5"
-                      orient="auto"
-                    >
-                      <polygon
-                        points="0 0, 10 5, 0 10"
-                        fill="#253F60"
-                      />
-                    </marker>
-                  </defs>
-                  
-                  {/* Cercle de flèches continu - 4 arcs avec flèches */}
-                  {/* Arc 1: Top to Right */}
-                  <path
-                    d="M 250 80 A 170 170 0 0 1 420 250"
-                    fill="none"
-                    stroke="#253F60"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    markerEnd="url(#arrowhead)"
-                  />
-                  
-                  {/* Arc 2: Right to Bottom */}
-                  <path
-                    d="M 420 250 A 170 170 0 0 1 250 420"
-                    fill="none"
-                    stroke="#253F60"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    markerEnd="url(#arrowhead)"
-                  />
-                  
-                  {/* Arc 3: Bottom to Left */}
-                  <path
-                    d="M 250 420 A 170 170 0 0 1 80 250"
-                    fill="none"
-                    stroke="#253F60"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    markerEnd="url(#arrowhead)"
-                  />
-                  
-                  {/* Arc 4: Left to Top */}
-                  <path
-                    d="M 80 250 A 170 170 0 0 1 250 80"
-                    fill="none"
-                    stroke="#253F60"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    markerEnd="url(#arrowhead)"
-                  />
-                  
-                  {/* Icône centrale - Image lampe.png */}
-                  <image
-                    href="/images/lampe.png"
-                    x="150"
-                    y="150"
-                    width="200"
-                    height="200"
-                    preserveAspectRatio="xMidYMid meet"
-                  />
-                </svg>
-                  </div>
-              
-              {/* Points dynamiques */}
-              {content.pourquoiCGP?.points && content.pourquoiCGP.points.length >= 4 && (
-                <>
-                  {/* Point 1 - Top Left */}
-                  <div className="absolute top-8 left-8 w-72">
-                    <div className="bg-white rounded-xl shadow-xl p-6 border-2 border-[#253F60] hover:shadow-2xl transition-shadow duration-300">
-                      <div className="flex items-start gap-3">
-                        <svg className="w-7 h-7 text-[#B99066] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-[#253F60] text-lg font-inter font-bold">
-                          {content.pourquoiCGP.points[0]}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Point 2 - Top Right */}
-                  <div className="absolute top-8 right-8 w-72">
-                    <div className="bg-white rounded-xl shadow-xl p-6 border-2 border-[#253F60] hover:shadow-2xl transition-shadow duration-300">
-                      <div className="flex items-start gap-3">
-                        <svg className="w-7 h-7 text-[#B99066] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-[#253F60] text-lg font-inter font-bold">
-                          {content.pourquoiCGP.points[1]}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Point 3 - Bottom Right */}
-                  <div className="absolute bottom-8 right-8 w-72">
-                    <div className="bg-white rounded-xl shadow-xl p-6 border-2 border-[#253F60] hover:shadow-2xl transition-shadow duration-300">
-                      <div className="flex items-start gap-3">
-                        <svg className="w-7 h-7 text-[#B99066] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-[#253F60] text-lg font-inter font-bold">
-                          {content.pourquoiCGP.points[2]}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Point 4 - Bottom Left */}
-                  <div className="absolute bottom-8 left-8 w-72">
-                    <div className="bg-white rounded-xl shadow-xl p-6 border-2 border-[#253F60] hover:shadow-2xl transition-shadow duration-300">
-                      <div className="flex items-start gap-3">
-                        <svg className="w-7 h-7 text-[#B99066] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-[#253F60] text-lg font-inter font-bold">
-                          {content.pourquoiCGP.points[3]}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-            
-            {/* Version mobile - liste verticale */}
-            <div className="lg:hidden mt-12 space-y-6">
-              {(content.pourquoiCGP?.points || []).map((point, index) => (
-                <div key={index} className="bg-white rounded-xl shadow-lg p-6 border-2 border-[#253F60]">
-                  <div className="flex items-start gap-3">
-                    <svg className="w-6 h-6 text-[#B99066] mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            {/* Grille de cartes - Desktop et Mobile */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+              {(content.pourquoiCGP?.points || []).map((point, index) => {
+                // Icônes spécifiques pour chaque point
+                const getIcon = (idx) => {
+                  const icons = [
+                    // Structuration patrimoniale globale
+                    <svg key={idx} className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>,
+                    // Optimisation fiscale et transmission
+                    <svg key={idx} className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>,
+                    // Accès à des solutions haut de gamme
+                    <svg key={idx} className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                    </svg>,
+                    // Suivi personnalisé et réactif
+                    <svg key={idx} className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-[#253F60] text-base font-inter font-semibold">
+                  ];
+                  return icons[idx] || icons[0];
+                };
+
+                return (
+                  <div 
+                    key={index} 
+                    className="group relative bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-200 hover:border-[#B99066] hover:bg-gradient-to-br hover:from-[#253F60] hover:to-[#1a2d47] hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 cursor-pointer overflow-hidden"
+                    style={{
+                      animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                    }}
+                  >
+                    {/* Effet de brillance au survol */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                    </div>
+                    
+                    {/* Icône */}
+                    <div className="mb-6 text-[#253F60] group-hover:text-[#B99066] transition-colors duration-300 transform group-hover:scale-110 group-hover:rotate-3">
+                      {getIcon(index)}
+                    </div>
+                    
+                    {/* Texte */}
+                    <h3 className="text-[#253F60] group-hover:text-white text-lg sm:text-xl font-inter font-bold leading-relaxed transition-colors duration-300 relative z-10">
                       {point}
-                    </span>
+                    </h3>
+                    
+                    {/* Ligne décorative en bas */}
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#253F60] via-[#B99066] to-[#253F60] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             </div>
           </div>
@@ -525,18 +441,36 @@ export default function PatrimoinePage() {
                 <div className="hidden lg:block absolute top-8 left-12 right-12 h-0.5 bg-gray-300 z-0"></div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 lg:gap-4 relative z-10">
-                  {(content.auditPatrimonial?.steps || []).map((step, index) => (
-                    <div key={index} className="relative flex flex-col items-center">
-                      <div className="relative z-10 w-16 h-16 bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-full flex items-center justify-center shadow-xl border-4 border-white mb-4 hover:scale-110 transition-transform duration-300">
-                        <span className="text-white font-bold text-xl">{index + 1}</span>
+                  {(content.auditPatrimonial?.steps || []).map((step, index) => {
+                    // Dégradé progressif du bleu Azalée (#253F60) vers l'or Azalée (#B99066)
+                    const colors = [
+                      { from: '#253F60', to: '#1e3a52' },     // Étape 1 - Bleu Azalée pur
+                      { from: '#2d4a6b', to: '#3d5a6b' },     // Étape 2 - Bleu légèrement éclairci
+                      { from: '#3d5a6b', to: '#5a6b7a' },     // Étape 3 - Bleu-gris
+                      { from: '#5a6b7a', to: '#7a8a7a' },     // Étape 4 - Gris-bleu vers gris
+                      { from: '#8a7a6a', to: '#9a8a6a' },     // Étape 5 - Gris vers beige
+                      { from: '#B99066', to: '#A67A5A' }      // Étape 6 - Or Azalée pur
+                    ];
+                    const stepColor = colors[index] || colors[0];
+                    
+                    return (
+                      <div key={index} className="relative flex flex-col items-center">
+                        <div 
+                          className="relative z-10 w-16 h-16 rounded-full flex items-center justify-center shadow-xl border-4 border-white mb-4 hover:scale-110 transition-transform duration-300"
+                          style={{
+                            background: `linear-gradient(135deg, ${stepColor.from} 0%, ${stepColor.to} 100%)`
+                          }}
+                        >
+                          <span className="text-white font-bold text-xl">{index + 1}</span>
+                        </div>
+                        <div className="w-full bg-white rounded-lg shadow-lg p-4 border-2 border-gray-100 hover:border-[#B99066] transition-all duration-300">
+                          <p className="text-sm font-inter font-semibold text-[#253F60] text-center leading-tight">
+                            {step}
+                          </p>
+                        </div>
                       </div>
-                      <div className="w-full bg-white rounded-lg shadow-lg p-4 border-2 border-gray-100 hover:border-[#B99066] transition-all duration-300">
-                        <p className="text-sm font-inter font-semibold text-[#253F60] text-center leading-tight">
-                          {step}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -562,171 +496,212 @@ export default function PatrimoinePage() {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {(content.expertises?.services || []).map((service, index) => (
-              <div key={index} className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-                <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                  <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                </div>
-                <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-white/90 text-sm font-inter leading-relaxed">
-                  {service.description}
-                </p>
-              </div>
-            ))}
+            {(content.expertises?.services || []).map((service, index) => {
+              // Fonction pour mapper les titres aux URLs
+              const getServiceUrl = (title) => {
+                const titleLower = title?.toLowerCase() || '';
+                if (titleLower.includes('succession') || titleLower.includes('héritage')) {
+                  return '/patrimoine/succession-heritage';
+                } else if (titleLower.includes('donation') && titleLower.includes('gratuit')) {
+                  return '/patrimoine/donation-gratuite';
+                } else if (titleLower.includes('donation') && (titleLower.includes('onéreux') || titleLower.includes('onereux'))) {
+                  return '/patrimoine/donation-onereuse';
+                } else if (titleLower.includes('transmission')) {
+                  return '/patrimoine/transmission';
+                } else if (titleLower.includes('protection') || titleLower.includes('famille')) {
+                  return '/patrimoine/protection-famille';
+                } else if (titleLower.includes('bilan')) {
+                  return '/patrimoine/bilan';
+                } else if (titleLower.includes('conseil')) {
+                  return '/patrimoine/conseils';
+                } else {
+                  return '/patrimoine/autre';
+                }
+              };
+              
+              const serviceUrl = getServiceUrl(service.title);
+              
+              return (
+                <Link key={index} href={serviceUrl}>
+                  <div 
+                    className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                    style={{
+                      animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                    }}
+                  >
+                    {/* Effet de brillance au hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    
+                    <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                      {service.description}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
 
             {/* Service 2: Donation à titre gratuit */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/>
-                </svg>
+            <Link href="/patrimoine/donation-gratuite">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 0.1s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Donation à titre gratuit
+                </h3>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Profitez des abattements renouvelables tous les 15 ans pour transmettre sans fiscalité excessive. Nous vous aidons à choisir le bon moment, les bons bénéficiaires et le bon montage (pleine propriété, nue-propriété, démembrement).
+                </p>
               </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Donation à titre gratuit
-              </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Profitez des abattements renouvelables tous les 15 ans pour transmettre sans fiscalité excessive. Nous vous aidons à choisir le bon moment, les bons bénéficiaires et le bon montage (pleine propriété, nue-propriété, démembrement).
-              </p>
-            </div>
+            </Link>
             
             {/* Service 3: Donation à titre onéreux */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M9 11.24V7.5a2.5 2.5 0 0 1 5 0v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.08-.01-.15-.03-.24-.03-.31 0-.59.13-.79.33l-.79.8 4.94 4.94c.27.27.65.44 1.06.44h6.79c.75 0 1.33-.55 1.44-1.28l.75-5.27c.01-.07.02-.14.02-.2 0-.62-.38-1.16-.91-1.38z"/>
-                </svg>
+            <Link href="/patrimoine/donation-onereuse">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 0.2s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Donation à titre onéreux
+                </h3>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Rééquilibrez une succession, compensez des déséquilibres familiaux ou financez un projet avec des dispositifs fiscaux adaptés.
+                </p>
               </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Donation à titre onéreux
-              </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Rééquilibrez une succession, compensez des déséquilibres familiaux ou financez un projet avec des dispositifs fiscaux adaptés.
-              </p>
-            </div>
+            </Link>
             
             {/* Service 4: Transmission de patrimoine */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 7H16.5c-.8 0-1.54.5-1.85 1.26l-1.38 3.74H9.5c-.83 0-1.5.67-1.5 1.5S8.67 15 9.5 15h2.5v6h2v-6h2.5v6H20zm-5.5-6h-2v6h2v-6z"/>
-                </svg>
+            <Link href="/patrimoine/transmission">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 0.3s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Transmission de patrimoine
+                </h3>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Nous mettons en œuvre les meilleures solutions (assurance-vie, SCI, pacte Dutreil, démembrement, holding patrimoniale) pour vous permettre de transmettre dans la sérénité et en toute sécurité.
+                </p>
               </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Transmission de patrimoine
-              </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Nous mettons en œuvre les meilleures solutions (assurance-vie, SCI, pacte Dutreil, démembrement, holding patrimoniale) pour vous permettre de transmettre dans la sérénité et en toute sécurité.
-              </p>
-            </div>
+            </Link>
             
             {/* Service 5: Protection de la famille */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 3.1l6 2.58v4.82c0 4.54-3.07 8.83-8 9.81-4.93-.98-8-5.27-8-9.81V6.68l8-3.58zm0 2.9l-4 1.73v3.26c0 2.86 1.93 5.57 4 6.27 2.07-.7 4-3.41 4-6.27V8.73L12 7z"/>
-                </svg>
+            <Link href="/patrimoine/protection-famille">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 0.4s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Protection de la famille
+                </h3>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Anticipez les aléas de la vie : décès, divorce, incapacité. Nos solutions couvrent la clause bénéficiaire sur-mesure, le mandat de protection future, le choix du régime matrimonial.
+                </p>
               </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Protection de la famille
-              </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Anticipez les aléas de la vie : décès, divorce, incapacité. Nos solutions couvrent la clause bénéficiaire sur-mesure, le mandat de protection future, le choix du régime matrimonial.
-              </p>
-            </div>
+            </Link>
             
             {/* Service 6: Bilan patrimonial */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
-                </svg>
+            <Link href="/patrimoine/bilan">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 0.5s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Bilan patrimonial
+                </h3>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Un état des lieux personnalisé et confidentiel, base indispensable pour toute stratégie de croissance ou de transmission.
+                </p>
               </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Bilan patrimonial
-              </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Un état des lieux personnalisé et confidentiel, base indispensable pour toute stratégie de croissance ou de transmission.
-              </p>
-            </div>
+            </Link>
             
             {/* Service 7: Conseils patrimoniaux sur-mesure */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/>
-                </svg>
+            <Link href="/patrimoine/conseils">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 0.6s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Conseils patrimoniaux sur-mesure
+                </h3>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Dirigeants, professions libérales, héritiers : chaque profil mérite une stratégie ajustée et évolutive. Nos conseils intègrent vos objectifs, vos contraintes et votre horizon.
+                </p>
               </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Conseils patrimoniaux sur-mesure
-              </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Dirigeants, professions libérales, héritiers : chaque profil mérite une stratégie ajustée et évolutive. Nos conseils intègrent vos objectifs, vos contraintes et votre horizon.
-              </p>
-            </div>
+            </Link>
             
             {/* Service 8: Patrimoines complexes */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
+            <Link href="/patrimoine/autre">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 0.7s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Patrimoines complexes
+                </h3>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Indivision, expatriation, fiscalité internationale, résidences multiples : nos experts vous guident sur des montages adaptés et conformes à la réglementation.
+                </p>
               </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Patrimoines complexes
-              </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Indivision, expatriation, fiscalité internationale, résidences multiples : nos experts vous guident sur des montages adaptés et conformes à la réglementation.
-              </p>
-            </div>
+            </Link>
             
             {/* Service 9: Financement patrimonial */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
-                </svg>
+            <Link href="/patrimoine/autre">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 0.8s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Financement patrimonial
+                </h3>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Utilisez l'effet de levier du crédit pour développer votre patrimoine : crédit lombard, OBO, financement locatif ou refinancement.
+                </p>
               </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Financement patrimonial
-              </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Utilisez l'effet de levier du crédit pour développer votre patrimoine : crédit lombard, OBO, financement locatif ou refinancement.
-              </p>
-            </div>
+            </Link>
             
             {/* Service 10: Produits structurés & alternatifs */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/>
-                </svg>
-              </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Produits structurés & alternatifs
+            <Link href="/placements">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 0.9s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Produits structurés & alternatifs
             </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Accédez à des placements sur-mesure : produits structurés, private equity, ETF, capital-investissement, énergies renouvelables.
-              </p>
-            </div>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Accédez à des placements sur-mesure : produits structurés, private equity, ETF, capital-investissement, énergies renouvelables.
+                </p>
+              </div>
+            </Link>
             
             {/* Service 11: Fiscalité et expatriation */}
-            <div className="bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-white/40 transition-all duration-300">
-              <div className="w-14 h-14 mb-4 text-white flex items-center justify-center">
-                <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                </svg>
-                </div>
-              <h3 className="text-white text-xl font-cairo font-bold mb-3">
-                Fiscalité et expatriation
-              </h3>
-              <p className="text-white/90 text-sm font-inter leading-relaxed">
-                Nous accompagnons aussi les non-résidents dans leur structuration patrimoniale en tenant compte des conventions fiscales internationales.
-              </p>
-            </div>
+            <Link href="/patrimoine/autre">
+              <div 
+                className="group relative bg-transparent border-2 border-white/20 rounded-xl p-6 hover:border-[#B99066] hover:bg-white/5 hover:shadow-2xl hover:shadow-[#B99066]/20 transform hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer"
+                style={{ animation: 'fadeInUp 0.6s ease-out 1s both' }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <h3 className="text-white text-xl font-cairo font-bold mb-3 group-hover:text-[#B99066] transition-colors duration-300">
+                  Fiscalité et expatriation
+                </h3>
+                <p className="text-white/90 text-sm font-inter leading-relaxed group-hover:text-white transition-colors duration-300">
+                  Nous accompagnons aussi les non-résidents dans leur structuration patrimoniale en tenant compte des conventions fiscales internationales.
+                </p>
+              </div>
+            </Link>
           </div>
           
           {/* Bouton CTA */}
@@ -919,134 +894,76 @@ export default function PatrimoinePage() {
           </div>
           
           <div className="max-w-6xl mx-auto space-y-12">
-            {(content.autresProfessionnels?.professionnels || []).map((prof, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-lg p-8 border-l-4 border-[#253F60] hover:shadow-xl transition-shadow duration-300">
-                <div className="flex flex-col md:flex-row gap-6 items-start">
-                  <div className="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-lg flex items-center justify-center">
+            {(content.autresProfessionnels?.professionnels || []).map((prof, index) => {
+              // Fonction pour obtenir l'icône appropriée selon le professionnel
+              const getIcon = (title) => {
+                const titleLower = title?.toLowerCase() || '';
+                
+                if (titleLower.includes('notaire')) {
+                  // Icône Notaire - Document avec sceau
+                  return (
+                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  );
+                } else if (titleLower.includes('avocat') || titleLower.includes('fiscaliste')) {
+                  // Icône Avocat - Balance de justice
+                  return (
                     <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
                     </svg>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-4">
-                      {prof.title}
-                    </h3>
-                    <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed" dangerouslySetInnerHTML={{ __html: prof.description }} />
+                  );
+                } else if (titleLower.includes('comptable') || titleLower.includes('expert-comptable')) {
+                  // Icône Expert-comptable - Calculatrice
+                  return (
+                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  );
+                } else if (titleLower.includes('banquier') || titleLower.includes('banque')) {
+                  // Icône Banquier - Bâtiment bancaire
+                  return (
+                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                  );
+                } else if (titleLower.includes('courtier')) {
+                  // Icône Courtier - Clé
+                  return (
+                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                    </svg>
+                  );
+                } else {
+                  // Icône par défaut - Document
+                  return (
+                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  );
+                }
+              };
+              
+              return (
+                <div key={index} className="bg-white rounded-xl shadow-lg p-8 border-l-4 border-[#253F60] hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex flex-col md:flex-row gap-6 items-start">
+                    <div className="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-lg flex items-center justify-center">
+                      {getIcon(prof.title)}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-4">
+                        {prof.title}
+                      </h3>
+                      <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed" dangerouslySetInnerHTML={{ __html: prof.description }} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Section : Notre approche */}
-      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-12 sm:mb-16 text-center tracking-tight">
-            {content.notreApproche?.title || "Notre approche"}
-          </h2>
-          
-          {/* Diagramme circulaire : Le client au centre */}
-          <div className="max-w-5xl mx-auto mb-16">
-            <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold text-center mb-12">
-              Le client au centre
-            </h3>
-            <div className="hidden lg:block relative w-full max-w-3xl mx-auto">
-              <img 
-                src="/images/Gemini_Generated_Image_moj9n5moj9n5moj9.png" 
-                alt="Le client au centre entouré des 5 partenaires : CGP, notaire, avocat, expert-comptable, courtier"
-                className="w-full h-auto rounded-xl shadow-xl"
-                style={{ filter: 'drop-shadow(0 10px 25px rgba(0,0,0,0.1))' }}
-              />
-            </div>
-            
-            {/* Version mobile - liste verticale améliorée */}
-            <div className="lg:hidden space-y-6">
-              <div className="bg-gradient-to-br from-[#253F60] to-[#1a2d47] text-white rounded-xl p-8 text-center shadow-xl border-4 border-[#B99066]">
-                <div className="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
-                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <p className="font-bold text-xl mb-2">Le client</p>
-                <p className="text-[#B99066] font-semibold text-sm">au centre</p>
-              </div>
-              <div className="grid grid-cols-1 gap-4">
-                <div className="bg-gradient-to-br from-[#B99066] to-[#A67A5A] text-white rounded-xl p-6 text-center shadow-lg border-2 border-[#253F60] hover:shadow-xl transition-all">
-                  <p className="font-bold text-lg mb-1">CGP</p>
-                  <p className="text-sm opacity-90">Chef d'orchestre</p>
-                </div>
-                <div className="bg-gradient-to-br from-[#B99066] to-[#A67A5A] text-white rounded-xl p-6 text-center shadow-lg border-2 border-[#253F60] hover:shadow-xl transition-all">
-                  <p className="font-bold text-lg mb-1">Notaire</p>
-                  <p className="text-sm opacity-90">Transmission</p>
-                </div>
-                <div className="bg-gradient-to-br from-[#B99066] to-[#A67A5A] text-white rounded-xl p-6 text-center shadow-lg border-2 border-[#253F60] hover:shadow-xl transition-all">
-                  <p className="font-bold text-lg mb-1">Avocat</p>
-                  <p className="text-sm opacity-90">Juridique</p>
-                </div>
-                <div className="bg-gradient-to-br from-[#B99066] to-[#A67A5A] text-white rounded-xl p-6 text-center shadow-lg border-2 border-[#253F60] hover:shadow-xl transition-all">
-                  <p className="font-bold text-lg mb-1">Expert-comptable</p>
-                  <p className="text-sm opacity-90">Fiscalité</p>
-                </div>
-                <div className="bg-gradient-to-br from-[#B99066] to-[#A67A5A] text-white rounded-xl p-6 text-center shadow-lg border-2 border-[#253F60] hover:shadow-xl transition-all">
-                  <p className="font-bold text-lg mb-1">Courtier</p>
-                  <p className="text-sm opacity-90">Financement</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold leading-tight mb-8 sm:mb-12 text-center tracking-tight">
-            Pourquoi faire appel à Azalée Patrimoine pour gérer votre patrimoine ?
-          </h2>
-          
-          <div className="max-w-6xl mx-auto space-y-12">
-            {(content.notreApproche?.sections || []).map((section, index) => (
-              <div key={index} className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-8 border-l-4 border-[#253F60] shadow-lg">
-                <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6">
-                  {section.title}
-                </h3>
-                <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed" dangerouslySetInnerHTML={{ __html: section.content }} />
-                <div className="mt-6 flex justify-center">
-                  <div className="w-24 h-24 bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-lg flex items-center justify-center shadow-md">
-                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* H3: En résumé */}
-          {content.notreApproche?.resume && (
-            <div className="max-w-6xl mx-auto mt-12">
-              <div className="bg-gradient-to-br from-[#253F60] to-[#1a2d47] rounded-xl p-8 md:p-12 shadow-2xl">
-                <h3 className="text-white text-2xl sm:text-3xl font-cairo font-bold mb-8 text-center">
-                  {content.notreApproche.resume.title}
-                </h3>
-                <div className="space-y-4 mb-8">
-                  {(content.notreApproche.resume.points || []).map((point, index) => (
-                    <div key={index} className="flex items-start gap-4">
-                      <svg className="w-7 h-7 text-green-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <p className="text-white/90 text-lg sm:text-xl font-inter leading-relaxed">
-                        {point}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                
-                <p className="text-white text-xl sm:text-2xl font-inter leading-relaxed text-center font-light italic">
-                  {content.notreApproche.resume.conclusion}
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* Section : FAQ Gestion de patrimoine */}
       <section className="w-full bg-gradient-to-b from-white to-gray-50 py-16 sm:py-20 lg:py-24">
@@ -1167,54 +1084,91 @@ export default function PatrimoinePage() {
           </h2>
           
           <div className="max-w-6xl mx-auto">
-            {/* Carte de France avec les villes */}
-            <div className="relative w-full max-w-4xl mx-auto mb-12">
-              {/* Image SVG de la France */}
-              <img 
-                src="/images/france.svg" 
-                alt="Carte de France" 
-                className="w-full h-auto"
-              />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              {/* Carte de France à gauche - avec dégradé professionnel */}
+              <div className="relative w-full">
+                <div className="relative w-full rounded-xl overflow-hidden shadow-xl bg-white">
+                  {/* Container avec dégradé appliqué directement sur la forme de la carte */}
+                  <div 
+                    className="relative w-full"
+                    style={{ 
+                      filter: 'drop-shadow(0 10px 25px rgba(0,0,0,0.15))',
+                      background: 'linear-gradient(135deg, #253F60 0%, #4a6b8a 30%, #7a8a7a 60%, #B99066 100%)',
+                      WebkitMaskImage: 'url(/images/france.svg)',
+                      WebkitMaskSize: 'contain',
+                      WebkitMaskRepeat: 'no-repeat',
+                      WebkitMaskPosition: 'center',
+                      maskImage: 'url(/images/france.svg)',
+                      maskSize: 'contain',
+                      maskRepeat: 'no-repeat',
+                      maskPosition: 'center',
+                      aspectRatio: '596.41547 / 584.5448',
+                      minHeight: '400px'
+                    }}
+                  />
+                </div>
+              </div>
               
-              {/* Marqueurs de villes positionnés par-dessus */}
-              <svg 
-                className="absolute top-0 left-0 w-full h-full pointer-events-none"
-                viewBox="0 0 596.41547 584.5448"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                {(content.localisation?.villes || []).map((ville, index) => {
-                  // Positions approximatives pour chaque ville (vous pouvez ajuster)
-                  const positions = [
-                    { cx: 300, cy: 250 }, // Paris
-                    { cx: 300, cy: 100 }, // Lille
-                    { cx: 150, cy: 350 }, // Nantes
-                    { cx: 200, cy: 400 }, // La Rochelle
-                    { cx: 450, cy: 550 }, // Salon de Provence
-                    { cx: 500, cy: 400 }  // Annemasse
-                  ];
-                  const pos = positions[index] || { cx: 300, cy: 250 };
-                  return (
-                    <g key={index} className="pointer-events-auto cursor-pointer">
-                      <circle cx={pos.cx} cy={pos.cy} r="8" fill="#253F60" className="hover:fill-[#B99066] transition-colors"/>
-                      <text x={pos.cx} y={pos.cy - 10} textAnchor="middle" fill="#253F60" fontSize="12" fontWeight="bold" fontFamily="Inter, sans-serif">{ville}</text>
-                    </g>
-                  );
-                })}
-              </svg>
+              {/* Carte informative à droite */}
+              <div className="bg-gradient-to-br from-[#253F60] to-[#B99066] rounded-xl shadow-2xl p-8 sm:p-10 lg:p-12 text-white">
+                <div className="text-center mb-8">
+                  <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-white text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-6">
+                    {content.localisation?.cardTitle || "Disponible en toute la France"}
+                  </h3>
+                  <p className="text-white/90 text-lg sm:text-xl font-inter leading-relaxed mb-8">
+                    {content.localisation?.cardDescription || "Nos conseillers en gestion de patrimoine sont présents partout en France pour vous accompagner dans votre projet patrimonial, où que vous soyez."}
+                  </p>
+                </div>
+                
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center gap-4 bg-white/10 rounded-lg p-4">
+                    <svg className="w-6 h-6 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-white text-base font-inter">Conseil personnalisé près de chez vous</span>
+                  </div>
+                  <div className="flex items-center gap-4 bg-white/10 rounded-lg p-4">
+                    <svg className="w-6 h-6 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-white text-base font-inter">Rendez-vous en présentiel ou à distance</span>
+                  </div>
+                  <div className="flex items-center gap-4 bg-white/10 rounded-lg p-4">
+                    <svg className="w-6 h-6 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-white text-base font-inter">Expertise locale et nationale</span>
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <button 
+                    onClick={() => window.open(content.localisation?.buttonUrl || 'https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                    className="bg-white text-[#253F60] px-8 py-4 rounded-lg shadow-xl font-inter font-bold text-lg hover:bg-white/90 hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-300"
+                  >
+                    {content.localisation?.buttonText || "Prendre rendez-vous"}
+                  </button>
+                </div>
+              </div>
             </div>
-            
-            {/* Boutons pour chaque ville */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {(content.localisation?.villes || []).map((ville, index) => (
-                <button 
-                  key={index}
-                  onClick={() => window.open(content.localisation?.buttonUrl || 'https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
-                  className="bg-gradient-to-r from-[#253F60] to-[#1a2d47] text-white px-6 py-4 rounded-lg shadow-xl font-inter font-bold text-base hover:from-[#1a2d47] hover:to-[#253F60] hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-300"
-                >
-                  {(content.localisation?.buttonText || "Rencontrer un conseiller en gestion de patrimoine à {ville}").replace('{ville}', ville)}
-                </button>
-              ))}
-            </div>
+          </div>
+          
+          {/* CTA Button */}
+          <div className="mt-12 text-center">
+            <a
+              href={content.localisation?.ctaButtonUrl || "https://calendly.com/rdv-azalee-patrimoine/30min"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-gradient-to-r from-[#253F60] to-[#1a2d47] hover:from-[#1a2d47] hover:to-[#253F60] text-white px-10 py-5 rounded-lg shadow-xl font-inter font-bold text-lg sm:text-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl"
+            >
+              {content.localisation?.ctaButtonText || "Rencontrer un conseiller en gestion de patrimoine"}
+            </a>
           </div>
         </div>
       </section>

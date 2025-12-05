@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function ProtectionFamillePage() {
@@ -99,7 +100,7 @@ export default function ProtectionFamillePage() {
             <PlacementChart 
               title="Indicateurs de protection familiale"
               data={chartData}
-              chartImage="/images/variation-chart-image-944f04.png"
+              chartImage="/images/protection.png"
             />
           </div>
         </div>
@@ -461,6 +462,8 @@ export default function ProtectionFamillePage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }

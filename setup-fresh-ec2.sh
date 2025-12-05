@@ -81,3 +81,5 @@ echo "   exit"
 echo "   ssh -i your-key.pem ubuntu@$EC2_IP"
 
 
+
+

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function ScpiOpciPage() {
@@ -651,6 +652,8 @@ export default function ScpiOpciPage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 } 

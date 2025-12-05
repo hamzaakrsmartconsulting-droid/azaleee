@@ -223,29 +223,60 @@ export default function FiscalitePage() {
       </section>
 
       {/* Section Comprendre l'impôt sur le revenu */}
-      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
+      <section className="w-full bg-gradient-to-b from-gray-50 to-white py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl">
-            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-6">
-              {pageContent.comprendreIR?.h2 || "Comprendre l'impôt sur le revenu"}
-            </h2>
+          <div className="max-w-5xl mx-auto">
+            {/* En-tête */}
+            <div className="text-center mb-12">
+              <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold mb-4">
+                {pageContent.comprendreIR?.h2 || "Comprendre l'impôt sur le revenu"}
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#253F60] to-[#B99066] mx-auto mb-8"></div>
+            </div>
             
-            {/* Ligne horizontale grise */}
-            <div className="w-full h-px bg-gray-300 mb-8"></div>
-            
-            <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-6">
-              {pageContent.comprendreIR?.h3 || "Comment fonctionne l'impôt en France"}
-            </h3>
-            
-            <div className="space-y-6">
-              {(pageContent.comprendreIR?.paragraphs || [
-                "En France, l'impôt sur le revenu est prélevé sur l'ensemble des revenus perçus par un foyer fiscal au cours de l'année civile. Il s'applique de façon progressive : plus vos revenus sont élevés, plus le taux d'imposition applicable à chaque \"tranche\" de revenus augmente. Ce système vise l'équité fiscale, tout en incitant à la structuration de votre stratégie patrimoniale.",
-                "L'impôt sur le revenu joue un rôle déterminant dans la gestion et la valorisation de votre patrimoine. Avant même de songer à l'optimisation fiscale, il est essentiel de bien comprendre son fonctionnement pour faire les bons choix et saisir toutes les opportunités offertes par la législation."
-              ]).map((paragraph, index) => (
-                <p key={index} className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
+            {/* Carte principale avec contenu */}
+            <div className="bg-white rounded-2xl shadow-xl border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl transition-all duration-300">
+              <div className="p-8 sm:p-10 lg:p-12">
+                <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-8 flex items-center gap-4">
+                  <div className="w-1 h-12 bg-gradient-to-b from-[#253F60] to-[#B99066] rounded-full"></div>
+                  <span>{pageContent.comprendreIR?.h3 || "Comment fonctionne l'impôt en France"}</span>
+                </h3>
+                
+                <div className="space-y-6">
+                  {(pageContent.comprendreIR?.paragraphs || [
+                    "En France, l'impôt sur le revenu est prélevé sur l'ensemble des revenus perçus par un foyer fiscal au cours de l'année civile. Il s'applique de façon progressive : plus vos revenus sont élevés, plus le taux d'imposition applicable à chaque \"tranche\" de revenus augmente. Ce système vise l'équité fiscale, tout en incitant à la structuration de votre stratégie patrimoniale.",
+                    "L'impôt sur le revenu joue un rôle déterminant dans la gestion et la valorisation de votre patrimoine. Avant même de songer à l'optimisation fiscale, il est essentiel de bien comprendre son fonctionnement pour faire les bons choix et saisir toutes les opportunités offertes par la législation."
+                  ]).map((paragraph, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <div className="mt-2 flex-shrink-0">
+                        <div className="w-2 h-2 bg-[#B99066] rounded-full"></div>
+                      </div>
+                      <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed flex-1">
+                        {paragraph}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Encadré informatif en bas */}
+              <div className="bg-gradient-to-r from-[#253F60]/5 to-[#B99066]/5 border-t-2 border-[#B99066]/20 p-6 sm:p-8">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 mt-1">
+                    <svg className="w-6 h-6 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[#253F60] font-inter font-semibold text-sm sm:text-base mb-2">
+                      💡 À retenir
+                    </p>
+                    <p className="text-[#4B5563] text-sm sm:text-base font-inter leading-relaxed">
+                      Une bonne compréhension du système fiscal français est la base d'une stratégie patrimoniale efficace et optimisée.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -301,7 +332,7 @@ export default function FiscalitePage() {
           <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             {/* Colonne gauche - Texte */}
-                        <div>
+            <div>
               <h3 className="text-[#253F60] text-xl sm:text-2xl lg:text-3xl font-cairo font-semibold mb-8 bg-[#F5F0E8] inline-block px-4 py-2 rounded-lg">
                 {pageContent.bareme?.h3 || "Barème, tranches, décote et quotient familial"}
                 </h3>
@@ -349,79 +380,45 @@ export default function FiscalitePage() {
                   ))}
                 </div>
               </div>
+
+              {/* Section Profiter des dispositifs fiscaux */}
+              <div className="mt-12">
+                <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-6">
+                  {pageContent.dispositifs?.h2 || "Profiter des dispositifs fiscaux"}
+                </h2>
+                
+                <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8">
+                  {pageContent.dispositifs?.intro || "La fiscalité française regorge de \"niches\" permettant de réduire son impôt tout en investissant dans des actifs porteurs."}
+                </p>
+
+                {/* Bouton CTA */}
+                {pageContent.dispositifs?.ctaButton && (
+                  <div className="mb-12 text-center">
+                    <button 
+                      onClick={() => window.open(pageContent.dispositifs?.ctaLink || 'https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
+                      className="bg-[#253F60] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-base lg:text-lg hover:bg-[#1a2d47] hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
+                    >
+                      {pageContent.dispositifs.ctaButton}
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Colonne droite - Infographie */}
             <div className="lg:sticky lg:top-8">
-              <div className="bg-gradient-to-br from-[#F5F0E8] to-white rounded-2xl shadow-xl p-6 sm:p-8 border-2 border-[#B99066]/30">
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[#253F60] text-sm font-inter font-semibold uppercase">Fiscalité</span>
-                    <svg className="w-6 h-6" viewBox="0 0 20 20" fill="none">
-                      <rect x="0" y="0" width="6.67" height="20" fill="#002654"/>
-                      <rect x="6.67" y="0" width="6.67" height="20" fill="#FFFFFF"/>
-                      <rect x="13.33" y="0" width="6.67" height="20" fill="#ED2939"/>
-                    </svg>
-                  </div>
-                  <h4 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-2">
-                    {pageContent.bareme?.infographie?.title || "Impôt sur le revenu"}
-                  </h4>
-                  <div className="bg-[#B99066] px-3 py-1 rounded inline-block mb-4">
-                    <p className="text-white text-sm sm:text-base font-cairo font-bold">
-                      {pageContent.bareme?.infographie?.subtitle || "Tranches et taux d'imposition 2025"}
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="mb-6 space-y-3 text-sm text-[#4B5563] font-inter leading-relaxed">
-                  {(pageContent.bareme?.infographie?.description || [
-                    "L'impôt sur vos revenus de 2024, déclarés en 2025, est calculé par tranches, en fonction du montant de vos revenus. Chaque tranche correspond à un taux d'imposition (de 0 à 45 %).",
-                    "Si votre revenu annuel dépasse celui de la tranche 1 (11 497 €), il sera concerné par plusieurs tranches successives, comme expliqué dans l'exemple."
-                  ]).map((desc, index) => (
-                    <p key={index}>{desc}</p>
-                  ))}
-                </div>
-
-                {/* Image de l'infographie */}
-                <div className="rounded-lg overflow-hidden shadow-lg border-2 border-gray-200">
-                  <img 
-                    src={pageContent.bareme?.infographie?.image || "/images/I6644.jpg"} 
-                    alt={pageContent.bareme?.infographie?.imageAlt || "Barème de l'impôt sur le revenu 2025 - Tranches et taux d'imposition"} 
-                    className="w-full h-auto"
-                  />
-                </div>
+              {/* Image de l'infographie */}
+              <div className="rounded-lg overflow-hidden shadow-lg border-2 border-gray-200">
+                <img 
+                  src={pageContent.bareme?.infographie?.image || "/images/I6644.jpg"} 
+                  alt={pageContent.bareme?.infographie?.imageAlt || "Barème de l'impôt sur le revenu 2025 - Tranches et taux d'imposition"} 
+                  className="w-full h-auto"
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Section Profiter des dispositifs fiscaux */}
-      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-        <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mb-10">
-            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-6">
-              {pageContent.dispositifs?.h2 || "Profiter des dispositifs fiscaux"}
-            </h2>
-            
-            <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8">
-              {pageContent.dispositifs?.intro || "La fiscalité française regorge de \"niches\" permettant de réduire son impôt tout en investissant dans des actifs porteurs."}
-            </p>
-          </div>
-
-          {/* Bouton CTA */}
-          {pageContent.dispositifs?.ctaButton && (
-            <div className="mb-12 text-center">
-              <button 
-                onClick={() => window.open(pageContent.dispositifs?.ctaLink || 'https://calendly.com/rdv-azalee-patrimoine/30min', '_blank')}
-                className="bg-[#253F60] text-white px-8 py-4 rounded-lg shadow-lg font-inter font-semibold text-base lg:text-lg hover:bg-[#1a2d47] hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
-              >
-                {pageContent.dispositifs.ctaButton}
-              </button>
-            </div>
-          )}
-          </div>
-        </section>
 
       {/* Section Les dispositifs de défiscalisation immobilière */}
       <section className="w-full bg-gray-50 py-16 sm:py-20 lg:py-24">
@@ -475,34 +472,56 @@ export default function FiscalitePage() {
       </section>
 
       {/* Section Les erreurs fréquentes à éviter */}
-      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
+      <section className="w-full bg-gradient-to-b from-white to-gray-50 py-16 sm:py-20 lg:py-24">
         <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl">
-            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-8">
-              {pageContent.erreurs?.h2 || "Les erreurs fréquentes à éviter"}
-            </h2>
+          <div className="max-w-5xl mx-auto">
+            {/* En-tête */}
+            <div className="text-center mb-12">
+              <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold mb-4">
+                {pageContent.erreurs?.h2 || "Les erreurs fréquentes à éviter"}
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#253F60] to-[#B99066] mx-auto mb-8"></div>
+            </div>
 
-            {/* Liste à puces */}
-            <ul className="space-y-4 mb-8">
-              {(pageContent.erreurs?.errors || []).map((error, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <div className="mt-2 flex-shrink-0 w-2 h-2 bg-black rounded-full"></div>
-                  <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                    {error}
-                  </p>
-                </li>
-              ))}
-            </ul>
+            {/* Carte principale avec contenu */}
+            <div className="bg-white rounded-2xl shadow-xl border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl transition-all duration-300">
+              <div className="p-8 sm:p-10 lg:p-12">
+                {/* Liste à puces améliorée */}
+                <ul className="space-y-6 mb-8">
+                  {(pageContent.erreurs?.errors || []).map((error, index) => (
+                    <li key={index} className="flex items-start gap-4">
+                      <div className="mt-2 flex-shrink-0">
+                        <div className="w-2 h-2 bg-[#B99066] rounded-full"></div>
+                      </div>
+                      <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed flex-1">
+                        {error}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
 
-            {/* Section Astuce */}
-            {pageContent.erreurs?.astuce && (
-              <div className="bg-[#F5F0E8] border-l-4 border-[#B99066] p-6 rounded-lg">
-                <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                  <strong className="font-semibold text-[#253F60]">{pageContent.erreurs.astuce.title}</strong>{" "}
-                  <span className="italic">{pageContent.erreurs.astuce.text}</span>
-                </p>
+                {/* Section Astuce améliorée */}
+                {pageContent.erreurs?.astuce && (
+                  <div className="bg-gradient-to-r from-[#253F60]/5 to-[#B99066]/5 border-l-4 border-[#B99066] p-6 sm:p-8 rounded-lg mt-8">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 mt-1">
+                        <svg className="w-6 h-6 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-[#253F60] font-inter font-semibold text-base sm:text-lg mb-2">
+                          {pageContent.erreurs.astuce.title || "Astuce"}
+                        </p>
+                        <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
+                          {pageContent.erreurs.astuce.text}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </section>
@@ -662,44 +681,61 @@ export default function FiscalitePage() {
         </section>
 
       {/* Section Conseils de l'expert Azalée Patrimoine */}
-      <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
+      <section className="w-full bg-gradient-to-b from-gray-50 to-white py-16 sm:py-20 lg:py-24">
           <div className="max-w-[1368px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mb-12">
-            <h2 className="text-[#253F60] text-2xl sm:text-3xl lg:text-4xl font-cairo font-bold mb-8">
-              {pageContent.conseilsExpert?.h2 || "Conseils de l'expert Azalée Patrimoine"}
-            </h2>
+          <div className="max-w-5xl mx-auto">
+            {/* En-tête */}
+            <div className="text-center mb-12">
+              <h2 className="text-[#253F60] text-3xl sm:text-4xl lg:text-5xl font-cairo font-bold mb-4">
+                {pageContent.conseilsExpert?.h2 || "Conseils de l'expert Azalée Patrimoine"}
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#253F60] to-[#B99066] mx-auto mb-8"></div>
+            </div>
 
-            <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-semibold mb-6">
-              {pageContent.conseilsExpert?.h3 || "Pourquoi travailler avec un Conseiller en Gestion de Patrimoine (CGP) ?"}
+            {/* Carte principale avec contenu */}
+            <div className="bg-white rounded-2xl shadow-xl border-2 border-[#E5E7EB] overflow-hidden hover:shadow-2xl transition-all duration-300 mb-8">
+              <div className="p-8 sm:p-10 lg:p-12">
+                <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-8 flex items-center gap-4">
+                  <div className="w-1 h-12 bg-gradient-to-b from-[#253F60] to-[#B99066] rounded-full"></div>
+                  <span>{pageContent.conseilsExpert?.h3 || "Pourquoi travailler avec un Conseiller en Gestion de Patrimoine (CGP) ?"}</span>
                 </h3>
 
-            <div className="space-y-4 mb-10">
-              {(pageContent.conseilsExpert?.paragraphs || [
-                "Faire appel à un CGP permet de transformer la complexité fiscale et patrimoniale en véritables leviers pour atteindre vos objectifs de vie.",
-                "Un CGP ne se limite pas à vous vendre des solutions : il vous accompagne dans la durée, en toute indépendance, avec une vue globale sur votre situation et en tenant compte de l'évolution permanente des dispositifs fiscaux."
-              ]).map((paragraph, index) => (
-                <p key={index} className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
+                <div className="space-y-6">
+                  {(pageContent.conseilsExpert?.paragraphs || [
+                    "Faire appel à un CGP permet de transformer la complexité fiscale et patrimoniale en véritables leviers pour atteindre vos objectifs de vie.",
+                    "Un CGP ne se limite pas à vous vendre des solutions : il vous accompagne dans la durée, en toute indépendance, avec une vue globale sur votre situation et en tenant compte de l'évolution permanente des dispositifs fiscaux."
+                  ]).map((paragraph, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <div className="mt-2 flex-shrink-0">
+                        <div className="w-2 h-2 bg-[#B99066] rounded-full"></div>
+                      </div>
+                      <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed flex-1">
+                        {paragraph}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Grille Avantages / Inconvénients */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
               {/* Avantages */}
               {pageContent.conseilsExpert?.avantages && (
-                <div className="bg-[#F5F0E8] rounded-xl p-6 border-2 border-[#B99066]">
-                  <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4 flex items-center gap-2">
+                <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-[#B99066] hover:shadow-xl transition-all duration-300">
+                  <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6 flex items-center gap-3">
                     <svg className="w-6 h-6 text-[#B99066]" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     {pageContent.conseilsExpert.avantages.title}
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-4">
                     {(pageContent.conseilsExpert.avantages.items || []).map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                        <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
+                      <li key={index} className="flex items-start gap-4">
+                        <div className="mt-2 flex-shrink-0">
+                          <div className="w-2 h-2 bg-[#B99066] rounded-full"></div>
+                        </div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed flex-1">
                           {item}
                         </p>
                       </li>
@@ -710,18 +746,20 @@ export default function FiscalitePage() {
 
               {/* Inconvénients */}
               {pageContent.conseilsExpert?.inconvenients && (
-                <div className="bg-[#F5F0E8] rounded-xl p-6 border-2 border-[#253F60]">
-                  <h3 className="text-[#253F60] text-xl font-cairo font-bold mb-4 flex items-center gap-2">
+                <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border-2 border-[#253F60] hover:shadow-xl transition-all duration-300">
+                  <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-bold mb-6 flex items-center gap-3">
                     <svg className="w-6 h-6 text-[#253F60]" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                     </svg>
                     {pageContent.conseilsExpert.inconvenients.title}
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-4">
                     {(pageContent.conseilsExpert.inconvenients.items || []).map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="mt-1 flex-shrink-0 w-2 h-2 bg-[#253F60] rounded-full"></div>
-                        <p className="text-[#4B5563] text-sm font-inter leading-relaxed">
+                      <li key={index} className="flex items-start gap-4">
+                        <div className="mt-2 flex-shrink-0">
+                          <div className="w-2 h-2 bg-[#253F60] rounded-full"></div>
+                        </div>
+                        <p className="text-[#4B5563] text-base font-inter leading-relaxed flex-1">
                           {item}
                         </p>
                       </li>
@@ -733,23 +771,40 @@ export default function FiscalitePage() {
 
             {/* Astuce */}
             {pageContent.conseilsExpert?.astuce && (
-              <div className="bg-[#F5F0E8] border-l-4 border-[#B99066] p-6 rounded-lg mb-10">
-                <h3 className="text-[#253F60] text-lg font-cairo font-bold mb-3">{pageContent.conseilsExpert.astuce.title}</h3>
-                <ul className="space-y-2 text-[#4B5563] text-sm font-inter">
-                  {(pageContent.conseilsExpert.astuce.items || []).map((item, index) => (
-                    <li key={index}>• {item}</li>
-                  ))}
-                </ul>
+              <div className="bg-gradient-to-r from-[#253F60]/5 to-[#B99066]/5 border-l-4 border-[#B99066] p-6 sm:p-8 rounded-lg mb-8">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 mt-1">
+                    <svg className="w-6 h-6 text-[#B99066]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-[#253F60] text-lg sm:text-xl font-cairo font-bold mb-4">{pageContent.conseilsExpert.astuce.title || "Astuce"}</h3>
+                    <ul className="space-y-3">
+                      {(pageContent.conseilsExpert.astuce.items || []).map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <div className="mt-2 flex-shrink-0">
+                            <div className="w-2 h-2 bg-[#B99066] rounded-full"></div>
+                          </div>
+                          <p className="text-[#4B5563] text-base font-inter leading-relaxed flex-1">
+                            {item}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
             )}
 
             {/* Audit fiscal personnalisé */}
             {pageContent.conseilsExpert?.auditFiscal && (
-              <div className="mb-10">
-                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-semibold mb-4">
-                  {pageContent.conseilsExpert.auditFiscal.title}
+              <div className="bg-white rounded-2xl shadow-xl border-2 border-[#E5E7EB] p-8 sm:p-10 lg:p-12 mb-8 hover:shadow-2xl transition-all duration-300">
+                <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 flex items-center gap-4">
+                  <div className="w-1 h-12 bg-gradient-to-b from-[#253F60] to-[#B99066] rounded-full"></div>
+                  <span>{pageContent.conseilsExpert.auditFiscal.title}</span>
                 </h3>
-                <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed">
                   {pageContent.conseilsExpert.auditFiscal.description}
                 </p>
               </div>
@@ -757,15 +812,18 @@ export default function FiscalitePage() {
 
             {/* Le CGP réalise un diagnostic complet */}
             {pageContent.conseilsExpert?.diagnostic && (
-              <div className="mb-10">
-                <h2 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6">
-                  {pageContent.conseilsExpert.diagnostic.h2}
+              <div className="bg-white rounded-2xl shadow-xl border-2 border-[#E5E7EB] p-8 sm:p-10 lg:p-12 mb-8 hover:shadow-2xl transition-all duration-300">
+                <h2 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-8 flex items-center gap-4">
+                  <div className="w-1 h-12 bg-gradient-to-b from-[#253F60] to-[#B99066] rounded-full"></div>
+                  <span>{pageContent.conseilsExpert.diagnostic.h2}</span>
                 </h2>
-                <ul className="space-y-4">
+                <ul className="space-y-5">
                   {(pageContent.conseilsExpert.diagnostic.items || []).map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                      <p className="text-[#4B5563] text-base font-inter leading-relaxed" dangerouslySetInnerHTML={{ __html: item }} />
+                    <li key={index} className="flex items-start gap-4">
+                      <div className="mt-2 flex-shrink-0">
+                        <div className="w-2 h-2 bg-[#B99066] rounded-full"></div>
+                      </div>
+                      <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed flex-1" dangerouslySetInnerHTML={{ __html: item }} />
                     </li>
                   ))}
                 </ul>
@@ -774,18 +832,21 @@ export default function FiscalitePage() {
 
             {/* Accompagnement sur mesure */}
             {pageContent.conseilsExpert?.accompagnement && (
-              <div className="mb-10">
-                <h3 className="text-[#253F60] text-xl sm:text-2xl font-cairo font-semibold mb-4">
-                  {pageContent.conseilsExpert.accompagnement.title}
+              <div className="bg-white rounded-2xl shadow-xl border-2 border-[#E5E7EB] p-8 sm:p-10 lg:p-12 mb-8 hover:shadow-2xl transition-all duration-300">
+                <h3 className="text-[#253F60] text-2xl sm:text-3xl font-cairo font-bold mb-6 flex items-center gap-4">
+                  <div className="w-1 h-12 bg-gradient-to-b from-[#253F60] to-[#B99066] rounded-full"></div>
+                  <span>{pageContent.conseilsExpert.accompagnement.title}</span>
                 </h3>
-                <p className="text-[#4B5563] text-base font-inter leading-relaxed mb-6">
+                <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed mb-8">
                   {pageContent.conseilsExpert.accompagnement.intro}
                 </p>
-                <ul className="space-y-4">
+                <ul className="space-y-5">
                   {(pageContent.conseilsExpert.accompagnement.items || []).map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <div className="mt-2 flex-shrink-0 w-2 h-2 bg-[#B99066] rounded-full"></div>
-                      <p className="text-[#4B5563] text-base font-inter leading-relaxed">
+                    <li key={index} className="flex items-start gap-4">
+                      <div className="mt-2 flex-shrink-0">
+                        <div className="w-2 h-2 bg-[#B99066] rounded-full"></div>
+                      </div>
+                      <p className="text-[#4B5563] text-base sm:text-lg font-inter leading-relaxed flex-1">
                         {item}
                       </p>
                     </li>
@@ -835,7 +896,9 @@ export default function FiscalitePage() {
                     d="M 100 100 L 100 20 A 80 80 0 0 1 180 100 Z"
                     fill="#B99066"
                     opacity="0.9"
-                    className="hover:opacity-100 transition-opacity"
+                    className="hover:opacity-100 transition-opacity cursor-pointer"
+                    onMouseEnter={() => setHoveredIcon('diagnostic')}
+                    onMouseLeave={() => setHoveredIcon(null)}
                   />
                   
                   {/* Segment 2: Stratégie (Top Right - 90° à 180°) */}
@@ -843,7 +906,9 @@ export default function FiscalitePage() {
                     d="M 100 100 L 180 100 A 80 80 0 0 1 100 180 Z"
                     fill="#D4A574"
                     opacity="0.9"
-                    className="hover:opacity-100 transition-opacity"
+                    className="hover:opacity-100 transition-opacity cursor-pointer"
+                    onMouseEnter={() => setHoveredIcon('strategie')}
+                    onMouseLeave={() => setHoveredIcon(null)}
                   />
                   
                   {/* Segment 3: Mise en œuvre (Bottom Right - 180° à 270°) */}
@@ -851,7 +916,9 @@ export default function FiscalitePage() {
                     d="M 100 100 L 100 180 A 80 80 0 0 1 20 100 Z"
                     fill="#B99066"
                     opacity="0.9"
-                    className="hover:opacity-100 transition-opacity"
+                    className="hover:opacity-100 transition-opacity cursor-pointer"
+                    onMouseEnter={() => setHoveredIcon('mise-en-oeuvre')}
+                    onMouseLeave={() => setHoveredIcon(null)}
                   />
                   
                   {/* Segment 4: Suivi (Bottom Left - 270° à 360°) */}
@@ -859,7 +926,9 @@ export default function FiscalitePage() {
                     d="M 100 100 L 20 100 A 80 80 0 0 1 100 20 Z"
                     fill="#D4A574"
                     opacity="0.9"
-                    className="hover:opacity-100 transition-opacity"
+                    className="hover:opacity-100 transition-opacity cursor-pointer"
+                    onMouseEnter={() => setHoveredIcon('suivi')}
+                    onMouseLeave={() => setHoveredIcon(null)}
                   />
                   
                   {/* Cercle intérieur (donut) avec bordure dorée */}
@@ -931,14 +1000,16 @@ export default function FiscalitePage() {
                   </div>
                 </div>
                 
-                {/* Texte Diagnostic - Top Left (autour du cercle, éloigné) */}
-                <div className={`absolute -top-8 -left-4 sm:-top-12 sm:-left-8 lg:-left-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] transition-opacity duration-300 ${hoveredIcon === 'diagnostic' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                  <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">
-                    {pageContent.expertise?.diagramme?.segments?.[0]?.title || "Diagnostic complet"}
-                  </h3>
-                  <p className="text-white text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
-                    {pageContent.expertise?.diagramme?.segments?.[0]?.description || "Analyse approfondie de votre situation fiscale, patrimoniale, professionnelle et familiale pour identifier tous les leviers d'optimisation disponibles."}
-                  </p>
+                {/* Texte Diagnostic - Top Left */}
+                <div className={`absolute top-0 left-0 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] transition-opacity duration-300 z-20 ${hoveredIcon === 'diagnostic' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                  <div className="bg-white rounded-xl p-4 sm:p-6 shadow-xl border-2 border-[#B99066]">
+                    <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">
+                      {pageContent.expertise?.diagramme?.segments?.[0]?.title || "Diagnostic complet"}
+                    </h3>
+                    <p className="text-[#4B5563] text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
+                      {pageContent.expertise?.diagramme?.segments?.[0]?.description || "Analyse approfondie de votre situation fiscale, patrimoniale, professionnelle et familiale pour identifier tous les leviers d'optimisation disponibles."}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Badge 2: Stratégie (Top Right segment - positionné à l'intérieur du segment) */}
@@ -955,14 +1026,16 @@ export default function FiscalitePage() {
                   </div>
                 </div>
                 
-                {/* Texte Stratégie - Top Right (autour du cercle, éloigné) */}
-                <div className={`absolute -top-8 -right-4 sm:-top-12 sm:-right-8 lg:-right-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] text-right transition-opacity duration-300 ${hoveredIcon === 'strategie' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                  <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">
-                    {pageContent.expertise?.diagramme?.segments?.[1]?.title || "Stratégie personnalisée"}
-                  </h3>
-                  <p className="text-white text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
-                    {pageContent.expertise?.diagramme?.segments?.[1]?.description || "Élaboration d'un plan d'action sur-mesure intégrant vos objectifs, contraintes et aversion au risque, avec priorisation des actions selon leur impact."}
-                  </p>
+                {/* Texte Stratégie - Top Right */}
+                <div className={`absolute top-0 right-0 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] text-right transition-opacity duration-300 z-20 ${hoveredIcon === 'strategie' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                  <div className="bg-white rounded-xl p-4 sm:p-6 shadow-xl border-2 border-[#B99066]">
+                    <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">
+                      {pageContent.expertise?.diagramme?.segments?.[1]?.title || "Stratégie personnalisée"}
+                    </h3>
+                    <p className="text-[#4B5563] text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
+                      {pageContent.expertise?.diagramme?.segments?.[1]?.description || "Élaboration d'un plan d'action sur-mesure intégrant vos objectifs, contraintes et aversion au risque, avec priorisation des actions selon leur impact."}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Badge 3: Mise en œuvre (Bottom Right segment - positionné à l'intérieur du segment) */}
@@ -978,14 +1051,16 @@ export default function FiscalitePage() {
                   </div>
                 </div>
                 
-                {/* Texte Mise en œuvre - Bottom Right (autour du cercle, éloigné) */}
-                <div className={`absolute -bottom-8 -right-4 sm:-bottom-12 sm:-right-8 lg:-right-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] text-right transition-opacity duration-300 ${hoveredIcon === 'mise-en-oeuvre' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                  <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">
-                    {pageContent.expertise?.diagramme?.segments?.[2]?.title || "Mise en œuvre"}
-                  </h3>
-                  <p className="text-white text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
-                    {pageContent.expertise?.diagramme?.segments?.[2]?.description || "Accompagnement opérationnel pour la concrétisation des recommandations : sélection des investissements, formalités administratives, suivi des échéances."}
-                  </p>
+                {/* Texte Mise en œuvre - Bottom Right */}
+                <div className={`absolute bottom-0 right-0 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] text-right transition-opacity duration-300 z-20 ${hoveredIcon === 'mise-en-oeuvre' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                  <div className="bg-white rounded-xl p-4 sm:p-6 shadow-xl border-2 border-[#B99066]">
+                    <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">
+                      {pageContent.expertise?.diagramme?.segments?.[2]?.title || "Mise en œuvre"}
+                    </h3>
+                    <p className="text-[#4B5563] text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
+                      {pageContent.expertise?.diagramme?.segments?.[2]?.description || "Accompagnement opérationnel pour la concrétisation des recommandations : sélection des investissements, formalités administratives, suivi des échéances."}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Badge 4: Suivi (Bottom Left segment - positionné à l'intérieur du segment) */}
@@ -1001,14 +1076,16 @@ export default function FiscalitePage() {
                   </div>
                 </div>
                 
-                {/* Texte Suivi - Bottom Left (autour du cercle, éloigné) */}
-                <div className={`absolute -bottom-8 -left-4 sm:-bottom-12 sm:-left-8 lg:-left-16 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] transition-opacity duration-300 ${hoveredIcon === 'suivi' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                  <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">
-                    {pageContent.expertise?.diagramme?.segments?.[3]?.title || "Suivi et ajustement"}
-                  </h3>
-                  <p className="text-white text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
-                    {pageContent.expertise?.diagramme?.segments?.[3]?.description || "Veille réglementaire continue, adaptation de la stratégie aux évolutions législatives, optimisation permanente selon l'évolution de votre situation."}
-                  </p>
+                {/* Texte Suivi - Bottom Left */}
+                <div className={`absolute bottom-0 left-0 max-w-[220px] sm:max-w-[260px] lg:max-w-[280px] transition-opacity duration-300 z-20 ${hoveredIcon === 'suivi' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                  <div className="bg-white rounded-xl p-4 sm:p-6 shadow-xl border-2 border-[#B99066]">
+                    <h3 className="text-[#B99066] text-lg sm:text-xl lg:text-2xl font-cairo font-bold mb-3">
+                      {pageContent.expertise?.diagramme?.segments?.[3]?.title || "Suivi et ajustement"}
+                    </h3>
+                    <p className="text-[#4B5563] text-sm sm:text-base lg:text-lg font-inter leading-relaxed">
+                      {pageContent.expertise?.diagramme?.segments?.[3]?.description || "Veille réglementaire continue, adaptation de la stratégie aux évolutions législatives, optimisation permanente selon l'évolution de votre situation."}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Logo central dans le donut */}
@@ -1016,7 +1093,7 @@ export default function FiscalitePage() {
                   <img 
                     src="/images/azalee-patrimoine.png" 
                     alt="Azalée Patrimoine" 
-                    className="w-24 h-24 sm:w-28 sm:h-28 object-contain"
+                    className="w-24 h-24 sm:w-28 sm:h-28 object-contain scale-x-[-1]"
                   />
                 </div>
               </div>

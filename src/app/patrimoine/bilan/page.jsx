@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Header from "../../../components/common/Header";
+import Footer from "../../../components/common/Footer";
 import PlacementChart from "../../../components/PlacementChart";
 
 export default function BilanPage() {
@@ -581,6 +582,8 @@ export default function BilanPage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }
